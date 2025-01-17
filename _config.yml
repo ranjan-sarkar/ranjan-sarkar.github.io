@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Ranjan Sarkar"
+title                    : "Ranjan's Homepage"
 title_separator          : "-"
 name                     : &name "Ranjan Sarkar"
 description              : &description "Research Scholar in Artificial Intelligence"
@@ -21,13 +21,13 @@ repository               : "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
-  name             : "Ranjan"
+  avatar           : "Ranjan KGP Dp.jpg"
+  name             : "Ranjan Sarkar"
   pronouns         : # example: "he/him"  
-  bio              : "AI Researcher"
-  location         : "Kharagpur, West Bengal, India"
+  bio              : "PhD Researcher Scholar, Department of Artificial Intelligence, IIT Kharagpur"
+  location         : "Kharagpur, WB, India"
   employer         : "IIT Kharagpur"
-  uri              : # URL
+  URI              : "ahttps://sites.google.com/view/ranjan-sarkar/"
   email            : "ranjan.sarkar.24@kgpian.iitkgp.ac.in" 
 
   # Academic websites
