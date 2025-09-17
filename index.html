@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranjan Sarkar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Define color variables for light and dark themes */
+        :root {
+            --bg-light-primary: #f8fafc; /* slate-50 */
+            --bg-light-secondary: #ffffff;
+            --text-light-primary: #1e293b; /* slate-800 */
+            --text-light-secondary: #475569; /* slate-600 */
+            --border-light: #e2e8f0; /* slate-200 */
+            --accent-light: #4F46E5; /* indigo-600 */
+            --accent-hover-light: #4338CA; /* indigo-700 */
+
+            --bg-dark-primary: #0f172a; /* slate-900 */
+            --bg-dark-secondary: #1e293b; /* slate-800 */
+            --text-dark-primary: #f1f5f9; /* slate-100 */
+            --text-dark-secondary: #94a3b8; /* slate-400 */
+            --border-dark: #334155; /* slate-700 */
+            --accent-dark: #818CF8; /* indigo-400 */
+            --accent-hover-dark: #6366F1; /* indigo-500 */
+        }
+
+        /* Apply theme colors using CSS variables */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light-primary);
+            color: var(--text-light-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+            background-color: var(--bg-dark-primary);
+            color: var(--text-dark-primary);
+        }
+
+        /* Component-specific theming */
+        .themed-bg-primary { background-color: var(--bg-light-primary); }
+        .dark .themed-bg-primary { background-color: var(--bg-dark-primary); }
+        
+        .themed-bg-secondary { background-color: var(--bg-light-secondary); }
+        .dark .themed-bg-secondary { background-color: var(--bg-dark-secondary); }
+
+        .themed-text-primary { color: var(--text-light-primary); }
+        .dark .themed-text-primary { color: var(--text-dark-primary); }
+
+        .themed-text-secondary { color: var(--text-light-secondary); }
+        .dark .themed-text-secondary { color: var(--text-dark-secondary); }
+
+        .themed-border { border-color: var(--border-light); }
+        .dark .themed-border { border-color: var(--border-dark); }
+        
+        .themed-accent { color: var(--accent-light); }
+        .dark .themed-accent { color: var(--accent-dark); }
+        
+        .themed-accent-bg { background-color: var(--accent-light); }
+        .dark .themed-accent-bg { background-color: var(--accent-dark); }
+
+        .themed-accent-bg-hover:hover { background-color: var(--accent-hover-light); }
+        .dark .themed-accent-bg-hover:hover { background-color: var(--accent-hover-dark); }
+        
+        /* Blurry Header */
+        header {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.5);
+            border-bottom-width: 1px;
+            border-color: var(--border-light);
+        }
+        .dark header {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-color: var(--border-dark);
+        }
+        
+        /* Active nav link style */
+        header nav a.active {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        .dark header nav a.active {
+             color: var(--accent-dark);
+        }
+
+
+        /* Timeline styles */
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+            padding-left: 2.5rem;
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.25rem;
+            width: 1px;
+            height: 100%;
+            background-color: var(--border-light);
+        }
+        .dark .timeline-item::before {
+            background-color: var(--border-dark);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 9999px;
+            border-width: 2px;
+            border-color: var(--bg-light-secondary);
+            background-color: var(--accent-light);
+        }
+        .dark .timeline-dot {
+            border-color: var(--bg-dark-secondary);
+            background-color: var(--accent-dark);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        /* Course page styles */
+        .course-page {
+            display: none;
+        }
+        
+        /* Section alternate background */
+        section:nth-child(odd) {
+            background-color: var(--bg-light-secondary);
+        }
+        .dark section:nth-child(odd) {
+            background-color: var(--bg-dark-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full transition-all duration-300">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <a href="#" class="themed-text-primary font-bold text-xl">Ranjan Sarkar</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#home" class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
+                        <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a>
+                        <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
+                        <a href="#education" class="themed-text-secondary hover:themed-text-primary transition-colors">Education</a>
+                        <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a>
+                        <a href="#teaching" class="themed-text-secondary hover:themed-text-primary transition-colors">Teaching</a>
+                    </nav>
+                    <button id="theme-toggle" class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
+                        <i class="fas fa-moon" id="theme-icon-dark"></i>
+                        <i class="fas fa-sun" id="theme-icon-light" style="display: none;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home" class="py-20 md:py-32">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/5 flex justify-center md:justify-start">
+                    <img src="Portfolio-DP.png" alt="Ranjan Sarkar" class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
+                </div>
+                <div class="md:w-3/5 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-4">Ranjan Sarkar</h1>
+                    <p class="text-xl md:text-2xl themed-text-primary mb-2">PhD Scholar, Artificial Intelligence</p>  
+                    <p class="md:text-xl themed-text-primary mb-6">Indian Institute of Technology Kharagpur</p>
+                    <p class="themed-text-secondary mb-8 max-w-2xl">
+                        I am a PhD research scholar at the <a href="https://ai.iitkgp.ac.in" target="_blank" class="text-accent font-medium hover:underline">Department of Artificial Intelligence, IIT Kharagpur</a>, advised by <a href="https://prabhatkmishra.github.io/people" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io" target="_blank" class="text-accent font-medium hover:underline">PSALM Lab (Predictive Stochastic Adaptive Learning Machines)</a>. My research focuses on the intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs, Computer Vision, and Robotics.
+                    </p>
+                    <div class="flex items-center justify-center md:justify-start gap-4 mb-8">
+                        <a href="cv.pdf" target="_blank" class="inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
+                            Download CV
+                        </a>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start space-x-6">
+                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="https://github.com/ranjan-sarkar" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="#" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Interests Section -->
+        <section id="research" class="py-20 md:py-28">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-robot"></i></div>
+                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Reinforcement Learning</h3>
+                        <p class="themed-text-secondary">Exploring decision-making in complex environments, focusing on algorithm design, theoretical guarantees, and efficient exploration strategies.</p>
+                    </div>
+                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-language"></i></div>
+                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Natural Language Processing</h3>
+                        <p class="themed-text-secondary">Investigating the optimization and application of Large Language Models, aiming to enhance their efficiency, reasoning, and alignment.</p>
+                    </div>
+                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-eye"></i></div>
+                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Computer Vision</h3>
+                        <p class="themed-text-secondary">Working on efficient object detection and semantic segmentation models for autonomous systems navigation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="py-20 md:py-28">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
+                <!-- <div class="space-y-8">
+                    <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
+                        <h3 class="text-lg font-semibold themed-text-primary">"A Novel Approach to Cross-lingual Text Summarization"</h3>
+                        <p class="themed-text-secondary text-sm my-1">
+                            <span class="font-medium">Jane Doe</span>, John Smith, Prof. Alan Turing
+                        </p>
+                        <p class="italic themed-text-secondary text-sm">Proceedings of the ACL, 2024</p>
+                        <div class="mt-3 space-x-4">
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Paper</a>
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Code</a>
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Cite</a>
+                        </div>
+                    </div>
+                    <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
+                        <h3 class="text-lg font-semibold themed-text-primary">"Efficient Attention Mechanisms for Low-Resource NMT"</h3>
+                        <p class="themed-text-secondary text-sm my-1">
+                            John Smith, <span class="font-medium">Jane Doe</span>, Prof. Alan Turing
+                        </p>
+                        <p class="italic themed-text-secondary text-sm">Findings of EMNLP, 2023</p>
+                        <div class="mt-3 space-x-4">
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Paper</a>
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Code</a>
+                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Cite</a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+        
+        <!-- Education & Experience Timeline -->
+        <section id="education" class="py-20 md:py-28">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <div>
+                        <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Education</h2>
+                        <div class="relative">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence</h3>
+                                <p class="themed-text-secondary text-sm">IIT Kharagpur • 2025 - Present</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">M.Sc in Mathematics</h3>
+                                <p class="themed-text-secondary text-sm">IIT Kharagpur • 2021 - 2023</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">B.Sc in Mathematics</h3>
+                                <p class="themed-text-secondary text-sm">University of Calcutta • 2018 - 2021</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="experience">
+                        <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Experience</h2>
+                         <div class="relative">
+                            <!-- <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">Research Fellow</h3>
+                                <p class="themed-text-secondary text-sm">PSALM Lab, IIT Kharagpur • 2025 - Present</p>
+                                <p class="themed-text-secondary text-sm mt-2">Worked on conversational AI models.</p>
+                            </div> -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
+                                <p class="themed-text-secondary text-sm">EXL Services, Gurgaon IN • 2023 - 2024</p>
+                                <!-- <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p> -->
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">Master's Student</h3>
+                                <p class="themed-text-secondary text-sm">Dept. of Mathematics, IIT Kharagpur • 2022 - 2023</p>
+                                <p class="themed-text-secondary text-sm mt-2">Supervisor: Prof. Swanand Khare.</p>
+                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using Alternating Least Square (ALS) Algorithm</p>
+                            </div>
+                            <!-- <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant</h3>
+                                <p class="themed-text-secondary text-sm">IIT Kharagpur, 2021 - 2023</p>
+                                <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teaching Section -->
+        <section id="teaching" class="py-20 md:py-28">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Course Card 1 -->
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="amfai">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211: Algorithmic and Mathematical Foundations for AI</h3>
+                            <p class="themed-text-secondary mb-4">Autumn 2025 • Prof. Adway Mitra</p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                        </div>
+                    </div>
+                    <!-- Course Card 2 -->
+                    <!-- <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="ai201">
+                         <div class="p-6">
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI201: Deep Learning Foundations</h3>
+                            <p class="themed-text-secondary mb-4">Teaching Assistant, Autumn 2022</p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Course Topics -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-2xl font-bold themed-text-primary">Course Topics</h3>
+                <button id="close-modal" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
+            </div>
+            <div id="modal-body" class="themed-text-secondary">
+                <p class="mb-4">A brief overview of the key topics covered in the course:</p>
+                <ul id="modal-topics" class="list-disc list-inside space-y-2">
+                    <!-- Topics will be injected here -->
+                </ul>
+            </div>
+            <div class="mt-6 text-right">
+                <a href="#" id="modal-fullscreen-link" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                    View Full Course Page
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fullscreen Course Pages Container -->
+    <div id="course-pages-container">
+        <!-- Beautified Course Page for amfai -->
+        <div id="course-amfai" class="course-page min-h-screen themed-bg-secondary py-20">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI60211: Algorithmic and Mathematical Foundations for AI</h1>
+                    <p class="text-xl themed-text-secondary">Autumn 2025 • IIT Kharagpur</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2">
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Description</h2>
+                        <p class="themed-text-secondary mb-6">This course introduces the fundamental mathematical concepts of linear algebra, probability, statistics, optimization and sorting, searching, graph algorithms. It's designed for first-year MTech students. As a teaching assistant, my responsibilities included conducting tutorial sessions, holding doubt-clearing sessions.</p>
+                        
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments</h2>
+                        <div class="space-y-4">
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 0: Introductory Session</h3>
+                                    <p class="text-sm themed-text-secondary">July 17, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1HOqjNLTgU6UpcOyhxbtwrsDv70KUeGIj/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 1: Group, Ring, Field</h3>
+                                    <p class="text-sm themed-text-secondary">July 26, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1PbrYCwEmxeQ4zPgv47H0q4jlETAee-2b/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 2: Vector Space</h3>
+                                    <p class="text-sm themed-text-secondary">Aug 4, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1O-d10tV67zOmDfASo8OZZTKXdBpw9jHB/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 3: Linear Algebra</h3>
+                                    <p class="text-sm themed-text-secondary">Aug 14, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/14uJglv8dAmai3DNJCHL73sQ5cq9w4wiA/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 4: Probability Theory</h3>
+                                    <p class="text-sm themed-text-secondary">Sept 1, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1zaYzqqzkL1f_wOC6VaUALxOJLvGcQyqp" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 5: Optimization</h3>
+                                    <p class="text-sm themed-text-secondary">Sept 15, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1UfhIHuSEncwL1pOpeHi683siRYCaqIya/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-1">
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
+                             <div class="space-y-3 themed-text-secondary text-sm">
+                                <p><strong>Instructor:</strong> Prof. Adway Mitra</p>
+                                <p><strong>TAs:</strong> Ranjan Sarkar</p>
+                                <p><strong>Office Hours:</strong> Mon 4-6 PM & Thu 3-5 PM</p>
+                             </div>
+                        </div>
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <ul class="list-disc list-inside space-y-2 themed-text-secondary text-sm">
+                                <li>Linear Algebra</li>
+                                <li>Probability Theory</li>
+                                <li>Optimization</li>
+                                <li>Searching Algorithm</li>
+                                <li>Sorting Algorithm</li>
+                                <li>BFS DFS</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="mt-16 text-center">
+                    <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                </div>
+            </div>
+        </div>
+        <!-- Beautified Course Page for AI201 -->
+        <div id="course-ai201" class="course-page min-h-screen themed-bg-secondary py-20">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                 <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI201: Deep Learning Foundations</h1>
+                    <p class="text-xl themed-text-secondary">Autumn 2022, IIT Kharagpur</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2">
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Description</h2>
+                        <p class="themed-text-secondary mb-6">This course provides a thorough introduction to the theory and practice of deep learning. Students learn about neural network architectures and apply them to solve real-world problems. My role involved designing assignments and guiding students through their final projects.</p>
+                        
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments & Projects</h2>
+                        <div class="space-y-4">
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 1: Neural Networks</h3>
+                                    <p class="text-sm themed-text-secondary">Due: Sep 20, 2022</p>
+                                </div>
+                                <a href="#" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Final Project: Image Classifier</h3>
+                                    <p class="text-sm themed-text-secondary">Due: Nov 30, 2022</p>
+                                </div>
+                                <a href="#" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-1">
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
+                             <div class="space-y-3 themed-text-secondary text-sm">
+                                <p><strong>Instructor:</strong> Prof. Alan Turing</p>
+                                <p><strong>TAs:</strong> Jane Doe</p>
+                                <p><strong>Office Hours:</strong> Thu 5-6 PM</p>
+                             </div>
+                        </div>
+                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <ul class="list-disc list-inside space-y-2 themed-text-secondary text-sm">
+                                <li>Intro to Neural Networks</li>
+                                <li>Convolutional Nets (CNNs)</li>
+                                <li>Recurrent Nets (RNNs)</li>
+                                <li>Transformers</li>
+                                <li>Generative Models</li>
+                                <li>PyTorch/TensorFlow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 text-center">
+                    <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: #0f172a;"> <!-- slate-900, dark color forced -->
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Contact</h3>
+                    <div class="flex items-start text-slate-400 mb-2">
+                        <i class="fas fa-map-marker-alt mt-1 w-5 text-center mr-2"></i>
+                        <span>PSALM Lab, Takshashila 1st Floor<br>Department of AI, IIT Kharagpur<br>Kharagpur, WB, India - 721302</span>
+                    </div>
+                    <div class="flex items-center text-slate-400">
+                        <i class="fas fa-envelope w-5 text-center mr-2"></i>
+                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#research" class="text-slate-400 hover:text-white transition-colors">Research</a></li>
+                        <li><a href="#publications" class="text-slate-400 hover:text-white transition-colors">Publications</a></li>
+                        <li><a href="#teaching" class="text-slate-400 hover:text-white transition-colors">Teaching</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Connect</h3>
+                    <div class="flex justify-center md:justify-start space-x-5">
+                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="https://github.com/ranjan-sarkar" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="#" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-slate-700 pt-8 text-center text-slate-500 text-sm">
+                &copy; 2025 Ranjan Sarkar. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Theme Switcher ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const lightIcon = document.getElementById('theme-icon-light');
+            
+            // Check for saved theme in localStorage
+            if (localStorage.getItem('theme') === 'dark' || 
+               (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                darkIcon.style.display = 'none';
+                lightIcon.style.display = 'inline-block';
+            } else {
+                document.documentElement.classList.remove('dark');
+                darkIcon.style.display = 'inline-block';
+                lightIcon.style.display = 'none';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline-block';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkIcon.style.display = 'inline-block';
+                    lightIcon.style.display = 'none';
+                }
+            });
+            
+            // --- Modal Logic ---
+            const courseData = {
+                'amfai': {
+                    title: 'AI60211 • Algorithmic and Mathematical Foundations for AI',
+                    id: 'AI60211',
+                    shortname: 'AMFAI',
+                    topics: [
+                        'Linear Algebra, Matrix Theory',
+                        'Probability Theory, Statistics',
+                        'Optimization Theory and Algorithms',
+                        'Searching and Sorting Algorithms',
+                        'Graph Algorithms: BST DST',
+                    ]
+                },
+                'ai201': {
+                    title: 'AI201: Deep Learning Foundations',
+                    topics: [
+                        'Introduction to Neural Networks',
+                        'Convolutional Neural Networks (CNNs)',
+                        'Recurrent Neural Networks (RNNs)',
+                        'Attention and Transformers',
+                        'Generative Models (GANs, VAEs)',
+                    ]
+                }
+            };
+            
+            const modal = document.getElementById('course-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalTopics = document.getElementById('modal-topics');
+            const modalFullscreenLink = document.getElementById('modal-fullscreen-link');
+            
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const courseId = card.dataset.course;
+                    const data = courseData[courseId];
+                    
+                    modalTitle.textContent = data.title;
+                    modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
+                    modalFullscreenLink.href = `#${courseId}`;
+
+                    modal.classList.add('show');
+                });
+            });
+            
+            const closeModal = () => {
+                modal.classList.remove('show');
+            };
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // --- Page Routing Logic ---
+            const mainContent = document.getElementById('main-content');
+            const coursePagesContainer = document.getElementById('course-pages-container');
+            const allCoursePages = document.querySelectorAll('.course-page');
+
+            const showPage = (pageId) => {
+                mainContent.style.display = 'none';
+                allCoursePages.forEach(p => p.style.display = 'none');
+                
+                const pageToShow = document.getElementById(`course-${pageId}`);
+                if (pageToShow) {
+                    pageToShow.style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainContent.style.display = 'block';
+                }
+            };
+
+            const handleRouteChange = () => {
+                const hash = window.location.hash.substring(1); // remove '#'
+                closeModal(); // always close modal on route change
+                if(courseData[hash]) {
+                    document.title = `${courseData[hash].id} • Ranjan Sarkar`;
+                    showPage(hash);
+                } else {
+                    mainContent.style.display = 'block';
+                    allCoursePages.forEach(p => p.style.display = 'none');
+                    // If there's a hash for a section, scroll to it
+                    if (hash && document.getElementById(hash)) {
+                       document.getElementById(hash).scrollIntoView();
+                    }
+                }
+            };
+            
+            document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href === '#') {
+                        e.preventDefault();
+                        window.location.hash = '';
+                    } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
+                        // Let the default anchor link behavior handle scrolling
+                    } else {
+                         // This handles clicks on course links and back buttons
+                    }
+                });
+            });
+
+            window.addEventListener('hashchange', handleRouteChange);
+            
+            // Initial check on page load
+            handleRouteChange();
+
+            // --- Scrollspy for Header ---
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('header nav a');
+
+            const observerOptions = {
+                rootMargin: '-80px 0px -60% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const navLink = document.querySelector(`header nav a[href="#${id}"]`);
+
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        if (navLink) {
+                            navLink.classList.add('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+
