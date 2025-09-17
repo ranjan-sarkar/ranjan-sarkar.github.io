@@ -88,6 +88,14 @@
              color: var(--accent-dark);
         }
 
+        /* Active nav link style - mobile*/
+        header nav a.active, .mobile-nav a.active {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        .dark header nav a.active, .dark .mobile-nav a.active {
+             color: var(--accent-dark);
+        }
 
         /* Timeline styles */
         .timeline-item {
@@ -192,7 +200,24 @@
                         <i class="fas fa-moon" id="theme-icon-dark"></i>
                         <i class="fas fa-sun" id="theme-icon-light" style="display: none;"></i>
                     </button>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
+                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg"></i>
+                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" style="display: none;"></i>
+                        </button>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden themed-bg-secondary border-t themed-border mobile-nav">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
+                <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a>
+                <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
+                <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Education</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Experience</a>
+                <a href="#teaching" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Teaching</a>
             </div>
         </div>
     </header>
@@ -607,6 +632,27 @@
                     darkIcon.style.display = 'inline-block';
                     lightIcon.style.display = 'none';
                 }
+            });
+
+            // --- Mobile Menu ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('mobile-menu-open-icon');
+            const closeIcon = document.getElementById('mobile-menu-close-icon');
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isMenuHidden = mobileMenu.classList.toggle('hidden');
+                openIcon.style.display = isMenuHidden ? 'block' : 'none';
+                closeIcon.style.display = isMenuHidden ? 'none' : 'block';
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    openIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
             });
             
             // --- Modal Logic ---
