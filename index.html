@@ -134,6 +134,18 @@
             background-color: var(--accent-dark);
         }
 
+        /* Animation for sections on scroll */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Modal styles */
         .modal {
             display: none;
@@ -224,7 +236,7 @@
 
     <main id="main-content">
         <!-- Home Section -->
-        <section id="home" class="py-20 md:py-32">
+        <section id="home" class="scroll-animate py-20 md:py-32">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-2/5 flex justify-center md:justify-start">
                     <img src="Portfolio-DP.png" alt="Ranjan Sarkar" class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
@@ -252,7 +264,7 @@
         </section>
 
         <!-- Research Interests Section -->
-        <section id="research" class="py-20 md:py-28">
+        <section id="research" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -276,7 +288,7 @@
         </section>
 
         <!-- Publications Section -->
-        <section id="publications" class="py-20 md:py-28">
+        <section id="publications" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
                 <!-- <div class="space-y-8">
@@ -309,7 +321,7 @@
         </section>
         
         <!-- Education & Experience Timeline -->
-        <section id="education" class="py-20 md:py-28">
+        <section id="education" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                     <div>
@@ -367,7 +379,7 @@
         </section>
 
         <!-- Teaching Section -->
-        <section id="teaching" class="py-20 md:py-28">
+        <section id="teaching" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -416,7 +428,7 @@
     <!-- Fullscreen Course Pages Container -->
     <div id="course-pages-container">
         <!-- Beautified Course Page for amfai -->
-        <div id="course-amfai" class="course-page min-h-screen themed-bg-secondary py-20">
+        <div id="course-amfai" class="scroll-animate course-page min-h-screen themed-bg-secondary py-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h1 class="text-4xl font-bold themed-text-primary mb-2">AI60211: Algorithmic and Mathematical Foundations for AI</h1>
@@ -654,7 +666,18 @@
                     closeIcon.style.display = 'none';
                 });
             });
-            
+
+            // Scroll animation logic
+            const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            scrollAnimateElements.forEach(el => scrollObserver.observe(el));
+                
             // --- Modal Logic ---
             const courseData = {
                 'amfai': {
@@ -793,5 +816,6 @@
     </script>
 </body>
 </html>
+
 
 
