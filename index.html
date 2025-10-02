@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranjan Sarkar</title>
-    <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg">
+    <!-- <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -188,6 +188,19 @@
         }
         .dark section:nth-child(odd) {
             background-color: var(--bg-dark-secondary);
+        }
+
+        /* Scroll to Top Button */
+        #scroll-to-top {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+        #scroll-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
     </style>
 </head>
@@ -619,6 +632,12 @@
         </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 z-50 p-3 rounded-full themed-accent-bg dark:bg-dark-primary text-white shadow-lg hover:opacity-90 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -819,10 +838,24 @@
             sections.forEach(section => {
                 observer.observe(section);
             });
+
+            // --- SCROLL TO TOP BUTTON ---
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 600) {
+                    scrollToTopBtn.classList.add('show');
+                } else {
+                    scrollToTopBtn.classList.remove('show');
+                }
+            });
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     </script>
 </body>
 </html>
+
 
 
 
