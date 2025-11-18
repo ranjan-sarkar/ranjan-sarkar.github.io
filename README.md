@@ -42,7 +42,7 @@ My research focuses on the intersection of **Reinforcement Learning**, **Estimat
 ## Research Interests
 
 - Reinforcement Learning
-- Estimation Theory
+- Machine Learning
 - Optimization
 - Tensor Methods & Decomposition
 - AI Applications in LLMs, CV, and Robotics
