@@ -882,65 +882,8 @@
                     closeModal();
                 }
             });
-
-               // --- Page Routing Logic ---
-            const mainContent = document.getElementById('main-content');
-            const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
-            const originalTitle = document.title;
-
-            const showPage = (pageId) => {
-                mainContent.style.display = 'none';
-                allFullscreenPages.forEach(p => p.style.display = 'none');
-                
-                const pageToShow = document.getElementById(pageId);
-                if (pageToShow) {
-                    pageToShow.style.display = 'block';
-                    window.scrollTo(0, 0);
-                } else {
-                    mainContent.style.display = 'block';
-                }
-            };
-
-            const handleRouteChange = () => {
-                const hash = window.location.hash.substring(1);
-                closeModal();
-                closeBlogModal();
-
-                if (courseData[hash]) {
-                    document.title = `${courseData[hash].title} | Ranjan Sarkar`;
-                    showPage(`course-${hash}`);
-                } else if (hash === 'blog-page') {
-                    document.title = `Blog | Ranjan Sarkar`;
-                    showPage('blog-page');
-                } else if (hash === 'seminars') {
-                    document.title = `Ranjan Sarkar • Seminar Talks`;
-                    showPage('seminars');
-                } else {
-                    document.title = originalTitle;
-                    mainContent.style.display = 'block';
-                    allFullscreenPages.forEach(p => p.style.display = 'none');
-                    if (hash && document.getElementById(hash)) {
-                       document.getElementById(hash).scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            };
             
-            document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
-                    if (href === '#') {
-                        e.preventDefault();
-                        window.location.hash = '';
-                    }
-                });
-            });
-
-            window.addEventListener('hashchange', handleRouteChange);
-            
-            // Initial check on page load
-            handleRouteChange();
-            
-            // // --- Page Routing Logic ---
+            // --- Page Routing Logic ---
             // const mainContent = document.getElementById('main-content');
             // const coursePagesContainer = document.getElementById('course-pages-container');
             // const allCoursePages = document.querySelectorAll('.course-page');
@@ -958,44 +901,62 @@
             //     }
             // };
 
-            // const handleRouteChange = () => {
-            //     const hash = window.location.hash.substring(1); // remove '#'
-            //     closeModal(); // always close modal on route change
-            //     if(courseData[hash]) {
-            //         // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
-            //         document.title = `Ranjan Sarkar`;
-            //         showPage(hash);
-            //     } else if (hash === 'seminars') {
-            //         document.title = `Ranjan Sarkar • Seminar Talks`;
-            //         showPage('seminars');
-            //     } else {
-            //         mainContent.style.display = 'block';
-            //         allCoursePages.forEach(p => p.style.display = 'none');
-            //         // If there's a hash for a section, scroll to it
-            //         if (hash && document.getElementById(hash)) {
-            //            document.getElementById(hash).scrollIntoView();
-            //         }
-            //     }
-            // };
-            
-            // document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
-            //     link.addEventListener('click', (e) => {
-            //         const href = link.getAttribute('href');
-            //         if (href === '#') {
-            //             e.preventDefault();
-            //             window.location.hash = '';
-            //         } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
-            //             // Let the default anchor link behavior handle scrolling
-            //         } else {
-            //              // This handles clicks on course links and back buttons
-            //         }
-            //     });
-            // });
 
-            // window.addEventListener('hashchange', handleRouteChange);
+            const mainContent = document.getElementById('main-content');
+            const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
+            const originalTitle = document.title;
+
+            const showPage = (pageId) => {
+                mainContent.style.display = 'none';
+                allFullscreenPages.forEach(p => p.style.display = 'none');
+                
+                const pageToShow = document.getElementById(pageId);
+                if (pageToShow) {
+                    pageToShow.style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainContent.style.display = 'block';
+                }
+            };
             
-            // // Initial check on page load
-            // handleRouteChange();
+            const handleRouteChange = () => {
+                const hash = window.location.hash.substring(1); // remove '#'
+                closeModal(); // always close modal on route change
+                if(courseData[hash]) {
+                    // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
+                    document.title = `Ranjan Sarkar`;
+                    showPage(hash);
+                } else if (hash === 'seminars') {
+                    document.title = `Ranjan Sarkar • Seminar Talks`;
+                    showPage('seminars');
+                } else {
+                    mainContent.style.display = 'block';
+                    allCoursePages.forEach(p => p.style.display = 'none');
+                    // If there's a hash for a section, scroll to it
+                    if (hash && document.getElementById(hash)) {
+                       document.getElementById(hash).scrollIntoView();
+                    }
+                }
+            };
+            
+            document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href === '#') {
+                        e.preventDefault();
+                        window.location.hash = '';
+                    } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
+                        // Let the default anchor link behavior handle scrolling
+                    } else {
+                         // This handles clicks on course links and back buttons
+                    }
+                });
+            });
+
+            window.addEventListener('hashchange', handleRouteChange);
+            
+            // Initial check on page load
+            handleRouteChange();
 
             // --- Scrollspy for Header ---
             const sections = document.querySelectorAll('section[id]');
@@ -1039,6 +1000,7 @@
     </script>
 </body>
 </html>
+
 
 
 
