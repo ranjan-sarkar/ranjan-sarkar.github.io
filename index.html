@@ -884,22 +884,22 @@
             });
             
             // --- Page Routing Logic ---
-            // const mainContent = document.getElementById('main-content');
-            // const coursePagesContainer = document.getElementById('course-pages-container');
-            // const allCoursePages = document.querySelectorAll('.course-page');
+            const mainContent = document.getElementById('main-content');
+            const coursePagesContainer = document.getElementById('course-pages-container');
+            const allCoursePages = document.querySelectorAll('.course-page');
 
-            // const showPage = (pageId) => {
-            //     mainContent.style.display = 'none';
-            //     allCoursePages.forEach(p => p.style.display = 'none');
+            const showPage1 = (pageId) => {
+                mainContent.style.display = 'none';
+                allCoursePages.forEach(p => p.style.display = 'none');
                 
-            //     const pageToShow = document.getElementById(`course-${pageId}`);
-            //     if (pageToShow) {
-            //         pageToShow.style.display = 'block';
-            //         window.scrollTo(0, 0);
-            //     } else {
-            //         mainContent.style.display = 'block';
-            //     }
-            // };
+                const pageToShow = document.getElementById(`course-${pageId}`);
+                if (pageToShow) {
+                    pageToShow.style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainContent.style.display = 'block';
+                }
+            };
 
 
             const mainContent = document.getElementById('main-content');
@@ -925,7 +925,7 @@
                 if(courseData[hash]) {
                     // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
                     document.title = `Ranjan Sarkar`;
-                    showPage(hash);
+                    showPage1(hash);
                 } else if (hash === 'seminars') {
                     document.title = `Ranjan Sarkar • Seminar Talks`;
                     showPage('seminars');
@@ -1000,6 +1000,7 @@
     </script>
 </body>
 </html>
+
 
 
 
