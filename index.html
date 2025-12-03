@@ -294,7 +294,7 @@
                                     "An Estimation-Control duality and its extension to unknown distributions"
                                 </span>.
                                 <a href="#seminars" class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Presentation
+                                    View Slides
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </a>
                             </p>
@@ -888,7 +888,7 @@
             const coursePagesContainer = document.getElementById('course-pages-container');
             const allCoursePages = document.querySelectorAll('.course-page');
 
-            const showPage1 = (pageId) => {
+            const showCoursePage = (pageId) => {
                 mainContent.style.display = 'none';
                 allCoursePages.forEach(p => p.style.display = 'none');
                 
@@ -901,23 +901,21 @@
                 }
             };
 
+            const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
+            const originalTitle = document.title;
 
-            // const mainContent = document.getElementById('main-content');
-            // const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
-            // const originalTitle = document.title;
-
-            // const showPage = (pageId) => {
-            //     mainContent.style.display = 'none';
-            //     allFullscreenPages.forEach(p => p.style.display = 'none');
+            const showPage = (pageId) => {
+                mainContent.style.display = 'none';
+                allFullscreenPages.forEach(p => p.style.display = 'none');
                 
-            //     const pageToShow = document.getElementById(pageId);
-            //     if (pageToShow) {
-            //         pageToShow.style.display = 'block';
-            //         window.scrollTo(0, 0);
-            //     } else {
-            //         mainContent.style.display = 'block';
-            //     }
-            // };
+                const pageToShow = document.getElementById(pageId);
+                if (pageToShow) {
+                    pageToShow.style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainContent.style.display = 'block';
+                }
+            };
             
             const handleRouteChange = () => {
                 const hash = window.location.hash.substring(1); // remove '#'
@@ -925,7 +923,7 @@
                 if(courseData[hash]) {
                     // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
                     document.title = `Ranjan Sarkar`;
-                    showPage1(hash);
+                    showCoursePage(hash);
                 } else if (hash === 'seminars') {
                     document.title = `Ranjan Sarkar • Seminar Talks`;
                     showPage('seminars');
@@ -1000,6 +998,7 @@
     </script>
 </body>
 </html>
+
 
 
 
