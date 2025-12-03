@@ -902,22 +902,22 @@
             };
 
 
-            const mainContent = document.getElementById('main-content');
-            const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
-            const originalTitle = document.title;
+            // const mainContent = document.getElementById('main-content');
+            // const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
+            // const originalTitle = document.title;
 
-            const showPage = (pageId) => {
-                mainContent.style.display = 'none';
-                allFullscreenPages.forEach(p => p.style.display = 'none');
+            // const showPage = (pageId) => {
+            //     mainContent.style.display = 'none';
+            //     allFullscreenPages.forEach(p => p.style.display = 'none');
                 
-                const pageToShow = document.getElementById(pageId);
-                if (pageToShow) {
-                    pageToShow.style.display = 'block';
-                    window.scrollTo(0, 0);
-                } else {
-                    mainContent.style.display = 'block';
-                }
-            };
+            //     const pageToShow = document.getElementById(pageId);
+            //     if (pageToShow) {
+            //         pageToShow.style.display = 'block';
+            //         window.scrollTo(0, 0);
+            //     } else {
+            //         mainContent.style.display = 'block';
+            //     }
+            // };
             
             const handleRouteChange = () => {
                 const hash = window.location.hash.substring(1); // remove '#'
@@ -1000,6 +1000,7 @@
     </script>
 </body>
 </html>
+
 
 
 
