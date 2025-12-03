@@ -278,6 +278,39 @@
             </div>
         </section>
 
+        <!-- News Section -->
+        <section id="news" class="py-20 md:py-15">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold themed-text-primary themed-accent text-center mb-10">Recent News</h2>
+                <div class="max-w-5xl mx-auto space-y-6">
+                    <!-- News Item 1 (Presentation) -->
+                    <div class="flex items-start group">
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-200 mt-1">Dec 2025</div>
+                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <!-- <div class="themed-bg-secondary themed-accent group-hover:themed-accent-bg-hover transition-colors duration-300"></div> -->
+                            <p class="themed-text-primary transition-colors">
+                                Delivered Self-Study Seminar on
+                                <span class="font-serif italic text-lg themed-text-primary">
+                                    "An Estimation-Control duality and its extension to unknown distributions"
+                                </span>.
+                                <a href="#seminars" class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
+                                    View Presentation
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- News Item 2 -->
+                    <div class="flex items-start group">
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2025</div>
+                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <p>Started working as a Research Scholar in PSALM Lab.</p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        
         <!-- Research Interests Section -->
         <section id="research" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -420,6 +453,49 @@
         </section>
     </main>
 
+    <!-- Presentation Archive Page -->
+    <div id="seminars" class="course-page min-h-screen themed-bg-secondary py-20">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
+            <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Seminar / Talks</h1>
+            
+            <div class="space-y-12">
+                <!-- Presentation Item 1 -->
+                <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
+                    <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
+                        <h2 class="text-2xl font-bold themed-text-secondary mb-2">Self-Study Seminar</h2>
+                        <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distribution</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
+                            <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
+                            <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
+                        </p>
+                    </div>
+                    <div class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
+                        <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                    </div>
+                </div>
+                
+                <!-- Template for Future Presentation -->
+                <!-- 
+                    <div class="presentation-item bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6 md:p-8 border-b border-light-border dark:border-dark-border bg-slate-50 dark:bg-slate-800/50">
+                            <h2 class="text-2xl font-bold mb-2">Next Talk Title</h2>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
+                                <span class="mr-3 flex items-center"><svg ...>...</svg> Date</span>
+                                <span class="flex items-center"><svg ...>...</svg> Venue</span>
+                            </p>
+                        </div>
+                        <div class="aspect-w-16 aspect-h-9 w-full">
+                            <iframe src="YOUR_EMBED_URL" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                </div> 
+                -->
+                <div class="mt-16 text-center">
+                    <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                </div>
+            </div>
+        </div>    
+    </div>
+    
     <!-- Modal for Course Topics -->
     <div id="course-modal" class="modal">
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
@@ -590,6 +666,54 @@
         </div>
     </div>
 
+    <!-- Fullscreen Pages Container -->
+    <div id="course-pages-container">
+        <!-- Presentation Archive Page -->
+        <section id="seminars" class="course-page min-h-screen themed-bg-secondary py-20">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
+                <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Seminar / Talks</h1>
+                
+                <div class="space-y-12">
+                    <!-- Presentation Item 1 -->
+                    <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
+                        <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
+                            <h2 class="text-2xl font-bold themed-text-secondary  mb-2">Self-Study Seminar</h2>
+                            <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distribution</h2>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
+                                <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
+                            </p>
+                        </div>
+                        <div class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
+                            <!-- <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="100%" height="100%" frameborder="0" scrolling="no" class="absolute inset-0"></iframe> -->
+                            <!-- <iframe src="https://iitkgpacin-my.sharepoint.com/personal/ranjan_sarkar_24_kgpian_iitkgp_ac_in/_layouts/15/Doc.aspx?sourcedoc={4add7720-47f5-4ba7-be3e-04ae6c331f49}&amp;action=embedview&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="640px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe> -->
+                            <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Template for Future Presentation -->
+                    <!-- 
+                        <div class="presentation-item bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-xl shadow-lg overflow-hidden">
+                            <div class="p-6 md:p-8 border-b border-light-border dark:border-dark-border bg-slate-50 dark:bg-slate-800/50">
+                                <h2 class="text-2xl font-bold mb-2">Next Talk Title</h2>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
+                                    <span class="mr-3 flex items-center"><svg ...>...</svg> Date</span>
+                                    <span class="flex items-center"><svg ...>...</svg> Venue</span>
+                                </p>
+                            </div>
+                            <div class="aspect-w-16 aspect-h-9 w-full">
+                                <iframe src="YOUR_EMBED_URL" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+                            </div>
+                    </div> 
+                    -->
+                    <div class="mt-16 text-center">
+                        <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                    </div>
+                </div>
+        </div>    
+    </section>
+
+    
     <!-- Footer -->
     <footer style="background-color: #0f172a;"> <!-- slate-900, dark color forced -->
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -784,6 +908,9 @@
                     // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
                     document.title = `Ranjan Sarkar`;
                     showPage(hash);
+                } else if (hash === 'seminars') {
+                    document.title = `Ranjan Sarkar • Seminar Talks`;
+                    showPage('seminars');
                 } else {
                     mainContent.style.display = 'block';
                     allCoursePages.forEach(p => p.style.display = 'none');
@@ -855,6 +982,7 @@
     </script>
 </body>
 </html>
+
 
 
 
