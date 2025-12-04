@@ -202,6 +202,11 @@
             transform: translateY(0);
             pointer-events: auto;
         }
+
+        /* Hidden News Items Logic */
+        .hidden-news-item {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -282,9 +287,9 @@
         <section id="news" class="py-20 md:py-15">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold themed-text-primary themed-accent text-center mb-10">Recent News</h2>
-                <div class="max-w-5xl mx-auto space-y-6">
+                <div id="news-container" class="max-w-5xl mx-auto space-y-6">
                     <!-- News Item 1 (Presentation) -->
-                    <div class="flex items-start group">
+                    <div class="flex items-start group news-item">
                         <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Dec 2025</div>
                         <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
                             <!-- <div class="themed-bg-secondary themed-accent group-hover:themed-accent-bg-hover transition-colors duration-300"></div> -->
@@ -301,13 +306,23 @@
                         </div>
                     </div>
                     <!-- News Item 2 -->
-                    <div class="flex items-start group">
+                    <div class="flex items-start group news-item">
                         <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2025</div>
                         <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
                             <p>Started working as a Research Scholar in PSALM Lab.</p>
                         </div>
                     </div>
                 </div>
+                <!-- Load More Button -->
+                <div class="text-center mt-8">
+                    <button id="load-more-news" class="hidden inline-flex items-center text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors focus:outline-none">
+                        Older News
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </section>
 
         
@@ -982,6 +997,28 @@
                 observer.observe(section);
             });
 
+            // --- RECENT NEWS: EXPAND OLDER ---
+            const newsContainer = document.getElementById('news-container');
+            const loadMoreBtn = document.getElementById('load-more-news');
+            const newsItems = newsContainer.querySelectorAll('.news-item');
+
+            // Initially hide items beyond the first 5
+            if (newsItems.length > 4) {
+                loadMoreBtn.classList.remove('hidden');
+                newsItems.forEach((item, index) => {
+                    if (index >= 4) {
+                        item.classList.add('hidden-news-item');
+                    }
+                });
+            }
+
+            loadMoreBtn.addEventListener('click', () => {
+                newsItems.forEach(item => {
+                    item.classList.remove('hidden-news-item');
+                });
+                loadMoreBtn.style.display = 'none'; // Hide the button after expanding
+            });
+
             // --- SCROLL TO TOP BUTTON ---
             const scrollToTopBtn = document.getElementById('scroll-to-top');
             window.addEventListener('scroll', () => {
@@ -998,6 +1035,7 @@
     </script>
 </body>
 </html>
+
 
 
 
