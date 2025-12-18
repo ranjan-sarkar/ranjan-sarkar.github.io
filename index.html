@@ -35,6 +35,22 @@
     <meta name="twitter:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
     
     <style>
+        /* Adding custom font */
+        @font-face {
+            font-family: 'GoogleSans-Regular'; 
+            src: url('GoogleSans-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .google-font {
+            font-family: 'GoogleSans-Regular', sans-serif;
+            font-weight: 400; 
+            letter-spacing: 0.025em;
+            color: #202124;
+        }
+        
         /* Define color variables for light and dark themes */
         :root {
             --bg-light-primary: #f8fafc; /* slate-50 */
@@ -56,7 +72,7 @@
 
         /* Apply theme colors using CSS variables */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'GoogleSans-Regular', sans-serif;
             background-color: var(--bg-light-primary);
             color: var(--text-light-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -240,7 +256,7 @@
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
-                    <a href="#" class="themed-text-primary font-bold text-xl">Ranjan Sarkar</a>
+                    <a href="#" class="google-font themed-text-primary text-xl"><b>Ranjan</b> Sarkar</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <nav class="hidden md:flex items-center space-x-8">
@@ -1059,6 +1075,7 @@
     </script>
 </body>
 </html>
+
 
 
 
