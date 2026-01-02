@@ -538,16 +538,14 @@
                         </div>
                     </div>
                     <!-- Course Card 2 -->
-                    <a href="https://prabhatkmishra.github.io/cps.html" target="_blank">
-                        <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="aicps">
-                             <div class="p-6">
-                                <p class="themed-text-primary themed-accent mb-2">Spring 2026</p>
-                                <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006: AI for Cyber Physical Systems</h3>
-                                <p class="themed-text-secondary mb-4">Course Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                                <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
-                            </div>
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="aicps">
+                         <div class="p-6">
+                            <p class="themed-text-primary themed-accent mb-2">Spring 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006: AI for Cyber Physical Systems</h3>
+                            <p class="themed-text-secondary mb-4">Course Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -685,7 +683,7 @@
                              <div class="space-y-3 themed-text-secondary text-sm">
                                 <p><strong>Instructor: </strong><a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
                                 <p><strong>TA:</strong> Ranjan Sarkar, Sushmita Majee</p>
-                                <p><strong>Timings:</strong> Mon 4-6 PM & Thu 3-5 PM</p>
+                                <!-- <p><strong>Timings:</strong> Mon 4-6 PM & Thu 3-5 PM</p> -->
                              </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
@@ -938,19 +936,21 @@
                         'Optimization Theory and Algorithms',
                         'Searching and Sorting Algorithms',
                         'Graph Algorithms: BST DST',
-                    ]
+                    ],
+                    link: '#amfai'
                 },
-                // 'aicps': {
-                //     title: 'AI61006: AI for Cyber Physical Systems',
-                //     id: 'AI61006',
-                //     shortname: 'AICPS',
-                //     topics: [
-                //         'Introduction',
-                //         'Acting: RL, Deep RL, Gymnasium',
-                //         'Planning: A*, RRT, PRM',
-                //         'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
-                //     ]
-                // }
+                'aicps': {
+                    title: 'AI61006: AI for Cyber Physical Systems',
+                    id: 'AI61006',
+                    shortname: 'AICPS',
+                    topics: [
+                        'Introduction',
+                        'Acting: RL, Deep RL, Gymnasium',
+                        'Planning: A*, RRT, PRM',
+                        'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
+                    ],
+                    link: 'https://prabhatkmishra.github.io/cps.html'
+                }
             };
             
             const modal = document.getElementById('course-modal');
@@ -966,8 +966,11 @@
                     
                     modalTitle.textContent = data.title;
                     modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
-                    modalFullscreenLink.href = `#${courseId}`;
-
+                    if (data.link.startsWith('#')) {
+                        modalFullscreenLink.href = `#${courseId}`;
+                    } else {
+                        modalFullscreenLink.href = data.link;
+                    }
                     modal.classList.add('show');
                 });
             });
@@ -1120,6 +1123,7 @@
     </script>
 </body>
 </html>
+
 
 
 
