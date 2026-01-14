@@ -258,6 +258,20 @@
         .modal.show .modal-content {
             transform: scale(1);
         }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem; /* mt-6 */
+            gap: 1rem;
+        }
+        .button-container > * {
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .hidden {
+            display: none;
+        }
         
         /* Course page styles */
         .course-page {
@@ -607,7 +621,13 @@
                     <!-- Topics will be injected here -->
                 </ul>
             </div>
-            <div class="mt-6 text-right">
+            <!-- Tutorial Button Container -->
+            <div class="button-container">
+                <div id="modal-tutorial-container" class="hidden">
+                    <a href="#" id="modal-tutorial-btn" target="_blank" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                        View Coding Tutorials
+                    </a>
+                </div>
                 <a href="#" id="modal-fullscreen-link" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
                     View Full Course Page
                 </a>
@@ -703,63 +723,34 @@
                 </div>
             </div>
         </div>
-        <!-- Beautified Course Page for AI201 -->
-        <!-- <div id="course-ai201" class="course-page min-h-screen themed-bg-secondary py-20">
+        <!-- Course Page for AI for CPS -->
+        <div id="course-aicps" class="course-page min-h-screen themed-bg-secondary py-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                 <div class="text-center mb-12">
-                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI201: Deep Learning Foundations</h1>
-                    <p class="text-xl themed-text-secondary">Autumn 2022, IIT Kharagpur</p>
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI61006</h1>
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI for Cyber Physical Systems</h1>
+                    <p class="text-xl themed-text-secondary">Spring 2026 • IIT Kharagpur</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
                     <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Description</h2>
-                        <p class="themed-text-secondary mb-6">This course provides a thorough introduction to the theory and practice of deep learning. Students learn about neural network architectures and apply them to solve real-world problems. My role involved designing assignments and guiding students through their final projects.</p>
-                        
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments & Projects</h2>
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding Tutorials</h2>
                         <div class="space-y-4">
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 1: Neural Networks</h3>
-                                    <p class="text-sm themed-text-secondary">Due: Sep 20, 2022</p>
+                                    <h3 class="font-semibold themed-text-primary">Tutorial 1: How to start your first python project</h3>
+                                    <p class="text-sm themed-text-secondary">Jan 12, 2026</p>
                                 </div>
-                                <a href="#" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="Tutorial/AI61006_T1_Intro.ipynb" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
-                                <div>
-                                    <h3 class="font-semibold themed-text-primary">Final Project: Image Classifier</h3>
-                                    <p class="text-sm themed-text-secondary">Due: Nov 30, 2022</p>
-                                </div>
-                                <a href="#" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:col-span-1">
-                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary text-sm">
-                                <p><strong>Instructor:</strong> Prof. Alan Turing</p>
-                                <p><strong>TAs:</strong> Jane Doe</p>
-                                <p><strong>Office Hours:</strong> Thu 5-6 PM</p>
-                             </div>
-                        </div>
-                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
-                            <ul class="list-disc list-inside space-y-2 themed-text-secondary text-sm">
-                                <li>Intro to Neural Networks</li>
-                                <li>Convolutional Nets (CNNs)</li>
-                                <li>Recurrent Nets (RNNs)</li>
-                                <li>Transformers</li>
-                                <li>Generative Models</li>
-                                <li>PyTorch/TensorFlow</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="mt-16 text-center">
                     <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
                 </div>
-            </div> -->
+            </div>
+        </div>
         </div>
     </div>
 
@@ -949,6 +940,7 @@
                         'Planning: A*, RRT, PRM',
                         'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
                     ],
+                    tutorialUrl: "#aicps",
                     link: 'https://prabhatkmishra.github.io/cps.html'
                 }
             };
@@ -957,6 +949,8 @@
             const closeModalBtn = document.getElementById('close-modal');
             const modalTitle = document.getElementById('modal-title');
             const modalTopics = document.getElementById('modal-topics');
+            const modalTutorialBtn = document.getElementById('modal-tutorial-btn');
+            const modalTutorialContainer = document.getElementById('modal-tutorial-container');
             const modalFullscreenLink = document.getElementById('modal-fullscreen-link');
             
             document.querySelectorAll('.course-card').forEach(card => {
@@ -966,6 +960,15 @@
                     
                     modalTitle.textContent = data.title;
                     modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
+                    
+                    // Handle Tutorial Button
+                    if (data.tutorialUrl) {
+                        modalTutorialBtn.href = data.tutorialUrl;
+                        modalTutorialContainer.classList.remove('hidden');
+                    } else {
+                        modalTutorialContainer.classList.add('hidden');
+                    }
+                
                     if (data.link.startsWith('#')) {
                         modalFullscreenLink.href = `#${courseId}`;
                     } else {
@@ -1123,6 +1126,7 @@
     </script>
 </body>
 </html>
+
 
 
 
