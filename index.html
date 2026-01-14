@@ -272,6 +272,40 @@
         .hidden {
             display: none;
         }
+
+        .row-col-list {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+            list-style-position: outside;
+            padding-left: 10px;
+            max-width: 900px;
+        }
+        .row-col-list li {
+            margin: 0.06rem 0;
+        }
+
+        .inline-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 16px;
+        }
+        .inline-bullets li {
+            position: relative;
+            padding-left: 1.2em;
+        }
+        .inline-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
         
         /* Course page styles */
         .course-page {
@@ -739,7 +773,15 @@
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
                                     <h3 class="font-semibold themed-text-primary">Tutorial 1: How to start your first python project</h3>
-                                    <p class="text-sm themed-text-secondary">Jan 12, 2026</p>
+                                    <p class="text-sm themed-text-secondary mb-3">Jan 12, 2026</p>
+                                    <ul class="inline-bullets themed-text-secondary text-sm">
+                                        <li>Pandas</li>
+                                        <li>Numpy</li>
+                                        <li>Matplotlib</li>
+                                        <li>Sympy</li>
+                                        <li>CasADi</li>
+                                        <li>OpenAI Gym</li>
+                                    </ul>
                                 </div>
                                 <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T1_Intro.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
@@ -1126,6 +1168,7 @@
     </script>
 </body>
 </html>
+
 
 
 
