@@ -54,13 +54,13 @@ My research focuses on the intersection of **Reinforcement Learning**, **Estimat
 I have contributed as a Teaching Assistant for the following course(s) in the Department of AI:
 
 - **AI61006**  
-  AI for Cyber Physical Systems
-  Semester: Spring 2026
+  AI for Cyber Physical Systems  
+  Semester: Spring 2026  
   Instructor: Dr. Prabhat Kumar Mishra
 
 - **AI60211**  
-  Algorithmic and Mathematical Foundations for AI
-  Semester: Autumn 2025
+  Algorithmic and Mathematical Foundations for AI  
+  Semester: Autumn 2025  
   Instructor: Prof. Adway Mitra
 
 ---
