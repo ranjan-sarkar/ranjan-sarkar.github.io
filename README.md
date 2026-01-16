@@ -59,7 +59,7 @@ I have contributed as a Teaching Assistant for the following course(s) in the De
   Instructor: Dr. Prabhat Kumar Mishra
 
 - **AI60211**  
-  Algorithmic and Mathematical Foundations for AI  
+  Algorithmic and Mathematical Foundations for AI
   Semester: Autumn 2025
   Instructor: Prof. Adway Mitra
 
