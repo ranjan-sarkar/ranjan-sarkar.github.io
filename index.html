@@ -247,7 +247,7 @@
             position: relative;
             margin: 5% auto;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             transform: scale(0.95);
             transition: transform 0.3s ease-in-out;
         }
@@ -644,13 +644,14 @@
     <!-- Modal for Course Topics -->
     <div id="course-modal" class="modal">
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="modal-title" class="text-2xl font-bold themed-text-primary">Course Topics</h3>
+            <div class="flex justify-between items-center mb-1">
+                <h3 id="modal-id" class="text-xl font-bold themed-text-primary themed-accent">Course id</h3>
                 <button id="close-modal" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
             </div>
+            <h3 id="modal-title" class="text-2xl font-bold themed-text-primary mb-4">Course Name</h3>
             <div id="modal-body" class="themed-text-secondary">
-                <p class="mb-4">A brief overview of the key topics covered in the course:</p>
-                <ul id="modal-topics" class="list-disc list-inside space-y-2">
+                <p class="mb-3">A brief overview of the key topics covered in the course:</p>
+                <ul id="modal-topics" class="list-disc list-inside space-y-2 mb-6" style="padding-left: 20px;">
                     <!-- Topics will be injected here -->
                 </ul>
             </div>
@@ -959,8 +960,8 @@
             // --- Modal Logic ---
             const courseData = {
                 'amfai': {
-                    title: 'AI60211 • Algorithmic and Mathematical Foundations for AI',
                     id: 'AI60211',
+                    title: 'Algorithmic and Mathematical Foundations for AI',
                     shortname: 'AMFAI',
                     topics: [
                         'Linear Algebra, Matrix Theory',
@@ -972,12 +973,12 @@
                     link: '#amfai'
                 },
                 'aicps': {
-                    title: 'AI61006 • AI for Cyber Physical Systems',
                     id: 'AI61006',
+                    title: 'AI for Cyber Physical Systems',
                     shortname: 'AICPS',
                     topics: [
                         'Introduction',
-                        'Acting: RL, Deep RL, Gymnasium',
+                        'Acting: RL, Q-Learning, SARSA, Gymnasium',
                         'Planning: A*, RRT, PRM',
                         'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
                     ],
@@ -988,6 +989,7 @@
             
             const modal = document.getElementById('course-modal');
             const closeModalBtn = document.getElementById('close-modal');
+            const modalId = document.getElementById('modal-id');
             const modalTitle = document.getElementById('modal-title');
             const modalTopics = document.getElementById('modal-topics');
             const modalTutorialBtn = document.getElementById('modal-tutorial-btn');
@@ -998,7 +1000,8 @@
                 card.addEventListener('click', () => {
                     const courseId = card.dataset.course;
                     const data = courseData[courseId];
-                    
+
+                    modalId.textContent = data.id;
                     modalTitle.textContent = data.title;
                     modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
                     
@@ -1167,6 +1170,7 @@
     </script>
 </body>
 </html>
+
 
 
 
