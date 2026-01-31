@@ -1084,8 +1084,9 @@
             const handleRouteChange = () => {
                 const hash = window.location.hash.substring(1); // remove '#'
                 closeModal(); // always close modal on route change
+                
                 if(courseData[hash]) {
-                    // document.title = `Ranjan Sarkar • ${courseData[hash].id}`;
+                    document.title = `${courseData[hash].id} • ${courseData[hash].title} | Ranjan Sarkar`;
                     document.title = `Ranjan Sarkar`;
                     showCoursePage(hash);
                 } else if (hash === 'seminars') {
@@ -1184,6 +1185,7 @@
     </script>
 </body>
 </html>
+
 
 
 
