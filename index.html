@@ -1094,6 +1094,7 @@
                     document.title = `Ranjan Sarkar`;
                     showPage('seminars');
                 } else {
+                    document.title = originalTitle;
                     mainContent.style.display = 'block';
                     allCoursePages.forEach(p => p.style.display = 'none');
                     // If there's a hash for a section, scroll to it
@@ -1109,10 +1110,6 @@
                     if (href === '#') {
                         e.preventDefault();
                         window.location.hash = '';
-                    } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
-                        // Let the default anchor link behavior handle scrolling
-                    } else {
-                         // This handles clicks on course links and back buttons
                     }
                 });
             });
@@ -1186,6 +1183,7 @@
     </script>
 </body>
 </html>
+
 
 
 
