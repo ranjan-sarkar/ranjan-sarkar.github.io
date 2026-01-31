@@ -1049,21 +1049,21 @@
             
             // --- Page Routing Logic ---
             const mainContent = document.getElementById('main-content');
-            // const coursePagesContainer = document.getElementById('course-pages-container');
-            // const allCoursePages = document.querySelectorAll('.course-page');
+            const coursePagesContainer = document.getElementById('course-pages-container');
+            const allCoursePages = document.querySelectorAll('.course-page');
 
-            // const showCoursePage = (pageId) => {
-            //     mainContent.style.display = 'none';
-            //     allCoursePages.forEach(p => p.style.display = 'none');
+            const showCoursePage = (pageId) => {
+                mainContent.style.display = 'none';
+                allCoursePages.forEach(p => p.style.display = 'none');
                 
-            //     const pageToShow = document.getElementById(`course-${pageId}`);
-            //     if (pageToShow) {
-            //         pageToShow.style.display = 'block';
-            //         window.scrollTo(0, 0);
-            //     } else {
-            //         mainContent.style.display = 'block';
-            //     }
-            // };
+                const pageToShow = document.getElementById(`course-${pageId}`);
+                if (pageToShow) {
+                    pageToShow.style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainContent.style.display = 'block';
+                }
+            };
 
             const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
             const originalTitle = document.title;
@@ -1087,9 +1087,9 @@
                 
                 if(courseData[hash]) {
                     document.title = `${courseData[hash].id} • ${courseData[hash].title} | Ranjan Sarkar`;
-                    document.title = `Ranjan Sarkar`;
-                    showPage(`course-${hash}`);
-                    // showCoursePage(hash);
+                    // document.title = `Ranjan Sarkar`;
+                    // showPage(`course-${hash}`);
+                    showCoursePage(hash);
                 } else if (hash === 'seminars') {
                     document.title = `Ranjan Sarkar`;
                     showPage('seminars');
@@ -1187,6 +1187,7 @@
     </script>
 </body>
 </html>
+
 
 
 
