@@ -1028,6 +1028,7 @@
                 
                     if (data.link.startsWith('#')) {
                         modalFullscreenLink.href = `#${courseId}`;
+                        modalFullscreenLink.target = "_self";
                     } else {
                         modalFullscreenLink.href = data.link;
                         modalFullscreenLink.target = "_blank";
@@ -1187,6 +1188,7 @@
     </script>
 </body>
 </html>
+
 
 
 
