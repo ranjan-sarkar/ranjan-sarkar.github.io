@@ -1110,6 +1110,10 @@
                     if (href === '#') {
                         e.preventDefault();
                         window.location.hash = '';
+                    } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
+                        // Let the default anchor link behavior handle scrolling
+                    } else {
+                         // This handles clicks on course links and back buttons
                     }
                 });
             });
