@@ -1,4 +1,4 @@
-# Ranjan Sarkar Website
+# Ranjan Sarkar
 
 **PhD Research Scholar**  
 **Department of Artificial Intelligence**  
