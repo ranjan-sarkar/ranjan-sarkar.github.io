@@ -349,6 +349,86 @@
         .hidden-news-item {
             display: none !important;
         }
+
+        .publication-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .citation-pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: "Courier New", monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid var(--border-light);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+        }
+        .dark .citation-pre {
+            border-color: var(--border-dark);
+            background-color: #0f172a;
+        }
+
+        .social-icon-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon-link::before,
+        .social-icon-link::after {
+            position: absolute;
+            left: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(4px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            z-index: 20;
+        }
+
+        .social-icon-link::before {
+            content: attr(data-tooltip);
+            bottom: calc(100% + 10px);
+            white-space: nowrap;
+            padding: 0.45rem 0.7rem;
+            border-radius: 0.55rem;
+            background: rgba(15, 23, 42, 0.96);
+            color: #f8fafc;
+            font-size: 0.72rem;
+            line-height: 1;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+        }
+
+        .social-icon-link::after {
+            content: '';
+            bottom: calc(100% + 3px);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(15, 23, 42, 0.96);
+        }
+
+        .social-icon-link:hover::before,
+        .social-icon-link:hover::after,
+        .social-icon-link:focus-visible::before,
+        .social-icon-link:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dark .social-icon-link::before {
+            background: rgba(226, 232, 240, 0.98);
+            color: #0f172a;
+        }
+
+        .dark .social-icon-link::after {
+            border-top-color: rgba(226, 232, 240, 0.98);
+        }
     </style>
 </head>
 <body>
@@ -364,7 +444,7 @@
                     <nav class="hidden md:flex items-center space-x-8">
                         <a href="#home" class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
                         <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a>
-<!--                         <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a> -->
+                        <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
                         <a href="#education" class="themed-text-secondary hover:themed-text-primary transition-colors">Education</a>
                         <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a>
                         <a href="#TA" class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
@@ -387,7 +467,7 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
                 <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a>
-<!--                 <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a> -->
+                <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
                 <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Education</a>
                 <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Experience</a>
                 <a href="#TA" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">TA</a>
@@ -407,18 +487,18 @@
                     <p class="text-xl md:text-2xl themed-text-primary mb-2">PhD Scholar, Artificial Intelligence</p>  
                     <p class="md:text-xl themed-text-primary mb-6">Indian Institute of Technology Kharagpur</p>
                     <p class="themed-text-secondary mb-8 max-w-2xl">
-                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial Intelligence</a> (DoAI) at <a href="https://www.iitkgp.ac.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>, advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab (Receding Horizon and Predictive Intelligence)</a>. My research focuses on the intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs, Computer Vision, and Robotics.
+                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>, advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr. Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs, Computer Vision, and Robotics.
                     </p>
                     <div class="flex items-center justify-center md:justify-start gap-7 mb-8">
                         <a href="Resume_RANJAN.pdf" target="_blank" class="inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
                             Resume
                         </a>
                         <div class="flex items-center justify-center md:justify-start space-x-6">
-                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
-                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
-                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
-                            <a href="https://github.com/ranjan-sarkar" target="_blank" class="themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email" data-tooltip="Email" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
+                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn" data-tooltip="LinkedIn" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" data-tooltip="Google Scholar" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
+                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" aria-label="ResearchGate" data-tooltip="ResearchGate" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
+                            <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub" data-tooltip="GitHub" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
                         </div>
                     </div>
                 </div>
@@ -510,37 +590,82 @@
         </section>
 
         <!-- Publications Section -->
-<!--         <section id="publications" class="scroll-animate py-20 md:py-28">
+        <section id="publications" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
+               <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
                 <div class="space-y-8">
                     <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
-                        <h3 class="text-lg font-semibold themed-text-primary">"LQG solution for POMDP without estimating states: A minimum variance approach"</h3>
-                        <p class="themed-text-secondary text-sm my-1">
-                            <span class="font-medium">Ranjan Sarkar, Prabhat K. Mishra</span>, 
+                        <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                            <div>
+                                <p class="uppercase tracking-wide text-xs font-semibold themed-accent">Preprint</p>
+                                <h3 class="font-serif italic text-xl themed-text-primary mt-1">
+                                    LQG solution for POMDP without estimating states: A minimum variance approach
+                                </h3>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full themed-bg-primary themed-text-secondary border themed-border w-fit">July 2026</span>
+                        </div>
+                        <p class="themed-text-secondary text-sm mt-1">
+                            <span class="font-medium">Ranjan Sarkar</span>, <span class="font-medium">Prabhat K. Mishra</span>
                         </p>
-                        <p class="italic themed-text-secondary text-sm">arXiv</p>
-                        <div class="mt-3 space-x-4">
-                            <a href="https://arxiv.org/abs/2607.12135" class="themed-accent hover:underline text-sm font-medium">Paper</a>
-                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Code</a>
-                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Cite</a>
+                        <p class="themed-text-secondary text-sm mt-2">
+                            This work presents a minimum variance perspective to solve LQG-style POMDP problems without explicit state estimation.
+                        </p>
+                        <p class="text-sm themed-text-primary mt-1">arXiv:2607.12135</p>
+                        <!-- <div class="publication-meta-grid mt-4">
+                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Venue</p>
+                                <p class="text-sm themed-text-primary mt-1">arXiv Preprint</p>
+                            </div>
+                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Identifier</p>
+                                <p class="text-sm themed-text-primary mt-1">arXiv:2607.12135</p>
+                            </div>
+                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Category</p>
+                                <p class="text-sm themed-text-primary mt-1">math.OC</p>
+                            </div>
+                        </div> -->
+                        <div class="mt-3 flex flex-wrap items-center gap-4">
+                            <a href="https://arxiv.org/abs/2607.12135" target="_blank" class="themed-accent hover:underline text-sm font-medium">Paper</a>
+                            <span class="themed-text-secondary text-sm font-medium">Code (coming soon)</span>
+                            <button
+                                type="button"
+                                class="cite-trigger themed-accent hover:underline text-sm font-medium"
+                                data-cite-title="BibTeX Citation"
+                                data-bibtex="@misc{ranjan2026lqg,
+    title={LQG solution for POMDP without estimating states: A minimum variance approach},
+    author={Ranjan Sarkar and Prabhat K. Mishra},
+    year={2026},
+    eprint={2607.12135},
+    archivePrefix={arXiv},
+    primaryClass={math.OC},
+    url={https://arxiv.org/abs/2607.12135},
+}">
+                                Cite
+                            </button>
                         </div>
                     </div>
+                    <!-- 
+                    Template for adding a new paper:
+                    - Keep class="cite-trigger"
+                    - Set data-bibtex to that paper's BibTeX
+                    - Optionally set data-cite-title for popup heading
                     <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
-                        <h3 class="text-lg font-semibold themed-text-primary">"Paper title"</h3>
+                        <h3 class="text-lg font-semibold themed-text-primary">"Covariance Initialization for Moving Horizon Estimation (MHE)"</h3>
                         <p class="themed-text-secondary text-sm my-1">
-                            John Smith, <span class="font-medium">Ranjan Sarkar</span>, Prof. 
+                            <span class="font-medium">Ranjan Sarkar, Prabhat K. Mishra</span>
                         </p>
                         <p class="italic themed-text-secondary text-sm">Conference</p>
                         <div class="mt-3 space-x-4">
-                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Paper</a>
-                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Code</a>
-                            <a href="#" class="themed-accent hover:underline text-sm font-medium">Cite</a>
+                            <a href="#" target="_blank" class="themed-accent hover:underline text-sm font-medium">Paper</a>
+                            <a href="#" target="_blank" class="themed-accent hover:underline text-sm font-medium">Code</a>
+                            <button type="button" class="cite-trigger themed-accent hover:underline text-sm font-medium" data-cite-title="BibTeX Citation" data-bibtex="@misc{yourkey,...}">Cite</button>
                         </div>
-                    </div>
+                    </div> 
+                    -->
                 </div>
             </div>
-        </section> -->
+        </section>
         
         <!-- Education & Experience Timeline -->
         <section id="education" class="scroll-animate py-20 md:py-28">
@@ -605,21 +730,30 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching Assistantship (TA)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Course Card 3 -->
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="rl">
+                        <div class="p-6">
+                            <p class="themed-text-primary themed-accent mb-2">Autumn 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning</h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                        </div>
+                    </div>
+                    <!-- Course Card 2 -->
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="aicps">
+                        <div class="p-6">
+                            <p class="themed-text-primary themed-accent mb-2">Spring 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical Systems</h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                        </div>
+                    </div>
                     <!-- Course Card 1 -->
                     <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="amfai">
                         <div class="p-6">
                             <p class="themed-text-primary themed-accent mb-2">Autumn 2025</p>
                             <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211 • Algorithmic and Mathematical Foundations for AI</h3>
                             <p class="themed-text-secondary mb-4">Instructor: <a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
-                        </div>
-                    </div>
-                    <!-- Course Card 2 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="aicps">
-                         <div class="p-6">
-                            <p class="themed-text-primary themed-accent mb-2">Spring 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical Systems</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
                             <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
                         </div>
                     </div>
@@ -699,6 +833,23 @@
         </div>
     </div>
     
+    <div id="cite-modal" class="modal" aria-hidden="true">
+        <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
+            <div class="flex justify-between items-center mb-1">
+                <h3 id="cite-modal-title" class="text-xl font-bold themed-text-primary themed-accent">BibTeX Citation</h3>
+                <button id="close-cite-modal" type="button" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
+            </div>
+            <p class="themed-text-secondary text-sm mb-4">The citation is copied automatically when this popup opens.</p>
+            <pre id="cite-bibtex-text" class="citation-pre themed-text-primary"></pre>
+            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p id="cite-copy-status" class="text-sm themed-text-secondary" aria-live="polite"></p>
+                <button id="copy-cite-btn" type="button" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                    Copy BibTeX
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Fullscreen Course Pages Container -->
     <div id="course-pages-container">
         <!-- Beautified Course Page for amfai -->
@@ -925,11 +1076,11 @@
                 <div>
                     <h3 class="font-semibold text-white mb-4">Connect</h3>
                     <div class="flex justify-center md:justify-start space-x-5">
-                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
-                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
-                        <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
-                        <a href="https://github.com/ranjan-sarkar" target="_blank" class="text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email" data-tooltip="Email" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn" data-tooltip="LinkedIn" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" data-tooltip="Google Scholar" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
+                        <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" aria-label="ResearchGate" data-tooltip="ResearchGate" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
+                        <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub" data-tooltip="GitHub" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
                     </div>
                 </div>
             </div>
@@ -1037,6 +1188,17 @@
                     ],
                     tutorialUrl: "#aicps",
                     link: 'https://prabhatkmishra.github.io/cps.html'
+                },
+                'rl': {
+                    id: 'AI31201',
+                    title: 'Reinforcement Learning',
+                    shortname: 'RL',
+                    // topics: [
+                    //     'Introduction',
+                    //     'RL, Q-Learning, SARSA, Gymnasium',
+                    // ],
+                    // tutorialUrl: "#aicps",
+                    // link: 'https://prabhatkmishra.github.io/cps.html'
                 }
             };
             
@@ -1088,6 +1250,77 @@
                 }
             });
             
+            
+            const citeModal = document.getElementById('cite-modal');
+            const citeTriggers = document.querySelectorAll('.cite-trigger');
+            const closeCiteModalBtn = document.getElementById('close-cite-modal');
+            const copyCiteBtn = document.getElementById('copy-cite-btn');
+            const citeBibtexText = document.getElementById('cite-bibtex-text');
+            const citeCopyStatus = document.getElementById('cite-copy-status');
+            const citeModalTitle = document.getElementById('cite-modal-title');
+
+            const setCitationStatus = (message, isError = false) => {
+                citeCopyStatus.textContent = message;
+                citeCopyStatus.classList.remove('themed-accent', 'text-red-500');
+                citeCopyStatus.classList.add(isError ? 'text-red-500' : 'themed-accent');
+            };
+
+            const copyCitationToClipboard = () => {
+                if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+                    setCitationStatus('Clipboard access is unavailable. Please copy the BibTeX text manually.', true);
+                    return;
+                }
+
+                navigator.clipboard.writeText(citeBibtexText.textContent)
+                    .then(() => {
+                        setCitationStatus('BibTeX copied to clipboard.');
+                    })
+                    .catch(() => {
+                        setCitationStatus('Auto-copy failed. Please use the copy button again or copy manually.', true);
+                    });
+            };
+
+            const closeCiteModal = () => {
+                citeModal.classList.remove('show');
+                citeModal.setAttribute('aria-hidden', 'true');
+            };
+
+            citeTriggers.forEach((trigger) => {
+                trigger.addEventListener('click', () => {
+                    const bibtex = trigger.dataset.bibtex;
+                    if (!bibtex) {
+                        citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
+                        citeBibtexText.textContent = '';
+                        setCitationStatus('No BibTeX found for this paper. Add data-bibtex on its Cite button.', true);
+                        citeModal.classList.add('show');
+                        citeModal.setAttribute('aria-hidden', 'false');
+                        return;
+                    }
+
+                    citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
+                    citeBibtexText.textContent = bibtex;
+                    setCitationStatus('Copying citation...');
+                    citeModal.classList.add('show');
+                    citeModal.setAttribute('aria-hidden', 'false');
+                    copyCitationToClipboard();
+                });
+            });
+
+            copyCiteBtn.addEventListener('click', copyCitationToClipboard);
+            closeCiteModalBtn.addEventListener('click', closeCiteModal);
+            citeModal.addEventListener('click', (e) => {
+                if (e.target === citeModal) {
+                    closeCiteModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeCiteModal();
+                }
+            });
+
             // --- Page Routing Logic ---
             const mainContent = document.getElementById('main-content');
             const coursePagesContainer = document.getElementById('course-pages-container');
