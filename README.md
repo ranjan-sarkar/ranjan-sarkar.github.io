@@ -6,38 +6,12 @@
 
 ---
 
+> *Thank you for visiting my academic portfolio! Connect with me for collaborations and research discussions.*
+
 ## About Me
 
 Currently, I am a research scholar at the Department of Artificial Intelligence, IIT Kharagpur, working under the supervision of Prof. Prabhat Kumar Mishra.  
 I work at the **RHPI Lab (Receding Horizon and Predictive Intelligence)**.
-
-My research focuses on the intersection of **Reinforcement Learning**, **Estimation**, and **Optimization**, with applications in:
-- Large Language Models (LLMs)
-- Computer Vision (CV)
-- Robotics
-
----
-
-## Education
-
-- **PhD in Artificial Intelligence**  
-  *Ongoing, IIT Kharagpur*  
-  Supervisor: Prof. Prabhat Kumar Mishra
-
-- **MSc in Mathematics**  
-  *IIT Kharagpur*  
-  Project: Application of Tensor CP Decomposition in Image Compression  
-  Adviser: Prof. Swanand Khare, Department of Mathematics
-
----
-
-## Experience
-
-- **Senior Business Analyst**  
-  *EXL Service, Gurgaon*  
-  Gurgaon-based Multi-national Consultancy Company
-
----
 
 ## Research Interests
 
@@ -49,28 +23,9 @@ My research focuses on the intersection of **Reinforcement Learning**, **Estimat
 
 ---
 
-## Teaching Assistantship (TA)
-
-I have contributed as a Teaching Assistant for the following course(s) in the Department of AI:
-
-- **AI61006**  
-  AI for Cyber Physical Systems  
-  Semester: Spring 2026  
-  Instructor: Dr. Prabhat Kumar Mishra
-
-- **AI60211**  
-  Algorithmic and Mathematical Foundations for AI  
-  Semester: Autumn 2025  
-  Instructor: Prof. Adway Mitra
-
----
-
 ## Contact
 
 - **Email:** ranjan.sarkar.24@kgpian.iitkgp.ac.in
 - **Lab:** RHPI Lab, Department of Artificial Intelligence, IIT Kharagpur
 - **Supervisor:** Prof. Prabhat Kumar Mishra
 
----
-
-> *Thank you for visiting my academic portfolio! Connect with me for collaborations and research discussions.*
