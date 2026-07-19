@@ -627,7 +627,7 @@
                                 data-cite-title="BibTeX Citation"
                                 data-bibtex="@misc{ranjan2026lqg,
     title={LQG solution for POMDP without estimating states: A minimum variance approach},
-    author={Ranjan Sarkar and Prabhat K. Mishra},
+    author={Sarkar, Ranjan and Mishra, Prabhat K.},
     year={2026},
     eprint={2607.12135},
     archivePrefix={arXiv},
@@ -828,11 +828,11 @@
     
     <div id="cite-modal" class="modal" aria-hidden="true">
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
-            <div class="flex justify-between items-center mb-1">
+            <div class="flex justify-between items-center mb-3">
                 <h3 id="cite-modal-title" class="text-xl font-bold themed-text-primary themed-accent">BibTeX Citation</h3>
                 <button id="close-cite-modal" type="button" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
             </div>
-            <p class="themed-text-secondary text-sm mb-4">The citation is copied automatically when this popup opens.</p>
+            <!-- <p class="themed-text-secondary text-sm mb-4">The citation is copied automatically when this popup opens.</p> -->
             <pre id="cite-bibtex-text" class="citation-pre themed-text-primary"></pre>
             <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p id="cite-copy-status" class="text-sm themed-text-secondary" aria-live="polite"></p>
@@ -1266,7 +1266,7 @@
 
                 navigator.clipboard.writeText(citeBibtexText.textContent)
                     .then(() => {
-                        setCitationStatus('BibTeX copied to clipboard.');
+                        setCitationStatus('BibTeX copied to clipboard!');
                     })
                     .catch(() => {
                         setCitationStatus('Auto-copy failed. Please use the copy button again or copy manually.', true);
