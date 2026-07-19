@@ -379,8 +379,7 @@
             justify-content: center;
         }
 
-        .social-icon-link::before,
-        .social-icon-link::after {
+        .social-icon-link::before {
             position: absolute;
             left: 50%;
             opacity: 0;
@@ -392,7 +391,7 @@
 
         .social-icon-link::before {
             content: attr(data-tooltip);
-            bottom: calc(100% + 10px);
+            bottom: calc(100% + 12px);
             white-space: nowrap;
             padding: 0.45rem 0.7rem;
             border-radius: 0.55rem;
@@ -405,18 +404,8 @@
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
         }
 
-        .social-icon-link::after {
-            content: '';
-            bottom: calc(100% + 3px);
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid rgba(15, 23, 42, 0.96);
-        }
-
         .social-icon-link:hover::before,
-        .social-icon-link:hover::after,
-        .social-icon-link:focus-visible::before,
-        .social-icon-link:focus-visible::after {
+        .social-icon-link:focus-visible::before {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
@@ -426,9 +415,6 @@
             color: #0f172a;
         }
 
-        .dark .social-icon-link::after {
-            border-top-color: rgba(226, 232, 240, 0.98);
-        }
     </style>
 </head>
 <body>
@@ -445,8 +431,8 @@
                         <a href="#home" class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
                         <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a>
                         <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
-                        <a href="#education" class="themed-text-secondary hover:themed-text-primary transition-colors">Education</a>
-                        <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a>
+                        <a href="#education" class="themed-text-secondary hover:themed-text-primary transition-colors">Background</a>
+                        <!-- <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a> -->
                         <a href="#TA" class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
                     </nav>
                     <button id="theme-toggle" class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
@@ -468,8 +454,8 @@
                 <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
                 <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a>
                 <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
-                <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Education</a>
-                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Experience</a>
+                <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Background</a>
+                <!-- <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Experience</a> -->
                 <a href="#TA" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">TA</a>
             </div>
         </div>
@@ -489,11 +475,11 @@
                     <p class="themed-text-secondary mb-8 max-w-2xl">
                         I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>, advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr. Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs, Computer Vision, and Robotics.
                     </p>
-                    <div class="flex items-center justify-center md:justify-start gap-7 mb-8">
-                        <a href="Resume_RANJAN.pdf" target="_blank" class="inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-7 gap-y-8 mb-5">
+                        <a href="Resume_RANJAN.pdf" target="_blank" class="shrink-0 inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
                             Resume
                         </a>
-                        <div class="flex items-center justify-center md:justify-start space-x-6">
+                        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:justify-start">
                             <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email" data-tooltip="Email" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
                             <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn" data-tooltip="LinkedIn" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
                             <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" data-tooltip="Google Scholar" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
@@ -510,6 +496,13 @@
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold themed-text-primary themed-accent text-center mb-10">Recent News</h2>
                 <div id="news-container" class="max-w-5xl mx-auto space-y-6">
+                    <!-- arXiv Preprint -->
+                    <div class="flex items-start group news-item">
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jul 2026</div>
+                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <p>Preprint is available on <a href="#publications" class="themed-text-primary text-accent font-medium hover:underline">arXiv</a>.</p>
+                        </div>
+                    </div>
                     <!-- News Item AI for Science and Technology -->
                     <div class="flex items-start group news-item">
                         <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2026</div>
@@ -534,7 +527,7 @@
                             </p>
                         </div>
                     </div>
-                    <!-- News Item 2 -->
+                    <!-- Joining -->
                     <div class="flex items-start group news-item">
                         <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2025</div>
                         <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
@@ -1429,10 +1422,10 @@
             const newsItems = newsContainer.querySelectorAll('.news-item');
 
             // Initially hide items beyond the first 5
-            if (newsItems.length > 4) {
+            if (newsItems.length > 3) {
                 loadMoreBtn.classList.remove('hidden');
                 newsItems.forEach((item, index) => {
-                    if (index >= 4) {
+                    if (index >= 3) {
                         item.classList.add('hidden-news-item');
                     }
                 });
