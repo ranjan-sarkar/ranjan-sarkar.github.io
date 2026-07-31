@@ -196,8 +196,9 @@
         /* Timeline styles */
         .timeline-item {
             position: relative;
+            display: flex;
+            align-items: flex-start;
             padding-bottom: 2.5rem;
-            padding-left: 2.5rem;
         }
         .timeline-item:last-child {
             padding-bottom: 0;
@@ -205,18 +206,33 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: 0.5rem;
+            left: 7rem;
             top: 0.25rem;
             width: 1px;
             height: 100%;
             background-color: var(--border-light);
+            transform: translateX(-50%);
         }
         .dark .timeline-item::before {
             background-color: var(--border-dark);
         }
+        .timeline-date {
+            width: 7rem;
+            flex-shrink: 0;
+            text-align: right;
+            padding-right: 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-light-secondary);
+            white-space: nowrap;
+            margin-top: 0.125rem;
+        }
+        .dark .timeline-date {
+            color: var(--text-dark-secondary);
+        }
         .timeline-dot {
             position: absolute;
-            left: 0;
+            left: 7rem;
             top: 0.25rem;
             height: 1rem;
             width: 1rem;
@@ -224,10 +240,16 @@
             border-width: 2px;
             border-color: var(--bg-light-secondary);
             background-color: var(--accent-light);
+            transform: translateX(-50%);
+            z-index: 10;
         }
         .dark .timeline-dot {
             border-color: var(--bg-dark-secondary);
             background-color: var(--accent-dark);
+        }
+        .timeline-content {
+            padding-left: 1.25rem;
+            flex-grow: 1;
         }
 
         /* Animation for sections on scroll */
@@ -666,19 +688,28 @@
                         <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Education</h2>
                         <div class="relative">
                             <div class="timeline-item">
+                                <div class="timeline-date">2025 - Present</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a> • 2025 - Present</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence</h3>
+                                    <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a></p>
+                                </div>
                             </div>
                             <div class="timeline-item">
+                                <div class="timeline-date">2021 - 2023</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">M.Sc in Mathematics</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a> • 2021 - 2023</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">M.Sc in Mathematics</h3>
+                                    <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a></p>
+                                </div>
                             </div>
                             <div class="timeline-item">
+                                <div class="timeline-date">2018 - 2021</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">B.Sc in Mathematics</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://vidyamandira.ac.in/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">University of Calcutta</a> • 2018 - 2021</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">B.Sc in Mathematics</h3>
+                                    <p class="themed-text-secondary text-sm"><a href="https://vidyamandira.ac.in/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">University of Calcutta</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -686,29 +717,41 @@
                         <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Experience</h2>
                          <div class="relative">
                             <!-- <div class="timeline-item">
+                                <div class="timeline-date">2025 - Present</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">Research Fellow</h3>
-                                <p class="themed-text-secondary text-sm">RHPI Lab, IIT Kharagpur • 2025 - Present</p>
-                                <p class="themed-text-secondary text-sm mt-2">Worked on conversational AI models.</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">Research Fellow</h3>
+                                    <p class="themed-text-secondary text-sm">RHPI Lab, IIT Kharagpur</p>
+                                    <p class="themed-text-secondary text-sm mt-2">Worked on conversational AI models.</p>
+                                </div>
                             </div> -->
                             <div class="timeline-item">
+                                <div class="timeline-date">2023 - 2024</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">EXL Service</a>, Gurgaon IN • 2023 - 2024</p>
-                                <!-- <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p> -->
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
+                                    <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">EXL Service</a>, Gurgaon IN</p>
+                                    <!-- <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p> -->
+                                </div>
                             </div>
                             <div class="timeline-item">
+                                <div class="timeline-date">2022 - 2023</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">Master's Student</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in/department/MA" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Mathematics</a>, IIT Kharagpur • 2022 - 2023</p>
-                                <p class="themed-text-secondary text-sm mt-2">Supervisor: <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-srkhare" target="_blank" class="text-accent font-medium hover:underline">Prof. Swanand Khare</a>.</p>
-                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using Alternating Least Square (ALS) Algorithm</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">Master's Student</h3>
+                                    <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in/department/MA" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Mathematics</a>, IIT Kharagpur</p>
+                                    <p class="themed-text-secondary text-sm mt-2">Supervisor: <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-srkhare" target="_blank" class="text-accent font-medium hover:underline">Prof. Swanand Khare</a>.</p>
+                                    <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using Alternating Least Square (ALS) Algorithm</p>
+                                </div>
                             </div>
                             <!-- <div class="timeline-item">
+                                <div class="timeline-date">2021 - 2023</div>
                                 <div class="timeline-dot"></div>
-                                <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant</h3>
-                                <p class="themed-text-secondary text-sm">IIT Kharagpur, 2021 - 2023</p>
-                                <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p>
+                                <div class="timeline-content">
+                                    <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant</h3>
+                                    <p class="themed-text-secondary text-sm">IIT Kharagpur</p>
+                                    <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p>
+                                </div>
                             </div> -->
                         </div>
                     </div>
