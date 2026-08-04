@@ -161,6 +161,62 @@
 
         .themed-accent-bg-hover:hover { background-color: var(--accent-hover-light); }
         .dark .themed-accent-bg-hover:hover { background-color: var(--accent-hover-dark); }
+
+        .seminar-embed {
+            width: min(100%, calc((100vh - 14rem) * 16 / 9));
+            aspect-ratio: 16 / 9;
+            margin: 0 auto;
+        }
+
+        .seminar-embed iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .seminar-tag {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            gap: 0.6rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: 0.9rem;
+            border: 1px solid var(--border-light);
+            background-color: rgba(255, 255, 255, 0.72);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            line-height: 1;
+            text-transform: uppercase;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .dark .seminar-tag {
+            border-color: var(--border-dark);
+            background-color: rgba(15, 23, 42, 0.72);
+            box-shadow: 0 10px 25px rgba(2, 6, 23, 0.28);
+        }
+
+        .seminar-tag::before {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: var(--accent-light);
+            flex: 0 0 auto;
+        }
+
+        .seminar-tag::after {
+            content: attr(data-tag);
+            white-space: nowrap;
+        }
+
+        .dark .seminar-tag::before {
+            background-color: var(--accent-dark);
+        }
         
         /* Blurry Header */
         header {
@@ -191,6 +247,83 @@
         }
         .dark header nav a.active, .dark .mobile-nav a.active {
              color: var(--accent-dark);
+        }
+
+        .ta-dropdown-menu {
+            opacity: 0;
+            transform: translateY(0.5rem) scale(0.98);
+            pointer-events: none;
+            visibility: hidden;
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        .ta-dropdown::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+            height: 0.75rem;
+        }
+
+        .ta-dropdown.is-open .ta-dropdown-menu {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        .ta-dropdown.is-open .ta-dropdown-trigger svg {
+            transform: rotate(180deg);
+        }
+
+        .ta-dropdown-trigger svg {
+            transition: transform 180ms ease;
+        }
+
+        .mobile-ta-submenu {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: translateY(-0.25rem);
+            transition: max-height 240ms ease, opacity 180ms ease, transform 180ms ease;
+        }
+
+        .mobile-ta-submenu.is-open {
+            max-height: 22rem;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-ta-toggle svg {
+            transition: transform 180ms ease;
+        }
+
+        .mobile-ta-toggle[aria-expanded="true"] svg {
+            transform: rotate(180deg);
+        }
+
+        .ta-dropdown-menu a.is-active,
+        .ta-dropdown-menu a:hover,
+        .ta-dropdown-menu a:focus-visible {
+            background-color: var(--bg-light-primary);
+            color: var(--text-light-primary);
+        }
+
+        .dark .ta-dropdown-menu a.is-active,
+        .dark .ta-dropdown-menu a:hover,
+        .dark .ta-dropdown-menu a:focus-visible {
+            background-color: var(--bg-dark-primary);
+            color: var(--text-dark-primary);
+        }
+
+        .ta-dropdown-menu a.is-active span:first-child,
+        .ta-dropdown-menu a:hover span:first-child,
+        .ta-dropdown-menu a:focus-visible span:first-child,
+        .dark .ta-dropdown-menu a.is-active span:first-child,
+        .dark .ta-dropdown-menu a:hover span:first-child,
+        .dark .ta-dropdown-menu a:focus-visible span:first-child {
+            opacity: 0.9;
         }
 
         /* Timeline styles */
@@ -326,7 +459,7 @@
             margin: 0;
             display: flex;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 0.3rem 1rem;
             font-size: 16px;
         }
         .inline-bullets li {
@@ -451,11 +584,40 @@
                 <div class="flex items-center space-x-4">
                     <nav class="hidden md:flex items-center space-x-8">
                         <a href="#home" class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
-                        <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a>
+                        <a href="#news" class="themed-text-secondary hover:themed-text-primary transition-colors">News</a>
+                        <a href="#seminars" class="themed-text-secondary hover:themed-text-primary transition-colors">Talks</a>
+                        <!-- <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a> -->
                         <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
                         <a href="#background" class="themed-text-secondary hover:themed-text-primary transition-colors">Background</a>
                         <!-- <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a> -->
-                        <a href="#TA" class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
+                        <div class="ta-dropdown relative">
+                            <div class="inline-flex items-center gap-1">
+                                <a href="#TA" class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
+                                <button type="button" id="ta-dropdown-button" aria-label="Open TA course menu" aria-haspopup="true" aria-expanded="false" class="ta-dropdown-trigger themed-text-secondary hover:themed-text-primary transition-colors inline-flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="ta-dropdown-menu absolute right-0 top-full z-50 overflow-hidden rounded-xl border themed-border themed-bg-secondary shadow-2xl" style="top: calc(100% + 0.5rem); width: 15rem; max-width: calc(100vw - 2rem);">
+                                <a href="#rl" data-course-link="rl" class="block px-4 pt-4 pb-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI31201</span>
+                                    <span class="block text-sm font-medium">Reinforcement Learning</span>
+                                </a>
+                                <a href="#robot" data-course-link="robot" class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI60209</span>
+                                    <span class="block text-sm font-medium">AI for Robot Autonomy</span>
+                                </a>
+                                <a href="#aicps" data-course-link="aicps" class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI61006</span>
+                                    <span class="block text-sm font-medium">AI for Cyber Physical Systems</span>
+                                </a>
+                                <a href="#amfai" data-course-link="amfai" class="block px-4 pt-2 pb-4 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI60211</span>
+                                    <span class="block text-sm font-medium">Algorithmic and Mathematical Foundations for AI</span>
+                                </a>
+                            </div>
+                        </div>
                     </nav>
                     <button id="theme-toggle" class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
                         <svg id="theme-icon-light" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -474,18 +636,32 @@
         <div id="mobile-menu" class="hidden md:hidden themed-bg-secondary border-t themed-border mobile-nav">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
-                <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a>
+                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">News</a>
+                <a href="#seminars" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Talks</a>
+                <!-- <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a> -->
                 <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
-                <a href="#background" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Background</a>
-                <!-- <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Experience</a> -->
-                <a href="#TA" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">TA</a>
+                <!-- <a href="#background" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Background</a> -->
+                <div class="px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors flex items-center justify-between gap-3">
+                    <a href="#TA" class="flex-1">TA</a>
+                    <button type="button" id="mobile-ta-toggle" class="mobile-ta-toggle inline-flex items-center justify-center rounded-md p-1 themed-text-secondary hover:themed-text-primary" aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="mobile-ta-submenu" class="mobile-ta-submenu mt-1 space-y-1 border-l-2 themed-border pl-3 ml-3">
+                    <a href="#rl" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI31201 - RL</a>
+                    <a href="#robot" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60209 - Robot Autonomy</a>
+                    <a href="#aicps" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI61006 - AICPS</a>
+                    <a href="#amfai" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60211 - AMFAI</a>
+                </div>
             </div>
         </div>
     </header>
 
     <main id="main-content">
         <!-- Home Section -->
-        <section id="home" class="scroll-animate py-20 md:py-28">
+        <section id="home" class="scroll-animate scroll-mt-20 py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-2/5 flex justify-center md:justify-start">
                     <img src="KGP_DP.png" alt="Ranjan Sarkar" class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
@@ -514,7 +690,7 @@
         </section>
 
         <!-- News Section -->
-        <section id="news" class="py-20 md:py-14">
+        <section id="news" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold themed-text-primary themed-accent text-center mb-10">Recent News</h2>
                 <div id="news-container" class="max-w-5xl mx-auto space-y-6">
@@ -571,7 +747,7 @@
 
         
         <!-- Research Interests Section -->
-        <section id="research" class="scroll-animate py-20 md:py-28">
+        <section id="research" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -605,7 +781,7 @@
         </section>
 
         <!-- Publications Section -->
-        <section id="publications" class="scroll-animate py-20 md:py-28">
+        <section id="publications" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
                 <div class="space-y-8">
@@ -686,11 +862,20 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching Assistantship (TA)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    <!-- Course Card 3 -->
+                    <!-- Course Card 4 -->
                     <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="rl">
                         <div class="p-6">
                             <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Autumn 2026</p>
                             <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning</h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                        </div>
+                    </div>
+                    <!-- Course Card 3 -->
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="robot">
+                        <div class="p-6">
+                            <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Autumn 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60209 • AI for Robot Autonomy</h3>
                             <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
                             <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
                         </div>
@@ -719,7 +904,7 @@
     </main>
 
     <!-- Background Page -->
-    <div id="background" class="scroll-animate fullscreen-page min-h-screen themed-bg-secondary py-20">
+    <div id="background" class="scroll-animate scroll-mt-20 fullscreen-page min-h-screen themed-bg-secondary pt-8 pb-16 md:pt-12 md:pb-20">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-12 text-center">Background</h1>
             
@@ -756,32 +941,31 @@
                 <div id="experience">
                     <h2 class="text-2xl font-bold text-center themed-text-primary themed-accent mb-12">Experience</h2>
                     <div class="relative">
-                        <!-- <div class="timeline-item">
+                        <div class="timeline-item">
                             <div class="timeline-date">2025 - Present</div>
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
-                                <h3 class="text-lg font-semibold themed-text-primary">Research Fellow</h3>
-                                <p class="themed-text-secondary text-sm">RHPI Lab, IIT Kharagpur</p>
-                                <p class="themed-text-secondary text-sm mt-2">Worked on conversational AI models.</p>
+                                <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant (TA)</h3>
+                                <p class="themed-text-secondary text-sm"><a href="https://ai.iitkgp.ac.in/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Artificial Intelligence</a>, IIT Kharagpur</p>
+                                <p class="themed-text-secondary text-sm mt-2">Assisted with UG and PG courses, including preparing assignments, conducting tutorials.</p>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="timeline-item">
                             <div class="timeline-date">2023 - 2024</div>
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
                                 <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">EXL Service</a>, Gurgaon IN</p>
-                                <!-- <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p> -->
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-date">2022 - 2023</div>
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
-                                <h3 class="text-lg font-semibold themed-text-primary">Master's Student</h3>
+                                <h3 class="text-lg font-semibold themed-text-primary">Master's Project Student</h3>
                                 <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in/department/MA" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Mathematics</a>, IIT Kharagpur</p>
                                 <p class="themed-text-secondary text-sm mt-2">Supervisor: <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-srkhare" target="_blank" class="text-accent font-medium hover:underline">Prof. Swanand Khare</a>.</p>
-                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using Alternating Least Square (ALS) Algorithm</p>
+                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using <strong>Singular Value Decomposition (SVD)</strong> and <strong>Alternating Least Square (ALS)</strong> Algorithm</p>
                             </div>
                         </div>
                         <!-- <div class="timeline-item">
@@ -802,44 +986,49 @@
             </div>
         </div>
     </div>
-    <div id="seminars" class="scroll-animate course-page min-h-screen themed-bg-secondary py-20">
+    <div id="seminars" class="scroll-animate scroll-mt-20 course-page min-h-screen themed-bg-secondary pt-20 pb-20 md:pt-20 md:pb-20">
         <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
             <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Seminar / Talks</h1>
             
             <div class="space-y-12">
+                <!-- Template for Future Presentation -->
+                <!-- <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
+                    <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
+                        <div class="seminar-tag themed-text-secondary mb-3" data-tag="IdoAI Talk Series" aria-label="IdoAI Talk Series"></div>
+                        <h2 class="text-xl font-bold themed-text-primary mb-2">Moving Horizon Estimation (MHE)</h2>
+                        <p class="text-slate-500 dark:text-slate-400 flex items-center">
+                            <span class="mr-5 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                Aug 2026
+                            </span>
+                            <span class="flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Dept. of AI, CRR Building, IIT Kharagpur</span>
+                        </p>
+                    </div>
+                    <div class="seminar-embed themed-bg-primary rounded-lg bg-slate-200 dark:bg-slate-900">
+                        <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" frameborder="0" scrolling="no">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                    </div>
+                </div> -->
+               
                 <!-- Presentation Item 1 -->
                 <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
                     <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                        <h2 class="text-2xl font-bold themed-text-secondary mb-2">Self-Study Seminar</h2>
-                        <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distribution</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                            <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
-                            <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
+                        <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar" aria-label="Self-Study Seminar"></div>
+                        <h2 class="text-xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distribution</h2>
+                        <p class="text-slate-500 dark:text-slate-400 flex items-center">
+                            <span class="mr-5 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
+                            <span class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
                         </p>
                     </div>
-                    <div class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
-                        <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                    <div class="seminar-embed themed-bg-primary rounded-lg bg-slate-200 dark:bg-slate-900">
+                        <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" frameborder="0" scrolling="no">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                     </div>
                 </div>
                 
-                <!-- Template for Future Presentation -->
-                <!-- 
-                    <div class="presentation-item bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 md:p-8 border-b border-light-border dark:border-dark-border bg-slate-50 dark:bg-slate-800/50">
-                            <h2 class="text-2xl font-bold mb-2">Next Talk Title</h2>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                                <span class="mr-3 flex items-center"><svg ...>...</svg> Date</span>
-                                <span class="flex items-center"><svg ...>...</svg> Venue</span>
-                            </p>
-                        </div>
-                        <div class="aspect-w-16 aspect-h-9 w-full">
-                            <iframe src="YOUR_EMBED_URL" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
-                        </div>
-                </div> 
-                -->
-                <div class="mt-16 text-center">
+                <!-- <div class="mt-16 text-center">
                     <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
-                </div>
+                </div> -->
             </div>
         </div>    
     </div>
@@ -909,43 +1098,61 @@
                         <div class="space-y-4">
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 0: Introductory Session</h3>
-                                    <p class="text-sm themed-text-secondary">July 17, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 0: &nbsp;Introductory Session</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        July 17, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/1HOqjNLTgU6UpcOyhxbtwrsDv70KUeGIj/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 1: Group, Ring, Field</h3>
-                                    <p class="text-sm themed-text-secondary">July 26, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 1: &nbsp;Group, Ring, Field</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        July 26, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/1PbrYCwEmxeQ4zPgv47H0q4jlETAee-2b/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 2: Vector Space</h3>
-                                    <p class="text-sm themed-text-secondary">Aug 4, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 2: &nbsp;Vector Space</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Aug 4, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/1O-d10tV67zOmDfASo8OZZTKXdBpw9jHB/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 3: Linear Algebra</h3>
-                                    <p class="text-sm themed-text-secondary">Aug 14, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 3: &nbsp;Linear Algebra</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Aug 14, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/14uJglv8dAmai3DNJCHL73sQ5cq9w4wiA/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 4: Probability Theory</h3>
-                                    <p class="text-sm themed-text-secondary">Sept 1, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 4: &nbsp;Probability Theory</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Sept 1, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/1zaYzqqzkL1f_wOC6VaUALxOJLvGcQyqp" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 5: Optimization</h3>
-                                    <p class="text-sm themed-text-secondary">Sept 15, 2025</p>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 5: &nbsp;Optimization</h3>
+                                    <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Sept 15, 2025
+                                    </span>
                                 </div>
                                 <a href="https://drive.google.com/file/d/1UfhIHuSEncwL1pOpeHi683siRYCaqIya/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
                             </div>
@@ -954,15 +1161,21 @@
                     <div class="md:col-span-1">
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
                              <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary text-sm">
-                                <p><strong>Instructor: </strong><a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
-                                <p><strong>TA:</strong> Ranjan Sarkar, Sushmita Majee</p>
+                             <div class="space-y-3 themed-text-secondary">
+                                <p><strong>Instructor: </strong><a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="whitespace-nowrap text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
+                                <div>
+                                    <p><strong>TA:</strong></p>
+                                    <ul class="mt-1 list-disc list-inside space-y-1">
+                                        <li>Ranjan Sarkar</li>
+                                        <li>Sushmita Majee</li>
+                                    </ul>
+                                </div>
                                 <!-- <p><strong>Timings:</strong> Mon 4-6 PM & Thu 3-5 PM</p> -->
                              </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
                              <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
-                            <ul class="list-disc list-inside space-y-2 themed-text-secondary text-sm">
+                            <ul class="list-disc list-inside space-y-2 themed-text-secondary">
                                 <li>Linear Algebra</li>
                                 <li>Probability Theory</li>
                                 <li>Optimization</li>
@@ -972,9 +1185,9 @@
                         </div>
                     </div>
                 </div>
-                 <div class="mt-16 text-center">
+                <!-- <div class="mt-16 text-center">
                     <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- Course Page for AI for CPS -->
@@ -986,15 +1199,18 @@
                     <p class="text-xl themed-text-secondary">Spring 2026 • IIT Kharagpur</p>
                 </div>
                 <!-- Tutorial List -->
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                     <div class="md:col-span-2">
                         <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding Tutorials</h2>
                         <!-- Tutorial 1 -->
                         <div class="space-y-4">
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Tutorial 1: How to start your first python project</h3>
-                                    <p class="text-sm themed-text-secondary mb-3">Jan 12, 2026</p>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction to Python</h3>
+                                    <span class="mr-3 flex items-center themed-text-secondary mb-3">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            Jan 12, 2026
+                                    </span>
                                     <ul class="inline-bullets themed-text-secondary text-sm">
                                         <li>Pandas</li>
                                         <li>Numpy</li>
@@ -1004,32 +1220,128 @@
                                         <li>OpenAI Gym</li>
                                     </ul>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T1_Intro.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T1_Intro.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
                             </div>
                         </div>
                         <!-- Tutorial 2 -->
                         <div class="space-y-4">
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Tutorial 2: Q-Learning</h3>
-                                    <p class="text-sm themed-text-secondary">Feb 10, 2026</p>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning</h3>
+                                    <span class="mr-3 flex items-center themed-text-secondary mb-1">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            Feb 10, 2026
+                                    </span>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T2_Q-Learning.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T2_Q-Learning.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
                             </div>
                         </div>
                         <!-- Tutorial 3 -->
                         <!-- <div class="space-y-4">
                             <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Tutorial 3: Deep Q-Network (DQN) • Deep RL</h3>
-                                    <p class="text-sm themed-text-secondary">Feb 10, 2026</p>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 3: &nbsp;Deep Q-Network (DQN) • Deep RL</h3>
+                                    <span class="mr-3 flex items-center themed-text-secondary mb-3">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        &nbsp;Feb 10, 2026
+                                    </span>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T3_DQN.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI61006_T3_DQN.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
                             </div>
                         </div> -->
                     </div>
+                    <div class="md:col-span-1">
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
+                             <div class="space-y-3 themed-text-secondary">
+                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
+                                <div>
+                                    <p><strong>TA:</strong></p>
+                                    <ul class="mt-1 list-disc list-outside pl-5 space-y-1">
+                                        <li>Ranjan Sarkar</li>
+                                        <li>Anik Roy</li>
+                                        <li>Pankaj Maurya</li>
+                                        <li>Ankam Solomon Surya Sekhar</li>
+                                    </ul>
+                                </div>
+                                <p><strong>Timings:</strong> <br>Mon 3-5 PM & Tue 2-4 PM</p>
+                             </div>
+                        </div>
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary">
+                                <li>Introduction</li>
+                                <li>Acting: RL, Q-Learning, SARSA, Gymnasium</li>
+                                <li>Planning: A*, RRT, PRM</li>
+                                <li>Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 
+                <div class="mt-20 text-center">
+                    <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                </div>
+            </div>
+        </div>
+        <!-- course page: Robot Autonomy -->
+        <div id="course-robot" class="scroll-animate course-page min-h-screen themed-bg-secondary py-20">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI60209</h1>
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI for Robot Autonomy</h1>
+                    <p class="text-xl themed-text-secondary">Autumn 2026 • IIT Kharagpur</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2">
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Will be updated soon!</h2>
+                        <!-- <p class="themed-text-secondary mb-6">This course introduces </p> -->
+                        
+                        <!-- <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments</h2>
+                        <iv class="space-y-4">
+                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 0: Introductory Session</h3>
+                                    <p class="text-sm themed-text-secondary">July 17, 2025</p>
+                                </div>
+                                <a href="https://drive.google.com/file/d/1HOqjNLTgU6UpcOyhxbtwrsDv70KUeGIj/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="md:col-span-1">
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
+                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
+                             <div class="space-y-3 themed-text-secondary text-sm">
+                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
+                                <div>
+                                    <p><strong>TA:</strong></p>
+                                    <ul class="mt-1 list-disc list-outside pl-5 space-y-2">
+                                        <li>Samarth Gupta</li>
+                                        <li>Ranjan Sarkar</li>
+                                        <li>Ambalika Raj</li>
+                                        <li>Mohit Mishra</li>
+                                        <li>Satvik Jaiswal</li>
+                                        <li>Pranjul Shukla</li>
+                                        <li>Subhro Halder</li>
+                                    </ul>
+                                </div>
+                                <p><strong>Timings:</strong> <br>Wed 2-6 PM</p>
+                             </div>
+                        </div>
+                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary text-sm">
+                                <li>Module 1: &nbsp;Foundation of robotics</li>
+                                <li>Module 2: &nbsp;Introduction to RL</li>
+                                <li>Module 3: &nbsp;Autonomy with RL</li>
+                                <li>Module 4: &nbsp;Autonomy with dynamical systems</li>
+                                <li>Module 5: &nbsp;Introduction to Model Predictive Control</li>
+                                <li>Module 6: &nbsp;Autonomy under constraints</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="mt-20 text-center">
                     <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
                 </div>
@@ -1065,7 +1377,17 @@
                              <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
                              <div class="space-y-3 themed-text-secondary text-sm">
                                 <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
-                                <p><strong>TA:</strong> Ranjan Sarkar</p>
+                                <div>
+                                    <p><strong>TA:</strong></p>
+                                    <ul class="mt-1 list-disc list-inside space-y-1">
+                                        <li>Ranjan Sarkar</li>
+                                        <li>Samarth Gupta</li>
+                                        <li>Mohit Mishra</li>
+                                        <li>Satvik Jaiswal</li>
+                                        <li>Pranjul Shukla</li>
+                                        <li>Subhro Halder</li>
+                                    </ul>
+                                </div>
                                 <p><strong>Timings:</strong> <br>Thu 3-5 PM & Fri 2-4 PM</p>
                              </div>
                         </div>
@@ -1086,7 +1408,6 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
 
     <!-- Fullscreen Pages Container -->
@@ -1100,7 +1421,7 @@
                     <!-- Presentation Item 1 -->
                     <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
                         <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                            <h2 class="text-2xl font-bold themed-text-secondary  mb-2">Self-Study Seminar</h2>
+                            <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar" aria-label="Self-Study Seminar"></div>
                             <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distributions</h2>
                             <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
                                 <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
@@ -1155,11 +1476,12 @@
                 <div>
                     <h3 class="font-semibold text-white mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a></li>
+                        <!-- <li><a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a></li> -->
                         <!-- <li><a href="#research" class="text-slate-400 hover:text-white transition-colors">Research</a></li> -->
                         <li><a href="#publications" class="text-slate-400 hover:text-white transition-colors">Publications</a></li>
-                        <!-- <li><a href="#background" class="text-slate-400 hover:text-white transition-colors">Background</a></li> -->
+                        <li><a href="#seminars" class="text-slate-400 hover:text-white transition-colors">Seminar/Talks</a></li>
                         <li><a href="#TA" class="text-slate-400 hover:text-white transition-colors">TAShip</a></li>
+                        <li><a href="#background" class="text-slate-400 hover:text-white transition-colors">Background</a></li>
                         <li><a href="https://sites.google.com/view/ranjan-sarkar/ta?authuser=0#h.5j1qyijmklec" target="_blank" class="text-slate-400 hover:text-white transition-colors">Archive</a></li>
                     </ul>
                 </div>
@@ -1224,12 +1546,43 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const openIcon = document.getElementById('mobile-menu-open-icon');
             const closeIcon = document.getElementById('mobile-menu-close-icon');
+            const mobileTaToggle = document.getElementById('mobile-ta-toggle');
+            const mobileTaSubmenu = document.getElementById('mobile-ta-submenu');
+
+            const closeMobileTaSubmenu = () => {
+                if (!mobileTaToggle || !mobileTaSubmenu) {
+                    return;
+                }
+
+                mobileTaSubmenu.classList.remove('is-open');
+                mobileTaToggle.setAttribute('aria-expanded', 'false');
+            };
+
+            const toggleMobileTaSubmenu = () => {
+                if (!mobileTaToggle || !mobileTaSubmenu) {
+                    return;
+                }
+
+                const isOpen = mobileTaSubmenu.classList.toggle('is-open');
+                mobileTaToggle.setAttribute('aria-expanded', String(isOpen));
+            };
 
             mobileMenuButton.addEventListener('click', () => {
                 const isMenuHidden = mobileMenu.classList.toggle('hidden');
                 openIcon.style.display = isMenuHidden ? 'block' : 'none';
                 closeIcon.style.display = isMenuHidden ? 'none' : 'block';
+                if (isMenuHidden) {
+                    closeMobileTaSubmenu();
+                }
             });
+
+            if (mobileTaToggle) {
+                mobileTaToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMobileTaSubmenu();
+                });
+            }
 
             // Close mobile menu when a link is clicked
             document.querySelectorAll('#mobile-menu a').forEach(link => {
@@ -1237,6 +1590,7 @@
                     mobileMenu.classList.add('hidden');
                     openIcon.style.display = 'block';
                     closeIcon.style.display = 'none';
+                    closeMobileTaSubmenu();
                 });
             });
 
@@ -1291,6 +1645,21 @@
                     ],
                     // tutorialUrl: "#aicps",
                     link: '#rl'
+                },
+                'robot': {
+                    id: 'AI60209',
+                    title: 'AI for Robot Autonomy',
+                    shortname: 'Robot',
+                    topics: [
+                        'Module 1: Foundation of robotics',
+                        'Module 2: Introduction to RL',
+                        'Module 3: Autonomy with RL',
+                        'Module 4: Autonomy with dynamical systems',
+                        'Module 5: Introduction to Model Predictive Control',
+                        'Module 6: Autonomy under constraints'
+                    ],
+                    tutorialUrl: "#robot",
+                    link: 'https://prabhatkmishra.github.io/robot_autonomy.html'
                 }
             };
             
@@ -1350,6 +1719,62 @@
             const citeBibtexText = document.getElementById('cite-bibtex-text');
             const citeCopyStatus = document.getElementById('cite-copy-status');
             const citeModalTitle = document.getElementById('cite-modal-title');
+            const taDropdown = document.querySelector('.ta-dropdown');
+            const taDropdownButton = document.getElementById('ta-dropdown-button');
+            const taDropdownLinks = taDropdown ? Array.from(taDropdown.querySelectorAll('.ta-dropdown-menu a')) : [];
+
+            const syncTaDropdownActiveState = (hash) => {
+                const activeCourseId = courseData[hash] ? hash : '';
+
+                taDropdownLinks.forEach((link) => {
+                    const linkCourseId = link.dataset.courseLink || link.getAttribute('href')?.replace('#', '');
+                    link.classList.toggle('is-active', Boolean(activeCourseId) && linkCourseId === activeCourseId);
+                });
+            };
+
+            const closeTaDropdown = () => {
+                if (!taDropdown) {
+                    return;
+                }
+
+                taDropdown.classList.remove('is-open');
+                if (taDropdownButton) {
+                    taDropdownButton.setAttribute('aria-expanded', 'false');
+                }
+            };
+
+            const toggleTaDropdown = () => {
+                if (!taDropdown) {
+                    return;
+                }
+
+                const isOpen = taDropdown.classList.toggle('is-open');
+                if (taDropdownButton) {
+                    taDropdownButton.setAttribute('aria-expanded', String(isOpen));
+                }
+            };
+
+            if (taDropdownButton) {
+                taDropdownButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTaDropdown();
+                });
+            }
+
+            taDropdownLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    const targetHash = link.getAttribute('href')?.replace('#', '') || '';
+                    syncTaDropdownActiveState(targetHash);
+                    closeTaDropdown();
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (taDropdown && !taDropdown.contains(e.target)) {
+                    closeTaDropdown();
+                }
+            });
 
             const setCitationStatus = (message, isError = false) => {
                 citeCopyStatus.textContent = message;
@@ -1452,6 +1877,9 @@
             const handleRouteChange = () => {
                 const hash = window.location.hash.substring(1); // remove '#'
                 closeModal(); // always close modal on route change
+                closeTaDropdown();
+                closeMobileTaSubmenu();
+                syncTaDropdownActiveState(hash);
                 
                 if(courseData[hash]) {
                     document.title = `${courseData[hash].id} • ${courseData[hash].title} | Ranjan Sarkar`;
