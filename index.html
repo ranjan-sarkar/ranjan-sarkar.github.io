@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta name="google-site-verification" content="2GYzLjAA2sQ2-PvS5bxdybCQbhlbHBbipUtScfsIR7Q" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Ranjan Sarkar</title>
     <!-- <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg"> -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GX66CL7RZE"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-GX66CL7RZE');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-GX66CL7RZE');
     </script>
 
     <meta property="og:site_name" content="Ranjan Sarkar">
@@ -47,27 +48,29 @@
       "url": "https://ranjan-sarkar.github.io/"
     }
     </script>
-    
+
     <style>
         /* Adding custom font */
         @font-face {
-            font-family: 'GoogleSans-Regular'; 
+            font-family: 'GoogleSans-Regular';
             src: url('font/GoogleSans-Regular.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
         @font-face {
-            font-family: 'GoogleSans-Regular'; 
+            font-family: 'GoogleSans-Regular';
             src: url('font/GoogleSans-Medium.ttf') format('truetype');
             font-weight: 500;
             font-style: normal;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
         @font-face {
-            font-family: 'GoogleSans-Regular'; 
+            font-family: 'GoogleSans-Regular';
             src: url('font/GoogleSans-Bold.ttf') format('truetype');
             font-weight: 700;
             font-style: normal;
@@ -80,49 +83,66 @@
             font-weight: 400;
             letter-spacing: 0em;
         }
+
         .font-medium {
             font-family: 'GoogleSans-Regular', sans-serif;
             font-weight: 450;
             letter-spacing: -0.02em;
         }
+
         .font-semibold {
             font-family: 'GoogleSans-Regular', sans-serif;
             font-weight: 500;
             letter-spacing: -0.03em;
         }
+
         .font-bold {
             font-family: 'GoogleSans-Regular', sans-serif;
             font-weight: 700;
             letter-spacing: -0.03em;
         }
-        
+
         .google-font {
             font-family: 'GoogleSans-Regular', sans-serif;
-            font-weight: 400; 
+            font-weight: 400;
             letter-spacing: 0.022em;
             color: #202124;
         }
+
         .inter-font {
             font-family: 'Inter', sans-serif;
         }
-        
+
         /* Define color variables for light and dark themes */
         :root {
-            --bg-light-primary: #f8fafc; /* slate-50 */
+            --bg-light-primary: #f8fafc;
+            /* slate-50 */
             --bg-light-secondary: #ffffff;
-            --text-light-primary: #1e293b; /* slate-800 */
-            --text-light-secondary: #475569; /* slate-600 */
-            --border-light: #e2e8f0; /* slate-200 */
-            --accent-light: #4F46E5; /* indigo-600 */
-            --accent-hover-light: #4338CA; /* indigo-700 */
+            --text-light-primary: #1e293b;
+            /* slate-800 */
+            --text-light-secondary: #475569;
+            /* slate-600 */
+            --border-light: #e2e8f0;
+            /* slate-200 */
+            --accent-light: #4F46E5;
+            /* indigo-600 */
+            --accent-hover-light: #4338CA;
+            /* indigo-700 */
 
-            --bg-dark-primary: #0f172a; /* slate-900 */
-            --bg-dark-secondary: #1e293b; /* slate-800 */
-            --text-dark-primary: #f1f5f9; /* slate-100 */
-            --text-dark-secondary: #94a3b8; /* slate-400 */
-            --border-dark: #334155; /* slate-700 */
-            --accent-dark: #818CF8; /* indigo-400 */
-            --accent-hover-dark: #6366F1; /* indigo-500 */
+            --bg-dark-primary: #0f172a;
+            /* slate-900 */
+            --bg-dark-secondary: #1e293b;
+            /* slate-800 */
+            --text-dark-primary: #f1f5f9;
+            /* slate-100 */
+            --text-dark-secondary: #94a3b8;
+            /* slate-400 */
+            --border-dark: #334155;
+            /* slate-700 */
+            --accent-dark: #818CF8;
+            /* indigo-400 */
+            --accent-hover-dark: #6366F1;
+            /* indigo-500 */
         }
 
         /* Apply theme colors using CSS variables */
@@ -132,35 +152,76 @@
             color: var(--text-light-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         .dark body {
             background-color: var(--bg-dark-primary);
             color: var(--text-dark-primary);
         }
 
         /* Component-specific theming */
-        .themed-bg-primary { background-color: var(--bg-light-primary); }
-        .dark .themed-bg-primary { background-color: var(--bg-dark-primary); }
-        
-        .themed-bg-secondary { background-color: var(--bg-light-secondary); }
-        .dark .themed-bg-secondary { background-color: var(--bg-dark-secondary); }
+        .themed-bg-primary {
+            background-color: var(--bg-light-primary);
+        }
 
-        .themed-text-primary { color: var(--text-light-primary); }
-        .dark .themed-text-primary { color: var(--text-dark-primary); }
+        .dark .themed-bg-primary {
+            background-color: var(--bg-dark-primary);
+        }
 
-        .themed-text-secondary { color: var(--text-light-secondary); }
-        .dark .themed-text-secondary { color: var(--text-dark-secondary); }
+        .themed-bg-secondary {
+            background-color: var(--bg-light-secondary);
+        }
 
-        .themed-border { border-color: var(--border-light); }
-        .dark .themed-border { border-color: var(--border-dark); }
-        
-        .themed-accent { color: var(--accent-light); }
-        .dark .themed-accent { color: var(--accent-dark); }
-        
-        .themed-accent-bg { background-color: var(--accent-light); }
-        .dark .themed-accent-bg { background-color: var(--accent-dark); }
+        .dark .themed-bg-secondary {
+            background-color: var(--bg-dark-secondary);
+        }
 
-        .themed-accent-bg-hover:hover { background-color: var(--accent-hover-light); }
-        .dark .themed-accent-bg-hover:hover { background-color: var(--accent-hover-dark); }
+        .themed-text-primary {
+            color: var(--text-light-primary);
+        }
+
+        .dark .themed-text-primary {
+            color: var(--text-dark-primary);
+        }
+
+        .themed-text-secondary {
+            color: var(--text-light-secondary);
+        }
+
+        .dark .themed-text-secondary {
+            color: var(--text-dark-secondary);
+        }
+
+        .themed-border {
+            border-color: var(--border-light);
+        }
+
+        .dark .themed-border {
+            border-color: var(--border-dark);
+        }
+
+        .themed-accent {
+            color: var(--accent-light);
+        }
+
+        .dark .themed-accent {
+            color: var(--accent-dark);
+        }
+
+        .themed-accent-bg {
+            background-color: var(--accent-light);
+        }
+
+        .dark .themed-accent-bg {
+            background-color: var(--accent-dark);
+        }
+
+        .themed-accent-bg-hover:hover {
+            background-color: var(--accent-hover-light);
+        }
+
+        .dark .themed-accent-bg-hover:hover {
+            background-color: var(--accent-hover-dark);
+        }
 
         .seminar-embed {
             width: min(100%, calc((100vh - 14rem) * 16 / 9));
@@ -217,7 +278,7 @@
         .dark .seminar-tag::before {
             background-color: var(--accent-dark);
         }
-        
+
         /* Blurry Header */
         header {
             backdrop-filter: blur(10px);
@@ -226,27 +287,32 @@
             border-bottom-width: 1px;
             border-color: var(--border-light);
         }
+
         .dark header {
             background-color: rgba(15, 23, 42, 0.5);
             border-color: var(--border-dark);
         }
-        
+
         /* Active nav link style */
         header nav a.active {
             color: var(--accent-light);
             font-weight: 600;
         }
+
         .dark header nav a.active {
-             color: var(--accent-dark);
+            color: var(--accent-dark);
         }
 
         /* Active nav link style - mobile*/
-        header nav a.active, .mobile-nav a.active {
+        header nav a.active,
+        .mobile-nav a.active {
             color: var(--accent-light);
             font-weight: 600;
         }
-        .dark header nav a.active, .dark .mobile-nav a.active {
-             color: var(--accent-dark);
+
+        .dark header nav a.active,
+        .dark .mobile-nav a.active {
+            color: var(--accent-dark);
         }
 
         .ta-dropdown-menu {
@@ -333,9 +399,11 @@
             align-items: flex-start;
             padding-bottom: 2.5rem;
         }
+
         .timeline-item:last-child {
             padding-bottom: 0;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -346,9 +414,11 @@
             background-color: var(--border-light);
             transform: translateX(-50%);
         }
+
         .dark .timeline-item::before {
             background-color: var(--border-dark);
         }
+
         .timeline-date {
             width: 7rem;
             flex-shrink: 0;
@@ -360,9 +430,11 @@
             white-space: nowrap;
             margin-top: 0.125rem;
         }
+
         .dark .timeline-date {
             color: var(--text-dark-secondary);
         }
+
         .timeline-dot {
             position: absolute;
             left: 7rem;
@@ -376,10 +448,12 @@
             transform: translateX(-50%);
             z-index: 10;
         }
+
         .dark .timeline-dot {
             border-color: var(--bg-dark-secondary);
             background-color: var(--accent-dark);
         }
+
         .timeline-content {
             padding-left: 1.25rem;
             flex-grow: 1;
@@ -396,7 +470,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         /* Modal styles */
         .modal {
             display: none;
@@ -407,10 +481,11 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0, 0, 0, 0.6);
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
+
         .modal-content {
             position: relative;
             margin: 5% auto;
@@ -419,10 +494,12 @@
             transform: scale(0.95);
             transition: transform 0.3s ease-in-out;
         }
+
         .modal.show {
             display: block;
             opacity: 1;
         }
+
         .modal.show .modal-content {
             transform: scale(1);
         }
@@ -431,12 +508,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1.5rem; /* mt-6 */
+            margin-top: 1.5rem;
+            /* mt-6 */
             gap: 1rem;
         }
-        .button-container > * {
-            margin-bottom: 1rem; /* mb-4 */
+
+        .button-container>* {
+            margin-bottom: 1rem;
+            /* mb-4 */
         }
+
         .hidden {
             display: none;
         }
@@ -449,6 +530,7 @@
             padding-left: 10px;
             max-width: 900px;
         }
+
         .row-col-list li {
             margin: 0.06rem 0;
         }
@@ -462,10 +544,12 @@
             gap: 0.3rem 1rem;
             font-size: 16px;
         }
+
         .inline-bullets li {
             position: relative;
             padding-left: 1.2em;
         }
+
         .inline-bullets li::before {
             content: "•";
             position: absolute;
@@ -473,16 +557,17 @@
             font-weight: bold;
             font-size: 1.2em;
         }
-        
+
         /* Course page styles */
         .course-page {
             display: none;
         }
-        
+
         /* Section alternate background */
         section:nth-child(odd) {
             background-color: var(--bg-light-secondary);
         }
+
         .dark section:nth-child(odd) {
             background-color: var(--bg-dark-secondary);
         }
@@ -494,6 +579,7 @@
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
         }
+
         #scroll-to-top.show {
             opacity: 1;
             transform: translateY(0);
@@ -522,6 +608,7 @@
             padding: 1rem;
             background-color: #f8fafc;
         }
+
         .dark .citation-pre {
             border-color: var(--border-dark);
             background-color: #0f172a;
@@ -569,9 +656,9 @@
             background: rgba(226, 232, 240, 0.98);
             color: #0f172a;
         }
-
     </style>
 </head>
+
 <body>
 
     <!-- Header -->
@@ -579,52 +666,81 @@
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
-                    <a href="#" class="themed-text-primary text-xl"><span class="themed-accent font-semibold">Ranjan</span> Sarkar</a>
+                    <a href="#" class="themed-text-primary text-xl"><span
+                            class="themed-accent font-semibold">Ranjan</span> Sarkar</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <nav class="hidden md:flex items-center space-x-8">
-                        <a href="#home" class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
-                        <a href="#news" class="themed-text-secondary hover:themed-text-primary transition-colors">News</a>
-                        <a href="#seminars" class="themed-text-secondary hover:themed-text-primary transition-colors">Talks</a>
+                        <a href="#home"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
+                        <a href="#news"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">News</a>
+                        <a href="#seminars"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Talks</a>
                         <!-- <a href="#research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a> -->
-                        <a href="#publications" class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
-                        <a href="#background" class="themed-text-secondary hover:themed-text-primary transition-colors">Background</a>
+                        <a href="#publications"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
+                        <a href="#background"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Background</a>
                         <!-- <a href="#experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a> -->
                         <div class="ta-dropdown relative">
                             <div class="inline-flex items-center gap-1">
-                                <a href="#TA" class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
-                                <button type="button" id="ta-dropdown-button" aria-label="Open TA course menu" aria-haspopup="true" aria-expanded="false" class="ta-dropdown-trigger themed-text-secondary hover:themed-text-primary transition-colors inline-flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                <a href="#TA"
+                                    class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
+                                <button type="button" id="ta-dropdown-button" aria-label="Open TA course menu"
+                                    aria-haspopup="true" aria-expanded="false"
+                                    class="ta-dropdown-trigger themed-text-secondary hover:themed-text-primary transition-colors inline-flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
                             </div>
-                            <div class="ta-dropdown-menu absolute right-0 top-full z-50 overflow-hidden rounded-xl border themed-border themed-bg-secondary shadow-2xl" style="top: calc(100% + 0.5rem); width: 15rem; max-width: calc(100vw - 2rem);">
-                                <a href="#rl" data-course-link="rl" class="block px-4 pt-4 pb-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                            <div class="ta-dropdown-menu absolute right-0 top-full z-50 overflow-hidden rounded-xl border themed-border themed-bg-secondary shadow-2xl"
+                                style="top: calc(100% + 0.5rem); width: 15rem; max-width: calc(100vw - 2rem);">
+                                <a href="#rl" data-course-link="rl"
+                                    class="block px-4 pt-4 pb-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
                                     <span class="block text-xs uppercase tracking-wide opacity-70">AI31201</span>
                                     <span class="block text-sm font-medium">Reinforcement Learning</span>
                                 </a>
-                                <a href="#robot" data-course-link="robot" class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                <a href="#robot" data-course-link="robot"
+                                    class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
                                     <span class="block text-xs uppercase tracking-wide opacity-70">AI60209</span>
                                     <span class="block text-sm font-medium">AI for Robot Autonomy</span>
                                 </a>
-                                <a href="#aicps" data-course-link="aicps" class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                <a href="#aicps" data-course-link="aicps"
+                                    class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
                                     <span class="block text-xs uppercase tracking-wide opacity-70">AI61006</span>
                                     <span class="block text-sm font-medium">AI for Cyber Physical Systems</span>
                                 </a>
-                                <a href="#amfai" data-course-link="amfai" class="block px-4 pt-2 pb-4 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                <a href="#amfai" data-course-link="amfai"
+                                    class="block px-4 pt-2 pb-4 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
                                     <span class="block text-xs uppercase tracking-wide opacity-70">AI60211</span>
-                                    <span class="block text-sm font-medium">Algorithmic and Mathematical Foundations for AI</span>
+                                    <span class="block text-sm font-medium">Algorithmic and Mathematical Foundations for
+                                        AI</span>
                                 </a>
                             </div>
                         </div>
                     </nav>
-                    <button id="theme-toggle" class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
-                        <svg id="theme-icon-light" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg id="theme-icon-dark" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <button id="theme-toggle"
+                        class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
+                        <svg id="theme-icon-light" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        <svg id="theme-icon-dark" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                            </path>
+                        </svg>
                     </button>
                     <div class="md:hidden">
-                        <button id="mobile-menu-button" class="p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
+                        <button id="mobile-menu-button"
+                            class="p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
                             <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg"></i>
                             <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" style="display: none;"></i>
                         </button>
@@ -635,25 +751,41 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden themed-bg-secondary border-t themed-border mobile-nav">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
-                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">News</a>
-                <a href="#seminars" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Talks</a>
+                <a href="#home"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
+                <a href="#news"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">News</a>
+                <a href="#seminars"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Talks</a>
                 <!-- <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a> -->
-                <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
+                <a href="#publications"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
                 <!-- <a href="#background" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Background</a> -->
-                <div class="px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors flex items-center justify-between gap-3">
+                <div
+                    class="px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors flex items-center justify-between gap-3">
                     <a href="#TA" class="flex-1">TA</a>
-                    <button type="button" id="mobile-ta-toggle" class="mobile-ta-toggle inline-flex items-center justify-center rounded-md p-1 themed-text-secondary hover:themed-text-primary" aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <button type="button" id="mobile-ta-toggle"
+                        class="mobile-ta-toggle inline-flex items-center justify-center rounded-md p-1 themed-text-secondary hover:themed-text-primary"
+                        aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                 </div>
                 <div id="mobile-ta-submenu" class="mobile-ta-submenu mt-1 space-y-1 border-l-2 themed-border pl-3 ml-3">
-                    <a href="#rl" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI31201 - RL</a>
-                    <a href="#robot" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60209 - Robot Autonomy</a>
-                    <a href="#aicps" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI61006 - AICPS</a>
-                    <a href="#amfai" class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60211 - AMFAI</a>
+                    <a href="#rl"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI31201
+                        - RL</a>
+                    <a href="#robot"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60209
+                        - Robot Autonomy</a>
+                    <a href="#aicps"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI61006
+                        - AICPS</a>
+                    <a href="#amfai"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60211
+                        - AMFAI</a>
                 </div>
             </div>
         </div>
@@ -664,25 +796,52 @@
         <section id="home" class="scroll-animate scroll-mt-20 py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-2/5 flex justify-center md:justify-start">
-                    <img src="KGP_DP.png" alt="Ranjan Sarkar" class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
+                    <img src="KGP_DP.png" alt="Ranjan Sarkar"
+                        class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
                 </div>
                 <div class="md:w-3/5 text-center md:text-left">
                     <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-4">Ranjan Sarkar</h1>
-                    <p class="text-xl md:text-xl themed-text-primary">PhD Scholar, Artificial Intelligence</p>  
+                    <p class="text-xl md:text-xl themed-text-primary">PhD Scholar, Artificial Intelligence</p>
                     <p class="text-xl themed-text-primary mb-5">Indian Institute of Technology Kharagpur</p>
                     <p class="themed-text-secondary mb-8 max-w-2xl">
-                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>, advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr. Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs, Computer Vision, and Robotics.
+                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank"
+                            class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial
+                            Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank"
+                            class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>,
+                        advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en"
+                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr.
+                            Prabhat Kumar Mishra</a>. I work at the <a href="https://prabhatkmishra.github.io"
+                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab
+                            (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the
+                        intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs,
+                        Computer Vision, and Robotics.
                     </p>
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-7 gap-y-8 mb-5">
-                        <a href="Resume_RANJAN.pdf" target="_blank" class="shrink-0 inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
+                        <a href="Resume_RANJAN.pdf" target="_blank"
+                            class="shrink-0 inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
                             Resume
                         </a>
                         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:justify-start">
-                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email" data-tooltip="Email" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
-                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn" data-tooltip="LinkedIn" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" data-tooltip="Google Scholar" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
-                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" aria-label="ResearchGate" data-tooltip="ResearchGate" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
-                            <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub" data-tooltip="GitHub" class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
+                                data-tooltip="Email"
+                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fas fa-envelope fa-lg"></i></a>
+                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
+                                data-tooltip="LinkedIn"
+                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
+                                aria-label="Google Scholar" data-tooltip="Google Scholar"
+                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-google-scholar fa-lg"></i></a>
+                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
+                                aria-label="ResearchGate" data-tooltip="ResearchGate"
+                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-researchgate fa-lg"></i></a>
+                            <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
+                                data-tooltip="GitHub"
+                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-github fa-lg"></i></a>
                         </div>
                     </div>
                 </div>
@@ -696,48 +855,67 @@
                 <div id="news-container" class="max-w-5xl mx-auto space-y-6">
                     <!-- arXiv Preprint -->
                     <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jul 2026</div>
-                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Preprint is available on <a href="#publications" class="themed-text-primary text-accent font-medium hover:underline">arXiv</a>.</p>
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                            Jul 2026</div>
+                        <div
+                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <p>Preprint is available on <a href="#publications"
+                                    class="themed-text-primary text-accent font-medium hover:underline">arXiv</a>.</p>
                         </div>
                     </div>
                     <!-- News Item AI for Science and Technology -->
                     <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2026</div>
-                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Attended <a href="https://ais.cse.iitkgp.ac.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Workshop on AI for Science and Technology 2026</a> at IIT Kharagpur, supported by <a href="https://indiaai.gov.in/" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">IndiaAI</a>.</p>
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                            Jan 2026</div>
+                        <div
+                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <p>Attended <a href="https://ais.cse.iitkgp.ac.in/" target="_blank"
+                                    class="themed-text-primary text-accent font-medium hover:underline">Workshop on AI
+                                    for Science and Technology 2026</a> at IIT Kharagpur, supported by <a
+                                    href="https://indiaai.gov.in/" target="_blank"
+                                    class="themed-text-primary text-accent font-medium hover:underline">IndiaAI</a>.</p>
                         </div>
                     </div>
                     <!-- News Item (Presentation) -->
                     <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Dec 2025</div>
-                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                            Dec 2025</div>
+                        <div
+                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
                             <!-- <div class="themed-bg-secondary themed-accent group-hover:themed-accent-bg-hover transition-colors duration-300"></div> -->
                             <p class="themed-text-primary transition-colors">
                                 Delivered Self-Study Seminar on
                                 <span class="font-serif italic text-lg themed-text-primary">
                                     "An Estimation-Control duality and its extension to unknown distributions"
                                 </span>.
-                                <a href="#seminars" class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Slides &nbsp;
-                                    <i class="fa-solid fa-arrow-right"></i>
+                                <a href="#seminars"
+                                    class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
+                                    View Slides
                                 </a>
+                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
                             </p>
                         </div>
                     </div>
                     <!-- Joining -->
                     <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Jan 2025</div>
-                        <div class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Started working as a Research Scholar in <a href="https://prabhatkmishra.github.io" target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab</a>.</p>
+                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                            Jan 2025</div>
+                        <div
+                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
+                            <p>Started working as a Research Scholar in <a href="https://prabhatkmishra.github.io"
+                                    target="_blank"
+                                    class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab</a>.
+                            </p>
                         </div>
                     </div>
                 </div>
                 <!-- Load More Button -->
                 <div class="text-center mt-8">
-                    <button id="load-more-news" class="hidden inline-flex items-center text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors focus:outline-none">
+                    <button id="load-more-news"
+                        class="hidden inline-flex items-center text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors focus:outline-none">
                         Older News
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -745,26 +923,33 @@
             </div>
         </section>
 
-        
+
         <!-- Research Interests Section -->
         <section id="research" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests</h2>
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests
+                </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                    <div
+                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
                         <div class="text-2xl themed-accent mb-4"><i class="fas fa-brain"></i></div>
                         <h3 class="text-xl font-semibold themed-text-primary mb-2">Machine Learning</h3>
-                        <p class="themed-text-secondary">Investigating the theoretical and probabilistic foundations of machine learning models to provide mathematical guarantees.</p>
+                        <p class="themed-text-secondary">Investigating the theoretical and probabilistic foundations of
+                            machine learning models to provide mathematical guarantees.</p>
                     </div>
-                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                    <div
+                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
                         <div class="text-2xl themed-accent mb-4"><i class="fas fa-robot"></i></div>
                         <h3 class="text-xl font-semibold themed-text-primary mb-2">Reinforcement Learning</h3>
-                        <p class="themed-text-secondary">Focusing on the intersection of stochastic control and sequential decision-making to guarantee system stability and performance.</p>
+                        <p class="themed-text-secondary">Focusing on the intersection of stochastic control and
+                            sequential decision-making to guarantee system stability and performance.</p>
                     </div>
-                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
+                    <div
+                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
                         <div class="text-2xl themed-accent mb-4"><i class="fas fa-chart-line"></i></div>
                         <h3 class="text-xl font-semibold themed-text-primary mb-2">Stochastic Optimization</h3>
-                        <p class="themed-text-secondary">Developing scalable optimization frameworks and estimation techniques to handle high-dimensional uncertainty.</p>
+                        <p class="themed-text-secondary">Developing scalable optimization frameworks and estimation
+                            techniques to handle high-dimensional uncertainty.</p>
                     </div>
                     <!-- <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
                         <div class="text-2xl themed-accent mb-4"><i class="fas fa-language"></i></div>
@@ -783,23 +968,30 @@
         <!-- Publications Section -->
         <section id="publications" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-               <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
                 <div class="space-y-8">
-                    <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
+                    <div
+                        class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
                         <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                             <div>
-                                <p><a class="uppercase tracking-wide text-sm font-semibold themed-accent">Preprint</a> • <a class="themed-text-primary mt-1">arXiv:2607.12135</a></p>
+                                <p><a class="uppercase tracking-wide text-sm font-semibold themed-accent">Preprint</a> •
+                                    <a class="themed-text-primary mt-1">arXiv:2607.12135</a>
+                                </p>
                                 <h3 class="font-serif italic text-xl themed-text-primary mt-1">
                                     LQG solution for POMDP without estimating states: A minimum variance approach
                                 </h3>
                             </div>
-                            <span class="text-sm font-semibold px-3 py-1 rounded-full themed-bg-primary themed-text-secondary border themed-border w-fit">July 2026</span>
+                            <span
+                                class="text-sm font-semibold px-3 py-1 rounded-full themed-bg-primary themed-text-secondary border themed-border w-fit">July
+                                2026</span>
                         </div>
                         <p class="themed-text-secondary mt-1">
-                            <span class="font-medium">Ranjan Sarkar</span>, <span class="font-medium">Prabhat K. Mishra</span>
+                            <span class="font-medium">Ranjan Sarkar</span>, <span class="font-medium">Prabhat K.
+                                Mishra</span>
                         </p>
                         <p class="themed-text-secondary mt-2">
-                            This work presents a minimum variance perspective to solve LQG-style POMDP problems without explicit state estimation.
+                            This work presents a minimum variance perspective to solve LQG-style POMDP problems without
+                            explicit state estimation.
                         </p>
                         <!-- <div class="publication-meta-grid mt-4">
                             <div class="themed-bg-primary border themed-border rounded-lg p-3">
@@ -816,13 +1008,11 @@
                             </div>
                         </div> -->
                         <div class="mt-3 flex flex-wrap items-center gap-4">
-                            <a href="https://arxiv.org/abs/2607.12135" target="_blank" class="themed-accent hover:underline font-medium">Paper</a>
+                            <a href="https://arxiv.org/abs/2607.12135" target="_blank"
+                                class="themed-accent hover:underline font-medium">Paper</a>
                             <span class="themed-text-secondary font-medium">Code (coming soon)</span>
-                            <button
-                                type="button"
-                                class="cite-trigger themed-accent hover:underline font-medium"
-                                data-cite-title="BibTeX Citation"
-                                data-bibtex="@article{ranjan2026_lqg,
+                            <button type="button" class="cite-trigger themed-accent hover:underline font-medium"
+                                data-cite-title="BibTeX Citation" data-bibtex="@article{ranjan2026_lqg,
     title={{LQG} solution for {POMDP} without estimating states: A minimum variance approach}, 
     author={Sarkar, Ranjan and Mishra, Prabhat K.},
     journal={arXiv preprint arXiv:2607.12135},
@@ -854,48 +1044,77 @@
                 </div>
             </div>
         </section>
-        
+
 
 
         <!-- TAShip Section -->
         <section id="TA" class="scroll-animate py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching Assistantship (TA)</h2>
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching
+                    Assistantship (TA)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     <!-- Course Card 4 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="rl">
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                        data-course="rl">
                         <div class="p-6">
-                            <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                            <p
+                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
+                                Autumn 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning
+                            </h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a
+                                    href="https://prabhatkmishra.github.io/people.html" target="_blank"
+                                    class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
+                                <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
                     <!-- Course Card 3 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="robot">
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                        data-course="robot">
                         <div class="p-6">
-                            <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60209 • AI for Robot Autonomy</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                            <p
+                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
+                                Autumn 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60209 • AI for Robot Autonomy
+                            </h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a
+                                    href="https://prabhatkmishra.github.io/people.html" target="_blank"
+                                    class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
+                                <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
                     <!-- Course Card 2 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="aicps">
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                        data-course="aicps">
                         <div class="p-6">
-                            <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Spring 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical Systems</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                            <p
+                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
+                                Spring 2026</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical
+                                Systems</h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a
+                                    href="https://prabhatkmishra.github.io/people.html" target="_blank"
+                                    class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
+                                <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
                     <!-- Course Card 1 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl" data-course="amfai">
+                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                        data-course="amfai">
                         <div class="p-6">
-                            <p class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">Autumn 2025</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211 • Algorithmic and Mathematical Foundations for AI</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details &rarr;</span>
+                            <p
+                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
+                                Autumn 2025</p>
+                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211 • Algorithmic and
+                                Mathematical Foundations for AI</h3>
+                            <p class="themed-text-secondary mb-4">Instructor: <a
+                                    href="https://sites.google.com/site/adwayresearch/" target="_blank"
+                                    class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
+                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
+                                <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
                 </div>
@@ -904,10 +1123,11 @@
     </main>
 
     <!-- Background Page -->
-    <div id="background" class="scroll-animate scroll-mt-20 fullscreen-page min-h-screen themed-bg-secondary pt-8 pb-16 md:pt-12 md:pb-20">
+    <div id="background"
+        class="scroll-animate scroll-mt-20 fullscreen-page min-h-screen themed-bg-secondary pt-8 pb-16 md:pt-12 md:pb-20">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-12 text-center">Background</h1>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div>
                     <h2 class="text-2xl font-bold text-center themed-text-primary themed-accent mb-12">Education</h2>
@@ -916,8 +1136,14 @@
                             <div class="timeline-date">2025 - Present</div>
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
-                                <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a></p>
+                                <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence
+                                </h3>
+                                <p class="themed-text-secondary text-sm">
+                                    <i class="fa-solid fa-university"></i>&nbsp;
+                                    <a href="https://www.iitkgp.ac.in" target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">IIT
+                                        Kharagpur</a>
+                                </p>
                             </div>
                         </div>
                         <div class="timeline-item">
@@ -925,7 +1151,13 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">M.Sc in Mathematics</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">IIT Kharagpur</a></p>
+                                <p class="themed-text-secondary text-sm">
+                                    <i class="fa-solid fa-university"></i>&nbsp;
+                                    <a href="https://www.iitkgp.ac.in" target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">IIT
+                                        Kharagpur
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="timeline-item">
@@ -933,7 +1165,12 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">B.Sc in Mathematics</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://vidyamandira.ac.in/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">University of Calcutta</a></p>
+                                <p class="themed-text-secondary text-sm">
+                                    <i class="fa-solid fa-university"></i>&nbsp;
+                                    <a href="https://vidyamandira.ac.in/" target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">
+                                        University of Calcutta</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -946,8 +1183,12 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant (TA)</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://ai.iitkgp.ac.in/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Artificial Intelligence</a>, IIT Kharagpur</p>
-                                <p class="themed-text-secondary text-sm mt-2">Assisted with UG and PG courses, including preparing assignments, conducting tutorials.</p>
+                                <p class="themed-text-secondary text-sm"><a href="https://ai.iitkgp.ac.in/"
+                                        target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">Dept. of
+                                        Artificial Intelligence</a>, IIT Kharagpur</p>
+                                <p class="themed-text-secondary text-sm mt-2">Assisted with UG and PG courses, including
+                                    preparing assignments, conducting tutorials.</p>
                             </div>
                         </div>
                         <div class="timeline-item">
@@ -955,7 +1196,10 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">EXL Service</a>, Gurgaon IN</p>
+                                <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/"
+                                        target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">EXL
+                                        Service</a>, Gurgaon IN</p>
                             </div>
                         </div>
                         <div class="timeline-item">
@@ -963,9 +1207,16 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-content">
                                 <h3 class="text-lg font-semibold themed-text-primary">Master's Project Student</h3>
-                                <p class="themed-text-secondary text-sm"><a href="https://www.iitkgp.ac.in/department/MA" target="_blank" class="themed-text-secondary text-accent font-medium hover:underline">Dept. of Mathematics</a>, IIT Kharagpur</p>
-                                <p class="themed-text-secondary text-sm mt-2">Supervisor: <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-srkhare" target="_blank" class="text-accent font-medium hover:underline">Prof. Swanand Khare</a>.</p>
-                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor Decomposition in Image Compression using <strong>Singular Value Decomposition (SVD)</strong> and <strong>Alternating Least Square (ALS)</strong> Algorithm</p>
+                                <p class="themed-text-secondary text-sm"><a
+                                        href="https://www.iitkgp.ac.in/department/MA" target="_blank"
+                                        class="themed-text-secondary text-accent font-medium hover:underline">Dept. of
+                                        Mathematics</a>, IIT Kharagpur</p>
+                                <p class="themed-text-secondary text-sm mt-2">Supervisor: <a
+                                        href="https://www.iitkgp.ac.in/department/MA/faculty/ma-srkhare" target="_blank"
+                                        class="text-accent font-medium hover:underline">Prof. Swanand Khare</a>.</p>
+                                <p class="themed-text-secondary text-sm mt-2">Worked on Application of Tensor
+                                    Decomposition in Image Compression using <strong>Singular Value Decomposition
+                                        (SVD)</strong> and <strong>Alternating Least Square (ALS)</strong> Algorithm</p>
                             </div>
                         </div>
                         <!-- <div class="timeline-item">
@@ -982,14 +1233,19 @@
             </div>
 
             <div class="mt-16 text-center">
-                <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
+                <a href="#"
+                    class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    &nbsp; Back to Portfolio</a>
             </div>
         </div>
     </div>
-    <div id="seminars" class="scroll-animate scroll-mt-20 course-page min-h-screen themed-bg-secondary pt-20 pb-20 md:pt-20 md:pb-20">
+    <div id="seminars"
+        class="scroll-animate scroll-mt-20 course-page min-h-screen themed-bg-secondary pt-20 pb-20 md:pt-20 md:pb-20">
         <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
-            <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Seminar / Talks</h1>
-            
+            <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Seminar /
+                Talks</h1>
+
             <div class="space-y-12">
                 <!-- Template for Future Presentation -->
                 <!-- <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
@@ -1010,35 +1266,55 @@
                         <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" frameborder="0" scrolling="no">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                     </div>
                 </div> -->
-               
+
                 <!-- Presentation Item 1 -->
-                <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
+                <div
+                    class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
                     <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                        <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar" aria-label="Self-Study Seminar"></div>
-                        <h2 class="text-xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distribution</h2>
+                        <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar"
+                            aria-label="Self-Study Seminar"></div>
+                        <h2 class="text-xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its
+                            extension to unknown distribution</h2>
                         <p class="text-slate-500 dark:text-slate-400 flex items-center">
-                            <span class="mr-5 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
-                            <span class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
+                            <span class="mr-5 flex items-center"><svg class="w-4 h-4 mr-2" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg> Dec 2025</span>
+                            <span class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>Department of Artificial Intelligence, IIT Kharagpur</span>
                         </p>
                     </div>
                     <div class="seminar-embed themed-bg-primary rounded-lg bg-slate-200 dark:bg-slate-900">
-                        <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" frameborder="0" scrolling="no">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                        <iframe
+                            src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1"
+                            frameborder="0" scrolling="no">This is an embedded <a target="_blank"
+                                href="https://office.com">Microsoft Office</a> presentation, powered by <a
+                                target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                     </div>
                 </div>
-                
+
                 <!-- <div class="mt-16 text-center">
                     <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
                 </div> -->
             </div>
-        </div>    
+        </div>
     </div>
-    
+
     <!-- Modal for Course Topics -->
     <div id="course-modal" class="modal">
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
             <div class="flex justify-between items-center mb-1">
                 <h3 id="modal-id" class="text-xl font-bold themed-text-primary themed-accent">Course id</h3>
-                <button id="close-modal" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
+                <button id="close-modal"
+                    class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
             </div>
             <h3 id="modal-title" class="text-2xl font-bold themed-text-primary mb-4">Course Name</h3>
             <div id="modal-body" class="themed-text-secondary">
@@ -1050,28 +1326,33 @@
             <!-- Tutorial Button Container -->
             <div class="button-container">
                 <div id="modal-tutorial-container" class="hidden">
-                    <a href="#" id="modal-tutorial-btn" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                    <a href="#" id="modal-tutorial-btn"
+                        class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
                         View Coding Tutorials
                     </a>
                 </div>
-                <a href="#" id="modal-fullscreen-link" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                <a href="#" id="modal-fullscreen-link"
+                    class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
                     View Full Course Page
                 </a>
             </div>
         </div>
     </div>
-    
+
     <div id="cite-modal" class="modal" aria-hidden="true">
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
             <div class="flex justify-between items-center mb-3">
-                <h3 id="cite-modal-title" class="text-xl font-bold themed-text-primary themed-accent">BibTeX Citation</h3>
-                <button id="close-cite-modal" type="button" class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
+                <h3 id="cite-modal-title" class="text-xl font-bold themed-text-primary themed-accent">BibTeX Citation
+                </h3>
+                <button id="close-cite-modal" type="button"
+                    class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
             </div>
             <!-- <p class="themed-text-secondary text-sm mb-4">The citation is copied automatically when this popup opens.</p> -->
             <pre id="cite-bibtex-text" class="citation-pre themed-text-primary"></pre>
             <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p id="cite-copy-status" class="text-sm themed-text-secondary" aria-live="polite"></p>
-                <button id="copy-cite-btn" type="button" class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                <button id="copy-cite-btn" type="button"
+                    class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
                     Copy BibTeX
                 </button>
             </div>
@@ -1085,84 +1366,141 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI60211</h1>
-                    <h1 class="text-4xl font-bold themed-text-primary mb-2">Algorithmic and Mathematical Foundations for AI</h1>
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">Algorithmic and Mathematical Foundations for
+                        AI</h1>
                     <p class="text-xl themed-text-secondary">Autumn 2025 • IIT Kharagpur</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Description</h2>
-                        <p class="themed-text-secondary mb-6">This course introduces the fundamental mathematical concepts of linear algebra, probability, statistics, optimization and sorting, searching, graph algorithms. It's designed for first-year MTech students. As a teaching assistant, my responsibilities included conducting tutorial sessions, holding doubt-clearing sessions for the Maths part. The Algorithm part was assisted by other TAs.</p>
-                        
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments</h2>
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
+                            Description</h2>
+                        <p class="themed-text-secondary mb-6">This course introduces the fundamental mathematical
+                            concepts of linear algebra, probability, statistics, optimization and sorting, searching,
+                            graph algorithms. It's designed for first-year MTech students. As a teaching assistant, my
+                            responsibilities included conducting tutorial sessions, holding doubt-clearing sessions for
+                            the Maths part. The Algorithm part was assisted by other TAs.</p>
+
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Assignments
+                        </h2>
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 0: &nbsp;Introductory Session</h3>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 0: &nbsp;Introductory
+                                        Session</h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         July 17, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/1HOqjNLTgU6UpcOyhxbtwrsDv70KUeGIj/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/1HOqjNLTgU6UpcOyhxbtwrsDv70KUeGIj/view"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 1: &nbsp;Group, Ring, Field</h3>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 1: &nbsp;Group, Ring, Field
+                                    </h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         July 26, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/1PbrYCwEmxeQ4zPgv47H0q4jlETAee-2b/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/1PbrYCwEmxeQ4zPgv47H0q4jlETAee-2b/view"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
                                     <h3 class="font-semibold themed-text-primary">Assignment 2: &nbsp;Vector Space</h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         Aug 4, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/1O-d10tV67zOmDfASo8OZZTKXdBpw9jHB/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/1O-d10tV67zOmDfASo8OZZTKXdBpw9jHB/view"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 3: &nbsp;Linear Algebra</h3>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 3: &nbsp;Linear Algebra
+                                    </h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         Aug 14, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/14uJglv8dAmai3DNJCHL73sQ5cq9w4wiA/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/14uJglv8dAmai3DNJCHL73sQ5cq9w4wiA/view"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <h3 class="font-semibold themed-text-primary">Assignment 4: &nbsp;Probability Theory</h3>
+                                    <h3 class="font-semibold themed-text-primary">Assignment 4: &nbsp;Probability Theory
+                                    </h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         Sept 1, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/1zaYzqqzkL1f_wOC6VaUALxOJLvGcQyqp" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/1zaYzqqzkL1f_wOC6VaUALxOJLvGcQyqp"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center">
                                 <div>
                                     <h3 class="font-semibold themed-text-primary">Assignment 5: &nbsp;Optimization</h3>
                                     <span class="mr-1 flex items-center text-sm themed-text-secondary mb-1">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         Sept 15, 2025
                                     </span>
                                 </div>
-                                <a href="https://drive.google.com/file/d/1UfhIHuSEncwL1pOpeHi683siRYCaqIya/view" target="_blank" class="themed-accent hover:underline text-sm font-medium">View &rarr;</a>
+                                <a href="https://drive.google.com/file/d/1UfhIHuSEncwL1pOpeHi683siRYCaqIya/view"
+                                    target="_blank" class="themed-accent hover:underline text-sm font-medium">View
+                                    &rarr;</a>
                             </div>
                         </div>
                     </div>
                     <div class="md:col-span-1">
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary">
-                                <p><strong>Instructor: </strong><a href="https://sites.google.com/site/adwayresearch/" target="_blank" class="whitespace-nowrap text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
+                                Details</h2>
+                            <div class="space-y-3 themed-text-secondary">
+                                <p><strong>Instructor: </strong><a href="https://sites.google.com/site/adwayresearch/"
+                                        target="_blank"
+                                        class="whitespace-nowrap text-accent font-medium hover:underline">Prof. Adway
+                                        Mitra</a></p>
                                 <div>
                                     <p><strong>TA:</strong></p>
                                     <ul class="mt-1 list-disc list-inside space-y-1">
@@ -1171,10 +1509,11 @@
                                     </ul>
                                 </div>
                                 <!-- <p><strong>Timings:</strong> Mon 4-6 PM & Thu 3-5 PM</p> -->
-                             </div>
+                            </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
+                            </h2>
                             <ul class="list-disc list-inside space-y-2 themed-text-secondary">
                                 <li>Linear Algebra</li>
                                 <li>Probability Theory</li>
@@ -1195,26 +1534,35 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI61006</h1>
-                    <h1 class="text-4xl font-bold themed-text-primary mb-2">Artificial Intelligence for Cyber Physical Systems</h1>
+                    <h1 class="text-4xl font-bold themed-text-primary mb-2">Artificial Intelligence for Cyber Physical
+                        Systems</h1>
                     <p class="text-xl themed-text-secondary">Spring 2026 • IIT Kharagpur</p>
                 </div>
                 <!-- Tutorial List -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                     <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding Tutorials</h2>
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding
+                            Tutorials</h2>
                         <!-- Tutorial 1 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction to Python</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction
+                                        to Python</h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
-                                        <!-- <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> -->
-                                        <i class="fa-regular fa-calendar-check"></i> &ensp;
+                                            <!-- <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> -->
+                                            <i class="fa-regular fa-calendar-check"></i> &ensp;
                                             Jan 12, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Pankaj Maurya, &nbsp;Ranjan Sarkar
                                         </span>
                                     </div>
@@ -1227,69 +1575,102 @@
                                         <li>OpenAI Gym</li>
                                     </ul>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T1_Intro.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T1_Intro.ipynb"
+                                    target="_blank"
+                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
                             </div>
                         </div>
                         <!-- Tutorial 2 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning
+                                    </h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-1 text-sm">
                                         <span class="flex items-center">
-                                        <i class="fa-regular fa-calendar-check"></i> &ensp;Feb 10, 2026
+                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Feb 10, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Ranjan Sarkar
                                         </span>
                                     </div>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T2_Q-Learning.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T2_Q-Learning.ipynb"
+                                    target="_blank"
+                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
                             </div>
                         </div>
                         <!-- Tutorial 3 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 3: &nbsp;Deep Q-Network (DQN)</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 3: &nbsp;Deep
+                                        Q-Network (DQN)</h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
-                                        <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 10, 2026
+                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 10, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Ranjan Sarkar
                                         </span>
                                     </div>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T3_DQN.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T3_DQN.ipynb"
+                                    target="_blank"
+                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
                             </div>
                         </div>
                         <!-- Tutorial 4 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 4: &nbsp;REINFORCE</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 4: &nbsp;REINFORCE
+                                    </h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
-                                        <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 17, 2026
+                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 17, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Ankam Solomon Surya Sekhar
                                         </span>
                                     </div>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T4_REINFORCE.ipynb" target="_blank" class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T4_REINFORCE.ipynb"
+                                    target="_blank"
+                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
                             </div>
                         </div>
                     </div>
                     <div class="md:col-span-1">
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary">
-                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
+                                Details</h2>
+                            <div class="space-y-3 themed-text-secondary">
+                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html"
+                                        target="_blank"
+                                        class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K.
+                                        Mishra</a></p>
                                 <div>
                                     <p><strong>TA:</strong></p>
                                     <ul class="mt-1 list-disc list-outside pl-5 space-y-1">
@@ -1300,10 +1681,11 @@
                                     </ul>
                                 </div>
                                 <p><strong>Timings:</strong> <br>Mon 3-5 PM & Tue 2-4 PM</p>
-                             </div>
+                            </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
+                            </h2>
                             <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary">
                                 <li>Introduction</li>
                                 <li>Acting: RL, Q-Learning, SARSA, Gymnasium</li>
@@ -1313,9 +1695,13 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mt-20 text-center">
-                    <a href="https://prabhatkmishra.github.io/cps.html" target="_blank" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">Visit Official Course Page &rarr;</a>
+                    <a href="https://prabhatkmishra.github.io/cps.html" target="_blank"
+                        class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                        Visit Official Course Page&nbsp;
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1327,22 +1713,30 @@
                     <h1 class="text-4xl font-bold themed-text-primary mb-2">AI for Robot Autonomy</h1>
                     <p class="text-xl themed-text-secondary">Autumn 2026 • IIT Kharagpur</p>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding Tutorials</h2>
-                        
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding
+                            Tutorials</h2>
+
                         <!-- Tutorial 1 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction to Python & Gymnasium</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction
+                                        to Python & Gymnasium</h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
                                             <i class="fa-regular fa-calendar-check"></i> &ensp;Aug 12, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Satvik Jaiswal, &nbsp;Subhro Halder, &nbsp;Ranjan Sarkar
                                         </span>
                                     </div>
@@ -1354,15 +1748,23 @@
                                         <li>OpenAI Gymnasium</li>
                                     </ul>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T1_Introduction.ipynb" target="_blank" class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T1_Introduction.ipynb"
+                                    target="_blank"
+                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
+                                </a>
+                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
                             </div>
                         </div>
                     </div>
                     <div class="md:col-span-1">
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary text-sm">
-                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
+                                Details</h2>
+                            <div class="space-y-3 themed-text-secondary text-sm">
+                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html"
+                                        target="_blank"
+                                        class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K.
+                                        Mishra</a></p>
                                 <div>
                                     <p><strong>TA:</strong></p>
                                     <ul class="mt-1 list-disc list-outside pl-5 space-y-2">
@@ -1376,10 +1778,11 @@
                                     </ul>
                                 </div>
                                 <p><strong>Timings:</strong> <br>Wed 2-6 PM</p>
-                             </div>
+                            </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
+                            </h2>
                             <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary text-sm">
                                 <li>Module 1: &nbsp;Foundation of robotics</li>
                                 <li>Module 2: &nbsp;Introduction to RL</li>
@@ -1393,7 +1796,11 @@
                 </div>
 
                 <div class="mt-20 text-center">
-                    <a href="https://prabhatkmishra.github.io/robot_autonomy.html" target="_blank" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">Visit Official Course Page &rarr;</a>
+                    <a href="https://prabhatkmishra.github.io/robot_autonomy.html" target="_blank"
+                        class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                        Visit Official Course Page&nbsp;
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1405,22 +1812,30 @@
                     <h1 class="text-4xl font-bold themed-text-primary mb-2">Reinforcement Learning</h1>
                     <p class="text-xl themed-text-secondary">Autumn 2026 • IIT Kharagpur</p>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding Tutorials</h2>
-                        
+                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding
+                            Tutorials</h2>
+
                         <!-- Tutorial 1 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction to Python & Gymnasium</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction
+                                        to Python & Gymnasium</h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
                                             <i class="fa-regular fa-calendar-check"></i> &ensp;Aug 7, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Ranjan Sarkar
                                         </span>
                                     </div>
@@ -1432,34 +1847,51 @@
                                         <li>OpenAI Gymnasium</li>
                                     </ul>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/RL/AI31201_T1_Introduction.ipynb" target="_blank" class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/RL/AI31201_T1_Introduction.ipynb"
+                                    target="_blank"
+                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
+                                    &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
                             </div>
                         </div>
 
                         <!-- Tutorial 2 -->
                         <div class="space-y-4">
-                            <div class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
+                            <div
+                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning</h3>
+                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning
+                                    </h3>
                                     <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
                                         <span class="flex items-center">
                                             <i class="fa-regular fa-calendar-check"></i> &ensp;Aug 14, 2026
                                         </span>
                                         <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
                                             Samarth Gupta
                                         </span>
                                     </div>
                                 </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/RL/AI31201_T2_Q-Learning.ipynb" target="_blank" class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
+                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/RL/AI31201_T2_Q-Learning.ipynb"
+                                    target="_blank"
+                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
+                                    &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="md:col-span-1">
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course Details</h2>
-                             <div class="space-y-3 themed-text-secondary text-sm">
-                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html" target="_blank" class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></p>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
+                                Details</h2>
+                            <div class="space-y-3 themed-text-secondary text-sm">
+                                <p><strong>Instructor: </strong><a href="https://prabhatkmishra.github.io/people.html"
+                                        target="_blank"
+                                        class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K.
+                                        Mishra</a></p>
                                 <div>
                                     <p><strong>TA:</strong></p>
                                     <ul class="mt-1 list-disc list-inside space-y-1">
@@ -1472,10 +1904,11 @@
                                     </ul>
                                 </div>
                                 <p><strong>Timings:</strong> <br>Thu 3-5 PM & Fri 2-4 PM</p>
-                             </div>
+                            </div>
                         </div>
                         <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                             <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus</h2>
+                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
+                            </h2>
                             <ul class="list-disc list-inside space-y-2 themed-text-secondary text-sm">
                                 <!-- <li>Introduction to RL</li>
                                 <li>Multi-armed Bandits, Markov Decision Process (MDP)</li>
@@ -1498,26 +1931,47 @@
         <!-- Presentation Archive Page -->
         <section id="seminars" class="course-page min-h-screen themed-bg-secondary py-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
-                <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Talks</h1>
-                
+                <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-8 text-center md:text-center">Talks
+                </h1>
+
                 <div class="space-y-12">
                     <!-- Presentation Item 1 -->
-                    <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
+                    <div
+                        class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
                         <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                            <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar" aria-label="Self-Study Seminar"></div>
-                            <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its extension to unknown distributions</h2>
+                            <div class="seminar-tag themed-text-secondary mb-3" data-tag="Self-Study Seminar"
+                                aria-label="Self-Study Seminar"></div>
+                            <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and
+                                its extension to unknown distributions</h2>
                             <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                                <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Dec 2025</span>
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Department of Artificial Intelligence, IIT Kharagpur</span>
+                                <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg> Dec 2025</span>
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>Department of Artificial Intelligence, IIT Kharagpur</span>
                             </p>
                         </div>
-                        <div class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
+                        <div
+                            class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
                             <!-- <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="100%" height="100%" frameborder="0" scrolling="no" class="absolute inset-0"></iframe> -->
                             <!-- <iframe src="https://iitkgpacin-my.sharepoint.com/personal/ranjan_sarkar_24_kgpian_iitkgp_ac_in/_layouts/15/Doc.aspx?sourcedoc={4add7720-47f5-4ba7-be3e-04ae6c331f49}&amp;action=embedview&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="640px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe> -->
-                            <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+                            <iframe
+                                src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1"
+                                width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank"
+                                    href="https://office.com">Microsoft Office</a> presentation, powered by <a
+                                    target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                         </div>
                     </div>
-                    
+
                     <!-- Template for Future Presentation -->
                     <!-- 
                         <div class="presentation-item bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-xl shadow-lg overflow-hidden">
@@ -1534,592 +1988,579 @@
                     </div> 
                     -->
                     <div class="mt-16 text-center">
-                        <a href="#" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
-                    </div>
-                </div>
-        </div>    
-    </section>
-
-    
-    <!-- Footer -->
-    <footer style="background-color: #0f172a;"> <!-- slate-900, dark color forced -->
-        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Contact</h3>
-                    <div class="flex items-center text-slate-400 justify-center md:justify-start mb-3">
-                        <i class="fas fa-envelope w-5 text-center mr-2"></i>
-                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" class="hover:underline">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
-                    </div>
-                    <div class="flex items-start text-slate-400 justify-center md:justify-start">
-                        <i class="fas fa-map-marker-alt mt-1 w-5 text-center mr-2"></i>
-                        <span><a href="https://maps.app.goo.gl/eUzswzJQnkphKTdq5" target="_blank" class="hover:underline">RHPI Lab, Takshashila 1st Floor</a><br>Department of AI, IIT Kharagpur<br>Kharagpur, WB, India - 721302</span>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <!-- <li><a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a></li> -->
-                        <!-- <li><a href="#research" class="text-slate-400 hover:text-white transition-colors">Research</a></li> -->
-                        <li><a href="#publications" class="text-slate-400 hover:text-white transition-colors">Publications</a></li>
-                        <li><a href="#seminars" class="text-slate-400 hover:text-white transition-colors">Seminar/Talks</a></li>
-                        <li><a href="#TA" class="text-slate-400 hover:text-white transition-colors">TAShip</a></li>
-                        <li><a href="https://ranjan-sarkar.github.io/idoai" target="_blank" class="text-slate-400 hover:text-white transition-colors">IdoAI Talk Series</a></li>
-                        <!-- <li><a href="#background" class="text-slate-400 hover:text-white transition-colors">Background</a></li> -->
-                        <li><a href="https://sites.google.com/view/ranjan-sarkar/ta?authuser=0#h.5j1qyijmklec" target="_blank" class="text-slate-400 hover:text-white transition-colors">Archive</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-7">Connect</h3>
-                    <div class="flex justify-center md:justify-start space-x-5">
-                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email" data-tooltip="Email" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fas fa-envelope fa-lg"></i></a>
-                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn" data-tooltip="LinkedIn" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" data-tooltip="Google Scholar" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-google-scholar fa-lg"></i></a>
-                        <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank" aria-label="ResearchGate" data-tooltip="ResearchGate" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-researchgate fa-lg"></i></a>
-                        <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub" data-tooltip="GitHub" class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="#"
+                            class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr;
+                            Back to Portfolio</a>
                     </div>
                 </div>
             </div>
-            <div class="mt-10 border-t border-slate-700 pt-8 text-center text-slate-500 text-sm">
-                <span class="inter-font">&copy;</span> 2026 Ranjan Sarkar. All Rights Reserved.
+        </section>
+
+
+        <!-- Footer -->
+        <footer style="background-color: #0f172a;"> <!-- slate-900, dark color forced -->
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                    <div>
+                        <h3 class="font-semibold text-white mb-4">Contact</h3>
+                        <div class="flex items-center text-slate-400 justify-center md:justify-start mb-3">
+                            <i class="fas fa-envelope w-5 text-center mr-2"></i>
+                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank"
+                                class="hover:underline">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
+                        </div>
+                        <div class="flex items-start text-slate-400 justify-center md:justify-start">
+                            <i class="fas fa-map-marker-alt mt-1 w-5 text-center mr-2"></i>
+                            <span><a href="https://maps.app.goo.gl/eUzswzJQnkphKTdq5" target="_blank"
+                                    class="hover:underline">RHPI Lab, Takshashila 1st Floor</a><br>Department of AI, IIT
+                                Kharagpur<br>Kharagpur, WB, India - 721302</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <!-- <li><a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a></li> -->
+                            <!-- <li><a href="#research" class="text-slate-400 hover:text-white transition-colors">Research</a></li> -->
+                            <li><a href="#publications"
+                                    class="text-slate-400 hover:text-white transition-colors">Publications</a></li>
+                            <li><a href="#seminars"
+                                    class="text-slate-400 hover:text-white transition-colors">Seminar/Talks</a></li>
+                            <li><a href="#TA" class="text-slate-400 hover:text-white transition-colors">TAShip</a></li>
+                            <li><a href="https://ranjan-sarkar.github.io/idoai" target="_blank"
+                                    class="text-slate-400 hover:text-white transition-colors">IdoAI Talk Series</a></li>
+                            <!-- <li><a href="#background" class="text-slate-400 hover:text-white transition-colors">Background</a></li> -->
+                            <li><a href="https://sites.google.com/view/ranjan-sarkar/ta?authuser=0#h.5j1qyijmklec"
+                                    target="_blank"
+                                    class="text-slate-400 hover:text-white transition-colors">Archive</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-7">Connect</h3>
+                        <div class="flex justify-center md:justify-start space-x-5">
+                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
+                                data-tooltip="Email"
+                                class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fas fa-envelope fa-lg"></i></a>
+                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
+                                data-tooltip="LinkedIn"
+                                class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
+                                aria-label="Google Scholar" data-tooltip="Google Scholar"
+                                class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-google-scholar fa-lg"></i></a>
+                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
+                                aria-label="ResearchGate" data-tooltip="ResearchGate"
+                                class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-researchgate fa-lg"></i></a>
+                            <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
+                                data-tooltip="GitHub"
+                                class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                                    class="fab fa-github fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 border-t border-slate-700 pt-8 text-center text-slate-500 text-sm">
+                    <span class="inter-font">&copy;</span> 2026 Ranjan Sarkar. All Rights Reserved.
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 z-50 p-3 rounded-full themed-accent-bg dark:bg-dark-primary text-white shadow-lg hover:opacity-90 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-        </svg>
-    </button>
+        <!-- Scroll to Top Button -->
+        <button id="scroll-to-top"
+            class="fixed bottom-8 right-8 z-50 p-3 rounded-full themed-accent-bg dark:bg-dark-primary text-white shadow-lg hover:opacity-90 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Theme Switcher ---
-            const themeToggle = document.getElementById('theme-toggle');
-            const darkIcon = document.getElementById('theme-icon-dark');
-            const lightIcon = document.getElementById('theme-icon-light');
-            
-            // Check for saved theme in localStorage
-            if (localStorage.getItem('theme') === 'dark' || 
-               (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                darkIcon.style.display = 'none';
-                lightIcon.style.display = 'inline-block';
-            } else {
-                document.documentElement.classList.remove('dark');
-                darkIcon.style.display = 'inline-block';
-                lightIcon.style.display = 'none';
-            }
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // --- Theme Switcher ---
+                const themeToggle = document.getElementById('theme-toggle');
+                const darkIcon = document.getElementById('theme-icon-dark');
+                const lightIcon = document.getElementById('theme-icon-light');
 
-            themeToggle.addEventListener('click', () => {
-                document.documentElement.classList.toggle('dark');
-                if (document.documentElement.classList.contains('dark')) {
-                    localStorage.setItem('theme', 'dark');
+                // Check for saved theme in localStorage
+                if (localStorage.getItem('theme') === 'dark' ||
+                    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
                     darkIcon.style.display = 'none';
                     lightIcon.style.display = 'inline-block';
                 } else {
-                    localStorage.setItem('theme', 'light');
+                    document.documentElement.classList.remove('dark');
                     darkIcon.style.display = 'inline-block';
                     lightIcon.style.display = 'none';
                 }
-            });
 
-            // --- Mobile Menu ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const openIcon = document.getElementById('mobile-menu-open-icon');
-            const closeIcon = document.getElementById('mobile-menu-close-icon');
-            const mobileTaToggle = document.getElementById('mobile-ta-toggle');
-            const mobileTaSubmenu = document.getElementById('mobile-ta-submenu');
-
-            const closeMobileTaSubmenu = () => {
-                if (!mobileTaToggle || !mobileTaSubmenu) {
-                    return;
-                }
-
-                mobileTaSubmenu.classList.remove('is-open');
-                mobileTaToggle.setAttribute('aria-expanded', 'false');
-            };
-
-            const toggleMobileTaSubmenu = () => {
-                if (!mobileTaToggle || !mobileTaSubmenu) {
-                    return;
-                }
-
-                const isOpen = mobileTaSubmenu.classList.toggle('is-open');
-                mobileTaToggle.setAttribute('aria-expanded', String(isOpen));
-            };
-
-            mobileMenuButton.addEventListener('click', () => {
-                const isMenuHidden = mobileMenu.classList.toggle('hidden');
-                openIcon.style.display = isMenuHidden ? 'block' : 'none';
-                closeIcon.style.display = isMenuHidden ? 'none' : 'block';
-                if (isMenuHidden) {
-                    closeMobileTaSubmenu();
-                }
-            });
-
-            if (mobileTaToggle) {
-                mobileTaToggle.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleMobileTaSubmenu();
-                });
-            }
-
-            // Close mobile menu when a link is clicked
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    openIcon.style.display = 'block';
-                    closeIcon.style.display = 'none';
-                    closeMobileTaSubmenu();
-                });
-            });
-
-            // Scroll animation logic
-            const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-            scrollAnimateElements.forEach(el => scrollObserver.observe(el));
-                
-            // --- Modal Logic ---
-            const courseData = {
-                'amfai': {
-                    id: 'AI60211',
-                    title: 'Algorithmic and Mathematical Foundations for AI',
-                    shortname: 'AMFAI',
-                    topics: [
-                        'Linear Algebra, Matrix Theory',
-                        'Probability Theory, Statistics',
-                        'Optimization Theory and Algorithms',
-                        'Searching and Sorting Algorithms',
-                        'Graph Algorithms, BFS, DFS',
-                    ],
-                    link: '#amfai'
-                },
-                'aicps': {
-                    id: 'AI61006',
-                    title: 'AI for Cyber Physical Systems',
-                    shortname: 'AICPS',
-                    topics: [
-                        'Introduction',
-                        'Acting: RL, Q-Learning, SARSA, Gymnasium',
-                        'Planning: A*, RRT, PRM',
-                        'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
-                    ],
-                    tutorialUrl: "#aicps",
-                    link: 'https://prabhatkmishra.github.io/cps.html'
-                },
-                'rl': {
-                    id: 'AI31201',
-                    title: 'Reinforcement Learning',
-                    shortname: 'RL',
-                    topics: [
-                        'Will be updated soon!'
-                        // 'Introduction',
-                        // 'Policy Based Methods: REINFORCE, Actor-Critic',
-                        // 'Value Based Methods: Q-Learning, DQN, Double DQN',
-                    ],
-                    // tutorialUrl: "#aicps",
-                    link: '#rl'
-                },
-                'robot': {
-                    id: 'AI60209',
-                    title: 'AI for Robot Autonomy',
-                    shortname: 'Robot',
-                    topics: [
-                        'Module 1: Foundation of robotics',
-                        'Module 2: Introduction to RL',
-                        'Module 3: Autonomy with RL',
-                        'Module 4: Autonomy with dynamical systems',
-                        'Module 5: Introduction to Model Predictive Control',
-                        'Module 6: Autonomy under constraints'
-                    ],
-                    tutorialUrl: "#robot",
-                    link: 'https://prabhatkmishra.github.io/robot_autonomy.html'
-                }
-            };
-            
-            const modal = document.getElementById('course-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const modalId = document.getElementById('modal-id');
-            const modalTitle = document.getElementById('modal-title');
-            const modalTopics = document.getElementById('modal-topics');
-            const modalTutorialBtn = document.getElementById('modal-tutorial-btn');
-            const modalTutorialContainer = document.getElementById('modal-tutorial-container');
-            const modalFullscreenLink = document.getElementById('modal-fullscreen-link');
-            
-            document.querySelectorAll('.course-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const courseId = card.dataset.course;
-                    const data = courseData[courseId];
-
-                    modalId.textContent = data.id;
-                    modalTitle.textContent = data.title;
-                    modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
-                    
-                    // Handle Tutorial Button
-                    if (data.tutorialUrl) {
-                        modalTutorialBtn.href = data.tutorialUrl;
-                        modalTutorialContainer.classList.remove('hidden');
+                themeToggle.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        darkIcon.style.display = 'none';
+                        lightIcon.style.display = 'inline-block';
                     } else {
-                        modalTutorialContainer.classList.add('hidden');
+                        localStorage.setItem('theme', 'light');
+                        darkIcon.style.display = 'inline-block';
+                        lightIcon.style.display = 'none';
                     }
-                
-                    if (data.link.startsWith('#')) {
-                        modalFullscreenLink.href = `#${courseId}`;
-                        modalFullscreenLink.target = "_self";
-                    } else {
-                        modalFullscreenLink.href = data.link;
-                        modalFullscreenLink.target = "_blank";
-                    }
-                    modal.classList.add('show');
                 });
-            });
-            
-            const closeModal = () => {
-                modal.classList.remove('show');
-            };
 
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-            
-            
-            const citeModal = document.getElementById('cite-modal');
-            const citeTriggers = document.querySelectorAll('.cite-trigger');
-            const closeCiteModalBtn = document.getElementById('close-cite-modal');
-            const copyCiteBtn = document.getElementById('copy-cite-btn');
-            const citeBibtexText = document.getElementById('cite-bibtex-text');
-            const citeCopyStatus = document.getElementById('cite-copy-status');
-            const citeModalTitle = document.getElementById('cite-modal-title');
-            const taDropdown = document.querySelector('.ta-dropdown');
-            const taDropdownButton = document.getElementById('ta-dropdown-button');
-            const taDropdownLinks = taDropdown ? Array.from(taDropdown.querySelectorAll('.ta-dropdown-menu a')) : [];
+                // --- Mobile Menu ---
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const openIcon = document.getElementById('mobile-menu-open-icon');
+                const closeIcon = document.getElementById('mobile-menu-close-icon');
+                const mobileTaToggle = document.getElementById('mobile-ta-toggle');
+                const mobileTaSubmenu = document.getElementById('mobile-ta-submenu');
 
-            const syncTaDropdownActiveState = (hash) => {
-                const activeCourseId = courseData[hash] ? hash : '';
-
-                taDropdownLinks.forEach((link) => {
-                    const linkCourseId = link.dataset.courseLink || link.getAttribute('href')?.replace('#', '');
-                    link.classList.toggle('is-active', Boolean(activeCourseId) && linkCourseId === activeCourseId);
-                });
-            };
-
-            const closeTaDropdown = () => {
-                if (!taDropdown) {
-                    return;
-                }
-
-                taDropdown.classList.remove('is-open');
-                if (taDropdownButton) {
-                    taDropdownButton.setAttribute('aria-expanded', 'false');
-                }
-            };
-
-            const toggleTaDropdown = () => {
-                if (!taDropdown) {
-                    return;
-                }
-
-                const isOpen = taDropdown.classList.toggle('is-open');
-                if (taDropdownButton) {
-                    taDropdownButton.setAttribute('aria-expanded', String(isOpen));
-                }
-            };
-
-            if (taDropdownButton) {
-                taDropdownButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleTaDropdown();
-                });
-            }
-
-            taDropdownLinks.forEach((link) => {
-                link.addEventListener('click', () => {
-                    const targetHash = link.getAttribute('href')?.replace('#', '') || '';
-                    syncTaDropdownActiveState(targetHash);
-                    closeTaDropdown();
-                });
-            });
-
-            document.addEventListener('click', (e) => {
-                if (taDropdown && !taDropdown.contains(e.target)) {
-                    closeTaDropdown();
-                }
-            });
-
-            const setCitationStatus = (message, isError = false) => {
-                citeCopyStatus.textContent = message;
-                citeCopyStatus.classList.remove('themed-accent', 'text-red-500');
-                citeCopyStatus.classList.add(isError ? 'text-red-500' : 'themed-accent');
-            };
-
-            const copyCitationToClipboard = () => {
-                if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
-                    setCitationStatus('Clipboard access is unavailable. Please copy the BibTeX text manually.', true);
-                    return;
-                }
-
-                navigator.clipboard.writeText(citeBibtexText.textContent)
-                    .then(() => {
-                        setCitationStatus('BibTeX copied to clipboard!');
-                    })
-                    .catch(() => {
-                        setCitationStatus('Auto-copy failed. Please use the copy button again or copy manually.', true);
-                    });
-            };
-
-            const closeCiteModal = () => {
-                citeModal.classList.remove('show');
-                citeModal.setAttribute('aria-hidden', 'true');
-            };
-
-            citeTriggers.forEach((trigger) => {
-                trigger.addEventListener('click', () => {
-                    const bibtex = trigger.dataset.bibtex;
-                    if (!bibtex) {
-                        citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
-                        citeBibtexText.textContent = '';
-                        setCitationStatus('No BibTeX found for this paper. Add data-bibtex on its Cite button.', true);
-                        citeModal.classList.add('show');
-                        citeModal.setAttribute('aria-hidden', 'false');
+                const closeMobileTaSubmenu = () => {
+                    if (!mobileTaToggle || !mobileTaSubmenu) {
                         return;
                     }
 
-                    citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
-                    citeBibtexText.textContent = bibtex;
-                    setCitationStatus('Copying citation...');
-                    citeModal.classList.add('show');
-                    citeModal.setAttribute('aria-hidden', 'false');
-                    copyCitationToClipboard();
+                    mobileTaSubmenu.classList.remove('is-open');
+                    mobileTaToggle.setAttribute('aria-expanded', 'false');
+                };
+
+                const toggleMobileTaSubmenu = () => {
+                    if (!mobileTaToggle || !mobileTaSubmenu) {
+                        return;
+                    }
+
+                    const isOpen = mobileTaSubmenu.classList.toggle('is-open');
+                    mobileTaToggle.setAttribute('aria-expanded', String(isOpen));
+                };
+
+                mobileMenuButton.addEventListener('click', () => {
+                    const isMenuHidden = mobileMenu.classList.toggle('hidden');
+                    openIcon.style.display = isMenuHidden ? 'block' : 'none';
+                    closeIcon.style.display = isMenuHidden ? 'none' : 'block';
+                    if (isMenuHidden) {
+                        closeMobileTaSubmenu();
+                    }
                 });
-            });
 
-            copyCiteBtn.addEventListener('click', copyCitationToClipboard);
-            closeCiteModalBtn.addEventListener('click', closeCiteModal);
-            citeModal.addEventListener('click', (e) => {
-                if (e.target === citeModal) {
-                    closeCiteModal();
+                if (mobileTaToggle) {
+                    mobileTaToggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleMobileTaSubmenu();
+                    });
                 }
-            });
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                    closeCiteModal();
+                // Close mobile menu when a link is clicked
+                document.querySelectorAll('#mobile-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        openIcon.style.display = 'block';
+                        closeIcon.style.display = 'none';
+                        closeMobileTaSubmenu();
+                    });
+                });
+
+                // Scroll animation logic
+                const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+                const scrollObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                scrollAnimateElements.forEach(el => scrollObserver.observe(el));
+
+                // --- Modal Logic ---
+                const courseData = {
+                    'amfai': {
+                        id: 'AI60211',
+                        title: 'Algorithmic and Mathematical Foundations for AI',
+                        shortname: 'AMFAI',
+                        topics: [
+                            'Linear Algebra, Matrix Theory',
+                            'Probability Theory, Statistics',
+                            'Optimization Theory and Algorithms',
+                            'Searching and Sorting Algorithms',
+                            'Graph Algorithms, BFS, DFS',
+                        ],
+                        link: '#amfai'
+                    },
+                    'aicps': {
+                        id: 'AI61006',
+                        title: 'AI for Cyber Physical Systems',
+                        shortname: 'AICPS',
+                        topics: [
+                            'Introduction',
+                            'Acting: RL, Q-Learning, SARSA, Gymnasium',
+                            'Planning: A*, RRT, PRM',
+                            'Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO',
+                        ],
+                        tutorialUrl: "#aicps",
+                        link: 'https://prabhatkmishra.github.io/cps.html'
+                    },
+                    'rl': {
+                        id: 'AI31201',
+                        title: 'Reinforcement Learning',
+                        shortname: 'RL',
+                        topics: [
+                            'Will be updated soon!'
+                            // 'Introduction',
+                            // 'Policy Based Methods: REINFORCE, Actor-Critic',
+                            // 'Value Based Methods: Q-Learning, DQN, Double DQN',
+                        ],
+                        // tutorialUrl: "#aicps",
+                        link: '#rl'
+                    },
+                    'robot': {
+                        id: 'AI60209',
+                        title: 'AI for Robot Autonomy',
+                        shortname: 'Robot',
+                        topics: [
+                            'Module 1: Foundation of robotics',
+                            'Module 2: Introduction to RL',
+                            'Module 3: Autonomy with RL',
+                            'Module 4: Autonomy with dynamical systems',
+                            'Module 5: Introduction to Model Predictive Control',
+                            'Module 6: Autonomy under constraints'
+                        ],
+                        tutorialUrl: "#robot",
+                        link: 'https://prabhatkmishra.github.io/robot_autonomy.html'
+                    }
+                };
+
+                const modal = document.getElementById('course-modal');
+                const closeModalBtn = document.getElementById('close-modal');
+                const modalId = document.getElementById('modal-id');
+                const modalTitle = document.getElementById('modal-title');
+                const modalTopics = document.getElementById('modal-topics');
+                const modalTutorialBtn = document.getElementById('modal-tutorial-btn');
+                const modalTutorialContainer = document.getElementById('modal-tutorial-container');
+                const modalFullscreenLink = document.getElementById('modal-fullscreen-link');
+
+                document.querySelectorAll('.course-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const courseId = card.dataset.course;
+                        const data = courseData[courseId];
+
+                        modalId.textContent = data.id;
+                        modalTitle.textContent = data.title;
+                        modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
+
+                        // Handle Tutorial Button
+                        if (data.tutorialUrl) {
+                            modalTutorialBtn.href = data.tutorialUrl;
+                            modalTutorialContainer.classList.remove('hidden');
+                        } else {
+                            modalTutorialContainer.classList.add('hidden');
+                        }
+
+                        if (data.link.startsWith('#')) {
+                            modalFullscreenLink.href = `#${courseId}`;
+                            modalFullscreenLink.target = "_self";
+                        } else {
+                            modalFullscreenLink.href = data.link;
+                            modalFullscreenLink.target = "_blank";
+                        }
+                        modal.classList.add('show');
+                    });
+                });
+
+                const closeModal = () => {
+                    modal.classList.remove('show');
+                };
+
+                closeModalBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+
+
+                const citeModal = document.getElementById('cite-modal');
+                const citeTriggers = document.querySelectorAll('.cite-trigger');
+                const closeCiteModalBtn = document.getElementById('close-cite-modal');
+                const copyCiteBtn = document.getElementById('copy-cite-btn');
+                const citeBibtexText = document.getElementById('cite-bibtex-text');
+                const citeCopyStatus = document.getElementById('cite-copy-status');
+                const citeModalTitle = document.getElementById('cite-modal-title');
+                const taDropdown = document.querySelector('.ta-dropdown');
+                const taDropdownButton = document.getElementById('ta-dropdown-button');
+                const taDropdownLinks = taDropdown ? Array.from(taDropdown.querySelectorAll('.ta-dropdown-menu a')) : [];
+
+                const syncTaDropdownActiveState = (hash) => {
+                    const activeCourseId = courseData[hash] ? hash : '';
+
+                    taDropdownLinks.forEach((link) => {
+                        const linkCourseId = link.dataset.courseLink || link.getAttribute('href')?.replace('#', '');
+                        link.classList.toggle('is-active', Boolean(activeCourseId) && linkCourseId === activeCourseId);
+                    });
+                };
+
+                const closeTaDropdown = () => {
+                    if (!taDropdown) {
+                        return;
+                    }
+
+                    taDropdown.classList.remove('is-open');
+                    if (taDropdownButton) {
+                        taDropdownButton.setAttribute('aria-expanded', 'false');
+                    }
+                };
+
+                const toggleTaDropdown = () => {
+                    if (!taDropdown) {
+                        return;
+                    }
+
+                    const isOpen = taDropdown.classList.toggle('is-open');
+                    if (taDropdownButton) {
+                        taDropdownButton.setAttribute('aria-expanded', String(isOpen));
+                    }
+                };
+
+                if (taDropdownButton) {
+                    taDropdownButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleTaDropdown();
+                    });
                 }
-            });
 
-            // --- Page Routing Logic ---
-            const mainContent = document.getElementById('main-content');
-            const coursePagesContainer = document.getElementById('course-pages-container');
-            const allCoursePages = document.querySelectorAll('.course-page');
-            
-            // Keep header/mobile nav highlight in sync with route hash
-            const allNavLinks = document.querySelectorAll('header nav a, .mobile-nav a');
-            const setActiveNavLink = (hash) => {
-                allNavLinks.forEach((link) => link.classList.remove('active'));
+                taDropdownLinks.forEach((link) => {
+                    link.addEventListener('click', () => {
+                        const targetHash = link.getAttribute('href')?.replace('#', '') || '';
+                        syncTaDropdownActiveState(targetHash);
+                        closeTaDropdown();
+                    });
+                });
 
-                let targetHash = hash;
-                if (courseData[hash]) targetHash = 'TA';          // course pages belong to TA
-                if (hash === 'education') targetHash = 'background';
+                document.addEventListener('click', (e) => {
+                    if (taDropdown && !taDropdown.contains(e.target)) {
+                        closeTaDropdown();
+                    }
+                });
 
-                if (!targetHash) return;
+                const setCitationStatus = (message, isError = false) => {
+                    citeCopyStatus.textContent = message;
+                    citeCopyStatus.classList.remove('themed-accent', 'text-red-500');
+                    citeCopyStatus.classList.add(isError ? 'text-red-500' : 'themed-accent');
+                };
 
-                document
-                    .querySelectorAll(`header nav a[href="#${targetHash}"], .mobile-nav a[href="#${targetHash}"]`)
-                    .forEach((link) => link.classList.add('active'));
-            };
+                const copyCitationToClipboard = () => {
+                    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+                        setCitationStatus('Clipboard access is unavailable. Please copy the BibTeX text manually.', true);
+                        return;
+                    }
 
-            const showCoursePage = (pageId) => {
-                mainContent.style.display = 'none';
-                allCoursePages.forEach(p => p.style.display = 'none');
-                allFullscreenPages.forEach(p => p.style.display = 'none');
-                
-                const pageToShow = document.getElementById(`course-${pageId}`);
-                if (pageToShow) {
-                    pageToShow.style.display = 'block';
-                    window.scrollTo(0, 0);
-                } else {
-                    mainContent.style.display = 'block';
-                }
-            };
+                    navigator.clipboard.writeText(citeBibtexText.textContent)
+                        .then(() => {
+                            setCitationStatus('BibTeX copied to clipboard!');
+                        })
+                        .catch(() => {
+                            setCitationStatus('Auto-copy failed. Please use the copy button again or copy manually.', true);
+                        });
+                };
 
-            const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
-            const originalTitle = document.title;
+                const closeCiteModal = () => {
+                    citeModal.classList.remove('show');
+                    citeModal.setAttribute('aria-hidden', 'true');
+                };
 
-            const showPage = (pageId) => {
-                mainContent.style.display = 'none';
-                allCoursePages.forEach(p => p.style.display = 'none');
-                allFullscreenPages.forEach(p => p.style.display = 'none');
-                
-                const pageToShow = document.getElementById(pageId);
-                if (pageToShow) {
-                    pageToShow.style.display = 'block';
-                    window.scrollTo(0, 0);
-                } else {
-                    mainContent.style.display = 'block';
-                }
-            };
-            
-            const handleRouteChange = () => {
-                const hash = window.location.hash.substring(1); // remove '#'
-                closeModal(); // always close modal on route change
-                closeTaDropdown();
-                closeMobileTaSubmenu();
-                syncTaDropdownActiveState(hash);
-                setActiveNavLink(hash);
-                
-                if(courseData[hash]) {
-                    document.title = `${courseData[hash].id} • ${courseData[hash].title} | Ranjan Sarkar`;
-                    showCoursePage(hash);
-                } else if (hash === 'seminars') {
-                    document.title = `Ranjan Sarkar`;
-                    showPage('seminars');
-                } else if (hash === 'background' || hash === 'education') {
-                    document.title = `Background | Ranjan Sarkar`;
-                    showPage('background');
-                } else {
-                    document.title = originalTitle;
-                    mainContent.style.display = 'block';
+                citeTriggers.forEach((trigger) => {
+                    trigger.addEventListener('click', () => {
+                        const bibtex = trigger.dataset.bibtex;
+                        if (!bibtex) {
+                            citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
+                            citeBibtexText.textContent = '';
+                            setCitationStatus('No BibTeX found for this paper. Add data-bibtex on its Cite button.', true);
+                            citeModal.classList.add('show');
+                            citeModal.setAttribute('aria-hidden', 'false');
+                            return;
+                        }
+
+                        citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
+                        citeBibtexText.textContent = bibtex;
+                        setCitationStatus('Copying citation...');
+                        citeModal.classList.add('show');
+                        citeModal.setAttribute('aria-hidden', 'false');
+                        copyCitationToClipboard();
+                    });
+                });
+
+                copyCiteBtn.addEventListener('click', copyCitationToClipboard);
+                closeCiteModalBtn.addEventListener('click', closeCiteModal);
+                citeModal.addEventListener('click', (e) => {
+                    if (e.target === citeModal) {
+                        closeCiteModal();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        closeCiteModal();
+                    }
+                });
+
+                // --- Page Routing Logic ---
+                const mainContent = document.getElementById('main-content');
+                const coursePagesContainer = document.getElementById('course-pages-container');
+                const allCoursePages = document.querySelectorAll('.course-page');
+
+                // Keep header/mobile nav highlight in sync with route hash
+                const allNavLinks = document.querySelectorAll('header nav a, .mobile-nav a');
+                const setActiveNavLink = (hash) => {
+                    allNavLinks.forEach((link) => link.classList.remove('active'));
+
+                    let targetHash = hash;
+                    if (courseData[hash]) targetHash = 'TA';          // course pages belong to TA
+                    if (hash === 'education') targetHash = 'background';
+
+                    if (!targetHash) return;
+
+                    document
+                        .querySelectorAll(`header nav a[href="#${targetHash}"], .mobile-nav a[href="#${targetHash}"]`)
+                        .forEach((link) => link.classList.add('active'));
+                };
+
+                const showCoursePage = (pageId) => {
+                    mainContent.style.display = 'none';
                     allCoursePages.forEach(p => p.style.display = 'none');
                     allFullscreenPages.forEach(p => p.style.display = 'none');
-                    // If there's a hash for a section, scroll to it
-                    if (hash && document.getElementById(hash)) {
-                       document.getElementById(hash).scrollIntoView({behavior: 'smooth'});
-                    }
-                }
-            };
-            
-            document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
-                    if (href === '#') {
-                        e.preventDefault();
-                        window.location.hash = '';
-                    } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
-                        // Let the default anchor link behavior handle scrolling
+
+                    const pageToShow = document.getElementById(`course-${pageId}`);
+                    if (pageToShow) {
+                        pageToShow.style.display = 'block';
+                        window.scrollTo(0, 0);
                     } else {
-                         // This handles clicks on course links and back buttons
+                        mainContent.style.display = 'block';
                     }
-                });
-            });
+                };
 
-            window.addEventListener('hashchange', handleRouteChange);
-            
-            // Initial check on page load
-            handleRouteChange();
+                const allFullscreenPages = document.querySelectorAll('.fullscreen-page');
+                const originalTitle = document.title;
 
-            // --- Scrollspy for Header ---
-            const sections = document.querySelectorAll('#main-content section[id]');
-            const observerOptions = {
-                rootMargin: '-80px 0px -60% 0px'
-            };
+                const showPage = (pageId) => {
+                    mainContent.style.display = 'none';
+                    allCoursePages.forEach(p => p.style.display = 'none');
+                    allFullscreenPages.forEach(p => p.style.display = 'none');
 
-            const observer = new IntersectionObserver((entries) => {
-                // Only run scrollspy when main page is visible
-                if (mainContent.style.display === 'none') return;
-
-                entries.forEach(entry => {
-                    const id = entry.target.getAttribute('id');
-                    if (entry.isIntersecting) {
-                        setActiveNavLink(id);
+                    const pageToShow = document.getElementById(pageId);
+                    if (pageToShow) {
+                        pageToShow.style.display = 'block';
+                        window.scrollTo(0, 0);
+                    } else {
+                        mainContent.style.display = 'block';
                     }
-                });
-            }, observerOptions);
+                };
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+                const handleRouteChange = () => {
+                    const hash = window.location.hash.substring(1); // remove '#'
+                    closeModal(); // always close modal on route change
+                    closeTaDropdown();
+                    closeMobileTaSubmenu();
+                    syncTaDropdownActiveState(hash);
+                    setActiveNavLink(hash);
 
-            // --- RECENT NEWS: EXPAND OLDER ---
-            const newsContainer = document.getElementById('news-container');
-            const loadMoreBtn = document.getElementById('load-more-news');
-            const newsItems = newsContainer.querySelectorAll('.news-item');
-
-            // Initially hide items beyond the first 5
-            if (newsItems.length > 3) {
-                loadMoreBtn.classList.remove('hidden');
-                newsItems.forEach((item, index) => {
-                    if (index >= 3) {
-                        item.classList.add('hidden-news-item');
+                    if (courseData[hash]) {
+                        document.title = `${courseData[hash].id} • ${courseData[hash].title} | Ranjan Sarkar`;
+                        showCoursePage(hash);
+                    } else if (hash === 'seminars') {
+                        document.title = `Ranjan Sarkar`;
+                        showPage('seminars');
+                    } else if (hash === 'background' || hash === 'education') {
+                        document.title = `Background | Ranjan Sarkar`;
+                        showPage('background');
+                    } else {
+                        document.title = originalTitle;
+                        mainContent.style.display = 'block';
+                        allCoursePages.forEach(p => p.style.display = 'none');
+                        allFullscreenPages.forEach(p => p.style.display = 'none');
+                        // If there's a hash for a section, scroll to it
+                        if (hash && document.getElementById(hash)) {
+                            document.getElementById(hash).scrollIntoView({ behavior: 'smooth' });
+                        }
                     }
-                });
-            }
+                };
 
-            loadMoreBtn.addEventListener('click', () => {
-                newsItems.forEach(item => {
-                    item.classList.remove('hidden-news-item');
+                document.querySelectorAll('.back-to-main, a[href^="#"]').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const href = link.getAttribute('href');
+                        if (href === '#') {
+                            e.preventDefault();
+                            window.location.hash = '';
+                        } else if (href.startsWith('#') && !courseData[href.substring(1)]) {
+                            // Let the default anchor link behavior handle scrolling
+                        } else {
+                            // This handles clicks on course links and back buttons
+                        }
+                    });
                 });
-                loadMoreBtn.style.display = 'none'; // Hide the button after expanding
-            });
 
-            // --- SCROLL TO TOP BUTTON ---
-            const scrollToTopBtn = document.getElementById('scroll-to-top');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 600) {
-                    scrollToTopBtn.classList.add('show');
-                } else {
-                    scrollToTopBtn.classList.remove('show');
+                window.addEventListener('hashchange', handleRouteChange);
+
+                // Initial check on page load
+                handleRouteChange();
+
+                // --- Scrollspy for Header ---
+                const sections = document.querySelectorAll('#main-content section[id]');
+                const observerOptions = {
+                    rootMargin: '-80px 0px -60% 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    // Only run scrollspy when main page is visible
+                    if (mainContent.style.display === 'none') return;
+
+                    entries.forEach(entry => {
+                        const id = entry.target.getAttribute('id');
+                        if (entry.isIntersecting) {
+                            setActiveNavLink(id);
+                        }
+                    });
+                }, observerOptions);
+
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+
+                // --- RECENT NEWS: EXPAND OLDER ---
+                const newsContainer = document.getElementById('news-container');
+                const loadMoreBtn = document.getElementById('load-more-news');
+                const newsItems = newsContainer.querySelectorAll('.news-item');
+
+                // Initially hide items beyond the first 5
+                if (newsItems.length > 3) {
+                    loadMoreBtn.classList.remove('hidden');
+                    newsItems.forEach((item, index) => {
+                        if (index >= 3) {
+                            item.classList.add('hidden-news-item');
+                        }
+                    });
                 }
+
+                loadMoreBtn.addEventListener('click', () => {
+                    newsItems.forEach(item => {
+                        item.classList.remove('hidden-news-item');
+                    });
+                    loadMoreBtn.style.display = 'none'; // Hide the button after expanding
+                });
+
+                // --- SCROLL TO TOP BUTTON ---
+                const scrollToTopBtn = document.getElementById('scroll-to-top');
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 600) {
+                        scrollToTopBtn.classList.add('show');
+                    } else {
+                        scrollToTopBtn.classList.remove('show');
+                    }
+                });
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
             });
-            scrollToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-    </script>
+        </script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
