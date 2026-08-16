@@ -224,9 +224,12 @@
         }
 
         .seminar-embed {
-            width: min(100%, calc((100vh - 14rem) * 16 / 9));
-            aspect-ratio: 16 / 9;
+            width: min(100%, calc((100vh - 14rem) * 16 / 9.5));
+            aspect-ratio: 16 / 9.5;
             margin: 0 auto;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .seminar-embed iframe {
@@ -234,6 +237,7 @@
             width: 100%;
             height: 100%;
             border: 0;
+            border-radius: 0.75rem;
         }
 
         .seminar-tag {
@@ -1275,14 +1279,14 @@
                             aria-label="Self-Study Seminar"></div>
                         <h2 class="text-xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and its
                             extension to unknown distribution</h2>
-                        <p class="text-slate-500 dark:text-slate-400 flex items-center">
-                            <span class="mr-5 flex items-center"><svg class="w-4 h-4 mr-2" fill="none"
+                        <p class="text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-y-2 gap-x-5">
+                            <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                     </path>
                                 </svg> Dec 2025</span>
-                            <span class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                            <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
@@ -1292,10 +1296,10 @@
                                 </svg>Department of Artificial Intelligence, IIT Kharagpur</span>
                         </p>
                     </div>
-                    <div class="seminar-embed themed-bg-primary rounded-lg bg-slate-200 dark:bg-slate-900">
+                    <div class="seminar-embed themed-bg-primary rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-md">
                         <iframe
                             src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1"
-                            frameborder="0" scrolling="no">This is an embedded <a target="_blank"
+                            frameborder="0" scrolling="no" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">This is an embedded <a target="_blank"
                                 href="https://office.com">Microsoft Office</a> presentation, powered by <a
                                 target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                     </div>
@@ -1943,14 +1947,14 @@
                                 aria-label="Self-Study Seminar"></div>
                             <h2 class="text-2xl font-bold themed-text-primary mb-2">An Estimation-Control Duality and
                                 its extension to unknown distributions</h2>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                                <span class="mr-3 flex items-center"><svg class="w-4 h-4 mr-1" fill="none"
+                            <p class="text-sm text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-y-2 gap-x-5">
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                         </path>
                                     </svg> Dec 2025</span>
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none"
+                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
@@ -1960,13 +1964,10 @@
                                     </svg>Department of Artificial Intelligence, IIT Kharagpur</span>
                             </p>
                         </div>
-                        <div
-                            class="themed-bg-primary rounded-lg aspect-w-16 aspect-h-9 w-full bg-slate-200 dark:bg-slate-900 flex items-center justify-center relative group">
-                            <!-- <iframe src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="100%" height="100%" frameborder="0" scrolling="no" class="absolute inset-0"></iframe> -->
-                            <!-- <iframe src="https://iitkgpacin-my.sharepoint.com/personal/ranjan_sarkar_24_kgpian_iitkgp_ac_in/_layouts/15/Doc.aspx?sourcedoc={4add7720-47f5-4ba7-be3e-04ae6c331f49}&amp;action=embedview&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="1080px" height="640px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe> -->
+                        <div class="seminar-embed themed-bg-primary rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-md">
                             <iframe
                                 src="https://1drv.ms/p/c/ee1ef4d358f055b6/IQREq8QvTrGSQIpXQOg4COQFAcuS82pfR1LNAMLrgC-BYtg?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1"
-                                width="1080px" height="632px" frameborder="0">This is an embedded <a target="_blank"
+                                frameborder="0" scrolling="no" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">This is an embedded <a target="_blank"
                                     href="https://office.com">Microsoft Office</a> presentation, powered by <a
                                     target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                         </div>
@@ -1989,8 +1990,9 @@
                     -->
                     <div class="mt-16 text-center">
                         <a href="#"
-                            class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr;
-                            Back to Portfolio</a>
+                            class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            &nbsp; Back to Portfolio</a>
                     </div>
                 </div>
             </div>
