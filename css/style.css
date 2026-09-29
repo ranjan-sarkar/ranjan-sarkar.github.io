@@ -456,31 +456,37 @@ header nav a[data-nav].active::after {
     opacity: 0.9;
 }
 
-/* Timeline styles */
+/* Timeline styles (Background page): date | dot | card */
 .timeline-item {
     position: relative;
     display: flex;
     align-items: flex-start;
-    padding-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
 }
 
 .timeline-item:last-child {
     padding-bottom: 0;
 }
 
+/* line from this entry's dot down to the next one (the last entry has none) */
 .timeline-item::before {
     content: '';
     position: absolute;
     left: 7rem;
-    top: 0.25rem;
-    width: 1px;
+    top: 1.875rem;
+    width: 2px;
     height: 100%;
-    background-color: var(--border-light);
+    border-radius: 9999px;
+    background-color: rgba(79, 70, 229, 0.18);
     transform: translateX(-50%);
 }
 
+.timeline-item:last-child::before {
+    display: none;
+}
+
 .dark .timeline-item::before {
-    background-color: var(--border-dark);
+    background-color: rgba(129, 140, 248, 0.22);
 }
 
 .timeline-date {
@@ -488,39 +494,229 @@ header nav a[data-nav].active::after {
     flex-shrink: 0;
     text-align: right;
     padding-right: 1.25rem;
+    margin-top: 1.25rem;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-light-secondary);
     white-space: nowrap;
-    margin-top: 0.125rem;
 }
 
 .dark .timeline-date {
     color: var(--text-dark-secondary);
 }
 
+/* past entries: hollow dot; current entries (.is-current, set by js/main.js): filled dot */
 .timeline-dot {
     position: absolute;
     left: 7rem;
-    top: 0.25rem;
+    top: 1.375rem;
     height: 1rem;
     width: 1rem;
     border-radius: 9999px;
-    border-width: 2px;
-    border-color: var(--bg-light-secondary);
-    background-color: var(--accent-light);
+    border: 2px solid var(--accent-light);
+    background-color: var(--bg-light-secondary);
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .dark .timeline-dot {
+    border-color: var(--accent-dark);
+    background-color: var(--bg-dark-secondary);
+}
+
+.timeline-item.is-current .timeline-dot {
+    border-color: var(--bg-light-secondary);
+    background-color: var(--accent-light);
+}
+
+.dark .timeline-item.is-current .timeline-dot {
     border-color: var(--bg-dark-secondary);
     background-color: var(--accent-dark);
 }
 
+.timeline-item.is-current .timeline-date {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.dark .timeline-item.is-current .timeline-date {
+    color: var(--accent-dark);
+}
+
+/* each entry sits in a clean bordered card; the border picks up the accent on hover */
 .timeline-content {
-    padding-left: 1.25rem;
     flex-grow: 1;
+    min-width: 0;
+    margin-left: 1.5rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--border-light);
+    border-radius: 0.9rem;
+    background-color: var(--bg-light-secondary);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    border-color: rgba(79, 70, 229, 0.4);
+    transform: translateX(4px);
+}
+
+.dark .timeline-content {
+    border-color: var(--border-dark);
+    background-color: rgba(15, 23, 42, 0.55);
+}
+
+.dark .timeline-item:hover .timeline-content {
+    border-color: rgba(129, 140, 248, 0.45);
+}
+
+/* "Current" tag after the title of entries that run to "Present" (added by js/main.js) */
+.timeline-current {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    vertical-align: 0.15em;
+    color: var(--accent-light);
+    background-color: rgba(79, 70, 229, 0.1);
+}
+
+.dark .timeline-current {
+    color: var(--accent-dark);
+    background-color: rgba(129, 140, 248, 0.16);
+}
+
+/* Education / Experience headings with an icon badge */
+.bg-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.bg-heading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.8rem;
+    font-size: 1.05rem;
+    color: var(--accent-light);
+    background-color: rgba(79, 70, 229, 0.1);
+}
+
+.dark .bg-heading-icon {
+    color: var(--accent-dark);
+    background-color: rgba(129, 140, 248, 0.16);
+}
+
+/* outline button (Back to Portfolio, next to the solid Download CV button) */
+.bg-secondary-btn {
+    border: 1px solid var(--border-light);
+    color: var(--text-light-primary);
+    background-color: var(--bg-light-secondary);
+}
+
+.bg-secondary-btn:hover,
+.bg-secondary-btn:focus-visible {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+}
+
+.dark .bg-secondary-btn {
+    border-color: var(--border-dark);
+    color: var(--text-dark-primary);
+    background-color: transparent;
+}
+
+.dark .bg-secondary-btn:hover,
+.dark .bg-secondary-btn:focus-visible {
+    border-color: var(--accent-dark);
+    color: var(--accent-dark);
+}
+
+/* phones: date moves above its card and the timeline runs down the left edge */
+@media (max-width: 640px) {
+    .timeline-item {
+        flex-direction: column;
+        padding-left: 1.75rem;
+    }
+
+    .timeline-item::before {
+        left: 0.5rem;
+        top: 0.65rem;
+    }
+
+    .timeline-dot {
+        left: 0.5rem;
+        top: 0.15rem;
+    }
+
+    .timeline-date {
+        width: auto;
+        margin: 0 0 0.5rem;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .timeline-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/* Institution logos on the Background timeline: a small white tile beside each entry's text */
+.timeline-content.has-logo {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    column-gap: 0.9rem;
+    align-items: start;
+}
+
+.timeline-content.has-logo > .inst-logo {
+    grid-row: span 6;   /* tile sits in its own column beside the title and every line under it */
+}
+
+.inst-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.3rem;
+    border: 1px solid var(--border-light);
+    border-radius: 0.75rem;
+    background-color: #ffffff;   /* logos are drawn for a white background, in both themes */
+}
+
+.inst-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.dark .inst-logo {
+    border-color: var(--border-dark);
+}
+
+@media (max-width: 480px) {
+    .timeline-content.has-logo {
+        grid-template-columns: 2.25rem minmax(0, 1fr);
+        column-gap: 0.7rem;
+    }
+
+    .inst-logo {
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0.2rem;
+        border-radius: 0.6rem;
+    }
 }
 
 /* Animation for sections on scroll */
@@ -969,4 +1165,129 @@ header nav a[data-nav].active::after {
 .dark .social-icon-link::before {
     background: rgba(226, 232, 240, 0.98);
     color: #0f172a;
+}
+
+/* =====================================================================
+   Small UI details (each block is independent and can be removed on its own)
+   ===================================================================== */
+
+/* 1. Staggered reveal: cards and list items fade up one after another when their section appears.
+      js/main.js adds .reveal-child and a --reveal-delay to each item. The animation only fills
+      "backwards" (before it starts), so the cards' own hover lift keeps working afterwards. */
+.scroll-animate.visible .reveal-child {
+    animation: reveal-up 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes reveal-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+}
+
+/* 2. Header depth: a soft shadow appears under the sticky header once the page is scrolled */
+header.is-scrolled {
+    box-shadow: 0 8px 24px -14px rgba(15, 23, 42, 0.25);
+}
+
+.dark header.is-scrolled {
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* 3. Inline text links: an accent underline slides in from the left on hover */
+a.text-accent {
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent-light), var(--accent-light));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size 0.3s ease, color 0.2s ease;
+}
+
+.dark a.text-accent {
+    background-image: linear-gradient(var(--accent-dark), var(--accent-dark));
+}
+
+a.text-accent:hover,
+a.text-accent:focus-visible {
+    text-decoration: none;
+    background-size: 100% 1.5px;
+}
+
+/* 4. Research and TA cards: accent border on hover, alongside their existing lift */
+#research .grid > div,
+#TA .course-card {
+    transition-property: transform, box-shadow, border-color;
+}
+
+#research .grid > div:hover,
+#TA .course-card:hover {
+    border-color: rgba(79, 70, 229, 0.45);
+}
+
+.dark #research .grid > div:hover,
+.dark #TA .course-card:hover {
+    border-color: rgba(129, 140, 248, 0.5);
+}
+
+/* 5. Theme switch: colours fade over (js/main.js adds .theme-switching briefly) and the icon spins in */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, fill 0.4s ease,
+        stroke 0.4s ease !important;
+}
+
+#theme-toggle.is-spinning svg {
+    animation: theme-icon-in 0.5s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+@keyframes theme-icon-in {
+    from {
+        opacity: 0;
+        transform: rotate(-120deg) scale(0.6);
+    }
+}
+
+/* 6. Finishing touches: accent text selection and a slim, theme-matched scrollbar */
+::selection {
+    background-color: rgba(79, 70, 229, 0.18);
+}
+
+.dark ::selection {
+    background-color: rgba(129, 140, 248, 0.32);
+}
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 70, 229, 0.35) transparent;
+}
+
+html.dark {
+    scrollbar-color: rgba(129, 140, 248, 0.35) transparent;
+}
+
+/* 7. Profile photo: the picture zooms gently inside its round frame on hover; the frame itself stays put */
+.profile-photo {
+    transform: translateZ(0);   /* keeps the round clipping crisp in Safari while the picture zooms */
+}
+
+.profile-photo img {
+    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.profile-photo:hover img {
+    transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-animate.visible .reveal-child,
+    #theme-toggle.is-spinning svg {
+        animation: none;
+    }
+
+    .profile-photo:hover img {
+        transform: none;
+    }
 }

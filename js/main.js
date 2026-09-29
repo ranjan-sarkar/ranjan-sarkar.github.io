@@ -20,7 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     syncThemeIcons();
 
+    let themeSwitchTimer = null;
+
     themeToggle.addEventListener('click', () => {
+        // Let colours fade over for a moment instead of snapping (see .theme-switching in style.css)
+        document.documentElement.classList.add('theme-switching');
+        clearTimeout(themeSwitchTimer);
+        themeSwitchTimer = setTimeout(() => document.documentElement.classList.remove('theme-switching'), 450);
+
         document.documentElement.classList.toggle('dark');
         if (document.documentElement.classList.contains('dark')) {
             localStorage.setItem('theme', 'dark');
@@ -28,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', 'light');
         }
         syncThemeIcons();
+
+        // Spin the new sun/moon icon in (restart the animation on every click)
+        themeToggle.classList.remove('is-spinning');
+        void themeToggle.offsetWidth;
+        themeToggle.classList.add('is-spinning');
     });
 
     // --- Background curves on portrait screens ---
@@ -151,6 +163,36 @@ document.addEventListener('DOMContentLoaded', () => {
             openIcon.style.display = 'block';
             closeIcon.style.display = 'none';
             closeMobileTaSubmenu();
+        });
+    });
+
+    // Background timeline: entries whose date runs to "Present" get a filled dot and a "Current" tag
+    // (styles: .timeline-item.is-current / .timeline-current in style.css). Change the date and it goes away.
+    document.querySelectorAll('.timeline-item').forEach((item) => {
+        const date = item.querySelector('.timeline-date');
+        const title = item.querySelector('.timeline-content h3');
+        if (date && title && /present/i.test(date.textContent)) {
+            item.classList.add('is-current');
+            const tag = document.createElement('span');
+            tag.className = 'timeline-current';
+            tag.textContent = 'Current';
+            title.appendChild(tag);
+        }
+    });
+
+    // Staggered reveal: items inside an animated section fade up one after another
+    // (the animation itself is .reveal-child in style.css; it starts when the section gets .visible)
+    const REVEAL_GROUPS = [
+        '#research .grid > div',          // Research Interests cards
+        '#TA .grid > .course-card',       // TA course cards
+        '#news-container > .news-item',   // Recent News lines
+        '.timeline-item',                 // Background: education & experience
+        '.pub-card',                      // Publications page cards
+    ];
+    REVEAL_GROUPS.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((item, index) => {
+            item.classList.add('reveal-child');
+            item.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 90}ms`);
         });
     });
 
@@ -489,15 +531,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- SCROLL TO TOP BUTTON ---
+    // --- SCROLL TO TOP BUTTON + header depth once the page is scrolled ---
     const scrollToTopBtn = document.getElementById('scroll-to-top');
-    window.addEventListener('scroll', () => {
+    const siteHeader = document.querySelector('header');
+    const onScroll = () => {
         if (window.scrollY > 600) {
             scrollToTopBtn.classList.add('show');
         } else {
             scrollToTopBtn.classList.remove('show');
         }
-    });
+        siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
