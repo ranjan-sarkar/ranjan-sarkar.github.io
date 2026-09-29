@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Ranjan Sarkar</title>
-    <!-- <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg"> -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Apply the saved (or system) theme before first paint, so pages don't flash light in dark mode -->
     <script>
         try {
@@ -32,7 +34,6 @@
             }
         })();
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,16 +66,64 @@
     <meta name="twitter:description" content="Academic Portfolio" />
     <meta name="twitter:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
 
+    <!-- Structured data: tells search engines this is Ranjan Sarkar's academic profile and links his profiles -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ranjan Sarkar",
-      "url": "https://ranjan-sarkar.github.io/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ranjan-sarkar.github.io/#website",
+          "name": "Ranjan Sarkar",
+          "url": "https://ranjan-sarkar.github.io/"
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://ranjan-sarkar.github.io/#profile",
+          "url": "https://ranjan-sarkar.github.io/",
+          "name": "Ranjan Sarkar",
+          "isPartOf": { "@id": "https://ranjan-sarkar.github.io/#website" },
+          "mainEntity": { "@id": "https://ranjan-sarkar.github.io/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://ranjan-sarkar.github.io/#person",
+          "name": "Ranjan Sarkar",
+          "url": "https://ranjan-sarkar.github.io/",
+          "image": "https://ranjan-sarkar.github.io/KGP_DP.png",
+          "jobTitle": "PhD Research Scholar",
+          "email": "mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in",
+          "affiliation": {
+            "@type": "CollegeOrUniversity",
+            "name": "Indian Institute of Technology Kharagpur",
+            "url": "https://www.iitkgp.ac.in/",
+            "department": {
+              "@type": "Organization",
+              "name": "Department of Artificial Intelligence",
+              "url": "https://ai.iitkgp.ac.in/"
+            }
+          },
+          "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Kharagpur", "url": "https://www.iitkgp.ac.in/" },
+            { "@type": "CollegeOrUniversity", "name": "University of Calcutta" }
+          ],
+          "knowsAbout": ["Reinforcement Learning", "Machine Learning", "Stochastic Optimization", "State Estimation", "Optimal Control"],
+          "sameAs": [
+            "https://orcid.org/0009-0008-1419-3524",
+            "https://scholar.google.com/citations?user=opM7lgEAAAAJ",
+            "https://www.semanticscholar.org/author/Ranjan-Sarkar/2449780460",
+            "https://www.researchgate.net/profile/Ranjan-Sarkar-7",
+            "https://linkedin.com/in/ranjan-sarkar",
+            "https://github.com/ranjan-sarkar"
+          ]
+        }
+      ]
     }
     </script>
 
     <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind utilities, pre-built from tailwind.config.js (rebuild with: npm run build:css) -->
+    <link rel="stylesheet" href="css/tailwind.css">
 </head>
 
 <body data-page="home">

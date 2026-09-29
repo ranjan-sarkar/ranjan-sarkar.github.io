@@ -1,0 +1,4 @@
+/* Source for css/tailwind.css (generated; do not edit that file by hand). Rebuild with: npm run build:css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

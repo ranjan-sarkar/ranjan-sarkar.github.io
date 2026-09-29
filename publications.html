@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Publications | Ranjan Sarkar</title>
-    <!-- <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg"> -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Apply the saved (or system) theme before first paint, so pages don't flash light in dark mode -->
     <script>
         try {
@@ -16,7 +18,6 @@
             }
         } catch (e) { }
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +51,8 @@
     <meta name="twitter:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
 
     <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind utilities, pre-built from tailwind.config.js (rebuild with: npm run build:css) -->
+    <link rel="stylesheet" href="css/tailwind.css">
 </head>
 
 <body data-page="publications">
@@ -217,77 +220,89 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
                 <div class="space-y-8">
-                    <div
-                        class="themed-bg-secondary p-6 rounded-lg border themed-border">
-                        <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                            <div>
-                                <p><a class="uppercase tracking-wide text-sm font-semibold themed-accent">Indian Control Conference (ICC 2027)</a>
-                                    <!-- <a class="themed-text-primary mt-1">arXiv:2607.12135</a> -->
-                                </p>
-                                <h3 class="font-serif italic text-xl themed-text-primary mt-1">
-                                    LQG solution for POMDP without estimating states: A minimum variance approach
-                                </h3>
+                    <!-- Paper: ICC 2027 -->
+                    <article class="pub-card">
+                        <!-- Paper figure (teaser), centred beside the text; clicking it opens the paper -->
+                        <a href="https://arxiv.org/abs/2607.12135" target="_blank" rel="noopener" class="pub-figure"
+                            aria-label="Open the paper">
+                            <img src="Content/pub_lqg_pomdp.webp" width="720" height="307" loading="lazy"
+                                alt="Proposed architecture: the control is estimated directly from past controls and measurements, without estimating the hidden state">
+                        </a>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center justify-between gap-3">
+                                <span class="pub-venue">Indian Control Conference (ICC 2027)</span>
+                                <!-- <a class="themed-text-primary mt-1">arXiv:2607.12135</a> -->
+                                <span class="pub-date"><i class="fa-regular fa-calendar"></i>&nbsp; Sep 2026</span>
                             </div>
-                            <span
-                                class="text-sm font-semibold px-3 py-1 rounded-full themed-bg-primary themed-text-secondary border themed-border w-fit">Sep 2026</span>
-                        </div>
-                        <p class="themed-text-secondary mt-1">
-                            <span class="font-medium">Ranjan Sarkar</span>, <span class="font-medium">Prabhat K.
-                                Mishra</span>
-                        </p>
-                        <p class="themed-text-secondary mt-2">
-                            This work presents a minimum variance perspective to solve LQG-style POMDP problems without
-                            explicit state estimation.
-                        </p>
-                        <!-- <div class="publication-meta-grid mt-4">
-                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
-                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Venue</p>
-                                <p class="text-sm themed-text-primary mt-1">arXiv Preprint</p>
-                            </div>
-                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
-                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Identifier</p>
-                                <p class="text-sm themed-text-primary mt-1">arXiv:2607.12135</p>
-                            </div>
-                            <div class="themed-bg-primary border themed-border rounded-lg p-3">
-                                <p class="text-xs themed-text-secondary uppercase tracking-wide">Category</p>
-                                <p class="text-sm themed-text-primary mt-1">math.OC</p>
-                            </div>
-                        </div> -->
-                        <div class="mt-3 flex flex-wrap items-center gap-4">
-                            <a href="https://arxiv.org/abs/2607.12135" target="_blank"
-                                class="themed-accent hover:underline font-medium">Paper</a>
-                            <a href="talks.html#talk-rsday-2026-poster"
-                                class="themed-accent hover:underline font-medium">Poster</a>
-                            <span class="themed-text-secondary font-medium">Code (coming soon)</span>
-                            <button type="button" class="cite-trigger themed-accent hover:underline font-medium"
-                                data-cite-title="BibTeX Citation" data-bibtex="@article{ranjan2026_lqg,
+                            <h3 class="font-serif italic text-xl md:text-2xl leading-snug themed-text-primary mt-3">
+                                LQG solution for POMDP without estimating states: A minimum variance approach
+                            </h3>
+                            <p class="themed-text-primary mt-2">
+                                Ranjan Sarkar, Prabhat K. Mishra
+                            </p>
+                            <p class="themed-text-secondary mt-3">
+                                This work presents a minimum variance perspective to solve LQG-style POMDP problems without
+                                explicit state estimation.
+                            </p>
+                            <!-- <div class="publication-meta-grid mt-4">
+                                <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                    <p class="text-xs themed-text-secondary uppercase tracking-wide">Venue</p>
+                                    <p class="text-sm themed-text-primary mt-1">arXiv Preprint</p>
+                                </div>
+                                <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                    <p class="text-xs themed-text-secondary uppercase tracking-wide">Identifier</p>
+                                    <p class="text-sm themed-text-primary mt-1">arXiv:2607.12135</p>
+                                </div>
+                                <div class="themed-bg-primary border themed-border rounded-lg p-3">
+                                    <p class="text-xs themed-text-secondary uppercase tracking-wide">Category</p>
+                                    <p class="text-sm themed-text-primary mt-1">math.OC</p>
+                                </div>
+                            </div> -->
+                            <div class="mt-5 flex flex-wrap items-center gap-2">
+                                <a href="https://arxiv.org/abs/2607.12135" target="_blank" rel="noopener" class="pub-link">
+                                    <i class="fa-regular fa-file-lines"></i>Paper</a>
+                                <a href="talks.html#talk-rsday-2026-poster" class="pub-link">
+                                    <i class="fa-regular fa-image"></i>Poster</a>
+                                <span class="pub-link is-disabled" title="Code will be released soon">
+                                    <i class="fa-solid fa-code"></i>Code (coming soon)</span>
+                                <button type="button" class="pub-link cite-trigger"
+                                    data-cite-title="BibTeX Citation" data-bibtex="@article{ranjan2026_lqg,
     title={{LQG} solution for {POMDP} without estimating states: A minimum variance approach}, 
     author={Sarkar, Ranjan and Mishra, Prabhat K.},
     journal={arXiv preprint arXiv:2607.12135},
     year={2026},
     url={https://arxiv.org/abs/2607.12135}
 }">
-                                Cite
-                            </button>
+                                    <i class="fa-solid fa-quote-right"></i>Cite</button>
+                            </div>
                         </div>
-                    </div>
-                    <!-- 
-                    Template for adding a new paper:
-                    - Keep class="cite-trigger"
-                    - Set data-bibtex to that paper's BibTeX
-                    - Optionally set data-cite-title for popup heading
-                    <div class="themed-bg-secondary p-6 rounded-lg border themed-border transition-shadow duration-300 hover:shadow-xl">
-                        <h3 class="text-lg font-semibold themed-text-primary">"Covariance Initialization for Moving Horizon Estimation (MHE)"</h3>
-                        <p class="themed-text-secondary text-sm my-1">
-                            <span class="font-medium">Ranjan Sarkar, Prabhat K. Mishra</span>
-                        </p>
-                        <p class="italic themed-text-secondary text-sm">Conference</p>
-                        <div class="mt-3 space-x-4">
-                            <a href="#" target="_blank" class="themed-accent hover:underline text-sm font-medium">Paper</a>
-                            <a href="#" target="_blank" class="themed-accent hover:underline text-sm font-medium">Code</a>
-                            <button type="button" class="cite-trigger themed-accent hover:underline text-sm font-medium" data-cite-title="BibTeX Citation" data-bibtex="@misc{yourkey,...}">Cite</button>
+                    </article>
+                    <!--
+                    Template for adding a new paper (copy everything between the lines):
+                    - Figure: put the image in Content/ and set src, width and height (or delete the <a class="pub-figure"> block)
+                    - Keep class="pub-link cite-trigger" on the Cite button and set data-bibtex to that paper's BibTeX
+                    - For a link that isn't ready yet use: <span class="pub-link is-disabled">Code (coming soon)</span>
+                    ___________________________________________________________________________
+                    <article class="pub-card">
+                        <a href="PAPER_URL" target="_blank" rel="noopener" class="pub-figure" aria-label="Open the paper">
+                            <img src="Content/FIGURE.webp" width="720" height="300" loading="lazy" alt="Short description of the figure">
+                        </a>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center justify-between gap-3">
+                                <span class="pub-venue">Conference / Journal (Year)</span>
+                                <span class="pub-date"><i class="fa-regular fa-calendar"></i>&nbsp; Mon Year</span>
+                            </div>
+                            <h3 class="font-serif italic text-xl md:text-2xl leading-snug themed-text-primary mt-3">Paper title</h3>
+                            <p class="themed-text-secondary mt-2"><span class="font-semibold themed-text-primary">Ranjan Sarkar</span>, Co-author</p>
+                            <p class="themed-text-secondary mt-3">One or two sentence summary.</p>
+                            <div class="mt-5 flex flex-wrap items-center gap-2">
+                                <a href="PAPER_URL" target="_blank" rel="noopener" class="pub-link"><i class="fa-regular fa-file-lines"></i>Paper</a>
+                                <a href="CODE_URL" target="_blank" rel="noopener" class="pub-link"><i class="fa-solid fa-code"></i>Code</a>
+                                <button type="button" class="pub-link cite-trigger" data-cite-title="BibTeX Citation" data-bibtex="@misc{yourkey,...}"><i class="fa-solid fa-quote-right"></i>Cite</button>
+                            </div>
                         </div>
-                    </div> 
+                    </article>
+                    ___________________________________________________________________________
                     -->
                 </div>
                 <div class="text-center mt-10">

@@ -1,0 +1,9 @@
+{
+  "name": "ranjan-sarkar-website",
+  "private": true,
+  "description": "Build step for the site's Tailwind CSS (css/tailwind.css)",
+  "scripts": {
+    "build:css": "npx --yes tailwindcss@3.4.17 -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --minify",
+    "watch:css": "npx --yes tailwindcss@3.4.17 -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --watch"
+  }
+}
