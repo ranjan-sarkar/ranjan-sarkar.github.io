@@ -298,18 +298,7 @@
                                         converts the stochastic mean-squared-error control cost into a deterministic LQR
                                         cost over dual variables, which is solved directly with CasADi.</li>
                                     <li>Input constraints are enforced inside the dual optimization problem, instead of
-                                        saturating an unconstrained LQR law computed from the estimated state.</li>
-                                    <li>Initial results on reference tracking with the <span
-                                            class="font-medium themed-text-primary">MIT Cheetah 3</span>: the
-                                        proposed and standard controllers produce nearly identical force trajectories.</li>
-                                </ul>
-
-                                <h3 class="text-lg font-semibold themed-text-primary mb-2">Future Direction</h3>
-                                <ul class="list-disc space-y-2 mb-8" style="padding-left: 20px;">
-                                    <li>A moving horizon formulation for scalable implementation over long time horizons.
-                                    </li>
-                                    <li>Theoretical guarantees for the convergence of the control estimation error
-                                        variance.</li>
+                                        saturating an unconstrained LQG law computed from the estimated state.</li>
                                 </ul>
 
                                 <div class="flex flex-wrap gap-3">
