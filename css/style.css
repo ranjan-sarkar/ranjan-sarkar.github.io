@@ -1281,6 +1281,16 @@ html.dark {
     transform: scale(1.08);
 }
 
+/* Side-by-side layout (768px and up): the photo shrinks with its column, up to its full 24rem,
+   so it never runs into the text on the right. "#home" makes this win over Tailwind's md:w-96 / md:h-96. */
+@media (min-width: 768px) {
+    #home .profile-photo {
+        width: min(24rem, 100%);
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .scroll-animate.visible .reveal-child,
     #theme-toggle.is-spinning svg {
@@ -1289,5 +1299,56 @@ html.dark {
 
     .profile-photo:hover img {
         transform: none;
+    }
+}
+
+/* =====================================================================
+   Footer background design: soft corner glows and a thin gradient line along the top. The footer stays dark in both themes.
+   ===================================================================== */
+footer {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;   /* keeps the decoration behind the footer's text and links */
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(38rem 18rem at 100% 0%, rgba(99, 102, 241, 0.16), transparent 70%),
+        radial-gradient(32rem 16rem at 0% 100%, rgba(56, 189, 248, 0.10), transparent 70%);
+    background-repeat: no-repeat;
+}
+
+footer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.6) 30%, rgba(56, 189, 248, 0.5) 70%, transparent);
+}
+
+/* Footer columns: Contact gets more room for the long e-mail addresses, which also moves
+   Quick Links a little to the right towards Connect. Addresses wrap instead of overflowing. */
+@media (min-width: 768px) {
+    footer .footer-grid {   /* "footer" makes this win over Tailwind's md:grid-cols-3, which loads later */
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+.footer-grid a[href^="mailto:"] {
+    overflow-wrap: anywhere;
+}
+
+@media print {
+    footer::before,
+    footer::after {
+        display: none;
     }
 }
