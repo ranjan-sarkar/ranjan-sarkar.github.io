@@ -454,6 +454,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- "New" tags on recent news (home page) ---
+    // An item counts as new for 30 days. Its date comes from data-date="YYYY-MM-DD" on the .news-item
+    // when present, otherwise from its "Mon YYYY" label, read as the 1st of that month.
+    // This runs on every visit, so tags disappear by themselves once an item is older than that.
+    const NEWS_NEW_DAYS = 30;
+    const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+    const newsItemDate = (item, label) => {
+        if (item.dataset.date) {
+            const exact = new Date(`${item.dataset.date}T00:00:00`);
+            if (!Number.isNaN(exact.getTime())) {
+                return exact;
+            }
+        }
+        const match = label.trim().match(/^([A-Za-z]{3})[a-z]*\.?\s+(\d{4})$/);
+        const month = match ? MONTHS.indexOf(match[1].toLowerCase()) : -1;
+        return month >= 0 ? new Date(Number(match[2]), month, 1) : null;
+    };
+
+    document.querySelectorAll('.news-item').forEach((item) => {
+        const dateCell = item.firstElementChild;
+        const date = dateCell && newsItemDate(item, dateCell.textContent);
+        const ageInDays = date ? (Date.now() - date.getTime()) / 86400000 : Infinity;
+
+        if (ageInDays >= 0 && ageInDays <= NEWS_NEW_DAYS) {
+            const tag = document.createElement('span');
+            tag.className = 'news-new-tag';
+            tag.textContent = 'New';
+            // at the end of the news text, so every row keeps the same height
+            const textCell = item.lastElementChild;
+            (textCell.querySelector('p') || textCell).appendChild(tag);
+            item.classList.add('is-new');
+        }
+    });
+
     // --- SCROLL TO TOP BUTTON ---
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     window.addEventListener('scroll', () => {

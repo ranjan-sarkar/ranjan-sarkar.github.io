@@ -859,6 +859,52 @@ header nav a[data-nav].active::after {
     color: var(--text-dark-secondary);
 }
 
+/* ---------- "New" tag on recent news (added by js/main.js to items from the last 30 days) ---------- */
+.news-new-tag {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.6rem;
+    vertical-align: 0.1em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-image: linear-gradient(120deg, var(--accent-light), #0ea5e9, var(--accent-light));
+    background-size: 200% 100%;
+    box-shadow: 0 4px 12px -4px rgba(79, 70, 229, 0.6);
+    animation: news-new-shimmer 5s ease-in-out infinite;
+}
+
+.dark .news-new-tag {
+    color: #0f172a;
+    background-image: linear-gradient(120deg, var(--accent-dark), #38bdf8, var(--accent-dark));
+    box-shadow: 0 4px 14px -4px rgba(129, 140, 248, 0.55);
+}
+
+/* the timeline line of a new item picks up the accent colour */
+.news-item.is-new > div:last-child {
+    border-color: var(--accent-light);
+}
+
+.dark .news-item.is-new > div:last-child {
+    border-color: var(--accent-dark);
+}
+
+@keyframes news-new-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .news-new-tag {
+        animation: none;
+    }
+}
+
 .publication-meta-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
