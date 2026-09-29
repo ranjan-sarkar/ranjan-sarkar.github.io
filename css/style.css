@@ -1,0 +1,700 @@
+/* Shared styles for every page of ranjan-sarkar.github.io */
+
+/* Adding custom font */
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../font/GoogleSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../font/GoogleSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../font/GoogleSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.font-regular {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0em;
+}
+
+.font-medium {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    font-weight: 450;
+    letter-spacing: -0.02em;
+}
+
+.font-semibold {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+}
+
+.font-bold {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.google-font {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.022em;
+    color: #202124;
+}
+
+.inter-font {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Define color variables for light and dark themes */
+:root {
+    --bg-light-primary: #f8fafc;
+    /* slate-50 */
+    --bg-light-secondary: #ffffff;
+    --text-light-primary: #1e293b;
+    /* slate-800 */
+    --text-light-secondary: #475569;
+    /* slate-600 */
+    --border-light: #e2e8f0;
+    /* slate-200 */
+    --accent-light: #4F46E5;
+    /* indigo-600 */
+    --accent-hover-light: #4338CA;
+    /* indigo-700 */
+
+    --bg-dark-primary: #0f172a;
+    /* slate-900 */
+    --bg-dark-secondary: #1e293b;
+    /* slate-800 */
+    --text-dark-primary: #f1f5f9;
+    /* slate-100 */
+    --text-dark-secondary: #94a3b8;
+    /* slate-400 */
+    --border-dark: #334155;
+    /* slate-700 */
+    --accent-dark: #818CF8;
+    /* indigo-400 */
+    --accent-hover-dark: #6366F1;
+    /* indigo-500 */
+}
+
+/* Apply theme colors using CSS variables */
+body {
+    font-family: 'GoogleSans-Regular', sans-serif;
+    /* White base; alternate sections add a faint tint on top (see "Section alternate background") */
+    background-color: var(--bg-light-secondary);
+    color: var(--text-light-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+    background-color: var(--bg-dark-primary);
+    color: var(--text-dark-primary);
+}
+
+/* Decorative background: faint glows + contour lines, fixed behind all content */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    color: var(--accent-light);
+    background:
+        radial-gradient(60rem 40rem at 100% 0%, rgba(79, 70, 229, 0.08), transparent 70%),
+        radial-gradient(50rem 36rem at 0% 100%, rgba(14, 165, 233, 0.07), transparent 70%);
+}
+
+.dark .bg-decor {
+    color: var(--accent-dark);
+    background:
+        radial-gradient(60rem 40rem at 100% 0%, rgba(129, 140, 248, 0.09), transparent 75%),
+        radial-gradient(50rem 36rem at 0% 100%, rgba(56, 189, 248, 0.08), transparent 75%);
+}
+
+.bg-decor svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.12;
+}
+
+.dark .bg-decor svg {
+    opacity: 0.14;
+}
+
+/* Portrait screens (phones): the wide 1440x900 artwork above gets cropped to a thin middle strip,
+   which hides both curve fans. There, show each fan pinned to its own corner instead
+   (these two corner SVGs are built from the same paths in js/main.js). */
+.bg-decor svg.bg-decor-corner {
+    display: none;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .bg-decor svg:not(.bg-decor-corner) {
+        display: none;
+    }
+
+    .bg-decor svg.bg-decor-corner {
+        display: block;
+        position: absolute;
+        /* each fan's artwork is 710 x 440 units */
+        width: 80vw;
+        height: calc(80vw * 440 / 710);
+    }
+
+    .bg-decor-top-right {
+        top: 0;
+        right: 0;
+    }
+
+    /* nudged partly off-screen so this fan sits tighter into its corner */
+    .bg-decor-bottom-left {
+        bottom: -6vw;
+        left: -10vw;
+    }
+
+    /* keep lines as thick as on desktop even though the fans are scaled down */
+    .bg-decor-corner path {
+        vector-effect: non-scaling-stroke;
+    }
+}
+
+@media print {
+    .bg-decor {
+        display: none;
+    }
+}
+
+/* Component-specific theming */
+.themed-bg-primary {
+    background-color: var(--bg-light-primary);
+}
+
+.dark .themed-bg-primary {
+    background-color: var(--bg-dark-primary);
+}
+
+.themed-bg-secondary {
+    background-color: var(--bg-light-secondary);
+}
+
+.dark .themed-bg-secondary {
+    background-color: var(--bg-dark-secondary);
+}
+
+.themed-text-primary {
+    color: var(--text-light-primary);
+}
+
+.dark .themed-text-primary {
+    color: var(--text-dark-primary);
+}
+
+.themed-text-secondary {
+    color: var(--text-light-secondary);
+}
+
+.dark .themed-text-secondary {
+    color: var(--text-dark-secondary);
+}
+
+.themed-border {
+    border-color: var(--border-light);
+}
+
+.dark .themed-border {
+    border-color: var(--border-dark);
+}
+
+.themed-accent {
+    color: var(--accent-light);
+}
+
+.dark .themed-accent {
+    color: var(--accent-dark);
+}
+
+.themed-accent-bg {
+    background-color: var(--accent-light);
+}
+
+.dark .themed-accent-bg {
+    background-color: var(--accent-dark);
+}
+
+.themed-accent-bg-hover:hover {
+    background-color: var(--accent-hover-light);
+}
+
+.dark .themed-accent-bg-hover:hover {
+    background-color: var(--accent-hover-dark);
+}
+
+.seminar-embed {
+    width: min(100%, calc((100vh - 14rem) * 16 / 9.5));
+    aspect-ratio: 16 / 9.5;
+    margin: 0 auto;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.seminar-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0.75rem;
+}
+
+.seminar-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    gap: 0.6rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--border-light);
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1;
+    text-transform: uppercase;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.dark .seminar-tag {
+    border-color: var(--border-dark);
+    background-color: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.28);
+}
+
+.seminar-tag::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--accent-light);
+    flex: 0 0 auto;
+}
+
+.seminar-tag::after {
+    content: attr(data-tag);
+    white-space: nowrap;
+}
+
+.dark .seminar-tag::before {
+    background-color: var(--accent-dark);
+}
+
+/* Blurry Header */
+header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-bottom-width: 1px;
+    border-color: var(--border-light);
+}
+
+.dark header {
+    background-color: rgba(15, 23, 42, 0.8);
+    border-color: var(--border-dark);
+}
+
+/* Active nav link style */
+header nav a.active {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.dark header nav a.active {
+    color: var(--accent-dark);
+}
+
+/* Active nav link style - mobile*/
+header nav a.active,
+.mobile-nav a.active {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.dark header nav a.active,
+.dark .mobile-nav a.active {
+    color: var(--accent-dark);
+}
+
+.ta-dropdown-menu {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.98);
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.ta-dropdown::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 0.75rem;
+}
+
+.ta-dropdown.is-open .ta-dropdown-menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.ta-dropdown.is-open .ta-dropdown-trigger svg {
+    transform: rotate(180deg);
+}
+
+.ta-dropdown-trigger svg {
+    transition: transform 180ms ease;
+}
+
+.mobile-ta-submenu {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-0.25rem);
+    transition: max-height 240ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.mobile-ta-submenu.is-open {
+    max-height: 22rem;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mobile-ta-toggle svg {
+    transition: transform 180ms ease;
+}
+
+.mobile-ta-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.ta-dropdown-menu a.is-active,
+.ta-dropdown-menu a:hover,
+.ta-dropdown-menu a:focus-visible {
+    background-color: var(--bg-light-primary);
+    color: var(--text-light-primary);
+}
+
+.dark .ta-dropdown-menu a.is-active,
+.dark .ta-dropdown-menu a:hover,
+.dark .ta-dropdown-menu a:focus-visible {
+    background-color: var(--bg-dark-primary);
+    color: var(--text-dark-primary);
+}
+
+.ta-dropdown-menu a.is-active span:first-child,
+.ta-dropdown-menu a:hover span:first-child,
+.ta-dropdown-menu a:focus-visible span:first-child,
+.dark .ta-dropdown-menu a.is-active span:first-child,
+.dark .ta-dropdown-menu a:hover span:first-child,
+.dark .ta-dropdown-menu a:focus-visible span:first-child {
+    opacity: 0.9;
+}
+
+/* Timeline styles */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 7rem;
+    top: 0.25rem;
+    width: 1px;
+    height: 100%;
+    background-color: var(--border-light);
+    transform: translateX(-50%);
+}
+
+.dark .timeline-item::before {
+    background-color: var(--border-dark);
+}
+
+.timeline-date {
+    width: 7rem;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-light-secondary);
+    white-space: nowrap;
+    margin-top: 0.125rem;
+}
+
+.dark .timeline-date {
+    color: var(--text-dark-secondary);
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 7rem;
+    top: 0.25rem;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 9999px;
+    border-width: 2px;
+    border-color: var(--bg-light-secondary);
+    background-color: var(--accent-light);
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.dark .timeline-dot {
+    border-color: var(--bg-dark-secondary);
+    background-color: var(--accent-dark);
+}
+
+.timeline-content {
+    padding-left: 1.25rem;
+    flex-grow: 1;
+}
+
+/* Animation for sections on scroll */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+    position: relative;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 700px;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal.show {
+    display: block;
+    opacity: 1;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    /* mt-6 */
+    gap: 1rem;
+}
+
+.button-container>* {
+    margin-bottom: 1rem;
+    /* mb-4 */
+}
+
+.hidden {
+    display: none;
+}
+
+.row-col-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    list-style-position: outside;
+    padding-left: 10px;
+    max-width: 900px;
+}
+
+.row-col-list li {
+    margin: 0.06rem 0;
+}
+
+.inline-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    font-size: 16px;
+}
+
+.inline-bullets li {
+    position: relative;
+    padding-left: 1.2em;
+}
+
+.inline-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Section alternate background.
+   Only a very faint tint is layered over the base colour, so the background
+   contours show through almost equally in both kinds of section. */
+#main-content > section:nth-child(even) {
+    background-color: rgba(30, 90, 160, 0.03);
+    /* ≈ slate-50 over white */
+}
+
+.dark #main-content > section:nth-child(even) {
+    background-color: transparent;
+}
+
+.dark #main-content > section:nth-child(odd) {
+    background-color: rgba(148, 163, 184, 0.1);
+    /* ≈ slate-800 over slate-900 */
+}
+
+/* Full pages (Talks, Background, courses) */
+.course-page.themed-bg-secondary,
+.fullscreen-page.themed-bg-secondary {
+    background-color: transparent;
+}
+
+.dark .course-page.themed-bg-secondary,
+.dark .fullscreen-page.themed-bg-secondary {
+    background-color: rgba(148, 163, 184, 0.1);
+}
+
+/* Scroll to Top Button */
+#scroll-to-top {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+}
+
+#scroll-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Hidden News Items Logic */
+.hidden-news-item {
+    display: none !important;
+}
+
+.publication-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.citation-pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border: 1px solid var(--border-light);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+}
+
+.dark .citation-pre {
+    border-color: var(--border-dark);
+    background-color: #0f172a;
+}
+
+.social-icon-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon-link::before {
+    position: absolute;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 20;
+}
+
+.social-icon-link::before {
+    content: attr(data-tooltip);
+    bottom: calc(100% + 12px);
+    white-space: nowrap;
+    padding: 0.45rem 0.7rem;
+    border-radius: 0.55rem;
+    background: rgba(15, 23, 42, 0.96);
+    color: #f8fafc;
+    font-size: 0.72rem;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+}
+
+.social-icon-link:hover::before,
+.social-icon-link:focus-visible::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dark .social-icon-link::before {
+    background: rgba(226, 232, 240, 0.98);
+    color: #0f172a;
+}

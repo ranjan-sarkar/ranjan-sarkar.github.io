@@ -4,19 +4,56 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
 
 <url>
   <loc>https://ranjan-sarkar.github.io/</loc>
-  <lastmod>2026-01-31T07:16:16+00:00</lastmod>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://ranjan-sarkar.github.io/Resume_RANJAN.pdf</loc>
-  <lastmod>2026-01-31T07:16:16+00:00</lastmod>
+  <loc>https://ranjan-sarkar.github.io/publications.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/talks.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/ta.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/background.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
+<url>
+  <loc>https://ranjan-sarkar.github.io/rl.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/robot.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/aicps.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/amfai.html</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://ranjan-sarkar.github.io/Resume_RANJAN.pdf</loc>
+  <lastmod>2026-09-29T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 
 </urlset>

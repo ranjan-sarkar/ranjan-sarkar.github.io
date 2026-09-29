@@ -2,11 +2,10 @@
 <html lang="en" class="scroll-smooth">
 
 <head>
-    <meta name="google-site-verification" content="2GYzLjAA2sQ2-PvS5bxdybCQbhlbHBbipUtScfsIR7Q" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Ranjan Sarkar</title>
+    <title>TA | Ranjan Sarkar</title>
     <!-- <link rel="icon" type="image/svg+xml" href="robot-solid-full.svg"> -->
     <!-- Apply the saved (or system) theme before first paint, so pages don't flash light in dark mode -->
     <script>
@@ -16,21 +15,6 @@
                 document.documentElement.classList.add('dark');
             }
         } catch (e) { }
-    </script>
-    <!-- Old single-page links (e.g. /#seminars, /#amfai) now live on their own pages -->
-    <script>
-        (function () {
-            var hash = window.location.hash.substring(1);
-            var moved = {
-                seminars: 'talks.html', background: 'background.html', education: 'background.html', experience: 'background.html#experience',
-                rl: 'rl.html', robot: 'robot.html', aicps: 'aicps.html', amfai: 'amfai.html'
-            };
-            if (Object.prototype.hasOwnProperty.call(moved, hash)) {
-                window.location.replace(moved[hash]);
-            } else if (hash.indexOf('talk-') === 0) {
-                window.location.replace('talks.html#' + hash);
-            }
-        })();
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -50,34 +34,25 @@
     </script>
 
     <meta property="og:site_name" content="Ranjan Sarkar">
-    <meta property="og:title" content="Ranjan Sarkar Webpage" />
-    <meta property="og:description" content="Academic Portfolio" />
+    <meta property="og:title" content="Teaching Assistantship | Ranjan Sarkar" />
+    <meta property="og:description" content="Courses Ranjan Sarkar has assisted as a Teaching Assistant at IIT Kharagpur" />
     <meta property="og:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
-    <meta property="og:url" content="https://ranjan-sarkar.github.io/" />
+    <meta property="og:url" content="https://ranjan-sarkar.github.io/ta.html" />
     <meta property="og:type" content="website" />
 
-    <meta name="description" content="Academic Portfolio">
+    <meta name="description" content="Courses Ranjan Sarkar has assisted as a Teaching Assistant at IIT Kharagpur">
     <meta name="author" content="Ranjan Sarkar">
-    <link rel="canonical" href="https://ranjan-sarkar.github.io/">
+    <link rel="canonical" href="https://ranjan-sarkar.github.io/ta.html">
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ranjan Sarkar Webpage" />
-    <meta name="twitter:description" content="Academic Portfolio" />
+    <meta name="twitter:title" content="Teaching Assistantship | Ranjan Sarkar" />
+    <meta name="twitter:description" content="Courses Ranjan Sarkar has assisted as a Teaching Assistant at IIT Kharagpur" />
     <meta name="twitter:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ranjan Sarkar",
-      "url": "https://ranjan-sarkar.github.io/"
-    }
-    </script>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body data-page="home">
+<body data-page="ta">
 
     <!-- Decorative background layer -->
     <!-- Decorative background layer -->
@@ -237,248 +212,8 @@
     </header>
 
     <main id="main-content">
-        <!-- Home Section -->
-        <section id="home" class="scroll-animate scroll-mt-20 py-20 md:py-28">
-            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-2/5 flex justify-center md:justify-start">
-                    <img src="KGP_DP.png" alt="Ranjan Sarkar"
-                        class="rounded-full w-72 h-72 md:w-96 md:h-96 object-cover shadow-2xl">
-                </div>
-                <div class="md:w-3/5 text-center md:text-left">
-                    <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-4">Ranjan Sarkar</h1>
-                    <p class="text-xl md:text-xl themed-text-primary">PhD Scholar, Artificial Intelligence</p>
-                    <p class="text-xl themed-text-primary mb-5">Indian Institute of Technology Kharagpur</p>
-                    <p class="themed-text-secondary mb-8 max-w-2xl">
-                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank"
-                            class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial
-                            Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank"
-                            class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>,
-                        advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en"
-                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr.
-                            Prabhat Kumar Mishra</a>. I work at the <a href="https://rhpilab.in"
-                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab
-                            (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the
-                        intersection of Reinforcement Learning, Estimation, and Optimization, with applications in LLMs,
-                        Computer Vision, and Robotics.
-                    </p>
-                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-7 gap-y-8 mb-5">
-                        <a href="Resume_RANJAN.pdf" target="_blank"
-                            class="shrink-0 inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
-                            Resume
-                        </a>
-                        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:justify-start">
-                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
-                                data-tooltip="Email"
-                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
-                                    class="fas fa-envelope fa-lg"></i></a>
-                            <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
-                                data-tooltip="LinkedIn"
-                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
-                                    class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
-                                aria-label="Google Scholar" data-tooltip="Google Scholar"
-                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
-                                    class="fab fa-google-scholar fa-lg"></i></a>
-                            <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
-                                aria-label="ResearchGate" data-tooltip="ResearchGate"
-                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
-                                    class="fab fa-researchgate fa-lg"></i></a>
-                            <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
-                                data-tooltip="GitHub"
-                                class="social-icon-link themed-text-secondary hover:themed-accent transition-transform duration-300 transform hover:scale-125"><i
-                                    class="fab fa-github fa-lg"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- News Section -->
-        <section id="news" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold themed-text-primary themed-accent text-center mb-10">Recent News</h2>
-                <div id="news-container" class="max-w-5xl mx-auto space-y-6">
-                    <!-- ICC PAPER Accepted -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Sep 2026</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Our paper has been accepted to the <a href='https://controlsociety.org/icc/' target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Indian Control Conference (ICC 2027)</a>.</p>
-                        </div>
-                    </div>
-                    <!-- Dept RS Day Poster -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Aug 2026</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p class="themed-text-primary transition-colors">
-                                Presented a poster at the <a class='font-medium'>Department of AI Foundation Day and Research Scholar Day 2026</a>.
-                                <a href="talks.html#talk-rsday-2026-poster"
-                                    class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Poster
-                                </a>
-                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- arXiv Preprint -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Jul 2026</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Preprint is available on <a href="publications.html"
-                                    class="themed-text-primary text-accent font-medium hover:underline">arXiv</a>.</p>
-                        </div>
-                    </div>
-                    <!-- News Item AI for Science and Technology -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Jan 2026</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Attended <a href="https://ais.cse.iitkgp.ac.in/" target="_blank"
-                                    class="themed-text-primary text-accent font-medium hover:underline">Workshop on AI for Science and Technology 2026</a> at IIT Kharagpur, supported by <a
-                                    href="https://indiaai.gov.in/" target="_blank"
-                                    class="themed-text-primary text-accent font-medium hover:underline">IndiaAI</a>.</p>
-                        </div>
-                    </div>
-                    <!-- News Item (Presentation) -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Dec 2025</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <!-- <div class="themed-bg-secondary themed-accent group-hover:themed-accent-bg-hover transition-colors duration-300"></div> -->
-                            <p class="themed-text-primary transition-colors">
-                                Delivered Self-Study Seminar on
-                                <span class="font-serif italic text-lg themed-text-primary">
-                                    "An Estimation-Control duality and its extension to unknown distributions"
-                                </span>.
-                                <a href="talks.html#talk-self-study-2025"
-                                    class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Slides
-                                </a>
-                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Joining -->
-                    <div class="flex items-start group news-item">
-                        <div class="flex-shrink-0 w-24 text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                            Jan 2025</div>
-                        <div
-                            class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
-                            <p>Started working as a Research Scholar in <a href="https://rhpilab.in"
-                                    target="_blank"
-                                    class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab</a>.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Load More Button -->
-                <div class="text-center mt-8">
-                    <button id="load-more-news"
-                        class="hidden inline-flex items-center text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors focus:outline-none">
-                        Older News
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Interests Section -->
-        <section id="research" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
-            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Research Interests
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-brain"></i></div>
-                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Machine Learning</h3>
-                        <p class="themed-text-secondary">Investigating the theoretical and probabilistic foundations of
-                            machine learning models to provide mathematical guarantees.</p>
-                    </div>
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-robot"></i></div>
-                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Reinforcement Learning</h3>
-                        <p class="themed-text-secondary">Focusing on the intersection of stochastic control and
-                            sequential decision-making to guarantee system stability and performance.</p>
-                    </div>
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-chart-line"></i></div>
-                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Stochastic Optimization</h3>
-                        <p class="themed-text-secondary">Developing scalable optimization frameworks and estimation
-                            techniques to handle high-dimensional uncertainty.</p>
-                    </div>
-                    <!-- <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-language"></i></div>
-                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Natural Language Processing</h3>
-                        <p class="themed-text-secondary">Investigating the optimization and application of Large Language Models, aiming to enhance their efficiency, reasoning, and alignment.</p>
-                    </div>
-                    <div class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-eye"></i></div>
-                        <h3 class="text-xl font-semibold themed-text-primary mb-2">Computer Vision</h3>
-                        <p class="themed-text-secondary">Working on efficient object detection and semantic segmentation models for autonomous systems navigation.</p>
-                    </div> -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Publications Section (short list; full details on publications.html) -->
-        <section id="publications" class="scroll-animate scroll-mt-10 pt-20 pb-20 md:pt-20 md:pb-20">
-            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Publications</h2>
-                <div class="max-w-5xl mx-auto border-t themed-border">
-                    <div class="flex flex-col gap-2 py-5 border-b themed-border sm:flex-row sm:items-center sm:gap-6">
-                        <span class="shrink-0 sm:w-24 text-xs font-semibold uppercase tracking-wide themed-accent">ICC 2027</span>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="font-serif italic text-lg themed-text-primary">
-                                LQG solution for POMDP without estimating states: A minimum variance approach
-                            </h3>
-                            <p class="text-sm themed-text-primary mt-1">
-                                Ranjan Sarkar, Prabhat K. Mishra
-                            </p>
-                        </div>
-                        <div class="shrink-0 flex items-center gap-4 text-sm">
-                            <a href="https://arxiv.org/abs/2607.12135" target="_blank"
-                                class="themed-accent hover:underline font-medium">Paper</a>
-                            <button type="button" class="cite-trigger themed-accent hover:underline font-medium"
-                                data-cite-title="BibTeX Citation" data-bibtex="@article{ranjan2026_lqg,
-    title={{LQG} solution for {POMDP} without estimating states: A minimum variance approach},
-    author={Sarkar, Ranjan and Mishra, Prabhat K.},
-    journal={arXiv preprint arXiv:2607.12135},
-    year={2026},
-    url={https://arxiv.org/abs/2607.12135}
-}">
-                                Cite
-                            </button>
-                        </div>
-                    </div>
-                    <!--
-                    To add a paper here, copy the row above (keep this list to the 3 most recent;
-                    the full entry with abstract goes on publications.html).
-                    -->
-                </div>
-                <div class="text-center mt-10">
-                    <a href="publications.html"
-                        class="inline-flex items-center themed-accent hover:underline font-medium">
-                        View all publications&nbsp;<i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- TAShip Section -->
-        <section id="TA" class="scroll-animate py-20 md:py-28">
+        <section id="TA" class="scroll-animate min-h-screen py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching
                     Assistantship (TA)</h2>
@@ -548,12 +283,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-10">
-                    <a href="ta.html"
-                        class="inline-flex items-center themed-accent hover:underline font-medium">
-                        View all courses&nbsp;<i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
             </div>
         </section>
     </main>
@@ -585,26 +314,6 @@
                     class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
                     View Full Course Page
                 </a>
-            </div>
-        </div>
-    </div>
-
-    <div id="cite-modal" class="modal" aria-hidden="true">
-        <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
-            <div class="flex justify-between items-center mb-3">
-                <h3 id="cite-modal-title" class="text-xl font-bold themed-text-primary themed-accent">BibTeX Citation
-                </h3>
-                <button id="close-cite-modal" type="button"
-                    class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
-            </div>
-            <!-- <p class="themed-text-secondary text-sm mb-4">The citation is copied automatically when this popup opens.</p> -->
-            <pre id="cite-bibtex-text" class="citation-pre themed-text-primary"></pre>
-            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p id="cite-copy-status" class="text-sm themed-text-secondary" aria-live="polite"></p>
-                <button id="copy-cite-btn" type="button"
-                    class="inline-block themed-accent-bg text-white font-semibold py-2 px-5 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
-                    Copy BibTeX
-                </button>
             </div>
         </div>
     </div>
