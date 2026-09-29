@@ -1,6 +1,11 @@
 // Shared behaviour for every page of the site.
 // Each page sets <body data-page="..."> (and data-course="..." on course pages)
 // so the header can highlight where the visitor currently is.
+
+// Folder the site is served from (this file lives in js/). Search fetches pages and builds links
+// from here, so it also works on 404.html, which GitHub Pages shows at any missing address.
+const SITE_ROOT = new URL('..', document.currentScript?.src || location.href);
+
 document.addEventListener('DOMContentLoaded', () => {
     const currentPage = document.body.dataset.page || '';
     const currentCourse = document.body.dataset.course || '';
@@ -16,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = document.documentElement.classList.contains('dark');
         darkIcon.style.display = isDark ? 'none' : 'inline-block';
         lightIcon.style.display = isDark ? 'inline-block' : 'none';
+        // browser tooltip + screen-reader name saying what a click will do
+        const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+        themeToggle.title = label;
+        themeToggle.setAttribute('aria-label', label);
     };
 
     syncThemeIcons();
@@ -530,6 +539,597 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.add('is-new');
         }
     });
+
+    // --- Site search ---
+    // A search button is added to the header on every page. On first use it fetches the pages
+    // listed below and indexes the text inside their <main>, so new content is searchable as soon
+    // as it is published. Add any new page to SEARCH_PAGES.
+    // The footer is the same on every page, so it is indexed once (from the first page) and its
+    // results scroll to the footer of the page the visitor is on.
+    // Clicking a result opens page.html?q=...&hit=N (plus &in=footer for footer results); the target
+    // page then highlights the words and scrolls to the N-th matching block (see highlightSearchHits).
+    // The tutorial notebooks are searched through a small pre-built index (SEARCH_NOTEBOOKS, made by
+    // `npm run build:search`); their results open the notebook on GitHub in a new tab.
+    const SEARCH_PAGES = [
+        'index.html', 'publications.html', 'talks.html', 'background.html', 'ta.html',
+        'rl.html', 'robot.html', 'aicps.html', 'amfai.html',
+    ];
+    const SEARCH_NOTEBOOKS = 'js/search-notebooks.json';
+    const NOTEBOOK_RESULTS = 5; // at most this many hits per notebook, so they don't crowd out the pages
+    const SEARCH_BLOCKS = 'h1, h2, h3, h4, h5, h6, p, li, td, th, dt, dd, figcaption, blockquote, div, section, article';
+    const SEARCH_HEADINGS = /^H[1-4]$/;
+    const MAX_RESULTS = 40;
+    // the page being viewed ("/" is index.html; also copes with extension-less URLs like /talks)
+    const currentFile = (() => {
+        const file = decodeURIComponent(location.pathname.split('/').pop()) || 'index.html';
+        return file.endsWith('.html') ? file : `${file}.html`;
+    })();
+
+    const normalize = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const queryTerms = (query) => normalize(query).split(/\s+/).filter(Boolean);
+    const escapeHtml = (text) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+    const siteUrl = (path) => new URL(path, SITE_ROOT).href;
+
+    // Split the text inside <main> into blocks: each text node belongs to its nearest block element.
+    // Runs identically on fetched pages and on the live page, so block numbers match on both.
+    const extractBlocks = (root) => {
+        const blocks = new Map();
+        let heading = '';
+        // Words must stay apart across line breaks, icons, blocks and whitespace-only text
+        // ("2026<br>Dept." or "<svg>…</svg>Dept." -> "2026 Dept."), so these set a pending space.
+        let space = false;
+        const walker = root.ownerDocument.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+            if (node.nodeType === 1) {
+                space ||= node.matches(`br, svg, img, ${SEARCH_BLOCKS}`);
+                // icon-only links (e.g. the footer's LinkedIn / GitHub icons) are found by their label
+                const label = node.getAttribute('aria-label');
+                if (label && !node.textContent.trim() && !node.closest('.search-skip')) {
+                    blocks.set(node, { element: node, heading, nodes: [], text: label });
+                    space = true;
+                }
+                continue;
+            }
+            if (!node.nodeValue.trim() || node.parentElement.closest('script, style, noscript, svg, .search-skip')) {
+                space = true;
+                continue;
+            }
+            const element = node.parentElement.closest(SEARCH_BLOCKS) || root;
+            if (!blocks.has(element)) {
+                if (SEARCH_HEADINGS.test(element.tagName)) {
+                    heading = '';
+                }
+                blocks.set(element, { element, heading, nodes: [], text: '' });
+            }
+            const block = blocks.get(element);
+            block.nodes.push(node);
+            block.text += (space ? ' ' : '') + node.nodeValue;
+            space = false;
+            if (SEARCH_HEADINGS.test(element.tagName)) {
+                heading = block.text.replace(/\s+/g, ' ').trim();
+            }
+        }
+        return [...blocks.values()].map((block) => {
+            block.text = block.text.replace(/\s+/g, ' ').trim();
+            block.search = normalize(block.text);
+            return block;
+        });
+    };
+
+    const blockMatches = (block, terms) => terms.every((term) => block.search.includes(term));
+
+    let searchIndexPromise = null;
+    const loadSearchIndex = () => {
+        const pages = Promise.all(SEARCH_PAGES.map(async (url) => {
+            const response = await fetch(siteUrl(url));
+            if (!response.ok) {
+                throw new Error(`${url}: ${response.status}`);
+            }
+            const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+            const title = doc.title.replace(/\s*\|\s*Ranjan Sarkar\s*$/, '').trim();
+            const main = doc.querySelector('main') || doc.body;
+            const footer = doc.querySelector('footer');
+            return {
+                url,
+                title: url === 'index.html' ? 'Home' : title,
+                blocks: extractBlocks(main),
+                footerBlocks: footer ? extractBlocks(footer) : [],
+            };
+        }));
+        const notebooks = fetch(siteUrl(SEARCH_NOTEBOOKS))
+            .then((response) => (response.ok ? response.json() : []))
+            .catch(() => []) // the pages stay searchable without the notebook index
+            .then((list) => list.map((notebook) => ({
+                url: notebook.url,
+                title: notebook.title,
+                scope: 'notebook',
+                coursePage: notebook.page,
+                blocks: notebook.blocks.map((block) => ({ ...block, search: normalize(block.text) })),
+            })));
+        searchIndexPromise ??= Promise.all([pages, notebooks]).then(([sitePages, notebookPages]) => {
+            // footer hits scroll to the footer of this page (of the home page when on the 404 page)
+            const footerUrl = SEARCH_PAGES.includes(currentFile) ? currentFile : 'index.html';
+            const footerPage = { url: footerUrl, title: 'Footer', scope: 'footer', blocks: sitePages[0].footerBlocks };
+            return [...sitePages, footerPage, ...notebookPages];
+        }).catch((error) => {
+            searchIndexPromise = null; // allow a retry next time
+            throw error;
+        });
+        return searchIndexPromise;
+    };
+
+    // Escape text for HTML and wrap the searched words in <mark>
+    const markHtml = (text, terms) => {
+        const pattern = new RegExp(`(${terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+        // split() with a capture group puts the matched words at the odd positions
+        return text.split(pattern).map((piece, i) => (i % 2 ? `<mark>${escapeHtml(piece)}</mark>` : escapeHtml(piece))).join('');
+    };
+
+    const snippetHtml = (text, terms) => {
+        const lower = normalize(text);
+        const first = Math.min(...terms.map((term) => lower.indexOf(term)).filter((i) => i >= 0));
+        let start = Math.max(0, first - 60);
+        let end = Math.min(text.length, first + 160);
+        if (start > 0) start = text.indexOf(' ', start) + 1 || start;
+        if (end < text.length) end = text.lastIndexOf(' ', end) > first ? text.lastIndexOf(' ', end) : end;
+        return (start > 0 ? '… ' : '') + markHtml(text.slice(start, end), terms) + (end < text.length ? ' …' : '');
+    };
+
+    const runSearch = (pages, query) => {
+        const terms = queryTerms(query);
+        if (!terms.length) {
+            return [];
+        }
+        const results = [];
+        pages.forEach((page, pageOrder) => {
+            const isNotebook = page.scope === 'notebook';
+            if (page.scope !== 'footer' && terms.every((term) => normalize(page.title).includes(term))) {
+                results.push({
+                    page,
+                    kind: isNotebook ? 'notebook' : 'page',
+                    score: 100,
+                    order: -1,
+                    href: isNotebook ? page.url : siteUrl(page.url),
+                    title: markHtml(page.title, terms),
+                    snippet: isNotebook ? 'Open notebook on GitHub' : 'Open page',
+                });
+            }
+            let hit = 0;
+            page.blocks.forEach((block, order) => {
+                if (!blockMatches(block, terms)) {
+                    return;
+                }
+                // notebook blocks come from the pre-built index and say whether they are headings
+                const { element } = block;
+                const isHeading = block.isHeading ?? SEARCH_HEADINGS.test(element.tagName);
+                const isLink = Boolean(element) && (element.matches('a') || (element.children.length === 1 && element.firstElementChild.matches('a')));
+                const wholeWords = terms.filter((term) => new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(block.search)).length;
+                results.push({
+                    page,
+                    kind: isNotebook ? 'notebook' : isHeading ? 'heading' : isLink ? 'link' : 'text',
+                    score: (isHeading ? 20 : 0) + wholeWords * 5 - (isNotebook ? 2 : 0) - pageOrder * 0.01,
+                    order,
+                    href: isNotebook
+                        ? page.url
+                        : siteUrl(`${page.url}?q=${encodeURIComponent(query.trim())}${page.scope ? `&in=${page.scope}` : ''}&hit=${hit}`),
+                    // headings are their own title; other text sits under its section heading
+                    title: isHeading ? snippetHtml(block.text, terms) : markHtml(block.heading || page.title, terms),
+                    snippet: isHeading ? '' : snippetHtml(block.text, terms),
+                });
+                hit += 1;
+            });
+        });
+        // results from the page being viewed come first, then that course's notebooks,
+        // then the best matches from everywhere else
+        const isHere = ({ page }) => ((!page.scope && page.url === currentFile) ? 2 : page.coursePage === currentFile ? 1 : 0);
+        const perNotebook = new Map();
+        return results
+            .sort((a, b) => isHere(b) - isHere(a) || b.score - a.score || a.order - b.order)
+            .filter(({ page }) => {
+                if (page.scope !== 'notebook') {
+                    return true;
+                }
+                perNotebook.set(page, (perNotebook.get(page) || 0) + 1);
+                return perNotebook.get(page) <= NOTEBOOK_RESULTS;
+            })
+            .slice(0, MAX_RESULTS);
+    };
+
+    // Header button (placed before the theme toggle) and the search dialog
+    const searchButton = document.createElement('button');
+    searchButton.type = 'button';
+    searchButton.id = 'search-button';
+    searchButton.className = 'p-2 rounded-full themed-text-secondary focus:outline-none';
+    searchButton.setAttribute('aria-label', 'Search this website');
+    searchButton.title = 'Search (Ctrl+K)';
+    searchButton.innerHTML = `<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>`;
+    themeToggle.parentNode.insertBefore(searchButton, themeToggle);
+
+    const searchDialog = document.createElement('div');
+    searchDialog.className = 'search-overlay search-skip';
+    searchDialog.hidden = true;
+    searchDialog.innerHTML = `
+        <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search this website">
+            <div class="search-field">
+                <svg class="search-field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+                <input type="search" id="search-input" placeholder="Type to search all pages of this website"
+                    autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false"
+                    aria-controls="search-results" aria-autocomplete="list">
+                <kbd class="search-esc">Esc</kbd>
+            </div>
+            <div class="search-body">
+                <div id="search-results" class="search-results" role="listbox" aria-label="Search results"></div>
+                <div class="search-footer">
+                    <span class="search-status" aria-live="polite"></span>
+                    <span class="search-keys" aria-hidden="true">
+                        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                        <span><kbd>↵</kbd> open</span>
+                    </span>
+                </div>
+            </div>
+        </div>`;
+    document.body.appendChild(searchDialog);
+
+    const searchPanel = searchDialog.querySelector('.search-panel');
+    const searchInput = searchDialog.querySelector('#search-input');
+    const searchStatus = searchDialog.querySelector('.search-status');
+    const searchResults = searchDialog.querySelector('#search-results');
+    let activeResult = -1;
+    let searchIsOpen = false;
+    let closeTimer = null;
+    let panelResize = null;
+    let shownResults = new Set(); // page + block of each result on screen (hrefs change with the query)
+    const resultKey = (result) => `${result.page.title}|${result.order}`;
+
+    const icon = (path) => `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${path}"/></svg>`;
+    const RESULT_ICONS = {
+        page: icon('M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'),
+        heading: icon('M7 20l4-16m2 16l4-16M6 9h14M4 15h14'),
+        link: icon('M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1'),
+        text: icon('M4 6h16M4 12h16M4 18h10'),
+        notebook: icon('M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'),
+        recent: icon('M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'),
+    };
+    const ENTER_ICON = icon('M9 10l-5 5 5 5M20 4v7a4 4 0 01-4 4H4');
+    const EXTERNAL_ICON = icon('M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14');
+
+    // Recent searches: kept in this browser only (localStorage) and listed when the box opens empty.
+    // A search is remembered when one of its results is opened.
+    const RECENT_KEY = 'recent-searches';
+    const RECENT_MAX = 5;
+    const loadRecent = () => {
+        try {
+            const list = JSON.parse(localStorage.getItem(RECENT_KEY));
+            return Array.isArray(list) ? list.filter((item) => typeof item === 'string').slice(0, RECENT_MAX) : [];
+        } catch (e) {
+            return [];
+        }
+    };
+    const saveRecent = (list) => {
+        try {
+            if (list.length) {
+                localStorage.setItem(RECENT_KEY, JSON.stringify(list));
+            } else {
+                localStorage.removeItem(RECENT_KEY);
+            }
+        } catch (e) {
+            // storage blocked (private mode etc.): recent searches are simply not kept
+        }
+    };
+    const rememberSearch = (query) => {
+        const clean = query.trim().replace(/\s+/g, ' ');
+        if (clean) {
+            saveRecent([clean, ...loadRecent().filter((item) => normalize(item) !== normalize(clean))].slice(0, RECENT_MAX));
+        }
+    };
+    const EMPTY_ICON = icon('M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0zM8.5 8.5l4 4m0-4l-4 4');
+
+    // Change the panel's contents and let its height glide to the new size instead of jumping
+    const updatePanel = (change) => {
+        const from = searchPanel.offsetHeight;
+        panelResize?.cancel();
+        change();
+        const to = searchPanel.offsetHeight;
+        if (from !== to && searchIsOpen && !prefersReducedMotion) {
+            panelResize = searchPanel.animate([{ height: `${from}px` }, { height: `${to}px` }],
+                { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        }
+    };
+
+    const setActiveResult = (index, scroll = true) => {
+        const items = searchResults.querySelectorAll('a');
+        items.forEach((item, i) => item.setAttribute('aria-selected', String(i === index)));
+        activeResult = index;
+        if (items[index]) {
+            if (scroll) {
+                items[index].scrollIntoView({ block: 'nearest' });
+            }
+            searchInput.setAttribute('aria-activedescendant', items[index].id);
+        } else {
+            searchInput.removeAttribute('aria-activedescendant');
+        }
+    };
+
+    const renderResults = async () => {
+        const query = searchInput.value;
+        if (queryTerms(query).length === 0) {
+            // an empty box is just the input (plus recent searches, if there are any)
+            updatePanel(() => showIdle());
+            return;
+        }
+        let pages;
+        try {
+            pages = await loadSearchIndex();
+        } catch (error) {
+            updatePanel(() => showMessage(location.protocol === 'file:'
+                ? 'Search needs the site to be served over http (GitHub Pages or a local server), not opened as a file.'
+                : 'Search is unavailable right now. Please try again.'));
+            return;
+        }
+        if (query !== searchInput.value) {
+            return; // a newer keystroke has already rendered
+        }
+        const results = runSearch(pages, query);
+        if (!results.length) {
+            updatePanel(() => showMessage(`No results for “${query.trim()}”`, 'Try another word, or check the spelling.'));
+            return;
+        }
+
+        // Group the results under their page; pages are ordered by their best result
+        const groups = new Map();
+        results.forEach((result) => {
+            if (!groups.has(result.page)) {
+                groups.set(result.page, []);
+            }
+            groups.get(result.page).push(result);
+        });
+
+        // only results that were not already on screen fade in, one after another,
+        // so typing another letter does not make the whole list flicker
+        let entering = 0;
+        let index = 0;
+        const enterAttrs = (isNew) => (isNew ? ` is-entering" style="--enter-delay: ${Math.min(entering++, 10) * 28}ms` : '');
+        const html = [...groups].map(([page, pageResults]) => {
+            const isNotebook = page.scope === 'notebook';
+            const groupIsNew = pageResults.some((result) => !shownResults.has(resultKey(result)));
+            const items = pageResults.map((result) => `
+                <a id="search-result-${index++}" role="option" aria-selected="false" href="${result.href}"
+                    ${isNotebook ? 'target="_blank" rel="noopener"' : ''}
+                    class="search-result is-${result.kind}${enterAttrs(!shownResults.has(resultKey(result)))}">
+                    <span class="search-result-icon">${RESULT_ICONS[result.kind]}</span>
+                    <span class="search-result-body">
+                        <span class="search-result-title">${result.title}</span>
+                        ${result.snippet ? `<span class="search-result-text">${result.snippet}</span>` : ''}
+                    </span>
+                    <span class="search-result-enter">${isNotebook ? EXTERNAL_ICON : ENTER_ICON}</span>
+                </a>`).join('');
+            return `
+            <div class="search-group" role="group" aria-label="${escapeHtml(page.title)}${isNotebook ? ' (notebook)' : ''}">
+                <div class="search-group-label${enterAttrs(groupIsNew)}" aria-hidden="true">${escapeHtml(page.title)}${isNotebook ? '<span class="search-group-badge">Notebook</span>' : ''}</div>
+                ${items}
+            </div>`;
+        }).join('');
+        shownResults = new Set(results.map(resultKey));
+
+        updatePanel(() => {
+            searchPanel.classList.remove('is-empty', 'is-message', 'is-recent');
+            searchStatus.textContent = `${results.length}${results.length === MAX_RESULTS ? '+' : ''} result${results.length === 1 ? '' : 's'}`
+                + (groups.size > 1 ? ` on ${groups.size} pages` : '');
+            searchResults.innerHTML = html;
+        });
+        searchInput.setAttribute('aria-expanded', 'true');
+        setActiveResult(0);
+    };
+
+    // A centred message in place of the results ("No results", errors)
+    function showMessage(title, hint = '') {
+        searchPanel.classList.remove('is-empty', 'is-recent');
+        searchPanel.classList.add('is-message');
+        searchResults.innerHTML = `
+            <div class="search-message">
+                <span class="search-message-icon">${EMPTY_ICON}</span>
+                <p class="search-message-title">${escapeHtml(title)}</p>
+                ${hint ? `<p class="search-message-hint">${escapeHtml(hint)}</p>` : ''}
+            </div>`;
+        searchStatus.textContent = title;
+        shownResults = new Set();
+        searchInput.setAttribute('aria-expanded', 'false');
+        setActiveResult(-1);
+    }
+
+    // Back to just the input box
+    function clearResults() {
+        searchPanel.classList.remove('is-message', 'is-recent');
+        searchPanel.classList.add('is-empty');
+        searchResults.innerHTML = '';
+        searchStatus.textContent = '';
+        shownResults = new Set();
+        searchInput.setAttribute('aria-expanded', 'false');
+        setActiveResult(-1);
+    }
+
+    // Empty box: the recent searches, or nothing but the input when there are none
+    function showIdle() {
+        const recent = loadRecent();
+        if (!recent.length) {
+            clearResults();
+            return;
+        }
+        searchPanel.classList.remove('is-empty', 'is-message');
+        searchPanel.classList.add('is-recent');
+        searchResults.innerHTML = `
+            <div class="search-group" role="group" aria-label="Recent searches">
+                <div class="search-group-label search-recent-label">
+                    <span>Recent searches</span>
+                    <button type="button" class="search-recent-clear">Clear</button>
+                </div>
+                ${recent.map((query, i) => `
+                <a id="search-result-${i}" role="option" aria-selected="false" href="#" data-recent="${escapeHtml(query)}"
+                    class="search-result is-recent">
+                    <span class="search-result-icon">${RESULT_ICONS.recent}</span>
+                    <span class="search-result-body"><span class="search-result-title">${escapeHtml(query)}</span></span>
+                    <span class="search-result-enter">${ENTER_ICON}</span>
+                </a>`).join('')}
+            </div>`;
+        searchStatus.textContent = '';
+        shownResults = new Set();
+        searchInput.setAttribute('aria-expanded', 'true');
+        setActiveResult(-1); // nothing preselected: Enter in the empty box does nothing
+    }
+
+    // Opening and closing fade the backdrop and let the panel rise in / sink away (see .is-open in style.css)
+    const openSearch = () => {
+        clearTimeout(closeTimer);
+        searchIsOpen = true;
+        searchDialog.hidden = false;
+        void searchDialog.offsetWidth; // start the transition from the closed state
+        searchDialog.classList.add('is-open');
+        document.documentElement.classList.add('search-open');
+        searchInput.value = '';
+        showIdle();
+        searchInput.focus();
+        loadSearchIndex().catch(() => {}); // start fetching while the visitor types
+    };
+
+    const closeSearch = () => {
+        searchIsOpen = false;
+        searchDialog.classList.remove('is-open');
+        document.documentElement.classList.remove('search-open');
+        // hand focus back to the header button without leaving its glow on (see .focus-quiet in style.css)
+        searchButton.classList.add('focus-quiet');
+        searchButton.focus({ focusVisible: false });
+        // clear the query and results once the closing animation has finished
+        closeTimer = setTimeout(() => {
+            searchDialog.hidden = true;
+            searchInput.value = '';
+            clearResults();
+        }, prefersReducedMotion ? 0 : 220);
+    };
+
+    searchButton.addEventListener('click', openSearch);
+    // any other element can open the search too, e.g. the button on the 404 page
+    document.querySelectorAll('[data-open-search]').forEach((element) => element.addEventListener('click', openSearch));
+    searchButton.addEventListener('blur', () => searchButton.classList.remove('focus-quiet'));
+    searchInput.addEventListener('input', renderResults);
+    // the mouse moves the same selection as the arrow keys, so only one row is ever highlighted
+    searchResults.addEventListener('mousemove', (event) => {
+        const item = event.target.closest('a');
+        const index = item ? [...searchResults.querySelectorAll('a')].indexOf(item) : -1;
+        if (index >= 0 && index !== activeResult) {
+            setActiveResult(index, false);
+        }
+    });
+    searchResults.addEventListener('click', (event) => {
+        if (event.target.closest('.search-recent-clear')) {
+            saveRecent([]);
+            updatePanel(() => showIdle());
+            searchInput.focus();
+            return;
+        }
+        const item = event.target.closest('a');
+        if (!item) {
+            return;
+        }
+        if (item.dataset.recent !== undefined) {
+            // a recent search: run it again
+            event.preventDefault();
+            searchInput.value = item.dataset.recent;
+            searchInput.focus();
+            renderResults();
+        } else {
+            rememberSearch(searchInput.value);
+        }
+    });
+    searchDialog.addEventListener('click', (event) => {
+        if (event.target === searchDialog) {
+            closeSearch();
+        }
+    });
+    searchDialog.addEventListener('keydown', (event) => {
+        const count = searchResults.querySelectorAll('a').length;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeSearch();
+        } else if (event.key === 'ArrowDown' && count) {
+            event.preventDefault();
+            setActiveResult((activeResult + 1) % count);
+        } else if (event.key === 'ArrowUp' && count) {
+            event.preventDefault();
+            setActiveResult((activeResult - 1 + count) % count);
+        } else if (event.key === 'Enter' && event.target === searchInput && activeResult >= 0) {
+            event.preventDefault();
+            searchResults.querySelectorAll('a')[activeResult].click();
+        } else if (event.key === 'Tab') {
+            // keep focus inside the dialog
+            const focusable = [searchInput, ...searchResults.querySelectorAll('a, button')];
+            const index = focusable.indexOf(document.activeElement);
+            const next = event.shiftKey ? index - 1 : index + 1;
+            if (next < 0 || next >= focusable.length) {
+                event.preventDefault();
+                focusable[next < 0 ? focusable.length - 1 : 0].focus();
+            }
+        }
+    });
+    document.addEventListener('keydown', (event) => {
+        const typing = event.target.closest('input, textarea, select, [contenteditable="true"]');
+        if (!searchIsOpen && (((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') || (event.key === '/' && !typing))) {
+            event.preventDefault();
+            openSearch();
+        }
+    });
+
+    // Arriving from a search result: highlight the words and scroll to the chosen block
+    const highlightSearchHits = () => {
+        const params = new URLSearchParams(location.search);
+        const query = params.get('q');
+        const scope = document.querySelector(params.get('in') === 'footer' ? 'footer' : 'main');
+        if (!query || !scope) {
+            return;
+        }
+        const terms = queryTerms(query);
+        const matches = extractBlocks(scope).filter((block) => blockMatches(block, terms));
+        const pattern = new RegExp(terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'gi');
+
+        matches.forEach((block) => {
+            block.nodes.forEach((node) => {
+                const text = node.nodeValue;
+                const lower = normalize(text);
+                const fragment = document.createDocumentFragment();
+                let last = 0;
+                for (const match of lower.matchAll(pattern)) {
+                    fragment.append(text.slice(last, match.index));
+                    const mark = document.createElement('mark');
+                    mark.className = 'search-hit';
+                    mark.textContent = text.slice(match.index, match.index + match[0].length);
+                    fragment.append(mark);
+                    last = match.index + match[0].length;
+                }
+                if (last > 0) {
+                    fragment.append(text.slice(last));
+                    node.replaceWith(fragment);
+                }
+            });
+        });
+
+        const target = matches[Number(params.get('hit')) || 0] || matches[0];
+        if (target) {
+            target.element.classList.add('search-target');
+            // wait a frame so layout (fonts, scroll animations) has settled
+            requestAnimationFrame(() => target.element.scrollIntoView({ block: 'center', behavior: 'smooth' }));
+        }
+        // tidy the address bar; the highlights stay until the page is reloaded
+        params.delete('q');
+        params.delete('in');
+        params.delete('hit');
+        const rest = params.toString();
+        history.replaceState(null, '', location.pathname + (rest ? `?${rest}` : '') + location.hash);
+    };
+    highlightSearchHits();
 
     // --- SCROLL TO TOP BUTTON + header depth once the page is scrolled ---
     const scrollToTopBtn = document.getElementById('scroll-to-top');
