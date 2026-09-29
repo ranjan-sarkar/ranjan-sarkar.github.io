@@ -343,6 +343,42 @@ header nav a.active,
     color: var(--accent-dark);
 }
 
+/* Header nav underline: grows from the centre on hover (faint) and stays under the current section (solid).
+   Only the top-level desktop links carry data-nav, so dropdown and mobile links are unaffected. */
+header nav a[data-nav] {
+    position: relative;
+}
+
+header nav a[data-nav]::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    border-radius: 9999px;
+    background-color: var(--accent-light);
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dark header nav a[data-nav]::after {
+    background-color: var(--accent-dark);
+}
+
+header nav a[data-nav]:hover::after,
+header nav a[data-nav]:focus-visible::after {
+    opacity: 0.45;
+    transform: scaleX(1);
+}
+
+header nav a[data-nav].active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
 .ta-dropdown-menu {
     opacity: 0;
     transform: translateY(0.5rem) scale(0.98);

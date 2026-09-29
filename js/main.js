@@ -54,6 +54,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Background curves: gentle ripple while scrolling ---
+    // Each curve drifts a few SVG units along a slow wave driven by the scroll position.
+    // Neighbouring curves are slightly out of phase, so the fan ripples instead of sliding
+    // as one block, and the motion eases toward the scroll target so it stays smooth.
+    // At the top of the page every curve sits exactly where it is drawn.
+    const bgCurves = [];
+    document.querySelectorAll('.bg-decor svg').forEach((svg) => {
+        const indexInFan = { top: 0, bottom: 0 };
+        svg.querySelectorAll('path').forEach((path) => {
+            const fan = path.getAttribute('d').startsWith('M1450') ? 'top' : 'bottom';
+            bgCurves.push({ path, direction: fan === 'top' ? 1 : -1, lag: indexInFan[fan]++ * 0.45 });
+        });
+    });
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (bgCurves.length && !prefersReducedMotion) {
+        const AMPLITUDE = 8;      // SVG units; a curve moves at most 2x this from its drawn position
+        const WAVELENGTH = 900;   // px of scrolling for one full wave
+        const EASE = 0.08;        // fraction of the remaining distance covered per frame
+
+        let targetScroll = window.scrollY;
+        let currentScroll = targetScroll;
+        let frame = null;
+
+        const renderCurves = () => {
+            currentScroll += (targetScroll - currentScroll) * EASE;
+            const phase = (currentScroll / WAVELENGTH) * Math.PI * 2;
+
+            bgCurves.forEach(({ path, direction, lag }) => {
+                const dx = direction * AMPLITUDE * (Math.sin(phase + lag) - Math.sin(lag));
+                const dy = direction * AMPLITUDE * 0.6 * (Math.cos(phase + lag) - Math.cos(lag));
+                path.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
+            });
+
+            frame = Math.abs(targetScroll - currentScroll) > 0.5 ? requestAnimationFrame(renderCurves) : null;
+        };
+
+        window.addEventListener('scroll', () => {
+            targetScroll = window.scrollY;
+            if (!frame) {
+                frame = requestAnimationFrame(renderCurves);
+            }
+        }, { passive: true });
+
+        renderCurves();
+    }
+
     // --- Mobile Menu ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
