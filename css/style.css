@@ -719,6 +719,88 @@ header nav a[data-nav].active::after {
     }
 }
 
+/* Home: affiliations row under the bio (logo tile + two-line label per affiliation) */
+.affiliations {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .affiliations {
+        justify-content: flex-start;
+    }
+}
+
+.affiliation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-align: left;
+    border-radius: 0.75rem;
+}
+
+.affiliation .inst-logo {
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.affiliation:hover .inst-logo,
+.affiliation:focus-visible .inst-logo {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px -4px rgba(15, 23, 42, 0.25);
+}
+
+.affiliation-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.875rem;
+    line-height: 1.3;
+}
+
+.affiliation-name {
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.affiliation:hover .affiliation-name,
+.affiliation:focus-visible .affiliation-name {
+    color: var(--accent-light);
+}
+
+.dark .affiliation:hover .affiliation-name,
+.dark .affiliation:focus-visible .affiliation-name {
+    color: var(--accent-dark);
+}
+
+.affiliation-divider {
+    width: 1px;
+    height: 2rem;
+    background-color: var(--border-light);
+}
+
+.dark .affiliation-divider {
+    background-color: var(--border-dark);
+}
+
+/* phones: one affiliation per line, stacked as a centred block with the logos lined up on the left */
+@media (max-width: 639px) {
+    .affiliations {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .affiliation-divider {
+        display: none;
+    }
+}
+
 /* Animation for sections on scroll */
 .scroll-animate {
     opacity: 0;
