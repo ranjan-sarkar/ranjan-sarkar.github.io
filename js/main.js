@@ -347,6 +347,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Popups grow out of the spot that was clicked: the click point becomes the box's transform-origin
+    // (--modal-origin, see .modal-content in style.css). Keyboard clicks have no point, so they grow
+    // from the centre.
+    const setModalOrigin = (overlay, event) => {
+        const box = overlay.querySelector('.modal-content');
+        if (!event || (!event.clientX && !event.clientY)) {
+            box.style.removeProperty('--modal-origin');
+            return;
+        }
+        const x = event.clientX - box.offsetLeft;
+        const y = event.clientY + overlay.scrollTop - box.offsetTop;
+        box.style.setProperty('--modal-origin', `${x}px ${y}px`);
+    };
+
     const modal = document.getElementById('course-modal');
     const closeModal = () => {
         if (modal) {
@@ -364,12 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalFullscreenLink = document.getElementById('modal-fullscreen-link');
 
         document.querySelectorAll('.course-card').forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (event) => {
                 const data = courseData[card.dataset.course];
 
                 modalId.textContent = data.id;
                 modalTitle.textContent = data.title;
-                modalTopics.innerHTML = data.topics.map(topic => `<li>${topic}</li>`).join('');
+                // --i staggers the topics as they fade in (.modal.show #modal-topics li in style.css)
+                modalTopics.innerHTML = data.topics.map((topic, i) => `<li style="--i: ${Math.min(i, 8)}">${topic}</li>`).join('');
 
                 // Handle Tutorial Button
                 if (data.tutorialUrl) {
@@ -382,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Our own course pages open in the same tab, official course sites in a new one
                 modalFullscreenLink.href = data.link;
                 modalFullscreenLink.target = /^https?:/.test(data.link) ? '_blank' : '_self';
+                setModalOrigin(modal, event);
                 modal.classList.add('show');
             });
         });
@@ -392,6 +408,216 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeModal();
             }
         });
+    }
+
+    // --- Course search (TA page) ---
+    // Filters the course cards as you type. A card is matched on its semester and year, code, name,
+    // short name (RL, AICPS...), instructor and, from courseData, its topics; every word typed must
+    // match somewhere. The semester chips narrow the list further. Matching words are highlighted,
+    // a card found only through a topic shows that topic, and the remaining cards glide into place.
+    // Enter opens the card when only one is left; Esc clears. The search is kept in the address bar
+    // (?course=...&semester=...) so a filtered list can be shared.
+    const courseFilterInput = document.getElementById('course-filter-input');
+    if (courseFilterInput) {
+        const filterBox = courseFilterInput.closest('.course-filter');
+        const clearButton = filterBox.querySelector('.course-filter-clear');
+        const chipsBox = filterBox.querySelector('.course-filter-chips');
+        const filterStatus = document.getElementById('course-filter-status');
+        const courseGrid = document.getElementById('course-grid');
+        const emptyState = document.querySelector('.course-filter-empty');
+        const emptyTitle = emptyState.querySelector('.course-filter-empty-title');
+
+        // lower case, no accents, punctuation as spaces ("AI31201 • Reinforcement" -> "ai31201 reinforcement")
+        const fold = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        const words = (text) => ` ${fold(text).replace(/[^\p{L}\p{N}]+/gu, ' ').trim()} `;
+        const escapeText = (text) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+        const IGNORED = new Set(['prof', 'professor', 'dr', 'course', 'courses']);
+        const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+        const courses = [...courseGrid.querySelectorAll('.course-card')].map((card) => {
+            const info = courseData[card.dataset.course] || {};
+            const termEl = card.querySelector('p');      // "Autumn 2026"
+            const titleEl = card.querySelector('h3');    // "AI31201 • Reinforcement Learning"
+            const instructorEl = card.querySelector('p a');
+            const fields = [termEl, titleEl, instructorEl].map((el) => ({ el, text: el.textContent.replace(/\s+/g, ' ').trim() }));
+            const term = fields[0].text;
+            const topics = (info.topics || []).filter((topic) => !/updated soon/i.test(topic))
+                .map((text) => ({ text, search: words(text) }));
+            // the line that names the topic when that is what matched (hidden otherwise)
+            const topicLine = document.createElement('p');
+            topicLine.className = 'course-match';
+            topicLine.hidden = true;
+            const body = card.firstElementChild;
+            body.insertBefore(topicLine, body.lastElementChild);
+            return {
+                card, fields, term, topics, topicLine,
+                shortname: info.shortname || '',
+                // what the card shows; "fall" finds autumn courses too
+                search: words([...fields.map((f) => f.text), /autumn/i.test(term) ? 'fall' : ''].join(' ')),
+                alias: words(info.shortname || ''),
+            };
+        });
+
+        // Wrap the searched words in <mark> (the card text is plain, so folding keeps the positions)
+        const markTerms = (text, terms) => {
+            if (!terms.length) {
+                return escapeText(text);
+            }
+            const pattern = new RegExp(terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+            let html = '';
+            let last = 0;
+            for (const match of fold(text).matchAll(pattern)) {
+                html += escapeText(text.slice(last, match.index))
+                    + `<mark class="course-hit">${escapeText(text.slice(match.index, match.index + match[0].length))}</mark>`;
+                last = match.index + match[0].length;
+            }
+            return html + escapeText(text.slice(last));
+        };
+
+        // One chip per semester, in the order the cards list them, plus "All"
+        let activeTerm = '';
+        const terms = [...new Set(courses.map((c) => c.term))];
+        chipsBox.innerHTML = ['', ...terms].map((term) => `
+            <button type="button" class="course-chip" data-term="${escapeText(term)}" aria-pressed="false">
+                ${term ? escapeText(term) : 'All'}<span class="course-chip-count"></span>
+            </button>`).join('');
+        const chips = [...chipsBox.querySelectorAll('.course-chip')];
+
+        const queryTermsOf = (query) => words(query).trim().split(' ').filter((t) => t && !IGNORED.has(t));
+        const matchesText = (course, queryTerms) => queryTerms.every((t) => course.search.includes(t)
+            || course.alias.includes(t) || course.topics.some((topic) => topic.search.includes(t)));
+
+        const applyFilter = (animate = true) => {
+            const query = courseFilterInput.value;
+            const queryTerms = queryTermsOf(query);
+
+            // where each card is on screen now (mid-animation too), so the move starts from there
+            const before = new Map(courses.filter((c) => !c.card.hidden).map((c) => [c.card, c.card.getBoundingClientRect()]));
+            courses.forEach((c) => c.animation?.cancel());
+
+            let shown = 0;
+            courses.forEach((course) => {
+                const visible = matchesText(course, queryTerms) && (!activeTerm || course.term === activeTerm);
+                course.card.hidden = !visible;
+                course.fields.forEach(({ el, text }) => { el.innerHTML = markTerms(text, visible ? queryTerms : []); });
+                // a word that is not on the card itself was found in a topic (or is the short name):
+                // say so on the card, preferring a topic that has all of those words
+                const offCard = visible ? queryTerms.filter((t) => !course.search.includes(t)) : [];
+                const topicTerms = offCard.filter((t) => !course.alias.includes(t));
+                const topic = topicTerms.length
+                    ? course.topics.find((tp) => topicTerms.every((t) => tp.search.includes(t)))
+                        || course.topics.find((tp) => topicTerms.some((t) => tp.search.includes(t)))
+                    : null;
+                if (topic) {
+                    course.topicLine.innerHTML = `<i class="fa-solid fa-list-ul" aria-hidden="true"></i>`
+                        + `<span>Topic: ${markTerms(topic.text, queryTerms)}</span>`;
+                } else if (offCard.length) {
+                    course.topicLine.innerHTML = `<i class="fa-solid fa-tag" aria-hidden="true"></i>`
+                        + `<span>Also known as ${markTerms(course.shortname, queryTerms)}</span>`;
+                } else {
+                    course.topicLine.textContent = '';
+                }
+                course.topicLine.hidden = !topic && !offCard.length;
+                shown += visible;
+            });
+
+            // chips: pressed state, and how many courses each would show with the words typed
+            chips.forEach((chip) => {
+                const term = chip.dataset.term;
+                const count = courses.filter((c) => (!term || c.term === term) && matchesText(c, queryTerms)).length;
+                chip.setAttribute('aria-pressed', String(term === activeTerm));
+                chip.classList.toggle('is-empty', count === 0);
+                chip.querySelector('.course-chip-count').textContent = count;
+            });
+
+            const filtered = Boolean(queryTerms.length || activeTerm);
+            clearButton.hidden = !query;
+            filterStatus.textContent = filtered
+                ? `Showing ${shown} of ${courses.length} courses${shown === 1 ? ' · press Enter to open' : ''}`
+                : `${courses.length} courses`;
+            emptyState.hidden = shown > 0;
+            if (!shown) {
+                const inTerm = activeTerm ? ` in ${activeTerm}` : '';
+                emptyTitle.textContent = queryTerms.length ? `No courses match “${query.trim()}”${inTerm}` : `No courses${inTerm}`;
+            }
+
+            // keep the search in the address bar
+            const params = new URLSearchParams(location.search);
+            query.trim() ? params.set('course', query.trim()) : params.delete('course');
+            activeTerm ? params.set('semester', activeTerm) : params.delete('semester');
+            const search = params.toString();
+            history.replaceState(null, '', location.pathname + (search ? `?${search}` : '') + location.hash);
+
+            if (!animate || prefersReducedMotion) {
+                return;
+            }
+            // cards that stay slide from their old spot; cards that come back fade up one by one
+            let entering = 0;
+            courses.forEach((course) => {
+                if (course.card.hidden) {
+                    return;
+                }
+                const from = before.get(course.card);
+                if (from) {
+                    const to = course.card.getBoundingClientRect();
+                    const dx = from.left - to.left;
+                    const dy = from.top - to.top;
+                    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                        course.animation = course.card.animate(
+                            [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }],
+                            { duration: 450, easing: EASE });
+                    }
+                } else {
+                    course.animation = course.card.animate(
+                        [{ opacity: 0, transform: 'translateY(14px) scale(0.97)' }, { opacity: 1, transform: 'none' }],
+                        { duration: 420, delay: Math.min(entering++, 4) * 50, easing: EASE, fill: 'backwards' });
+                }
+            });
+            if (!shown) {
+                emptyState.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }],
+                    { duration: 350, easing: EASE });
+            }
+        };
+
+        courseFilterInput.addEventListener('input', () => applyFilter());
+        courseFilterInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && courseFilterInput.value) {
+                event.preventDefault();
+                courseFilterInput.value = '';
+                applyFilter();
+            } else if (event.key === 'Enter') {
+                const visible = courses.filter((c) => !c.card.hidden);
+                if (visible.length === 1) {
+                    event.preventDefault();
+                    visible[0].card.click();
+                }
+            }
+        });
+        clearButton.addEventListener('click', () => {
+            courseFilterInput.value = '';
+            applyFilter();
+            courseFilterInput.focus();
+        });
+        chipsBox.addEventListener('click', (event) => {
+            const chip = event.target.closest('.course-chip');
+            if (chip) {
+                // pressing the active semester again goes back to all
+                activeTerm = chip.dataset.term === activeTerm ? '' : chip.dataset.term;
+                applyFilter();
+            }
+        });
+        emptyState.querySelector('.course-filter-reset').addEventListener('click', () => {
+            courseFilterInput.value = '';
+            activeTerm = '';
+            applyFilter();
+            courseFilterInput.focus();
+        });
+
+        // a shared link (ta.html?course=...&semester=...) opens with that search
+        const initial = new URLSearchParams(location.search);
+        courseFilterInput.value = initial.get('course') || '';
+        activeTerm = terms.includes(initial.get('semester')) ? initial.get('semester') : '';
+        applyFilter(false);
     }
 
     // --- Citation Modal (Publications page) ---
@@ -433,9 +659,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         citeTriggers.forEach((trigger) => {
-            trigger.addEventListener('click', () => {
+            trigger.addEventListener('click', (event) => {
                 const bibtex = trigger.dataset.bibtex;
                 citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
+                setModalOrigin(citeModal, event);
                 citeModal.classList.add('show');
                 citeModal.setAttribute('aria-hidden', 'false');
 

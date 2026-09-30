@@ -553,69 +553,33 @@
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching
                     Assistantship (TA)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    <!-- Course Card 4 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                        data-course="rl">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning
-                            </h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
+                <!--
+                Homepage shows only the 2 most recent courses, in the compact .ta-feature layout (style.css);
+                the full list of cards is on ta.html. data-course picks the course details shown in the modal.
+                -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="course-card ta-feature" data-course="rl">
+                        <div class="ta-feature-body">
+                            <p class="ta-feature-code">AI31201</p>
+                            <h3 class="ta-feature-title themed-text-primary">Reinforcement Learning</h3>
+                            <p class="themed-text-secondary text-sm">Instructor: <a href="https://rhpilab.in/people.html" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <div class="ta-feature-aside">
+                            <span class="ta-feature-term">Autumn 2026</span>
+                            <span class="ta-feature-go" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
-                    <!-- Course Card 3 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                        data-course="robot">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60209 • AI for Robot Autonomy
-                            </h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
+                    <div class="course-card ta-feature" data-course="robot">
+                        <div class="ta-feature-body">
+                            <p class="ta-feature-code">AI60209</p>
+                            <h3 class="ta-feature-title themed-text-primary">AI for Robot Autonomy</h3>
+                            <p class="themed-text-secondary text-sm">Instructor: <a href="https://rhpilab.in/people.html" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
-                    </div>
-                    <!-- Course Card 2 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                        data-course="aicps">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Spring 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical
-                                Systems</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
-                                    class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <!-- Course Card 1 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                        data-course="amfai">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2025</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211 • Algorithmic and
-                                Mathematical Foundations for AI</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://sites.google.com/site/adwayresearch/" target="_blank"
-                                    class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        <div class="ta-feature-aside">
+                            <span class="ta-feature-term">Autumn 2026</span>
+                            <span class="ta-feature-go" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
                 </div>

@@ -813,9 +813,13 @@ header nav a[data-nav].active::after {
     transform: translateY(0);
 }
 
-/* Modal styles */
+/* Modal styles (course details, BibTeX citation).
+   Hidden with visibility + opacity rather than display: none, because a transition cannot run
+   from display: none; visibility flips only once the closing fade has finished.
+   Opening: the page behind blurs and dims, the box grows out of the spot that was clicked
+   (--modal-origin, set by setModalOrigin in main.js) with a slight spring while it comes into
+   focus, and its contents then fade up one after another. Closing is a quick shrink and fade. */
 .modal {
-    display: none;
     position: fixed;
     z-index: 50;
     left: 0;
@@ -823,9 +827,24 @@ header nav a[data-nav].active::after {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(15, 23, 42, 0.55);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    visibility: hidden;
+    pointer-events: none;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    transition: opacity 0.22s ease-in, backdrop-filter 0.22s ease-in, -webkit-backdrop-filter 0.22s ease-in,
+        visibility 0s linear 0.22s;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: opacity 0.35s ease-out, backdrop-filter 0.45s ease-out, -webkit-backdrop-filter 0.45s ease-out,
+        visibility 0s;
 }
 
 .modal-content {
@@ -833,17 +852,54 @@ header nav a[data-nav].active::after {
     margin: 5% auto;
     width: 90%;
     max-width: 700px;
-    transform: scale(0.95);
-    transition: transform 0.3s ease-in-out;
-}
-
-.modal.show {
-    display: block;
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(24px) scale(0.86);
+    transform-origin: var(--modal-origin, 50% 50%);
+    filter: blur(6px);
+    transition: opacity 0.2s ease-in, transform 0.25s ease-in, filter 0.2s ease-in;
 }
 
 .modal.show .modal-content {
-    transform: scale(1);
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+    transition: opacity 0.3s ease-out, transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1), filter 0.35s ease-out;
+}
+
+/* contents: each row fades up just after the box lands, then the topics one by one */
+.modal.show .modal-content > * {
+    animation: modal-item-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.modal.show .modal-content > :nth-child(1) { animation-delay: 0.08s; }
+.modal.show .modal-content > :nth-child(2) { animation-delay: 0.13s; }
+.modal.show .modal-content > :nth-child(3) { animation-delay: 0.18s; }
+.modal.show .modal-content > :nth-child(4) { animation-delay: 0.23s; }
+.modal.show .modal-content > :nth-child(n + 5) { animation-delay: 0.28s; }
+
+.modal.show #modal-topics li {
+    animation: modal-item-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(0.22s + var(--i, 0) * 0.04s);
+}
+
+@keyframes modal-item-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-content,
+    .modal.show .modal-content {
+        transform: none;
+        filter: none;
+    }
+
+    .modal.show .modal-content > *,
+    .modal.show #modal-topics li {
+        animation: none;
+    }
 }
 
 .button-container {
@@ -1302,6 +1358,11 @@ a.text-accent:focus-visible {
     transition-property: transform, box-shadow, border-color;
 }
 
+/* TA course cards (ta.html and the homepage): rounder corners than Tailwind's rounded-lg */
+#TA .course-card {
+    border-radius: 1rem;
+}
+
 #research .grid > div:hover,
 #TA .course-card:hover {
     border-color: rgba(79, 70, 229, 0.45);
@@ -1310,6 +1371,512 @@ a.text-accent:focus-visible {
 .dark #research .grid > div:hover,
 .dark #TA .course-card:hover {
     border-color: rgba(129, 140, 248, 0.5);
+}
+
+/* Home: compact TA cards (.ta-feature) — code, title and instructor on the left; the term badge
+   (top) and a round arrow (bottom) on the right. ta.html keeps the full-size cards; these open the
+   same course modal (they are .course-card too). */
+.ta-feature {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    border: 1px solid var(--border-light);
+    border-radius: 1rem;
+    background-color: var(--bg-light-secondary);
+    box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.12);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ta-feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 30px -12px rgba(15, 23, 42, 0.25);
+}
+
+.dark .ta-feature {
+    border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
+    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.4);
+}
+
+.dark .ta-feature:hover {
+    box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.6);
+}
+
+.ta-feature-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.ta-feature-code {
+    margin-bottom: 0.2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-light-secondary);
+}
+
+.dark .ta-feature-code {
+    color: var(--text-dark-secondary);
+}
+
+.ta-feature-title {
+    margin-bottom: 0.35rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.ta-feature-aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.ta-feature-term {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.dark .ta-feature-term {
+    background-color: rgba(129, 140, 248, 0.14);
+    color: var(--accent-dark);
+}
+
+.ta-feature-go {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.dark .ta-feature-go {
+    border-color: var(--border-dark);
+    color: var(--accent-dark);
+}
+
+/* hover: the arrow fills with the accent and nudges forward */
+.ta-feature:hover .ta-feature-go {
+    background-color: var(--accent-light);
+    border-color: var(--accent-light);
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+.dark .ta-feature:hover .ta-feature-go {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+/* phones: the term badge moves under the instructor so the text gets the full card width */
+@media (max-width: 480px) {
+    .ta-feature {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem 1rem 1rem 1.15rem;
+    }
+
+    .ta-feature-aside {
+        align-items: flex-start;
+    }
+
+    /* the whole card is the button, so the arrow can go */
+    .ta-feature-go {
+        display: none;
+    }
+}
+
+/* TA page: course search (search field, semester chips, count) — behaviour in js/main.js */
+.course-filter {
+    max-width: 44rem;
+    margin: 0 auto 2.5rem;
+}
+
+.course-filter-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 3.25rem;
+    padding: 0 0.5rem 0 1.1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: var(--bg-light-secondary);
+    box-shadow: 0 6px 20px -10px rgba(15, 23, 42, 0.18);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.course-filter-field:hover {
+    border-color: rgba(79, 70, 229, 0.35);
+}
+
+.course-filter-field:focus-within {
+    border-color: var(--accent-light);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12), 0 10px 26px -12px rgba(79, 70, 229, 0.35);
+}
+
+.course-filter-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--text-light-secondary);
+    transition: color 0.25s ease, transform 0.3s ease;
+}
+
+.course-filter-field:focus-within .course-filter-icon {
+    color: var(--accent-light);
+    transform: scale(1.08);
+}
+
+#course-filter-input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0 0.75rem;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text-light-primary);
+    font-size: 1rem;
+}
+
+#course-filter-input::placeholder {
+    color: var(--text-light-secondary);
+    opacity: 0.8;
+}
+
+#course-filter-input::-webkit-search-cancel-button {
+    display: none;   /* the round clear button below replaces it */
+}
+
+.course-filter-clear {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    color: var(--text-light-secondary);
+    animation: course-pop-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.course-filter-clear[hidden] {
+    display: none;
+}
+
+.course-filter-clear svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.course-filter-clear:hover,
+.course-filter-clear:focus-visible {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--accent-light);
+    transform: rotate(90deg);
+    outline: none;
+}
+
+@keyframes course-pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+}
+
+.course-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-top: 1rem;
+    padding: 0 0.25rem;
+}
+
+.course-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.course-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: var(--bg-light-secondary);
+    color: var(--text-light-secondary);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, opacity 0.25s ease,
+        transform 0.2s ease;
+}
+
+.course-chip:hover {
+    border-color: rgba(79, 70, 229, 0.45);
+    color: var(--accent-light);
+}
+
+.course-chip:active {
+    transform: scale(0.96);
+}
+
+.course-chip:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 2px;
+}
+
+.course-chip-count {
+    min-width: 1.35rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background-color: rgba(100, 116, 139, 0.12);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.course-chip[aria-pressed="true"] {
+    border-color: var(--accent-light);
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.course-chip[aria-pressed="true"] .course-chip-count {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* a semester with nothing for the words typed stays clickable but steps back */
+.course-chip.is-empty:not([aria-pressed="true"]) {
+    opacity: 0.5;
+}
+
+.course-filter-status {
+    font-size: 0.8125rem;
+    color: var(--text-light-secondary);
+}
+
+/* matching words on the cards, and the topic line shown when a topic matched */
+mark.course-hit {
+    padding: 0 0.1em;
+    border-radius: 0.2em;
+    background-color: rgba(79, 70, 229, 0.16);
+    color: inherit;
+}
+
+.course-match {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: -0.5rem 0 1rem;
+    font-size: 0.875rem;
+    color: var(--text-light-secondary);
+    animation: course-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.course-match i {
+    color: var(--accent-light);
+    font-size: 0.75rem;
+}
+
+.course-match[hidden] {
+    display: none;
+}
+
+@keyframes course-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+}
+
+/* nothing matched */
+.course-filter-empty {
+    max-width: 28rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+
+.course-filter-empty[hidden] {
+    display: none;
+}
+
+.course-filter-empty-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-bottom: 1rem;
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 1.2rem;
+}
+
+.course-filter-empty-title {
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.course-filter-reset {
+    margin-top: 1.25rem;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--accent-light);
+    border-radius: 999px;
+    color: var(--accent-light);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.course-filter-reset:hover,
+.course-filter-reset:focus-visible {
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+/* dark theme */
+.dark .course-filter-field,
+.dark .course-chip {
+    border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
+}
+
+.dark .course-filter-field {
+    box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+.dark .course-filter-field:hover {
+    border-color: rgba(129, 140, 248, 0.4);
+}
+
+.dark .course-filter-field:focus-within {
+    border-color: var(--accent-dark);
+    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.15), 0 10px 26px -12px rgba(0, 0, 0, 0.6);
+}
+
+.dark .course-filter-icon,
+.dark .course-filter-clear,
+.dark #course-filter-input::placeholder,
+.dark .course-chip,
+.dark .course-filter-status,
+.dark .course-match {
+    color: var(--text-dark-secondary);
+}
+
+.dark #course-filter-input {
+    color: var(--text-dark-primary);
+}
+
+.dark .course-filter-field:focus-within .course-filter-icon,
+.dark .course-chip:hover,
+.dark .course-match i,
+.dark .course-filter-clear:hover,
+.dark .course-filter-clear:focus-visible {
+    color: var(--accent-dark);
+}
+
+.dark .course-filter-clear:hover,
+.dark .course-filter-clear:focus-visible {
+    background-color: rgba(129, 140, 248, 0.14);
+}
+
+.dark .course-chip:hover {
+    border-color: rgba(129, 140, 248, 0.5);
+}
+
+.dark .course-chip-count {
+    background-color: rgba(148, 163, 184, 0.15);
+}
+
+.dark .course-chip[aria-pressed="true"] {
+    border-color: var(--accent-dark);
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.dark .course-chip[aria-pressed="true"] .course-chip-count {
+    background-color: rgba(15, 23, 42, 0.18);
+}
+
+.dark .course-chip:focus-visible {
+    outline-color: var(--accent-dark);
+}
+
+.dark mark.course-hit {
+    background-color: rgba(129, 140, 248, 0.28);
+}
+
+.dark .course-filter-empty-icon {
+    background-color: rgba(129, 140, 248, 0.14);
+    color: var(--accent-dark);
+}
+
+.dark .course-filter-reset {
+    border-color: var(--accent-dark);
+    color: var(--accent-dark);
+}
+
+.dark .course-filter-reset:hover,
+.dark .course-filter-reset:focus-visible {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+/* phones: chips and the count each get their own line, centred */
+@media (max-width: 480px) {
+    .course-filter-field {
+        height: 3rem;
+        padding-left: 0.95rem;
+    }
+
+    #course-filter-input {
+        padding: 0 0.6rem;
+        font-size: 1rem;   /* stays 16px so iOS does not zoom in */
+    }
+
+    .course-filter-bar {
+        flex-direction: column;
+    }
+
+    .course-filter-chips {
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .course-filter-clear,
+    .course-match {
+        animation: none;
+    }
+
+    .course-filter-clear:hover,
+    .course-filter-clear:focus-visible {
+        transform: none;
+    }
 }
 
 /* 5. Theme switch: colours fade over (js/main.js adds .theme-switching briefly) and the icon spins in */

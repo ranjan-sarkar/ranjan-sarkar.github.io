@@ -219,9 +219,35 @@
         <!-- TAShip Section -->
         <section id="TA" class="scroll-animate min-h-screen py-20 md:py-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-12">Teaching
+                <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-3">Teaching
                     Assistantship (TA)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <p class="text-center themed-text-secondary mb-10 max-w-2xl mx-auto">Courses I have assisted as a
+                    Teaching Assistant at IIT Kharagpur; open any card to see its topics and tutorials.</p>
+
+                <!-- Course search: filters the cards below (js/main.js, "Course search").
+                     search-skip keeps the site-wide search from indexing these controls. -->
+                <div class="course-filter search-skip" role="search" aria-label="Search courses">
+                    <div class="course-filter-field">
+                        <svg class="course-filter-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+                        <input type="search" id="course-filter-input" autocomplete="off" spellcheck="false"
+                            placeholder="Search by course, code, semester, year, instructor or topic"
+                            aria-label="Search courses" aria-controls="course-grid" aria-describedby="course-filter-status">
+                        <button type="button" class="course-filter-clear" aria-label="Clear search" hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div class="course-filter-bar">
+                        <!-- one chip per semester, built from the cards -->
+                        <div class="course-filter-chips" role="group" aria-label="Filter by semester"></div>
+                        <p id="course-filter-status" class="course-filter-status" aria-live="polite"></p>
+                    </div>
+                </div>
+
+                <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     <!-- Course Card 4 -->
                     <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
                         data-course="rl">
@@ -286,6 +312,13 @@
                                 <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </div>
+                </div>
+                <div class="course-filter-empty search-skip" hidden>
+                    <span class="course-filter-empty-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <p class="course-filter-empty-title themed-text-primary"></p>
+                    <p class="themed-text-secondary text-sm">Try a course code (AI61006), a semester (Spring), a year
+                        or an instructor's name.</p>
+                    <button type="button" class="course-filter-reset">Show all courses</button>
                 </div>
             </div>
         </section>
