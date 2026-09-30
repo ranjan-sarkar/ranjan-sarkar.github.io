@@ -743,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // An item counts as new for 30 days. Its date comes from data-date="YYYY-MM-DD" on the .news-item
     // when present, otherwise from its "Mon YYYY" label, read as the 1st of that month.
     // This runs on every visit, so tags disappear by themselves once an item is older than that.
-    const NEWS_NEW_DAYS = 30;
+    const NEWS_NEW_DAYS = 60;
     const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
     const newsItemDate = (item, label) => {
