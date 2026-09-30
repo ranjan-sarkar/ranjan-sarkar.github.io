@@ -361,10 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
         box.style.setProperty('--modal-origin', `${x}px ${y}px`);
     };
 
+    // While a popup is open the page behind it cannot scroll (html.modal-open in style.css)
+    const lockPageScroll = (locked) => document.documentElement.classList.toggle('modal-open', locked);
+
     const modal = document.getElementById('course-modal');
     const closeModal = () => {
         if (modal) {
             modal.classList.remove('show');
+            lockPageScroll(false);
         }
     };
 
@@ -398,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalFullscreenLink.href = data.link;
                 modalFullscreenLink.target = /^https?:/.test(data.link) ? '_blank' : '_self';
                 setModalOrigin(modal, event);
+                lockPageScroll(true);
                 modal.classList.add('show');
             });
         });
@@ -626,6 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (citeModal) {
             citeModal.classList.remove('show');
             citeModal.setAttribute('aria-hidden', 'true');
+            lockPageScroll(false);
         }
     };
 
@@ -663,6 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bibtex = trigger.dataset.bibtex;
                 citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
                 setModalOrigin(citeModal, event);
+                lockPageScroll(true);
                 citeModal.classList.add('show');
                 citeModal.setAttribute('aria-hidden', 'false');
 

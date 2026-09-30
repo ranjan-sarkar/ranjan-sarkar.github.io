@@ -819,6 +819,13 @@ header nav a[data-nav].active::after {
    Opening: the page behind blurs and dims, the box grows out of the spot that was clicked
    (--modal-origin, set by setModalOrigin in main.js) with a slight spring while it comes into
    focus, and its contents then fade up one after another. Closing is a quick shrink and fade. */
+/* the page behind an open popup stays put (main.js adds the class); the gutter keeps the
+   scrollbar's width reserved so the page does not shift sideways when it is hidden */
+html.modal-open {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
 .modal {
     position: fixed;
     z-index: 50;
@@ -827,6 +834,7 @@ header nav a[data-nav].active::after {
     width: 100%;
     height: 100%;
     overflow: auto;
+    overscroll-behavior: contain;   /* scrolling a tall popup never carries on to the page */
     background-color: rgba(15, 23, 42, 0.55);
     opacity: 0;
     visibility: hidden;
