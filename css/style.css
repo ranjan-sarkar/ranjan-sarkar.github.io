@@ -1438,6 +1438,9 @@ html.search-open {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* clip, unlike hidden, is not a scroll container: scrollIntoView() on a result can then never
+       scroll the panel itself (which would jolt the input up while the height is still growing) */
+    overflow: clip;
     border: 1px solid var(--border-light);
     border-radius: 1rem;
     background: var(--bg-light-secondary);

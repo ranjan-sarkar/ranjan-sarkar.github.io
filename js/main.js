@@ -921,9 +921,12 @@ document.addEventListener('DOMContentLoaded', () => {
             searchStatus.textContent = `${results.length}${results.length === MAX_RESULTS ? '+' : ''} result${results.length === 1 ? '' : 's'}`
                 + (groups.size > 1 ? ` on ${groups.size} pages` : '');
             searchResults.innerHTML = html;
+            searchResults.scrollTop = 0; // a new list starts at its first result
         });
         searchInput.setAttribute('aria-expanded', 'true');
-        setActiveResult(0);
+        // no scrollIntoView here: the first result is already at the top, and scrolling while the
+        // panel's height is still animating open would shift it
+        setActiveResult(0, false);
     };
 
     // A centred message in place of the results ("No results", errors)
