@@ -813,12 +813,6 @@ header nav a[data-nav].active::after {
     transform: translateY(0);
 }
 
-/* Modal styles (course details, BibTeX citation).
-   Hidden with visibility + opacity rather than display: none, because a transition cannot run
-   from display: none; visibility flips only once the closing fade has finished.
-   Opening: the page behind blurs and dims, the box grows out of the spot that was clicked
-   (--modal-origin, set by setModalOrigin in main.js) with a slight spring while it comes into
-   focus, and its contents then fade up one after another. Closing is a quick shrink and fade. */
 /* the page behind an open popup stays put (main.js adds the class); the gutter keeps the
    scrollbar's width reserved so the page does not shift sideways when it is hidden */
 html.modal-open {
@@ -826,6 +820,14 @@ html.modal-open {
     scrollbar-gutter: stable;
 }
 
+/* Modal styles (course details, BibTeX citation).
+   Hidden with visibility + opacity rather than display: none, because a transition cannot run
+   from display: none; visibility flips only once the closing fade has finished.
+   Opening (about 0.4s): the dimmed, blurred backdrop fades in, the box grows out of the spot that
+   was clicked (--modal-origin, set by setModalOrigin in main.js) and its rows follow just behind.
+   Only opacity and transform are animated, and the backdrop blur stays a fixed size (it fades with
+   the backdrop), so the browser can run it all on the GPU without dropping frames.
+   Closing is a quick fade and shrink. */
 .modal {
     position: fixed;
     z-index: 50;
@@ -836,23 +838,19 @@ html.modal-open {
     overflow: auto;
     overscroll-behavior: contain;   /* scrolling a tall popup never carries on to the page */
     background-color: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
-    transition: opacity 0.22s ease-in, backdrop-filter 0.22s ease-in, -webkit-backdrop-filter 0.22s ease-in,
-        visibility 0s linear 0.22s;
+    transition: opacity 0.15s ease-in, visibility 0s linear 0.15s;
 }
 
 .modal.show {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    transition: opacity 0.35s ease-out, backdrop-filter 0.45s ease-out, -webkit-backdrop-filter 0.45s ease-out,
-        visibility 0s;
+    transition: opacity 0.25s ease-out, visibility 0s;
 }
 
 .modal-content {
@@ -861,39 +859,48 @@ html.modal-open {
     width: 90%;
     max-width: 700px;
     opacity: 0;
-    transform: translateY(24px) scale(0.86);
+    transform: translateY(10px) scale(0.94);
     transform-origin: var(--modal-origin, 50% 50%);
-    filter: blur(6px);
-    transition: opacity 0.2s ease-in, transform 0.25s ease-in, filter 0.2s ease-in;
+    will-change: transform, opacity;
+    transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+}
+
+/* popups (course, BibTeX): same 1rem corners as the course cards instead of Tailwind's rounded-lg;
+   the buttons inside use 0.75rem, like the BibTeX text box, so they keep the same rounded feel */
+.modal .modal-content {
+    border-radius: 1rem;
+}
+
+.modal .modal-content .themed-accent-bg {
+    border-radius: 0.75rem;
 }
 
 .modal.show .modal-content {
     opacity: 1;
     transform: none;
-    filter: blur(0);
-    transition: opacity 0.3s ease-out, transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1), filter 0.35s ease-out;
+    transition: opacity 0.2s ease-out, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* contents: each row fades up just after the box lands, then the topics one by one */
+/* contents: the rows fade up just behind the box, then the topics in quick succession */
 .modal.show .modal-content > * {
-    animation: modal-item-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: modal-item-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.modal.show .modal-content > :nth-child(1) { animation-delay: 0.08s; }
-.modal.show .modal-content > :nth-child(2) { animation-delay: 0.13s; }
-.modal.show .modal-content > :nth-child(3) { animation-delay: 0.18s; }
-.modal.show .modal-content > :nth-child(4) { animation-delay: 0.23s; }
-.modal.show .modal-content > :nth-child(n + 5) { animation-delay: 0.28s; }
+.modal.show .modal-content > :nth-child(1) { animation-delay: 0.04s; }
+.modal.show .modal-content > :nth-child(2) { animation-delay: 0.07s; }
+.modal.show .modal-content > :nth-child(3) { animation-delay: 0.1s; }
+.modal.show .modal-content > :nth-child(4) { animation-delay: 0.13s; }
+.modal.show .modal-content > :nth-child(n + 5) { animation-delay: 0.16s; }
 
 .modal.show #modal-topics li {
-    animation: modal-item-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: calc(0.22s + var(--i, 0) * 0.04s);
+    animation: modal-item-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.1s + var(--i, 0) * 0.02s);
 }
 
 @keyframes modal-item-in {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(6px);
     }
 }
 
@@ -901,7 +908,6 @@ html.modal-open {
     .modal-content,
     .modal.show .modal-content {
         transform: none;
-        filter: none;
     }
 
     .modal.show .modal-content > *,
