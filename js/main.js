@@ -14,13 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // The 'dark' class itself is applied by a small inline script in <head>
     // (before first paint), so here we only sync the icons and handle clicks.
     const themeToggle = document.getElementById('theme-toggle');
-    const darkIcon = document.getElementById('theme-icon-dark');
-    const lightIcon = document.getElementById('theme-icon-light');
 
     const syncThemeIcons = () => {
+        // which icon shows is decided in style.css from the 'dark' class, so the button has its
+        // final size from the first paint and the header never shifts on load
         const isDark = document.documentElement.classList.contains('dark');
-        darkIcon.style.display = isDark ? 'none' : 'inline-block';
-        lightIcon.style.display = isDark ? 'inline-block' : 'none';
         // hover tooltip (data-tip, styled in style.css) + screen-reader name saying what a click will do
         const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
         themeToggle.dataset.tip = label;
@@ -1063,18 +1061,22 @@ document.addEventListener('DOMContentLoaded', () => {
             .slice(0, MAX_RESULTS);
     };
 
-    // Header button (placed before the theme toggle) and the search dialog
-    const searchButton = document.createElement('button');
-    searchButton.type = 'button';
-    searchButton.id = 'search-button';
-    searchButton.className = 'p-2 rounded-full themed-text-secondary focus:outline-none';
-    searchButton.setAttribute('aria-label', 'Search this website');
+    // Header button: it is written in each page's HTML (before the theme toggle) so the header
+    // keeps its layout while the page loads; it is only created here if a page lacks it
+    let searchButton = document.getElementById('search-button');
+    if (!searchButton) {
+        searchButton = document.createElement('button');
+        searchButton.type = 'button';
+        searchButton.id = 'search-button';
+        searchButton.className = 'p-2 rounded-full themed-text-secondary focus:outline-none';
+        searchButton.setAttribute('aria-label', 'Search this website');
+        searchButton.innerHTML = `<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>`;
+        themeToggle.parentNode.insertBefore(searchButton, themeToggle);
+    }
     // hover tooltip (data-tip, styled in style.css); Macs show the ⌘ key
     searchButton.dataset.tip = /Mac|iPhone|iPad/.test(navigator.platform) ? 'Search (⌘K)' : 'Search (Ctrl+K)';
-    searchButton.innerHTML = `<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-        stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>`;
-    themeToggle.parentNode.insertBefore(searchButton, themeToggle);
 
     const searchDialog = document.createElement('div');
     searchDialog.className = 'search-overlay search-skip';

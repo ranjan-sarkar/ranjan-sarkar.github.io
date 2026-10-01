@@ -510,6 +510,40 @@ header nav a.active,
     color: var(--accent-dark);
 }
 
+/* Keep the header steady while a page loads: the theme toggle shows the moon (light mode) or the
+   sun (dark mode) straight from the 'dark' class set in <head>, so it has its full size at first paint */
+#theme-icon-dark {
+    display: inline-block;
+}
+
+#theme-icon-light,
+.dark #theme-icon-dark {
+    display: none;
+}
+
+.dark #theme-icon-light {
+    display: inline-block;
+}
+
+/* ...and each desktop nav link reserves the width of its bold (active) label, carried in data-text,
+   so marking the current page or section as active never nudges the links beside it */
+header nav a[data-text] {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header nav a[data-text]::before {
+    content: attr(data-text);
+    order: 1; /* after the label, so the link's text baseline stays on the label (keeps TA in line) */
+    font-weight: 600;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+}
+
 /* Header nav underline: grows from the centre on hover (faint) and stays under the current section (solid).
    Only the top-level desktop links carry data-nav, so dropdown and mobile links are unaffected. */
 header nav a[data-nav] {
