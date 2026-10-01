@@ -626,11 +626,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Citation Modal (Publications page) ---
     const citeModal = document.getElementById('cite-modal');
+    const citeCopyStatus = document.getElementById('cite-copy-status');
+    let citeStatusTimer = null;
+
     const closeCiteModal = () => {
         if (citeModal) {
             citeModal.classList.remove('show');
             citeModal.setAttribute('aria-hidden', 'true');
             lockPageScroll(false);
+            if (citeCopyStatus) {
+                clearTimeout(citeStatusTimer);
+                citeCopyStatus.classList.remove('is-visible', 'toast-pop');
+                citeCopyStatus.innerHTML = '';
+            }
         }
     };
 
@@ -639,27 +647,49 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeCiteModalBtn = document.getElementById('close-cite-modal');
         const copyCiteBtn = document.getElementById('copy-cite-btn');
         const citeBibtexText = document.getElementById('cite-bibtex-text');
-        const citeCopyStatus = document.getElementById('cite-copy-status');
         const citeModalTitle = document.getElementById('cite-modal-title');
 
-        const setCitationStatus = (message, isError = false) => {
-            citeCopyStatus.textContent = message;
-            citeCopyStatus.classList.remove('themed-accent', 'text-red-500');
-            citeCopyStatus.classList.add(isError ? 'text-red-500' : 'themed-accent');
+        const setCitationStatus = (message, state = 'success') => {
+            if (!citeCopyStatus) return;
+            clearTimeout(citeStatusTimer);
+
+            let iconHtml = '';
+            if (state === 'success') {
+                iconHtml = '<svg class="shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="width: 1rem; height: 1rem;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>';
+            } else if (state === 'error') {
+                iconHtml = '<svg class="shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="width: 1rem; height: 1rem;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>';
+            } else if (state === 'pending') {
+                iconHtml = '<svg class="shrink-0 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" style="width: 1rem; height: 1rem;"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            }
+
+            citeCopyStatus.innerHTML = `${iconHtml}<span>${message}</span>`;
+            citeCopyStatus.className = 'text-sm';
+            citeCopyStatus.classList.add('is-visible', `is-${state}`);
+
+            // Trigger animation pop on each update
+            citeCopyStatus.classList.remove('toast-pop');
+            void citeCopyStatus.offsetWidth;
+            citeCopyStatus.classList.add('toast-pop');
+
+            if (state === 'success') {
+                citeStatusTimer = setTimeout(() => {
+                    citeCopyStatus.classList.remove('is-visible');
+                }, 3200);
+            }
         };
 
         const copyCitationToClipboard = () => {
             if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
-                setCitationStatus('Clipboard access is unavailable. Please copy the BibTeX text manually.', true);
+                setCitationStatus('Clipboard access unavailable. Please copy manually.', 'error');
                 return;
             }
 
             navigator.clipboard.writeText(citeBibtexText.textContent)
                 .then(() => {
-                    setCitationStatus('BibTeX copied to clipboard!');
+                    setCitationStatus('BibTeX copied to clipboard!', 'success');
                 })
                 .catch(() => {
-                    setCitationStatus('Auto-copy failed. Please use the copy button again or copy manually.', true);
+                    setCitationStatus('Auto-copy failed. Please copy manually.', 'error');
                 });
         };
 
@@ -674,12 +704,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!bibtex) {
                     citeBibtexText.textContent = '';
-                    setCitationStatus('No BibTeX found for this paper. Add data-bibtex on its Cite button.', true);
+                    setCitationStatus('No BibTeX found for this paper.', 'error');
                     return;
                 }
 
                 citeBibtexText.textContent = bibtex;
-                setCitationStatus('Copying citation...');
+                setCitationStatus('Copying citation...', 'pending');
                 copyCitationToClipboard();
             });
         });
