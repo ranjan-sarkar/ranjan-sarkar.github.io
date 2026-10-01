@@ -217,7 +217,7 @@
 
     <main id="main-content" tabindex="-1">
         <!-- TAShip Section -->
-        <section id="TA" class="scroll-animate min-h-screen py-20 md:py-28">
+        <section id="TA" class="scroll-animate min-h-screen pt-12 pb-20 md:pt-20 md:pb-28">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center themed-text-primary themed-accent mb-3">Teaching
                     Assistantship (TA)</h2>
@@ -248,68 +248,70 @@
                 </div>
 
                 <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    <!-- Course Card 4 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    <!--
+                    Course cards, newest first. Title + course code on top, instructor below, and a footer
+                    strip with the semester and "View Details" (.ta-card in style.css). data-course picks
+                    the details shown in the popup (courseData in js/main.js); the search reads the
+                    .ta-card-title / -code / -instructor / -term parts.
+                    -->
+                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
                         data-course="rl">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI31201 • Reinforcement Learning
-                            </h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
+                        <div class="ta-card-body">
+                            <div class="ta-card-head">
+                                <h3 class="ta-card-title themed-text-primary">Reinforcement Learning</h3>
+                                <span class="ta-card-code">AI31201</span>
+                            </div>
+                            <p class="ta-card-instructor themed-text-secondary"><i class="fa-solid fa-chalkboard-user card-instructor-icon" title="Instructor" aria-hidden="true"></i><span class="visually-hidden">Instructor: </span><a href="https://rhpilab.in/people.html" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <div class="ta-card-foot">
+                            <span class="ta-card-term">Autumn 2026</span>
+                            <span class="ta-card-more">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <!-- Course Card 3 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
                         data-course="robot">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60209 • AI for Robot Autonomy
-                            </h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
+                        <div class="ta-card-body">
+                            <div class="ta-card-head">
+                                <h3 class="ta-card-title themed-text-primary">AI for Robot Autonomy</h3>
+                                <span class="ta-card-code">AI60209</span>
+                            </div>
+                            <p class="ta-card-instructor themed-text-secondary"><i class="fa-solid fa-chalkboard-user card-instructor-icon" title="Instructor" aria-hidden="true"></i><span class="visually-hidden">Instructor: </span><a href="https://rhpilab.in/people.html" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <div class="ta-card-foot">
+                            <span class="ta-card-term">Autumn 2026</span>
+                            <span class="ta-card-more">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <!-- Course Card 2 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
                         data-course="aicps">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Spring 2026</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI61006 • AI for Cyber Physical
-                                Systems</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://rhpilab.in/people.html" target="_blank"
+                        <div class="ta-card-body">
+                            <div class="ta-card-head">
+                                <h3 class="ta-card-title themed-text-primary">AI for Cyber Physical Systems</h3>
+                                <span class="ta-card-code">AI61006</span>
+                            </div>
+                            <p class="ta-card-instructor themed-text-secondary"><i class="fa-solid fa-chalkboard-user card-instructor-icon" title="Instructor" aria-hidden="true"></i><span class="visually-hidden">Instructor: </span><a href="https://rhpilab.in/people.html" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Prabhat Kumar Mishra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <div class="ta-card-foot">
+                            <span class="ta-card-term">Spring 2026</span>
+                            <span class="ta-card-more">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <!-- Course Card 1 -->
-                    <div class="course-card rounded-lg shadow-lg overflow-hidden themed-bg-secondary border themed-border cursor-pointer transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
                         data-course="amfai">
-                        <div class="p-6">
-                            <p
-                                class="uppercase tracking-wide themed-text-primary themed-accent text-sm font-medium mb-2">
-                                Autumn 2025</p>
-                            <h3 class="text-xl font-semibold themed-text-primary mb-2">AI60211 • Algorithmic and
-                                Mathematical Foundations for AI</h3>
-                            <p class="themed-text-secondary mb-4">Instructor: <a
-                                    href="https://sites.google.com/site/adwayresearch/" target="_blank"
+                        <div class="ta-card-body">
+                            <div class="ta-card-head">
+                                <h3 class="ta-card-title themed-text-primary">Algorithmic and Mathematical Foundations for AI</h3>
+                                <span class="ta-card-code">AI60211</span>
+                            </div>
+                            <p class="ta-card-instructor themed-text-secondary"><i class="fa-solid fa-chalkboard-user card-instructor-icon" title="Instructor" aria-hidden="true"></i><span class="visually-hidden">Instructor: </span><a href="https://sites.google.com/site/adwayresearch/" target="_blank"
                                     class="text-accent font-medium hover:underline">Prof. Adway Mitra</a></p>
-                            <span class="themed-accent text-sm font-medium">View Details&nbsp;
-                                <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <div class="ta-card-foot">
+                            <span class="ta-card-term">Autumn 2025</span>
+                            <span class="ta-card-more">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
                 </div>
@@ -329,8 +331,8 @@
         <div class="modal-content themed-bg-secondary rounded-lg shadow-2xl border themed-border p-6 md:p-8">
             <div class="flex justify-between items-center mb-1">
                 <h3 id="modal-id" class="text-xl font-bold themed-text-primary themed-accent">Course id</h3>
-                <button id="close-modal"
-                    class="themed-text-secondary hover:themed-text-primary text-2xl">&times;</button>
+                <button id="close-modal" type="button" aria-label="Close"
+                    class="modal-close themed-text-secondary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <h3 id="modal-title" class="text-2xl font-bold themed-text-primary mb-4">Course Name</h3>
             <div id="modal-body" class="themed-text-secondary">

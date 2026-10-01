@@ -441,19 +441,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const courses = [...courseGrid.querySelectorAll('.course-card')].map((card) => {
             const info = courseData[card.dataset.course] || {};
-            const termEl = card.querySelector('p');      // "Autumn 2026"
-            const titleEl = card.querySelector('h3');    // "AI31201 • Reinforcement Learning"
-            const instructorEl = card.querySelector('p a');
-            const fields = [termEl, titleEl, instructorEl].map((el) => ({ el, text: el.textContent.replace(/\s+/g, ' ').trim() }));
+            // the card's parts (see the .ta-card markup in ta.html); each is searched and highlighted
+            const fields = ['.ta-card-term', '.ta-card-code', '.ta-card-title', '.ta-card-instructor a']
+                .map((selector) => card.querySelector(selector))
+                .map((el) => ({ el, text: el.textContent.replace(/\s+/g, ' ').trim() }));
             const term = fields[0].text;
             const topics = (info.topics || []).filter((topic) => !/updated soon/i.test(topic))
                 .map((text) => ({ text, search: words(text) }));
-            // the line that names the topic when that is what matched (hidden otherwise)
+            // the line that names the topic when that is what matched (hidden otherwise), under the instructor
             const topicLine = document.createElement('p');
             topicLine.className = 'course-match';
             topicLine.hidden = true;
-            const body = card.firstElementChild;
-            body.insertBefore(topicLine, body.lastElementChild);
+            card.querySelector('.ta-card-body').appendChild(topicLine);
             return {
                 card, fields, term, topics, topicLine,
                 shortname: info.shortname || '',
