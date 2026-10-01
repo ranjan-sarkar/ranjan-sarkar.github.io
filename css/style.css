@@ -1184,12 +1184,25 @@ html.modal-open {
     background-color: rgba(129, 140, 248, 0.14);
 }
 
+/* a long venue name can carry a short form (pub-venue-full / pub-venue-short) for phones */
+.pub-venue-short {
+    display: none;
+}
+
 /* phones: keep the venue on one line */
 @media (max-width: 480px) {
     .pub-venue {
         font-size: 0.68rem;
         letter-spacing: 0.03em;
         padding: 0.35rem 0.7rem;
+    }
+
+    .pub-venue-full {
+        display: none;
+    }
+
+    .pub-venue-short {
+        display: inline;
     }
 }
 
