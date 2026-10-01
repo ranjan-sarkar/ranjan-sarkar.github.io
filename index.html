@@ -312,7 +312,7 @@
                     <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-4">Ranjan Sarkar</h1>
                     <p class="text-xl md:text-xl themed-text-primary">PhD Scholar, Artificial Intelligence</p>
                     <p class="text-xl themed-text-primary mb-5">Indian Institute of Technology Kharagpur</p>
-                    <p class="themed-text-secondary mb-6 max-w-2xl">
+                    <p class="home-bio themed-text-secondary mb-6 max-w-2xl">
                         I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank"
                             class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial
                             Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank"
@@ -345,9 +345,10 @@
                         </a>
                     </div>
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-7 gap-y-8 mb-5">
-                        <a href="Resume_RANJAN.pdf" target="_blank"
-                            class="shrink-0 inline-block themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300 transform hover:-translate-y-1">
-                            Resume
+                        <!-- hover effect: .resume-btn in style.css -->
+                        <a href="Resume_RANJAN.pdf" target="_blank" class="resume-btn shrink-0">
+                            <span class="resume-btn-label">Resume</span>
+                            <i class="fa-solid fa-arrow-right resume-btn-icon" aria-hidden="true"></i>
                         </a>
                         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:justify-start">
                             <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
@@ -461,13 +462,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- Load More Button -->
-                <div class="text-center mt-8">
-                    <button id="load-more-news"
-                        class="hidden inline-flex items-center text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors focus:outline-none">
-                        Older News
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
+                <!-- Older news: a divider line with a toggle in the middle (shown by js/main.js when there
+                     are more than 4 items; styles: .news-more in style.css) -->
+                <div class="news-more" hidden>
+                    <button id="load-more-news" type="button" class="news-more-btn" aria-expanded="false"
+                        aria-controls="news-container">
+                        <span class="news-more-label">Older news</span>
+                        <span class="news-more-count"></span>
+                        <svg class="news-more-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -552,10 +555,7 @@
                     -->
                 </div>
                 <div class="text-center mt-10">
-                    <a href="publications.html"
-                        class="inline-flex items-center themed-accent hover:underline font-medium">
-                        View all publications&nbsp;<i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                    <a href="publications.html" class="more-link">View all publications<span class="more-link-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
                 </div>
             </div>
         </section>
@@ -596,10 +596,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-10">
-                    <a href="ta.html"
-                        class="inline-flex items-center themed-accent hover:underline font-medium">
-                        View all courses&nbsp;<i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                    <a href="ta.html" class="more-link">View all courses<span class="more-link-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
                 </div>
             </div>
         </section>

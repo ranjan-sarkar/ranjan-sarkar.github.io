@@ -216,179 +216,83 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-        <!-- Course Page for AI for CPS -->
-        <div id="course-aicps" class="scroll-animate course-page min-h-screen themed-bg-secondary py-20">
+        <!-- Course page: AI for CPS. Styles: .cp-* in css/style.css.
+             To add a tutorial or assignment, copy one <article class="cp-item"> and change its number,
+             title, date, people and link; also update the count in its section heading. -->
+        <div id="course-aicps" class="scroll-animate course-page themed-bg-secondary cp-page">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI61006</h1>
-                    <h1 class="text-4xl font-bold themed-text-primary mb-2">Artificial Intelligence for Cyber Physical
-                        Systems</h1>
-                    <p class="text-xl themed-text-secondary">Spring 2026 • IIT Kharagpur</p>
-                </div>
-                <!-- Tutorial List -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding
-                            Tutorials</h2>
-                        <!-- Tutorial 1 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction
-                                        to Python</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
-                                        <span class="flex items-center">
-                                            <!-- <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> -->
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;
-                                            Jan 12, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Pankaj Maurya, &nbsp;Ranjan Sarkar
-                                        </span>
-                                    </div>
-                                    <ul class="inline-bullets themed-text-secondary text-sm">
-                                        <li>Pandas</li>
-                                        <li>Numpy</li>
-                                        <li>Matplotlib</li>
-                                        <li>Sympy</li>
-                                        <li>CasADi</li>
-                                        <li>OpenAI Gym</li>
-                                    </ul>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T1_Intro.ipynb"
-                                    target="_blank"
-                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
-                            </div>
-                        </div>
-                        <!-- Tutorial 2 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp;Q-Learning
-                                    </h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-1 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Feb 10, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Ranjan Sarkar
-                                        </span>
-                                    </div>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T2_Q-Learning.ipynb"
-                                    target="_blank"
-                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp;&rarr;</a>
-                            </div>
-                        </div>
-                        <!-- Tutorial 3 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 3: &nbsp;Deep
-                                        Q-Network (DQN)</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 10, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Ranjan Sarkar
-                                        </span>
-                                    </div>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T3_DQN.ipynb"
-                                    target="_blank"
-                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
-                            </div>
-                        </div>
-                        <!-- Tutorial 4 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 4: &nbsp;REINFORCE
-                                    </h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Mar 17, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Ankam Solomon Surya Sekhar
-                                        </span>
-                                    </div>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T4_REINFORCE.ipynb"
-                                    target="_blank"
-                                    class="themed-accent hover:underline text-sm font-medium">View&nbsp&rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:col-span-1">
-                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
-                                Details</h2>
-                            <div class="space-y-3 themed-text-secondary">
-                                <p><strong>Instructor: </strong><a href="https://rhpilab.in/people.html"
-                                        target="_blank"
-                                        class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K.
-                                        Mishra</a></p>
-                                <div>
-                                    <p><strong>TA:</strong></p>
-                                    <ul class="mt-1 list-disc list-outside pl-5 space-y-1">
-                                        <li>Ranjan Sarkar</li>
-                                        <li>Anik Roy</li>
-                                        <li>Pankaj Maurya</li>
-                                        <li>Ankam Solomon Surya Sekhar</li>
-                                    </ul>
-                                </div>
-                                <p><strong>Timings:</strong> <br>Mon 3-5 PM & Tue 2-4 PM</p>
-                            </div>
-                        </div>
-                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
-                            </h2>
-                            <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary">
-                                <li>Introduction</li>
-                                <li>Acting: RL, Q-Learning, SARSA, Gymnasium</li>
-                                <li>Planning: A*, RRT, PRM</li>
-                                <li>Sensing: Kalman Filter, Sensor Fusion, CNN, YOLO</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="cp-hero">
+                    <span class="cp-code">AI61006</span>
+                    <h1 class="cp-title themed-text-primary">Artificial Intelligence for Cyber Physical Systems</h1>
+                    <p class="cp-subtitle themed-text-secondary">Spring 2026 • IIT Kharagpur</p>
                 </div>
 
-                <div class="mt-20 text-center">
-                    <a href="https://rhpilab.in/cps.html" target="_blank"
-                        class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
-                        Visit Official Course Page&nbsp;
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                <div class="cp-layout">
+                    <div class="cp-main">
+                        <section class="cp-section" aria-labelledby="cp-list-0">
+                            <h2 id="cp-list-0" class="cp-heading themed-text-primary"><span class="cp-heading-icon" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></span>Coding Tutorials<span class="cp-count">4</span></h2>
+                            <div class="cp-list">
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">1</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 1: </span>Introduction to Python</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-01-12">Jan 12, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Pankaj Maurya, Ranjan Sarkar</span></p>
+                                        <ul class="cp-tags" aria-label="Tools covered"><li>Pandas</li><li>Numpy</li><li>Matplotlib</li><li>Sympy</li><li>CasADi</li><li>OpenAI Gym</li></ul>
+                                    </div>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T1_Intro.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 1 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">2</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 2: </span>Q-Learning</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-02-10">Feb 10, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Ranjan Sarkar</span></p>
+                                    </div>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T2_Q-Learning.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 2 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">3</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 3: </span>Deep Q-Network (DQN)</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-03-10">Mar 10, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Ranjan Sarkar</span></p>
+                                    </div>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T3_DQN.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 3 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">4</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 4: </span>REINFORCE</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-03-17">Mar 17, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Ankam Solomon Surya Sekhar</span></p>
+                                    </div>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/AI_CPS/AI61006_T4_REINFORCE.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 4 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                            </div>
+                        </section>
+                    </div>
+
+                    <aside class="cp-side" aria-label="Course information">
+                        <section class="cp-panel" aria-labelledby="cp-details">
+                            <h2 id="cp-details" class="cp-panel-title themed-text-primary">Course Details</h2>
+                            <dl class="cp-facts">
+                                <div>
+                                    <dt><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>Instructor</dt>
+                                    <dd><a href="https://rhpilab.in/people.html" target="_blank" class="text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></dd>
+                                </div>
+                                <div>
+                                    <dt><i class="fa-regular fa-clock" aria-hidden="true"></i>Timings</dt>
+                                    <dd>Mon 3–5 PM &amp; Tue 2–4 PM</dd>
+                                </div>
+                                <div>
+                                    <dt><i class="fa-solid fa-users" aria-hidden="true"></i>Teaching Assistants</dt>
+                                    <dd><ul class="cp-people"><li><span class="cp-avatar search-skip" aria-hidden="true">RS</span>Ranjan Sarkar</li><li><span class="cp-avatar search-skip" aria-hidden="true">AR</span>Anik Roy</li><li><span class="cp-avatar search-skip" aria-hidden="true">PM</span>Pankaj Maurya</li><li><span class="cp-avatar search-skip" aria-hidden="true">AS</span>Ankam Solomon Surya Sekhar</li></ul></dd>
+                                </div>
+                            </dl>
+                        </section>
+                        <section class="cp-panel" aria-labelledby="cp-syllabus">
+                            <h2 id="cp-syllabus" class="cp-panel-title themed-text-primary">Syllabus</h2>
+                            <ol class="cp-syllabus"><li><span>Introduction</span></li><li><span><strong>Acting:</strong> RL, Q-Learning, SARSA, Gymnasium</span></li><li><span><strong>Planning:</strong> A*, RRT, PRM</span></li><li><span><strong>Sensing:</strong> Kalman Filter, Sensor Fusion, CNN, YOLO</span></li></ol>
+                        </section>
+                        <a class="cp-official" href="https://rhpilab.in/cps.html" target="_blank" rel="noopener">Visit Official Course Page<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </aside>
                 </div>
             </div>
         </div>

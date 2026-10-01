@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = document.documentElement.classList.contains('dark');
         darkIcon.style.display = isDark ? 'none' : 'inline-block';
         lightIcon.style.display = isDark ? 'inline-block' : 'none';
-        // browser tooltip + screen-reader name saying what a click will do
+        // hover tooltip (data-tip, styled in style.css) + screen-reader name saying what a click will do
         const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-        themeToggle.title = label;
+        themeToggle.dataset.tip = label;
         themeToggle.setAttribute('aria-label', label);
     };
 
@@ -747,25 +747,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const newsContainer = document.getElementById('news-container');
     const loadMoreBtn = document.getElementById('load-more-news');
 
+    // Only the first 4 items show at first; the toggle under the list ("Older news" / "Show less")
+    // opens and closes the rest. The list's height glides to its new size, and the older items fade
+    // up one after another when they appear (they fade out as it closes).
+    let expandOlderNews = () => {};   // also used by the site search, to open the list for a hit in it
     if (newsContainer && loadMoreBtn) {
-        const newsItems = newsContainer.querySelectorAll('.news-item');
+        const NEWS_SHOWN = 4;
+        const older = [...newsContainer.querySelectorAll('.news-item')].slice(NEWS_SHOWN);
+        const toggleRow = loadMoreBtn.closest('.news-more');
+        const label = loadMoreBtn.querySelector('.news-more-label');
+        const count = loadMoreBtn.querySelector('.news-more-count');
+        const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+        let expanded = false;
+        let resize = null;
 
-        // Initially hide items beyond the first 4
-        if (newsItems.length > 4) {
-            loadMoreBtn.classList.remove('hidden');
-            newsItems.forEach((item, index) => {
-                if (index >= 4) {
-                    item.classList.add('hidden-news-item');
+        const setOlderHidden = (hide) => older.forEach((item) => item.classList.toggle('hidden-news-item', hide));
+
+        // change what is shown, letting the list's height glide from the old size to the new one
+        const glide = (change, duration) => {
+            const from = newsContainer.offsetHeight;
+            resize?.cancel();
+            change();
+            const to = newsContainer.offsetHeight;
+            if (prefersReducedMotion || from === to) {
+                return null;
+            }
+            newsContainer.style.overflow = 'hidden';
+            resize = newsContainer.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration, easing: EASE });
+            resize.onfinish = resize.oncancel = () => { newsContainer.style.overflow = ''; };
+            return resize;
+        };
+
+        const render = () => {
+            loadMoreBtn.setAttribute('aria-expanded', String(expanded));
+            label.textContent = expanded ? 'Show less' : 'Older news';
+            count.textContent = expanded ? '' : older.length;
+            count.hidden = expanded;
+        };
+
+        const setExpanded = (open) => {
+            if (open === expanded) {
+                return;
+            }
+            expanded = open;
+            render();
+            if (open) {
+                glide(() => setOlderHidden(false), 500);
+                if (!prefersReducedMotion) {
+                    older.forEach((item, i) => item.animate(
+                        [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+                        { duration: 450, delay: 80 + i * 60, easing: EASE, fill: 'backwards' }));
                 }
-            });
-        }
+            } else {
+                // the list closes over the older items while they fade; they are taken out at the end
+                const animation = glide(() => setOlderHidden(true), 400);
+                if (animation) {
+                    setOlderHidden(false);   // keep them in place (clipped) during the glide
+                    const fades = older.map((item) => item.animate([{ opacity: 1 }, { opacity: 0 }],
+                        { duration: 200, fill: 'forwards' }));
+                    const done = () => {
+                        fades.forEach((fade) => fade.cancel());
+                        newsContainer.style.overflow = '';
+                    };
+                    animation.onfinish = () => { setOlderHidden(true); done(); };
+                    animation.oncancel = done;   // opened again before it finished
+                }
+            }
+        };
 
-        loadMoreBtn.addEventListener('click', () => {
-            newsItems.forEach(item => {
-                item.classList.remove('hidden-news-item');
-            });
-            loadMoreBtn.style.display = 'none'; // Hide the button after expanding
-        });
+        if (older.length) {
+            // the section's scroll-in animation (.reveal-child) would restart each time an older item
+            // is shown again and run on top of the fade below, so they skip it (they start hidden anyway)
+            older.forEach((item) => { item.style.animation = 'none'; });
+            setOlderHidden(true);
+            toggleRow.hidden = false;
+            render();
+            loadMoreBtn.addEventListener('click', () => setExpanded(!expanded));
+            expandOlderNews = () => {
+                if (!expanded) {
+                    expanded = true;
+                    render();
+                    setOlderHidden(false);
+                }
+            };
+        }
     }
 
     // --- "New" tags on recent news (home page) ---
@@ -1004,7 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
     searchButton.id = 'search-button';
     searchButton.className = 'p-2 rounded-full themed-text-secondary focus:outline-none';
     searchButton.setAttribute('aria-label', 'Search this website');
-    searchButton.title = 'Search (Ctrl+K)';
+    // hover tooltip (data-tip, styled in style.css); Macs show the ⌘ key
+    searchButton.dataset.tip = /Mac|iPhone|iPad/.test(navigator.platform) ? 'Search (⌘K)' : 'Search (Ctrl+K)';
     searchButton.innerHTML = `<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
         stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>`;
@@ -1384,6 +1450,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const target = matches[Number(params.get('hit')) || 0] || matches[0];
         if (target) {
+            if (target.element.closest('.hidden-news-item')) {
+                expandOlderNews();   // the hit is in the collapsed older news: open it first
+            }
             target.element.classList.add('search-target');
             // wait a frame so layout (fonts, scroll animations) has settled
             requestAnimationFrame(() => target.element.scrollIntoView({ block: 'center', behavior: 'smooth' }));

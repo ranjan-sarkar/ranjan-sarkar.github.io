@@ -243,6 +243,194 @@ body {
     background-color: var(--accent-hover-light);
 }
 
+/* "See more" links under a section (View all publications / courses, View on Google Scholar):
+   a soft accent pill with the label and an arrow in a filled circle. On hover the pill deepens,
+   gains a soft shadow and the arrow slides forward. An optional leading icon uses .more-link-lead. */
+.more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.25rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.06);
+    color: var(--accent-light);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.more-link-lead {
+    margin-right: -0.25rem;
+    font-size: 1.05em;
+}
+
+.more-link-arrow {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background-color: var(--accent-light);
+    color: #ffffff;
+    font-size: 0.8rem;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.more-link:hover,
+.more-link:focus-visible {
+    border-color: rgba(79, 70, 229, 0.45);
+    background-color: rgba(79, 70, 229, 0.11);
+    box-shadow: 0 8px 18px -10px rgba(79, 70, 229, 0.55);
+    outline: none;
+}
+
+.more-link:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.more-link:hover .more-link-arrow,
+.more-link:focus-visible .more-link-arrow {
+    transform: translateX(3px);
+}
+
+/* links to another site: the arrow points up-right, and slides that way on hover */
+.more-link-arrow.is-external i {
+    transform: rotate(-45deg);
+}
+
+.more-link:hover .more-link-arrow.is-external,
+.more-link:focus-visible .more-link-arrow.is-external {
+    transform: translate(2px, -2px);
+}
+
+.more-link:active {
+    transform: scale(0.98);
+}
+
+.dark .more-link {
+    border-color: rgba(129, 140, 248, 0.25);
+    background-color: rgba(129, 140, 248, 0.1);
+    color: var(--accent-dark);
+}
+
+.dark .more-link-arrow {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.dark .more-link:hover,
+.dark .more-link:focus-visible {
+    border-color: rgba(129, 140, 248, 0.5);
+    background-color: rgba(129, 140, 248, 0.16);
+    box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.6);
+}
+
+.dark .more-link:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .more-link:hover .more-link-arrow,
+    .more-link:focus-visible .more-link-arrow,
+    .more-link:active {
+        transform: none;
+    }
+}
+
+/* Home: the bio paragraph is justified on wide screens (1024px and up). Below that the text column
+   is too narrow and justifying leaves wide gaps between words, so it keeps the hero's alignment
+   (centred on phones, left on tablets). */
+@media (min-width: 1024px) {
+    .home-bio {
+        text-align: justify;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+}
+
+/* Home: Resume button. On hover the label slides left to make room for an arrow that fades in,
+   and the button lifts a little with a soft accent shadow; it presses in on click.
+   The button keeps its width throughout, so the icons beside it never move. */
+.resume-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    background-color: var(--accent-light);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 2px 6px -2px rgba(79, 70, 229, 0.35);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-color 0.4s ease;
+}
+
+.resume-btn-label,
+.resume-btn-icon {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.resume-btn-icon {
+    position: absolute;
+    right: 0.95rem;
+    font-size: 0.8em;
+    opacity: 0;
+    transform: translateX(-6px);
+}
+
+.resume-btn:hover,
+.resume-btn:focus-visible {
+    background-color: var(--accent-hover-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px -8px rgba(79, 70, 229, 0.5);
+    outline: none;
+}
+
+.resume-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3), 0 8px 16px -8px rgba(79, 70, 229, 0.5);
+}
+
+.resume-btn:hover .resume-btn-label,
+.resume-btn:focus-visible .resume-btn-label {
+    transform: translateX(-0.55rem);
+}
+
+.resume-btn:hover .resume-btn-icon,
+.resume-btn:focus-visible .resume-btn-icon {
+    opacity: 1;
+    transform: none;
+}
+
+.resume-btn:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+}
+
+.dark .resume-btn {
+    background-color: var(--accent-dark);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5);
+}
+
+.dark .resume-btn:hover,
+.dark .resume-btn:focus-visible {
+    background-color: var(--accent-hover-dark);
+    box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.6);
+}
+
+.dark .resume-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35), 0 8px 16px -8px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .resume-btn:hover,
+    .resume-btn:focus-visible,
+    .resume-btn:active,
+    .resume-btn:hover .resume-btn-label,
+    .resume-btn:focus-visible .resume-btn-label {
+        transform: none;
+    }
+}
+
 .dark .themed-accent-bg-hover:hover {
     background-color: var(--accent-hover-dark);
 }
@@ -264,47 +452,26 @@ body {
     border-radius: 0.75rem;
 }
 
-.seminar-tag {
+/* Talks page: the type tag on each talk card (poster, seminar, talk series): a soft accent capsule
+   with the label. */
+.talk-tag {
     display: inline-flex;
     align-items: center;
-    width: fit-content;
-    gap: 0.6rem;
-    padding: 0.55rem 0.9rem;
-    border-radius: 0.9rem;
-    border: 1px solid var(--border-light);
-    background-color: rgba(255, 255, 255, 0.8);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid rgba(79, 70, 229, 0.18);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.07);
+    color: var(--accent-light);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     line-height: 1;
-    text-transform: uppercase;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
-.dark .seminar-tag {
-    border-color: var(--border-dark);
-    background-color: rgba(15, 23, 42, 0.8);
-    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.28);
-}
-
-.seminar-tag::before {
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 9999px;
-    background-color: var(--accent-light);
-    flex: 0 0 auto;
-}
-
-.seminar-tag::after {
-    content: attr(data-tag);
-    white-space: nowrap;
-}
-
-.dark .seminar-tag::before {
-    background-color: var(--accent-dark);
+.dark .talk-tag {
+    border-color: rgba(129, 140, 248, 0.25);
+    background-color: rgba(129, 140, 248, 0.12);
+    color: var(--accent-dark);
 }
 
 /* Blurry Header */
@@ -550,7 +717,7 @@ header nav a[data-nav].active::after {
     margin-left: 1.5rem;
     padding: 1rem 1.15rem;
     border: 1px solid var(--border-light);
-    border-radius: 0.9rem;
+    border-radius: 1rem;
     background-color: var(--bg-light-secondary);
     transition: border-color 0.3s ease, transform 0.3s ease;
 }
@@ -639,6 +806,72 @@ header nav a[data-nav].active::after {
 .dark .bg-secondary-btn:focus-visible {
     border-color: var(--accent-dark);
     color: var(--accent-dark);
+}
+
+/* Action buttons (Download CV, Back to Portfolio, the poster card's View Poster / Read the Paper):
+   on hover the button lifts a little with a soft shadow and its icon nudges in the direction of the
+   action (down for a download, left for back, up for open); it presses in on click. */
+.action-btn {
+    display: inline-block;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease,
+        background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.action-btn-icon {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.action-btn:hover,
+.action-btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px -10px rgba(79, 70, 229, 0.55);
+}
+
+.action-btn:hover .action-btn-icon.is-down,
+.action-btn:focus-visible .action-btn-icon.is-down {
+    transform: translateY(2px);
+}
+
+.action-btn:hover .action-btn-icon.is-left,
+.action-btn:focus-visible .action-btn-icon.is-left {
+    transform: translateX(-3px);
+}
+
+.action-btn:hover .action-btn-icon.is-up,
+.action-btn:focus-visible .action-btn-icon.is-up {
+    transform: translateY(-2px);
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+}
+
+.action-btn-outline:hover,
+.action-btn-outline:focus-visible {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+}
+
+.dark .action-btn:hover,
+.dark .action-btn:focus-visible {
+    box-shadow: 0 10px 18px -10px rgba(0, 0, 0, 0.7);
+}
+
+.dark .action-btn-outline:hover,
+.dark .action-btn-outline:focus-visible {
+    border-color: var(--accent-dark);
+    color: var(--accent-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .action-btn:hover,
+    .action-btn:focus-visible,
+    .action-btn:active,
+    .action-btn:hover .action-btn-icon,
+    .action-btn:focus-visible .action-btn-icon {
+        transform: none;
+    }
 }
 
 /* phones: date moves above its card and the timeline runs down the left edge */
@@ -1066,6 +1299,121 @@ html.modal-open {
     display: none !important;
 }
 
+/* "Older news" toggle under the news list: a thin line that fades in from both edges, with a pill
+   button in the middle (label, count of older items, chevron that flips when the list is open) */
+.news-more {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 64rem;
+    margin: 2.25rem auto 0;
+}
+
+.news-more[hidden] {
+    display: none;
+}
+
+.news-more::before,
+.news-more::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-light));
+}
+
+.news-more::after {
+    background: linear-gradient(90deg, var(--border-light), transparent);
+}
+
+.news-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem 0.45rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: var(--bg-light-secondary);
+    color: var(--text-light-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-more-count {
+    min-width: 1.4rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background-color: rgba(100, 116, 139, 0.12);
+    font-size: 0.72rem;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.news-more-count[hidden] {
+    display: none;
+}
+
+.news-more-chevron {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-more-btn[aria-expanded="true"] .news-more-chevron {
+    transform: rotate(180deg);
+}
+
+.news-more-btn:hover,
+.news-more-btn:focus-visible {
+    border-color: rgba(79, 70, 229, 0.45);
+    color: var(--accent-light);
+    box-shadow: 0 8px 18px -12px rgba(79, 70, 229, 0.5);
+    outline: none;
+}
+
+.news-more-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+}
+
+.news-more-btn:hover .news-more-count,
+.news-more-btn:focus-visible .news-more-count {
+    background-color: rgba(79, 70, 229, 0.12);
+}
+
+.dark .news-more::before {
+    background: linear-gradient(90deg, transparent, var(--border-dark));
+}
+
+.dark .news-more::after {
+    background: linear-gradient(90deg, var(--border-dark), transparent);
+}
+
+.dark .news-more-btn {
+    border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
+    color: var(--text-dark-secondary);
+}
+
+.dark .news-more-count {
+    background-color: rgba(148, 163, 184, 0.15);
+}
+
+.dark .news-more-btn:hover,
+.dark .news-more-btn:focus-visible {
+    border-color: rgba(129, 140, 248, 0.5);
+    color: var(--accent-dark);
+    box-shadow: 0 8px 18px -12px rgba(0, 0, 0, 0.6);
+}
+
+.dark .news-more-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+}
+
+.dark .news-more-btn:hover .news-more-count,
+.dark .news-more-btn:focus-visible .news-more-count {
+    background-color: rgba(129, 140, 248, 0.16);
+}
+
 /* ---------- Publication cards (publications.html) ---------- */
 .pub-card {
     position: relative;
@@ -1474,6 +1822,75 @@ html.modal-open {
     color: #0f172a;
 }
 
+/* Header buttons (search, theme switch): a small tooltip below the button, in the same style as the
+   social-icon tooltips. Its text comes from data-tip (set in js/main.js). It shows after a short
+   pause on mouse hover, and on keyboard focus; not on touch screens, where a tap would leave it on. */
+#search-button,
+#theme-toggle {
+    position: relative;
+}
+
+#search-button::after,
+#theme-toggle::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    z-index: 70;
+    padding: 0.45rem 0.7rem;
+    border-radius: 0.55rem;
+    background: rgba(15, 23, 42, 0.96);
+    color: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* the theme switch sits at the right edge of the header, so its tooltip lines up with its right side */
+#theme-toggle::after {
+    left: auto;
+    right: 0;
+    transform: translateY(-4px);
+}
+
+@media (hover: hover) {
+    #search-button:hover::after,
+    #theme-toggle:hover::after {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transition-delay: 0.25s;
+    }
+
+    /* the button itself grows 10% on hover (hover:scale-110); shrink the tooltip back to normal size */
+    #theme-toggle:hover::after {
+        transform: scale(0.909);
+        transform-origin: top right;
+    }
+}
+
+#search-button:focus-visible:not(.focus-quiet)::after,
+#theme-toggle:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+#theme-toggle:focus-visible::after {
+    transform: none;
+}
+
+.dark #search-button::after,
+.dark #theme-toggle::after {
+    background: rgba(226, 232, 240, 0.98);
+    color: #0f172a;
+}
+
 /* =====================================================================
    Small UI details (each block is independent and can be removed on its own)
    ===================================================================== */
@@ -1527,9 +1944,13 @@ a.text-accent:focus-visible {
     transition-property: transform, box-shadow, border-color;
 }
 
-/* TA course cards (ta.html and the homepage): rounder corners than Tailwind's rounded-lg */
-#TA .course-card {
-    border-radius: 1rem;
+/* Cards across the site share the course cards' 1rem corners (instead of Tailwind's rounded-lg):
+   TA course cards (ta.html and the homepage), Research Interests (homepage) and talks (talks.html) */
+#TA .course-card,
+#research .grid > div,
+#main-content .presentation-item,
+#main-content .presentation-item > div {
+    border-radius: 1rem;   /* the id outweighs Tailwind's rounded-lg, which loads after this file */
 }
 
 #research .grid > div:hover,
@@ -1669,6 +2090,501 @@ a.text-accent:focus-visible {
     /* the whole card is the button, so the arrow can go */
     .ta-feature-go {
         display: none;
+    }
+}
+
+/* =====================================================================
+   Course pages (rl.html, robot.html, aicps.html, amfai.html) — .cp-*
+   Header (code badge, title, semester), a main column of numbered tutorial /
+   assignment cards, and a sidebar with the course details, syllabus and official page link.
+   ===================================================================== */
+.cp-page {
+    min-height: 100vh;
+    padding: 3rem 0 5rem;
+}
+
+@media (min-width: 768px) {
+    .cp-page {
+        padding-top: 4.5rem;
+    }
+}
+
+.cp-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+
+
+
+
+.cp-code {
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.cp-title {
+    max-width: 48rem;
+    margin: 0.9rem 0 0.5rem;
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.cp-subtitle {
+    font-size: 1.125rem;
+}
+
+/* two columns from 900px: content + sidebar */
+.cp-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+    .cp-layout {
+        grid-template-columns: minmax(0, 1fr) 21rem;
+        align-items: start;
+    }
+}
+
+.cp-section + .cp-section {
+    margin-top: 2.75rem;
+}
+
+.cp-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.cp-heading-icon {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.65rem;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 1rem;
+}
+
+.cp-count {
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background-color: rgba(100, 116, 139, 0.12);
+    color: var(--text-light-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.cp-text {
+    line-height: 1.75;
+}
+
+/* tutorial / assignment cards; the whole card opens the link (the button's ::after covers it) */
+.cp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cp-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--border-light);
+    border-radius: 1rem;
+    background-color: var(--bg-light-secondary);
+    box-shadow: 0 4px 14px -8px rgba(15, 23, 42, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cp-item:hover,
+.cp-item:focus-within {
+    transform: translateY(-3px);
+    border-color: rgba(79, 70, 229, 0.45);
+    box-shadow: 0 16px 30px -14px rgba(15, 23, 42, 0.25);
+}
+
+.cp-num {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.85rem;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 1.15rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cp-item:hover .cp-num,
+.cp-item:focus-within .cp-num {
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.cp-item-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.cp-item-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.cp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.1rem;
+    margin-top: 0.3rem;
+    font-size: 0.875rem;
+}
+
+.cp-meta span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+}
+
+.cp-meta i {
+    color: var(--accent-light);
+    font-size: 0.85em;
+}
+
+.cp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.7rem;
+}
+
+.cp-tags li {
+    padding: 0.1rem 0.6rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    color: var(--text-light-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.cp-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+    padding: 0.45rem 0.95rem;
+    border: 1px solid rgba(79, 70, 229, 0.35);
+    border-radius: 999px;
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.cp-open::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;   /* the whole card is the link */
+}
+
+.cp-item:hover .cp-open,
+.cp-open:focus-visible {
+    border-color: var(--accent-light);
+    background-color: var(--accent-light);
+    color: #ffffff;
+    outline: none;
+}
+
+/* sidebar panels */
+.cp-panel {
+    padding: 1.35rem 1.4rem;
+    border: 1px solid var(--border-light);
+    border-radius: 1rem;
+    background-color: var(--bg-light-secondary);
+    box-shadow: 0 4px 14px -8px rgba(15, 23, 42, 0.12);
+}
+
+.cp-panel + .cp-panel {
+    margin-top: 1.25rem;
+}
+
+.cp-panel-title {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.cp-facts > div + div {
+    margin-top: 1rem;
+}
+
+.cp-facts dt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-light-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.cp-facts dt i {
+    width: 1rem;
+    color: var(--accent-light);
+    text-align: center;
+}
+
+.cp-facts dd {
+    color: var(--text-light-primary);
+    font-size: 0.95rem;
+}
+
+.cp-people {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.15rem;
+}
+
+.cp-people li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+}
+
+.cp-avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.cp-syllabus {
+    counter-reset: cp-syllabus;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.cp-syllabus li {
+    counter-increment: cp-syllabus;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: baseline;
+    color: var(--text-light-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.cp-syllabus li::before {
+    content: counter(cp-syllabus);
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 0.5rem;
+    background-color: rgba(79, 70, 229, 0.09);
+    color: var(--accent-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    transform: translateY(-0.1rem);
+}
+
+.cp-syllabus strong {
+    color: var(--text-light-primary);
+    font-weight: 600;
+}
+
+.cp-empty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-light-secondary);
+    font-size: 0.9rem;
+}
+
+.cp-empty i {
+    color: var(--accent-light);
+}
+
+.cp-official {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.75rem;
+    background-color: var(--accent-light);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 10px 20px -10px rgba(79, 70, 229, 0.6);
+    transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cp-official:hover,
+.cp-official:focus-visible {
+    background-color: var(--accent-hover-light);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px -10px rgba(79, 70, 229, 0.7);
+}
+
+.cp-official i {
+    font-size: 0.85em;
+}
+
+/* dark theme */
+.dark .cp-meta i,
+.dark .cp-facts dt i,
+.dark .cp-empty i {
+    color: var(--accent-dark);
+}
+
+.dark .cp-code,
+.dark .cp-heading-icon,
+.dark .cp-num,
+.dark .cp-avatar,
+.dark .cp-syllabus li::before {
+    background-color: rgba(129, 140, 248, 0.14);
+    color: var(--accent-dark);
+}
+
+.dark .cp-count {
+    background-color: rgba(148, 163, 184, 0.15);
+    color: var(--text-dark-secondary);
+}
+
+.dark .cp-item,
+.dark .cp-panel {
+    border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
+    box-shadow: 0 4px 14px -8px rgba(0, 0, 0, 0.5);
+}
+
+.dark .cp-item:hover,
+.dark .cp-item:focus-within {
+    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 0 16px 30px -14px rgba(0, 0, 0, 0.6);
+}
+
+.dark .cp-item:hover .cp-num,
+.dark .cp-item:focus-within .cp-num {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.dark .cp-tags li {
+    border-color: var(--border-dark);
+    color: var(--text-dark-secondary);
+}
+
+.dark .cp-open {
+    border-color: rgba(129, 140, 248, 0.4);
+    color: var(--accent-dark);
+}
+
+.dark .cp-item:hover .cp-open,
+.dark .cp-open:focus-visible {
+    border-color: var(--accent-dark);
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.dark .cp-panel-title {
+    border-bottom-color: var(--border-dark);
+}
+
+.dark .cp-facts dt,
+.dark .cp-syllabus li,
+.dark .cp-empty {
+    color: var(--text-dark-secondary);
+}
+
+.dark .cp-facts dd,
+.dark .cp-syllabus strong {
+    color: var(--text-dark-primary);
+}
+
+.dark .cp-official {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.6);
+}
+
+.dark .cp-official:hover,
+.dark .cp-official:focus-visible {
+    background-color: #a5b4fc;
+}
+
+/* phones: the button drops under the card text */
+@media (max-width: 560px) {
+    .cp-item {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        padding: 1rem;
+        gap: 0.9rem;
+    }
+
+    .cp-num {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+
+    .cp-item-body {
+        flex-basis: calc(100% - 3.4rem);
+    }
+
+    .cp-open {
+        margin-left: 3.4rem;
+    }
+
+    .cp-heading {
+        font-size: 1.3rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cp-item:hover,
+    .cp-item:focus-within,
+    .cp-official:hover,
+    .cp-official:focus-visible {
+        transform: none;
     }
 }
 
@@ -2925,7 +3841,7 @@ footer .search-target {
     left: 1rem;
     z-index: 70;
     padding: 0.625rem 1rem;
-    border-radius: 0.625rem;
+    border-radius: 0.75rem;
     background: var(--accent-light);
     color: #fff;
     font-weight: 500;

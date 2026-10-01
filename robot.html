@@ -216,191 +216,83 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-        <!-- Course page: Robot Autonomy -->
-        <div id="course-robot" class="scroll-animate course-page min-h-screen themed-bg-secondary py-20">
+        <!-- Course page: Robot Autonomy. Styles: .cp-* in css/style.css.
+             To add a tutorial or assignment, copy one <article class="cp-item"> and change its number,
+             title, date, people and link; also update the count in its section heading. -->
+        <div id="course-robot" class="scroll-animate course-page themed-bg-secondary cp-page">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-1">AI60209</h1>
-                    <h1 class="text-4xl font-bold themed-text-primary mb-2">AI for Robot Autonomy</h1>
-                    <p class="text-xl themed-text-secondary">Autumn 2026 • IIT Kharagpur</p>
+                <div class="cp-hero">
+                    <span class="cp-code">AI60209</span>
+                    <h1 class="cp-title themed-text-primary">AI for Robot Autonomy</h1>
+                    <p class="cp-subtitle themed-text-secondary">Autumn 2026 • IIT Kharagpur</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-2">
-                        <h2 class="text-2xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Coding
-                            Tutorials</h2>
-
-                        <!-- Tutorial 1 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 1: &nbsp;Introduction
-                                        to Python & Gymnasium</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-4 gap-y-1 themed-text-secondary mb-3 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Aug 12, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Satvik Jaiswal, &nbsp;Subhro Halder, &nbsp;Ranjan Sarkar
-                                        </span>
+                <div class="cp-layout">
+                    <div class="cp-main">
+                        <section class="cp-section" aria-labelledby="cp-list-0">
+                            <h2 id="cp-list-0" class="cp-heading themed-text-primary"><span class="cp-heading-icon" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></span>Coding Tutorials<span class="cp-count">4</span></h2>
+                            <div class="cp-list">
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">1</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 1: </span>Introduction to Python &amp; Gymnasium</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-08-12">Aug 12, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Satvik Jaiswal, Subhro Halder, Ranjan Sarkar</span></p>
+                                        <ul class="cp-tags" aria-label="Tools covered"><li>Numpy</li><li>Matplotlib</li><li>Sympy</li><li>CasADi</li><li>OpenAI Gymnasium</li></ul>
                                     </div>
-                                    <ul class="inline-bullets themed-text-secondary text-sm">
-                                        <li>Numpy</li>
-                                        <li>Matplotlib</li>
-                                        <li>Sympy</li>
-                                        <li>CasADi</li>
-                                        <li>OpenAI Gymnasium</li>
-                                    </ul>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T1_Introduction.ipynb"
-                                    target="_blank"
-                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
-                                    &nbsp;<i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Tutorial 2 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 2: &nbsp; Linear
-                                        Quadratic Regulator (LQR)</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-6 gap-y-1 themed-text-secondary mb-2 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Sep 2, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Satvik Jaiswal
-                                        </span>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T1_Introduction.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 1 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">2</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 2: </span>Linear Quadratic Regulator (LQR)</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-09-02">Sep 2, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Satvik Jaiswal</span></p>
                                     </div>
-                                </div>
-                                <a href="https://colab.research.google.com/drive/15XqPj94iv5qHPX6MkrFgeqijgMSoMnd4?usp=sharing"
-                                    target="_blank"
-                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
-                                    &nbsp;<i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Tutorial 3 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 3: &nbsp; Q-Learning</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-6 gap-y-1 themed-text-secondary mb-2 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Sep 9, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Samarth Gupta
-                                        </span>
+                                    <a class="cp-open" href="https://colab.research.google.com/drive/15XqPj94iv5qHPX6MkrFgeqijgMSoMnd4?usp=sharing" target="_blank" rel="noopener" aria-label="Open Tutorial 2 in Google Colab"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Colab</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">3</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 3: </span>Q-Learning</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-09-09">Sep 9, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Samarth Gupta</span></p>
                                     </div>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T3_Q-Learning.ipynb"
-                                    target="_blank"
-                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
-                                    &nbsp;<i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Tutorial 4 -->
-                        <div class="space-y-4">
-                            <div
-                                class="themed-bg-secondary border themed-border p-4 rounded-lg flex justify-between items-center mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold themed-text-primary">Tutorial 4: &nbsp; Deep Q-Network (DQN)</h3>
-                                    <div class="mr-3 flex flex-wrap gap-x-6 gap-y-1 themed-text-secondary mb-2 text-sm">
-                                        <span class="flex items-center">
-                                            <i class="fa-regular fa-calendar-check"></i> &ensp;Sep 9, 2026
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 17.804A10.97 10.97 0 0112 15c2.485 0 4.78.822 6.879 2.204M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            Ranjan Sarkar
-                                        </span>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T3_Q-Learning.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 3 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
+                                <article class="cp-item">
+                                    <span class="cp-num" aria-hidden="true">4</span>
+                                    <div class="cp-item-body">
+                                        <h3 class="cp-item-title themed-text-primary"><span class="visually-hidden">Tutorial 4: </span>Deep Q-Network (DQN)</h3>
+                                        <p class="cp-meta themed-text-secondary"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i><time datetime="2026-09-09">Sep 9, 2026</time></span><span><i class="fa-regular fa-user" aria-hidden="true"></i>Ranjan Sarkar</span></p>
                                     </div>
-                                </div>
-                                <a href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T4_DQN.ipynb"
-                                    target="_blank"
-                                    class="whitespace-nowrap themed-accent hover:underline text-sm font-medium">View
-                                    &nbsp;<i class="fa-solid fa-arrow-right"></i>
-                                </a>
+                                    <a class="cp-open" href="https://github.com/ranjan-sarkar/ranjan-sarkar.github.io/blob/main/Tutorial/Robot_autonomy/AI60209_T4_DQN.ipynb" target="_blank" rel="noopener" aria-label="Open Tutorial 4 notebook on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i>Notebook</a>
+                                </article>
                             </div>
-                        </div>
+                        </section>
                     </div>
 
-                    <div class="md:col-span-1">
-                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg">
-                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Course
-                                Details</h2>
-                            <div class="space-y-3 themed-text-secondary text-sm">
-                                <p><strong>Instructor: </strong><a href="https://rhpilab.in/people.html"
-                                        target="_blank"
-                                        class="whitespace-nowrap text-accent font-medium hover:underline">Dr. Prabhat K.
-                                        Mishra</a></p>
+                    <aside class="cp-side" aria-label="Course information">
+                        <section class="cp-panel" aria-labelledby="cp-details">
+                            <h2 id="cp-details" class="cp-panel-title themed-text-primary">Course Details</h2>
+                            <dl class="cp-facts">
                                 <div>
-                                    <p><strong>TA:</strong></p>
-                                    <ul class="mt-1 list-disc list-outside pl-5 space-y-2">
-                                        <li>Ranjan Sarkar</li>
-                                        <li>Samarth Gupta</li>
-                                        <li>Satvik Jaiswal</li>
-                                        <li>Subhro Halder</li>
-                                        <li>Mohit Mishra</li>
-                                        <li>Pranjul Shukla</li>
-                                        <li>Ambalika Raj</li>
-                                    </ul>
+                                    <dt><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>Instructor</dt>
+                                    <dd><a href="https://rhpilab.in/people.html" target="_blank" class="text-accent font-medium hover:underline">Dr. Prabhat K. Mishra</a></dd>
                                 </div>
-                                <p><strong>Timings:</strong> <br>Wed 2-6 PM</p>
-                            </div>
-                        </div>
-                        <div class="themed-bg-secondary border themed-border p-4 rounded-lg mt-6">
-                            <h2 class="text-xl font-bold themed-text-primary border-b themed-border pb-2 mb-4">Syllabus
-                            </h2>
-                            <ul class="list-disc list-outside pl-5 space-y-2 themed-text-secondary text-sm">
-                                <li>Module 1: &nbsp;Foundation of robotics</li>
-                                <li>Module 2: &nbsp;Introduction to RL</li>
-                                <li>Module 3: &nbsp;Autonomy with RL</li>
-                                <li>Module 4: &nbsp;Autonomy with dynamical systems</li>
-                                <li>Module 5: &nbsp;Introduction to Model Predictive Control</li>
-                                <li>Module 6: &nbsp;Autonomy under constraints</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-20 text-center">
-                    <a href="https://rhpilab.in/robot_autonomy.html" target="_blank"
-                        class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">
-                        Visit Official Course Page&nbsp;
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                                <div>
+                                    <dt><i class="fa-regular fa-clock" aria-hidden="true"></i>Timings</dt>
+                                    <dd>Wed 2–6 PM</dd>
+                                </div>
+                                <div>
+                                    <dt><i class="fa-solid fa-users" aria-hidden="true"></i>Teaching Assistants</dt>
+                                    <dd><ul class="cp-people"><li><span class="cp-avatar search-skip" aria-hidden="true">RS</span>Ranjan Sarkar</li><li><span class="cp-avatar search-skip" aria-hidden="true">SG</span>Samarth Gupta</li><li><span class="cp-avatar search-skip" aria-hidden="true">SJ</span>Satvik Jaiswal</li><li><span class="cp-avatar search-skip" aria-hidden="true">SH</span>Subhro Halder</li><li><span class="cp-avatar search-skip" aria-hidden="true">MM</span>Mohit Mishra</li><li><span class="cp-avatar search-skip" aria-hidden="true">PS</span>Pranjul Shukla</li><li><span class="cp-avatar search-skip" aria-hidden="true">AR</span>Ambalika Raj</li></ul></dd>
+                                </div>
+                            </dl>
+                        </section>
+                        <section class="cp-panel" aria-labelledby="cp-syllabus">
+                            <h2 id="cp-syllabus" class="cp-panel-title themed-text-primary">Syllabus</h2>
+                            <ol class="cp-syllabus"><li><span><span class="visually-hidden">Module 1: </span>Foundation of robotics</span></li><li><span><span class="visually-hidden">Module 2: </span>Introduction to RL</span></li><li><span><span class="visually-hidden">Module 3: </span>Autonomy with RL</span></li><li><span><span class="visually-hidden">Module 4: </span>Autonomy with dynamical systems</span></li><li><span><span class="visually-hidden">Module 5: </span>Introduction to Model Predictive Control</span></li><li><span><span class="visually-hidden">Module 6: </span>Autonomy under constraints</span></li></ol>
+                        </section>
+                        <a class="cp-official" href="https://rhpilab.in/robot_autonomy.html" target="_blank" rel="noopener">Visit Official Course Page<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </aside>
                 </div>
             </div>
         </div>
