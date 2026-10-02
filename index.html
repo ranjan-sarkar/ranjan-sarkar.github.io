@@ -317,21 +317,43 @@
                     </div>
                 </div>
                 <div class="md:w-3/5 text-center md:text-left">
-                    <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-4">Ranjan Sarkar</h1>
-                    <p class="text-xl md:text-xl themed-text-primary">PhD Scholar, Artificial Intelligence</p>
-                    <p class="text-xl themed-text-primary mb-5">Indian Institute of Technology Kharagpur</p>
-                    <p class="home-bio themed-text-secondary mb-6 max-w-2xl">
-                        I am a PhD Research Scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank"
-                            class="themed-text-primary text-accent font-medium hover:underline">Department of Artificial
-                            Intelligence (DoAI)</a> at <a href="https://www.iitkgp.ac.in/" target="_blank"
-                            class="themed-text-primary text-accent font-medium hover:underline">IIT Kharagpur</a>,
-                        advised by <a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en"
-                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">Dr.
-                            Prabhat Kumar Mishra</a>. I work at the <a href="https://rhpilab.in"
-                            target="_blank" class="themed-text-primary text-accent font-medium hover:underline">RHPI Lab
-                            (Receding Horizon & Predictive Intelligence Lab)</a>. My research focuses on the
-                        intersection of Reinforcement Learning, Stochastic Estimation, and Optimization.
+                    <!-- Hero text: role tag, name, institute, a short intro, then the bio lines
+                         (.home-role, .home-institute, .home-intro and .home-bio in style.css) -->
+                    <p class="home-role mb-4"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>PhD Scholar · Artificial Intelligence</p>
+                    <h1 class="text-4xl md:text-6xl font-bold themed-text-primary themed-accent mb-3">Ranjan Sarkar</h1>
+                    <p class="home-institute themed-text-primary mb-5">Indian Institute of Technology Kharagpur</p>
+                    <p class="home-intro themed-text-secondary max-w-2xl mb-6">
+                        I am a PhD research scholar in the <a href="https://ai.iitkgp.ac.in" target="_blank"
+                            rel="noopener" class="themed-text-primary text-accent font-medium">Department of Artificial
+                            Intelligence</a> at <a href="https://www.iitkgp.ac.in/" target="_blank" rel="noopener"
+                            class="themed-text-primary text-accent font-medium">IIT Kharagpur</a>. I am interested in
+                        how intelligent systems can make good decisions when they cannot fully observe or predict the
+                        world around them. Most of my work sits where
+                        <strong class="themed-text-primary font-semibold">Reinforcement Learning</strong>,
+                        <strong class="themed-text-primary font-semibold">Stochastic Estimation</strong> and
+                        <strong class="themed-text-primary font-semibold">Optimization</strong> meet.
                     </p>
+                    <!-- Bio: one fact per line, a small label on the left (.home-bio in style.css) -->
+                    <dl class="home-bio mb-8">
+                        <dt><i class="fa-solid fa-user-tie" aria-hidden="true"></i>Advisor</dt>
+                        <dd><a href="https://scholar.google.com/citations?user=rXhwtr0AAAAJ&hl=en" target="_blank"
+                                rel="noopener" class="themed-text-primary text-accent">Dr. Prabhat Kumar Mishra</a></dd>
+                        <dt><i class="fa-solid fa-flask" aria-hidden="true"></i>Lab</dt>
+                        <dd><a href="https://rhpilab.in" target="_blank" rel="noopener"
+                                class="themed-text-primary text-accent">RHPI Lab</a>
+                            <span class="themed-text-secondary">· Receding Horizon &amp; Predictive Intelligence</span></dd>
+                        <!-- Research tags, hidden for now (the research areas are in the paragraph above);
+                             uncomment to show them again, the .home-bio-tags styles are still in style.css
+                        <dt><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Research</dt>
+                        <dd>
+                            <ul class="home-bio-tags">
+                                <li>Reinforcement Learning</li>
+                                <li>Stochastic Estimation</li>
+                                <li>Optimization</li>
+                            </ul>
+                        </dd>
+                        -->
+                    </dl>
                     <!-- Affiliations: the logo tiles are the same .inst-logo tiles as on the Background page -->
                     <div class="affiliations mb-8">
                         <a href="https://ai.iitkgp.ac.in" target="_blank" rel="noopener" class="affiliation">
@@ -407,11 +429,8 @@
                             class="pl-4 border-l-2 border-slate-300 hover:border-indigo-500 transition-colors duration-300">
                             <p class="themed-text-primary transition-colors">
                                 Presented a poster at the <a class='font-medium'>Department of AI Foundation Day and Research Scholar Day 2026</a>.
-                                <a href="talks.html#talk-rsday-2026-poster"
-                                    class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Poster
-                                </a>
-                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
+                                <a href="talks.html#talk-rsday-2026-poster" class="news-action">View Poster<i
+                                        class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                             </p>
                         </div>
                     </div>
@@ -449,11 +468,8 @@
                                 <span class="font-serif italic text-lg themed-text-primary">
                                     "An Estimation-Control duality and its extension to unknown distributions"
                                 </span>.
-                                <a href="talks.html#talk-self-study-2025"
-                                    class="inline-flex items-center themed-text-secondary themed-accent hover:underline font-medium ml-1">
-                                    View Slides
-                                </a>
-                                &nbsp;<i class="fa-solid fa-arrow-right themed-accent"></i>
+                                <a href="talks.html#talk-self-study-2025" class="news-action">View Slides<i
+                                        class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                             </p>
                         </div>
                     </div>
@@ -669,40 +685,40 @@
             <div class="footer-grid grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
                 <div>
                     <h3 class="font-semibold text-white mb-4">Contact</h3>
-                    <div class="flex items-start text-slate-400 justify-center md:justify-start mb-3">
+                    <div class="footer-contact flex items-start text-slate-400 justify-center md:justify-start mb-3">
                         <i class="fas fa-envelope mt-1 w-5 text-center mr-2"></i>
                         <div class="flex flex-col text-left">
                             <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank"
-                                class="hover:underline">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
+                                class="footer-link">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
                             <a href="mailto:ranjan.sarkar@rhpilab.in" target="_blank"
-                                class="hover:underline">ranjan.sarkar@rhpilab.in</a>
+                                class="footer-link">ranjan.sarkar@rhpilab.in</a>
                         </div>
                     </div>
-                    <div class="flex items-start text-slate-400 justify-center md:justify-start">
+                    <div class="footer-contact flex items-start text-slate-400 justify-center md:justify-start">
                         <i class="fas fa-map-marker-alt mt-1 w-5 text-center mr-2"></i>
                         <span><a href="https://maps.app.goo.gl/eUzswzJQnkphKTdq5" target="_blank"
-                                class="hover:underline">RHPI Lab, Takshashila 1st Floor</a><br>Department of AI, IIT
+                                class="footer-link">RHPI Lab, Takshashila 1st Floor</a><br>Department of AI, IIT
                             Kharagpur<br>Kharagpur, WB, India - 721302</span>
                     </div>
                 </div>
                 <div>
                     <h3 class="font-semibold text-white mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <!-- <li><a href="index.html" class="text-slate-400 hover:text-white transition-colors">Home</a></li> -->
-                        <!-- <li><a href="index.html#research" class="text-slate-400 hover:text-white transition-colors">Research</a></li> -->
+                        <!-- <li><a href="index.html" class="footer-quick-link text-slate-400">Home</a></li> -->
+                        <!-- <li><a href="index.html#research" class="footer-quick-link text-slate-400">Research</a></li> -->
                         <li><a href="talks.html"
-                                class="text-slate-400 hover:text-white transition-colors">Research Talks</a></li>
+                                class="footer-quick-link text-slate-400">Research Talks</a></li>
                         <li><a href="publications.html"
-                                class="text-slate-400 hover:text-white transition-colors">Publications</a></li>
-                        <li><a href="ta.html" class="text-slate-400 hover:text-white transition-colors">TAShip</a></li>
-                        <li><a href="background.html" class="text-slate-400 hover:text-white transition-colors">Background</a></li>
+                                class="footer-quick-link text-slate-400">Publications</a></li>
+                        <li><a href="ta.html" class="footer-quick-link text-slate-400">TAShip</a></li>
+                        <li><a href="background.html" class="footer-quick-link text-slate-400">Background</a></li>
                         <li><a href="https://rhpilab.in" target="_blank" rel="noopener"
-                                class="text-slate-400 hover:text-white transition-colors">RHPI Lab</a></li>
+                                class="footer-quick-link text-slate-400">RHPI Lab</a></li>
                         <li><a href="https://ranjan-sarkar.github.io/idoai" target="_blank"
-                                class="text-slate-400 hover:text-white transition-colors">IdoAI Talk Series</a></li>
+                                class="footer-quick-link text-slate-400">IdoAI Talk Series</a></li>
                         <li><a href="https://sites.google.com/view/ranjan-sarkar/ta?authuser=0#h.5j1qyijmklec"
                                 target="_blank"
-                                class="text-slate-400 hover:text-white transition-colors">Archive</a></li>
+                                class="footer-quick-link text-slate-400">Archive</a></li>
                     </ul>
                 </div>
                 <div>

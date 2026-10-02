@@ -338,14 +338,215 @@ body {
     }
 }
 
-/* Home: the bio paragraph is justified on wide screens (1024px and up). Below that the text column
-   is too narrow and justifying leaves wide gaps between words, so it keeps the hero's alignment
-   (centred on phones, left on tablets). */
+/* News: "View Poster" / "View Slides" after a news line. A small accent pill with the label and
+   an arrow, like a mini "View all" link; on hover the pill deepens, gains a soft shadow and the
+   arrow slides forward. */
+.news-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.35rem;
+    padding: 0.1rem 0.7rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.06);
+    color: var(--accent-light);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.news-action i {
+    font-size: 0.75em;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-action:hover,
+.news-action:focus-visible {
+    border-color: rgba(79, 70, 229, 0.45);
+    background-color: rgba(79, 70, 229, 0.12);
+    box-shadow: 0 6px 14px -8px rgba(79, 70, 229, 0.55);
+    outline: none;
+}
+
+.news-action:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.news-action:hover i,
+.news-action:focus-visible i {
+    transform: translateX(3px);
+}
+
+.news-action:active {
+    transform: scale(0.96);
+}
+
+.dark .news-action {
+    border-color: rgba(129, 140, 248, 0.25);
+    background-color: rgba(129, 140, 248, 0.1);
+    color: var(--accent-dark);
+}
+
+.dark .news-action:hover,
+.dark .news-action:focus-visible {
+    border-color: rgba(129, 140, 248, 0.5);
+    background-color: rgba(129, 140, 248, 0.17);
+    box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.6);
+}
+
+.dark .news-action:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .news-action:hover i,
+    .news-action:focus-visible i,
+    .news-action:active {
+        transform: none;
+    }
+}
+
+/* Home: role tag above the name, a soft accent pill like the research tags below */
+.home-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.06);
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.dark .home-role {
+    border-color: rgba(129, 140, 248, 0.25);
+    background-color: rgba(129, 140, 248, 0.1);
+    color: var(--accent-dark);
+}
+
+/* Home: institute line under the name */
+.home-institute {
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+@media (min-width: 768px) {
+    .home-institute {
+        font-size: 1.25rem;
+    }
+}
+
+/* Home: the short intro paragraph. Justified on wide screens (1024px and up); below that the text
+   column is too narrow and justifying leaves wide gaps between words, so it keeps the hero's
+   alignment (centred on phones, left on tablets). */
+.home-intro {
+    line-height: 1.7;
+}
+
 @media (min-width: 1024px) {
-    .home-bio {
+    .home-intro {
         text-align: justify;
         hyphens: auto;
         -webkit-hyphens: auto;
+    }
+}
+
+/* Home: the bio, one fact per line. A two-column grid: a small uppercase label with an icon on the
+   left, the value on the right, with a thin accent rule down the side. The block is only as wide
+   as its content, so on phones it sits centred under the name while its lines stay left-aligned.
+   Research areas are soft accent tags. Very narrow phones put each label above its value. */
+.home-bio {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 0.85rem 1.5rem;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 2px solid rgba(79, 70, 229, 0.3);
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .home-bio {
+        margin-inline: 0;
+    }
+}
+
+.home-bio dt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light-secondary);
+    white-space: nowrap;
+}
+
+.home-bio dt i {
+    width: 1rem;
+    text-align: center;
+    color: var(--accent-light);
+}
+
+.home-bio dd {
+    margin: 0;
+    font-weight: 500;
+}
+
+.home-bio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-bio-tags li {
+    padding: 0.2rem 0.7rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.06);
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.dark .home-bio {
+    border-left-color: rgba(129, 140, 248, 0.35);
+}
+
+.dark .home-bio dt {
+    color: var(--text-dark-secondary);
+}
+
+.dark .home-bio dt i {
+    color: var(--accent-dark);
+}
+
+.dark .home-bio-tags li {
+    border-color: rgba(129, 140, 248, 0.25);
+    background-color: rgba(129, 140, 248, 0.1);
+    color: var(--accent-dark);
+}
+
+@media (max-width: 420px) {
+    .home-bio {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .home-bio dd + dt {
+        margin-top: 0.6rem;
     }
 }
 
@@ -1232,6 +1433,7 @@ html.modal-open {
     }
 }
 
+/* popup buttons sit side by side; on a phone they wrap one under the other, 0.875rem apart */
 .button-container {
     display: flex;
     flex-wrap: wrap;
@@ -1239,12 +1441,9 @@ html.modal-open {
     align-items: center;
     margin-top: 1.5rem;
     /* mt-6 */
-    gap: 1rem;
-}
-
-.button-container>* {
     margin-bottom: 1rem;
     /* mb-4 */
+    gap: 0.875rem 1rem;
 }
 
 /* Course popup buttons (View Coding Tutorials, View Full Course Page): a leading icon, the label
@@ -1481,18 +1680,68 @@ html.modal-open {
     background-color: rgba(148, 163, 184, 0.1);
 }
 
-/* Scroll to Top Button */
+/* Scroll to Top Button: slides up into view once the page is scrolled (main.js adds .show).
+   On hover it lifts a little, deepens and gains a soft accent glow, and the chevron nudges up;
+   it presses in when clicked. */
 #scroll-to-top {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease,
+        box-shadow 0.3s ease;
     pointer-events: none;
+}
+
+#scroll-to-top svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #scroll-to-top.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+}
+
+#scroll-to-top.show:hover,
+#scroll-to-top.show:focus-visible {
+    opacity: 1;   /* overrides the hover:opacity-90 in the markup */
+    transform: translateY(-3px);
+    background-color: var(--accent-hover-light);
+    box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.7);
+    outline: none;
+}
+
+#scroll-to-top.show:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.35), 0 12px 24px -10px rgba(79, 70, 229, 0.7);
+}
+
+#scroll-to-top:hover svg,
+#scroll-to-top:focus-visible svg {
+    transform: translateY(-2px);
+}
+
+#scroll-to-top.show:active {
+    transform: translateY(0) scale(0.92);
+    transition-duration: 0.1s;
+}
+
+.dark #scroll-to-top.show:hover,
+.dark #scroll-to-top.show:focus-visible {
+    background-color: var(--accent-hover-dark);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.7);
+}
+
+.dark #scroll-to-top.show:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.4), 0 12px 24px -10px rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #scroll-to-top.show:hover,
+    #scroll-to-top.show:focus-visible,
+    #scroll-to-top.show:active,
+    #scroll-to-top:hover svg,
+    #scroll-to-top:focus-visible svg {
+        transform: none;
+    }
 }
 
 /* Hidden News Items Logic */
@@ -3437,6 +3686,74 @@ footer::after {
 
 .footer-grid a[href^="mailto:"] {
     overflow-wrap: anywhere;
+}
+
+/* Footer contact (e-mail, location): hovering a row turns its icon accent and lifts it a little;
+   the links turn white as an accent underline slides in from the left.
+   The footer is always dark, so these use the dark-theme accent in both themes. */
+.footer-contact > i {
+    transition: color 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-contact:hover > i,
+.footer-contact:focus-within > i {
+    color: var(--accent-dark);
+    transform: translateY(-2px) scale(1.12);
+}
+
+.footer-link {
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent-dark), var(--accent-dark));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size 0.3s ease, color 0.2s ease;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+    color: #ffffff;
+    background-size: 100% 1.5px;
+    outline: none;
+}
+
+/* Footer quick links: on hover the link turns white and a short accent dash grows in on its left.
+   The dash sits outside the text, so nothing moves (the column is centred on phones). */
+.footer-quick-link {
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.footer-quick-link::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 0.45rem);
+    width: 0.6rem;
+    height: 1.5px;
+    border-radius: 1px;
+    background-color: var(--accent-dark);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-quick-link:hover,
+.footer-quick-link:focus-visible {
+    color: #ffffff;
+    outline: none;
+}
+
+.footer-quick-link:hover::before,
+.footer-quick-link:focus-visible::before {
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-contact:hover > i,
+    .footer-contact:focus-within > i {
+        transform: none;
+    }
 }
 
 @media print {
