@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Neighbouring curves are slightly out of phase, so the fan ripples instead of sliding
     // as one block, and the motion eases toward the scroll target so it stays smooth.
     // At the top of the page every curve sits exactly where it is drawn.
+    // When a page opens (first visit or reload) the curves also ripple through one full wave on
+    // their own and settle back, as if the page had been scrolled; the lines fade in meanwhile
+    // (.bg-decor svg in style.css). Scrolling during the intro simply adds to it.
     const bgCurves = [];
     document.querySelectorAll('.bg-decor svg').forEach((svg) => {
         const indexInFan = { top: 0, bottom: 0 };
@@ -92,14 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const AMPLITUDE = 8;      // SVG units; a curve moves at most 2x this from its drawn position
         const WAVELENGTH = 900;   // px of scrolling for one full wave
         const EASE = 0.08;        // fraction of the remaining distance covered per frame
+        const INTRO_MS = 3000;    // length of the opening ripple
 
         let targetScroll = window.scrollY;
         let currentScroll = targetScroll;
         let frame = null;
+        let introStart = null;
+        let introRunning = true;
 
-        const renderCurves = () => {
+        const renderCurves = (now = performance.now()) => {
             currentScroll += (targetScroll - currentScroll) * EASE;
-            const phase = (currentScroll / WAVELENGTH) * Math.PI * 2;
+
+            // opening ripple: an extra "virtual scroll" of one wavelength, eased in and out to zero
+            let intro = 0;
+            if (introRunning) {
+                introStart ??= now;
+                const t = Math.min(1, (now - introStart) / INTRO_MS);
+                intro = WAVELENGTH * (1 + Math.cos(Math.PI * t)) / 2;
+                introRunning = t < 1;
+            }
+
+            const phase = ((currentScroll + intro) / WAVELENGTH) * Math.PI * 2;
 
             bgCurves.forEach(({ path, direction, lag }) => {
                 const dx = direction * AMPLITUDE * (Math.sin(phase + lag) - Math.sin(lag));
@@ -107,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 path.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
             });
 
-            frame = Math.abs(targetScroll - currentScroll) > 0.5 ? requestAnimationFrame(renderCurves) : null;
+            frame = introRunning || Math.abs(targetScroll - currentScroll) > 0.5
+                ? requestAnimationFrame(renderCurves) : null;
         };
 
         window.addEventListener('scroll', () => {
@@ -117,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, { passive: true });
 
-        renderCurves();
+        frame = requestAnimationFrame(renderCurves);
     }
 
     // --- Mobile Menu ---
@@ -201,6 +218,28 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.add('reveal-child');
             item.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 90}ms`);
         });
+    });
+
+    // Loading placeholders: on a slow connection a picture shows a soft shimmer until it arrives,
+    // then fades in; embedded slides (Talks page) do the same in their frame. Pictures that are
+    // already there (cached) are left alone. Styles: "Loading placeholders" in style.css.
+    document.querySelectorAll('img').forEach((img) => {
+        if (img.complete && img.naturalWidth) return;
+        img.classList.add('is-loading');
+        img.addEventListener('load', () => {
+            img.classList.remove('is-loading');
+            img.classList.add('is-loaded');
+        }, { once: true });
+        // a picture that fails keeps its space, without the shimmer
+        img.addEventListener('error', () => img.classList.remove('is-loading'), { once: true });
+    });
+
+    document.querySelectorAll('.seminar-embed iframe').forEach((frame) => {
+        const box = frame.parentElement;
+        const reveal = () => box.classList.remove('is-loading');
+        box.classList.add('is-loading');
+        frame.addEventListener('load', reveal, { once: true });
+        setTimeout(reveal, 20000);   // never keep the slides hidden if the load event goes missing
     });
 
     // Scroll animation logic

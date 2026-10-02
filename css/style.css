@@ -1,11 +1,13 @@
 /* Shared styles for every page of ranjan-sarkar.github.io */
 
-/* Adding custom font */
+/* Adding custom font. font-display: swap shows the text straight away in a fallback font and
+   switches when the font file arrives; without it, slow connections see no text for up to 3s. */
 @font-face {
     font-family: 'GoogleSans-Regular';
     src: url('../font/GoogleSans-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -15,6 +17,7 @@
     src: url('../font/GoogleSans-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
+    font-display: swap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -24,6 +27,7 @@
     src: url('../font/GoogleSans-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -133,6 +137,19 @@ body {
     width: 100%;
     height: 100%;
     opacity: 0.12;
+    animation: bg-curves-in 1.6s ease-out both;   /* lines fade in as a page opens */
+}
+
+@keyframes bg-curves-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bg-decor svg {
+        animation: none;
+    }
 }
 
 .dark .bg-decor svg {
@@ -651,6 +668,70 @@ body {
     height: 100%;
     border: 0;
     border-radius: 0.75rem;
+}
+
+/* Loading placeholders (main.js adds the classes; only on slow connections, cached pictures skip it).
+   A picture still downloading shows a soft shimmer sweeping across its space, then fades in once
+   it arrives. Embedded slides (.seminar-embed) shimmer in their frame and fade in when ready.
+   Reduced motion: a plain placeholder colour, no sweep or fade. */
+:root {
+    --skeleton-base: #e2e8f0;
+    --skeleton-shine: #f8fafc;
+}
+
+.dark {
+    --skeleton-base: #1e293b;
+    --skeleton-shine: #334155;
+}
+
+img.is-loading,
+.seminar-embed.is-loading {
+    color: transparent;   /* hides alt text some browsers draw while waiting */
+    background-color: var(--skeleton-base);
+    background-image: linear-gradient(100deg, transparent 30%, var(--skeleton-shine) 50%, transparent 70%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.seminar-embed iframe {
+    transition: opacity 0.5s ease;
+}
+
+.seminar-embed.is-loading iframe {
+    opacity: 0;
+}
+
+img.is-loaded {
+    animation: image-fade-in 0.5s ease-out;
+}
+
+@keyframes skeleton-shimmer {
+    from {
+        background-position: 150% 0;
+    }
+
+    to {
+        background-position: -50% 0;
+    }
+}
+
+@keyframes image-fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    img.is-loading,
+    .seminar-embed.is-loading,
+    img.is-loaded {
+        animation: none;
+    }
+
+    .seminar-embed iframe {
+        transition: none;
+    }
 }
 
 /* Talks page: the type tag on each talk card (poster, seminar, talk series): a soft accent capsule
@@ -3610,17 +3691,39 @@ html.dark {
     scrollbar-color: rgba(129, 140, 248, 0.35) transparent;
 }
 
-/* 7. Profile photo: the picture zooms gently inside its round frame on hover; the frame itself stays put */
+/* 7. Profile photo: the picture zooms gently inside its round frame on hover; the frame itself stays put.
+   For a smooth zoom in every browser:
+   - the frame is its own layer (translateZ) and an isolated group, so Safari keeps the round clip
+     while the picture inside is scaling, instead of flashing square corners;
+   - the picture stays on its own GPU layer all the time (will-change). Without it Chrome, Edge and
+     Firefox move it onto a layer only while it animates: a hitch as the zoom starts, then a visible
+     sharpness "snap" when it ends and the picture is redrawn;
+   - the zoom only runs on devices with a real hover (mouse, trackpad). On phones a tap would leave
+     the picture stuck zoomed in. */
 .profile-photo {
-    transform: translateZ(0);   /* keeps the round clipping crisp in Safari while the picture zooms */
+    isolation: isolate;
+    transform: translateZ(0);
+}
+
+.profile-photo picture {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .profile-photo img {
-    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.profile-photo:hover img {
-    transform: scale(1.08);
+@media (hover: hover) and (pointer: fine) {
+    .profile-photo:hover img {
+        transform: scale(1.08);
+    }
 }
 
 /* Side-by-side layout (768px and up): the photo shrinks with its column, up to its full 24rem,
