@@ -397,8 +397,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Our own course pages open in the same tab, official course sites in a new one
+                // (the button's arrow then points up-right, .modal-btn.is-external in style.css)
+                const isExternal = /^https?:/.test(data.link);
                 modalFullscreenLink.href = data.link;
-                modalFullscreenLink.target = /^https?:/.test(data.link) ? '_blank' : '_self';
+                modalFullscreenLink.target = isExternal ? '_blank' : '_self';
+                modalFullscreenLink.rel = isExternal ? 'noopener' : '';
+                modalFullscreenLink.classList.toggle('is-external', isExternal);
                 setModalOrigin(modal, event);
                 lockPageScroll(true);
                 modal.classList.add('show');

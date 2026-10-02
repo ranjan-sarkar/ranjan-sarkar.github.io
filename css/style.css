@@ -1234,6 +1234,7 @@ html.modal-open {
 
 .button-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
@@ -1244,6 +1245,172 @@ html.modal-open {
 .button-container>* {
     margin-bottom: 1rem;
     /* mb-4 */
+}
+
+/* Course popup buttons (View Coding Tutorials, View Full Course Page): a leading icon, the label
+   and an arrow in a small circle. On hover the button lifts with a soft accent shadow, the icon
+   tilts and the arrow slides forward (up-right for another site,
+   .is-external set in main.js); it presses in when clicked. The tutorials button is a soft accent
+   tint, the course page button solid accent, so the main action stands out. */
+.modal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.25;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease,
+        background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.modal-btn-icon {
+    font-size: 0.95em;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-btn-arrow {
+    display: grid;
+    place-items: center;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 0.55rem;
+    font-size: 0.75rem;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.modal-btn.is-external .modal-btn-arrow i {
+    transform: rotate(-45deg);
+}
+
+.modal-btn:hover,
+.modal-btn:focus-visible {
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.modal-btn:hover .modal-btn-icon,
+.modal-btn:focus-visible .modal-btn-icon {
+    transform: rotate(-8deg) scale(1.15);
+}
+
+.modal-btn:hover .modal-btn-arrow,
+.modal-btn:focus-visible .modal-btn-arrow {
+    transform: translateX(3px);
+}
+
+.modal-btn.is-external:hover .modal-btn-arrow,
+.modal-btn.is-external:focus-visible .modal-btn-arrow {
+    transform: translate(2px, -2px);
+}
+
+.modal-btn:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 0.1s;
+}
+
+/* soft: accent tint, like the "View all" links */
+.modal-btn-soft {
+    border-color: rgba(79, 70, 229, 0.22);
+    background-color: rgba(79, 70, 229, 0.07);
+    color: var(--accent-light);
+}
+
+.modal-btn-soft .modal-btn-arrow {
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.modal-btn-soft:hover,
+.modal-btn-soft:focus-visible {
+    border-color: rgba(79, 70, 229, 0.45);
+    background-color: rgba(79, 70, 229, 0.12);
+    box-shadow: 0 10px 20px -12px rgba(79, 70, 229, 0.6);
+}
+
+/* solid: filled accent */
+.modal-btn-solid {
+    background-color: var(--accent-light);
+    color: #ffffff;
+    box-shadow: 0 2px 6px -2px rgba(79, 70, 229, 0.4);
+}
+
+.modal-btn-solid .modal-btn-arrow {
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+.modal-btn-solid:hover,
+.modal-btn-solid:focus-visible {
+    background-color: var(--accent-hover-light);
+    box-shadow: 0 12px 22px -10px rgba(79, 70, 229, 0.65);
+}
+
+.modal-btn-solid:hover .modal-btn-arrow,
+.modal-btn-solid:focus-visible .modal-btn-arrow {
+    background-color: rgba(255, 255, 255, 0.28);
+}
+
+.modal-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.35), 0 10px 20px -12px rgba(79, 70, 229, 0.6);
+}
+
+.dark .modal-btn-soft {
+    border-color: rgba(129, 140, 248, 0.28);
+    background-color: rgba(129, 140, 248, 0.1);
+    color: var(--accent-dark);
+}
+
+.dark .modal-btn-soft .modal-btn-arrow {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.dark .modal-btn-soft:hover,
+.dark .modal-btn-soft:focus-visible {
+    border-color: rgba(129, 140, 248, 0.5);
+    background-color: rgba(129, 140, 248, 0.17);
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.7);
+}
+
+.dark .modal-btn-solid {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5);
+}
+
+.dark .modal-btn-solid .modal-btn-arrow {
+    background-color: rgba(15, 23, 42, 0.12);
+}
+
+.dark .modal-btn-solid:hover,
+.dark .modal-btn-solid:focus-visible {
+    background-color: var(--accent-hover-dark);
+    box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.7);
+}
+
+.dark .modal-btn-solid:hover .modal-btn-arrow,
+.dark .modal-btn-solid:focus-visible .modal-btn-arrow {
+    background-color: rgba(15, 23, 42, 0.2);
+}
+
+.dark .modal-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.4), 0 10px 20px -12px rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-btn:hover,
+    .modal-btn:focus-visible,
+    .modal-btn:active,
+    .modal-btn:hover .modal-btn-icon,
+    .modal-btn:focus-visible .modal-btn-icon,
+    .modal-btn:hover .modal-btn-arrow,
+    .modal-btn:focus-visible .modal-btn-arrow,
+    .modal-btn.is-external:hover .modal-btn-arrow,
+    .modal-btn.is-external:focus-visible .modal-btn-arrow {
+        transform: none;
+    }
 }
 
 .hidden {
