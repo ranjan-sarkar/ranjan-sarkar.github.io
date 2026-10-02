@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"> -->
 
     <!-- Google tag (gtag.js) -->
@@ -171,17 +171,20 @@
                         </svg>
                     </button>
                     <div class="md:hidden">
-                        <button id="mobile-menu-button"
-                            class="p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
-                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg"></i>
-                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" style="display: none;"></i>
+                        <!-- the two icons cross-fade (.mobile-menu-button in style.css) -->
+                        <button id="mobile-menu-button" type="button" aria-label="Menu" aria-expanded="false"
+                            aria-controls="mobile-menu"
+                            class="mobile-menu-button p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
+                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg" aria-hidden="true"></i>
+                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden themed-bg-secondary border-t themed-border mobile-nav">
+        <!-- Mobile menu: drops down over the page under the header (.mobile-nav in style.css, opened by main.js) -->
+        <div id="mobile-menu" class="md:hidden themed-bg-secondary border-t themed-border mobile-nav">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" data-nav="home"
                     class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
@@ -228,7 +231,7 @@
         <div id="seminars"
             class="scroll-animate scroll-mt-20 course-page min-h-screen themed-bg-secondary pt-20 pb-20 md:pt-20 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-8 lg:px-8">
-                <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-3 text-center md:text-center">Research Talk & Presentations</h1>
+                <h1 class="type-page-title font-bold themed-text-primary themed-accent mb-3 text-center">Research Talk & Presentations</h1>
                 <p class="text-center themed-text-secondary mb-10 max-w-2xl mx-auto">Posters, seminars and talks on my research and the topics I am exploring.</p>
 
                 <div class="space-y-12">
@@ -236,7 +239,7 @@
                     <!-- <div class="presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
                         <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
                             <span class="talk-tag mb-3">IdoAI Talk Series</span>
-                            <h2 class="text-xl font-bold themed-text-primary mb-2">Moving Horizon Estimation (MHE)</h2>
+                            <h2 class="type-title font-bold themed-text-primary mb-2">Moving Horizon Estimation (MHE)</h2>
                             <p class="text-slate-500 dark:text-slate-400 flex items-center">
                                 <span class="mr-5 flex items-center">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -253,36 +256,23 @@
                     </div> -->
 
                     <!-- Presentation Item 2: RS Day 2026 Poster -->
-                    <div id="talk-rsday-2026-poster"
-                        class="scroll-mt-24 presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
-                        <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                            <span class="talk-tag mb-3">Poster Presentation</span>
-                            <h2 class="text-xl sm:text-2xl font-bold themed-text-primary mb-1">
+                    <!-- Talk card (.talk-card in style.css): type tag, title and the details (date, event,
+                         venue) each with an icon, then the poster and its summary -->
+                    <article id="talk-rsday-2026-poster" class="talk-card scroll-mt-24 themed-bg-primary border themed-border">
+                        <div class="talk-head">
+                            <span class="talk-tag">Poster Presentation</span>
+                            <h2 class="type-title font-bold themed-text-primary">
                                 LQG solution for POMDP without estimating states: A Minimum Variance Approach</h2>
-                            <p class="text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-y-2 gap-x-5">
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg> 29 Aug 2026</span>
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12a2.25 2.25 0 002.25-2.25V3M2.25 3h19.5M8.25 16.5l-1.5 4.5m9-4.5l1.5 4.5M9 12.75v-1.5m3 1.5V9m3 3.75v-4.5">
-                                        </path>
-                                    </svg>AI Departmental Foundation Day &amp; Research Scholar Day 2026</span>
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>Dept. of Artificial Intelligence, IIT Kharagpur</span>
-                            </p>
+                            <ul class="talk-meta">
+                                <li><span class="talk-meta-icon" aria-hidden="true"><i class="fa-regular fa-calendar"></i></span>
+                                    <span class="visually-hidden">Date: </span><time datetime="2026-08-29">29 Aug 2026</time></li>
+                                <li><span class="talk-meta-icon" aria-hidden="true"><i class="fa-solid fa-person-chalkboard"></i></span>
+                                    <span><span class="visually-hidden">Event: </span>AI Departmental Foundation Day &amp; Research Scholar Day 2026</span></li>
+                                <li><span class="talk-meta-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+                                    <span><span class="visually-hidden">Venue: </span>Dept. of Artificial Intelligence, IIT Kharagpur</span></li>
+                            </ul>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-5 gap-8 px-0 md:px-8 pb-2 md:pb-6 items-start">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
                             <a href="Content/RS_day_POSTER_2026.pdf" target="_blank" rel="noopener"
                                 class="md:col-span-2 block w-full max-w-md mx-auto rounded-xl overflow-hidden border themed-border shadow-md transition-shadow duration-300 hover:shadow-xl"
                                 aria-label="Open the full poster (PDF)">
@@ -291,12 +281,12 @@
                                     alt="Poster: LQG solution for POMDP without estimating states, A Minimum Variance Approach, by Ranjan Sarkar and Prabhat K. Mishra">
                             </a>
                             <div class="md:col-span-3 themed-text-secondary">
-                                <h3 class="text-lg font-semibold themed-text-primary mb-2">Abstract</h3>
+                                <h3 class="type-card-title font-semibold themed-text-primary mb-2">Abstract</h3>
                                 <p class="mb-6">We compute constrained stabilizing control directly from the noisy
                                     measurements and previously applied controls, without explicitly estimating the hidden
                                     states.</p>
 
-                                <h3 class="text-lg font-semibold themed-text-primary mb-2">Highlights</h3>
+                                <h3 class="type-card-title font-semibold themed-text-primary mb-2">Highlights</h3>
                                 <ul class="list-disc space-y-2 mb-6" style="padding-left: 20px;">
                                     <li>The standard LQG pipeline relies on the <span
                                             class="font-medium themed-text-primary">separation principle</span> (state
@@ -319,31 +309,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
                     <!-- Presentation Item 1 -->
-                    <div id="talk-self-study-2025"
-                        class="scroll-mt-24 presentation-item themed-bg-primary p-7 rounded-lg shadow-lg border themed-border overflow-hidden">
-                        <div class="p-6 md:p-8 themed-bg-primary rounded-lg p-7">
-                            <span class="talk-tag mb-3">Self-Study Seminar</span>
-                            <h2 class="text-xl sm:text-2xl font-bold themed-text-primary mb-1">
+                    <article id="talk-self-study-2025" class="talk-card scroll-mt-24 themed-bg-primary border themed-border">
+                        <div class="talk-head">
+                            <span class="talk-tag">Self-Study Seminar</span>
+                            <h2 class="type-title font-bold themed-text-primary">
                                 An Estimation-Control Duality and its extension to unknown distribution</h2>
-                            <p class="text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-y-2 gap-x-5">
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg> Dec 2025</span>
-                                <span class="flex items-center"><svg class="w-4 h-4 mr-2 shrink-0 flex-shrink-0" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>Dept. of Artificial Intelligence, IIT Kharagpur</span>
-                            </p>
+                            <ul class="talk-meta">
+                                <li><span class="talk-meta-icon" aria-hidden="true"><i class="fa-regular fa-calendar"></i></span>
+                                    <span class="visually-hidden">Date: </span><time datetime="2025-12">Dec 2025</time></li>
+                                <li><span class="talk-meta-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+                                    <span><span class="visually-hidden">Venue: </span>Dept. of Artificial Intelligence, IIT Kharagpur</span></li>
+                            </ul>
                         </div>
                         <div
                             class="seminar-embed themed-bg-primary rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-md">
@@ -354,7 +333,7 @@
                                     href="https://office.com">Microsoft Office</a> presentation, powered by <a
                                     target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                         </div>
-                    </div>
+                    </article>
 
                     <!-- <div class="mt-16 text-center">
                         <a href="index.html" class="back-to-main themed-accent-bg text-white font-semibold py-3 px-6 rounded-lg shadow-md themed-accent-bg-hover transition-all duration-300">&larr; Back to Portfolio</a>
@@ -411,33 +390,33 @@
                     <div class="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-4">
                         <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
                             data-tooltip="Email"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fas fa-envelope fa-lg"></i></a>
                         <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
                             data-tooltip="LinkedIn"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-linkedin-in fa-lg"></i></a>
                         <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
                             aria-label="Google Scholar" data-tooltip="Google Scholar"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-google-scholar fa-lg"></i></a>
                         <a href="https://www.semanticscholar.org/author/Ranjan-Sarkar/2449780460" target="_blank"
                             aria-label="Semantic Scholar" data-tooltip="Semantic Scholar"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><svg
+                            class="social-icon-link text-slate-400"><svg
                                 class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M24 8.609c-.848.536-1.436.83-2.146 1.245-4.152 2.509-8.15 5.295-11.247 8.981l-1.488 1.817-4.568-7.268c1.021.814 3.564 3.098 4.603 3.599l3.356-2.526c2.336-1.644 8.946-5.226 11.49-5.848ZM8.046 15.201c.346.277.692.537.969.744.761-3.668.121-7.613-1.886-11.039 3.374-.052 6.731-.087 10.105-.139a14.794 14.794 0 0 1 1.298 5.295c.294-.156.588-.294.883-.433-.104-1.868-.641-3.91-1.662-6.263-4.602-.018-9.188-.018-13.79-.018 2.993 3.547 4.36 7.839 4.083 11.853Zm-.623-.484c.087.086.191.155.277.225-.138-3.409-1.419-6.887-3.824-9.881H1.73c3.098 2.855 4.984 6.299 5.693 9.656Zm-.744-.658c.104.087.208.173.329.277-.9-2.526-2.492-5.018-4.741-7.198H0c2.89 2.076 5.122 4.481 6.679 6.921Z" />
                             </svg></a>
                         <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
                             aria-label="ResearchGate" data-tooltip="ResearchGate"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-researchgate fa-lg"></i></a>
                         <a href="https://orcid.org/0009-0008-1419-3524" target="_blank" aria-label="ORCID"
                             data-tooltip="ORCID"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-orcid fa-lg"></i></a>
                         <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
                             data-tooltip="GitHub"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-github fa-lg"></i></a>
                     </div>
                 </div>

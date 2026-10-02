@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"> -->
 
     <!-- Google tag (gtag.js) -->
@@ -171,17 +171,20 @@
                         </svg>
                     </button>
                     <div class="md:hidden">
-                        <button id="mobile-menu-button"
-                            class="p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
-                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg"></i>
-                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" style="display: none;"></i>
+                        <!-- the two icons cross-fade (.mobile-menu-button in style.css) -->
+                        <button id="mobile-menu-button" type="button" aria-label="Menu" aria-expanded="false"
+                            aria-controls="mobile-menu"
+                            class="mobile-menu-button p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
+                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg" aria-hidden="true"></i>
+                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden themed-bg-secondary border-t themed-border mobile-nav">
+        <!-- Mobile menu: drops down over the page under the header (.mobile-nav in style.css, opened by main.js) -->
+        <div id="mobile-menu" class="md:hidden themed-bg-secondary border-t themed-border mobile-nav">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="index.html" data-nav="home"
                     class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
@@ -228,12 +231,12 @@
         <div id="background"
             class="scroll-animate scroll-mt-20 fullscreen-page min-h-screen themed-bg-secondary pt-8 pb-16 md:pt-12 md:pb-20">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl font-bold themed-text-primary themed-accent mb-3 text-center">Background</h1>
+                <h1 class="type-page-title font-bold themed-text-primary themed-accent mb-3 text-center">Background</h1>
                 <p class="text-center themed-text-secondary mb-14">My academic journey and professional experience</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="bg-columns grid grid-cols-1 gap-16">
                     <div>
-                        <h2 class="bg-heading text-2xl font-bold themed-text-primary themed-accent mb-10">
+                        <h2 class="bg-heading type-section font-bold themed-text-primary themed-accent mb-10">
                             <span class="bg-heading-icon" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></span>Education</h2>
                         <div class="relative">
                             <div class="timeline-item">
@@ -242,7 +245,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/iit-kharagpur.webp" width="176" height="176" loading="lazy"
                                             alt="IIT Kharagpur logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">PhD in Artificial Intelligence
+                                    <h3 class="type-card-title font-semibold themed-text-primary">PhD in Artificial Intelligence
                                     </h3>
                                     <p class="themed-text-secondary text-sm">
                                         <a href="https://www.iitkgp.ac.in" target="_blank"
@@ -257,7 +260,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/iit-kharagpur.webp" width="176" height="176" loading="lazy"
                                             alt="IIT Kharagpur logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">M.Sc in Mathematics</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">M.Sc in Mathematics</h3>
                                     <p class="themed-text-secondary text-sm">
                                         <a href="https://www.iitkgp.ac.in" target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">IIT
@@ -272,7 +275,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/university-of-calcutta.webp" width="176" height="176" loading="lazy"
                                             alt="University of Calcutta logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">B.Sc in Mathematics</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">B.Sc in Mathematics</h3>
                                     <p class="themed-text-secondary text-sm">
                                         <a href="https://vidyamandira.ac.in/" target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">
@@ -283,7 +286,7 @@
                         </div>
                     </div>
                     <div id="experience">
-                        <h2 class="bg-heading text-2xl font-bold themed-text-primary themed-accent mb-10">
+                        <h2 class="bg-heading type-section font-bold themed-text-primary themed-accent mb-10">
                             <span class="bg-heading-icon" aria-hidden="true"><i class="fa-solid fa-briefcase"></i></span>Experience</h2>
                         <div class="relative">
                             <div class="timeline-item">
@@ -292,7 +295,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/rhpi-lab.svg" width="1152" height="1011" loading="lazy"
                                             alt="RHPI Lab logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">Research Scholar</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">Research Scholar</h3>
                                     <p class="themed-text-secondary text-sm"><a href="https://rhpilab.in"
                                             target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">RHPI
@@ -310,7 +313,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/iit-kharagpur.webp" width="176" height="176" loading="lazy"
                                             alt="IIT Kharagpur logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant (TA)</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">Teaching Assistant (TA)</h3>
                                     <p class="themed-text-secondary text-sm"><a href="https://ai.iitkgp.ac.in/"
                                             target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">Dept. of
@@ -325,7 +328,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/exl.webp" width="176" height="176" loading="lazy"
                                             alt="EXL Service logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">Senior Business Analyst</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">Senior Business Analyst</h3>
                                     <p class="themed-text-secondary text-sm"><a href="https://www.exlservice.com/"
                                             target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">EXL
@@ -338,7 +341,7 @@
                                 <div class="timeline-content has-logo">
                                     <span class="inst-logo"><img src="Content/logos/iit-kharagpur.webp" width="176" height="176" loading="lazy"
                                             alt="IIT Kharagpur logo"></span>
-                                    <h3 class="text-lg font-semibold themed-text-primary">Master's Project Student</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">Master's Project Student</h3>
                                     <p class="themed-text-secondary text-sm"><a
                                             href="https://www.iitkgp.ac.in/department/MA" target="_blank"
                                             class="themed-text-secondary text-accent font-medium hover:underline">Dept. of
@@ -360,7 +363,7 @@
                                 <div class="timeline-date">2021 - 2023</div>
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
-                                    <h3 class="text-lg font-semibold themed-text-primary">Teaching Assistant</h3>
+                                    <h3 class="type-card-title font-semibold themed-text-primary">Teaching Assistant</h3>
                                     <p class="themed-text-secondary text-sm">IIT Kharagpur</p>
                                     <p class="themed-text-secondary text-sm mt-2">Assisted with "Deep Learning Foundations" and "Intro to AI" courses.</p>
                                 </div>
@@ -430,33 +433,33 @@
                     <div class="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-4">
                         <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
                             data-tooltip="Email"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fas fa-envelope fa-lg"></i></a>
                         <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
                             data-tooltip="LinkedIn"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-linkedin-in fa-lg"></i></a>
                         <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
                             aria-label="Google Scholar" data-tooltip="Google Scholar"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-google-scholar fa-lg"></i></a>
                         <a href="https://www.semanticscholar.org/author/Ranjan-Sarkar/2449780460" target="_blank"
                             aria-label="Semantic Scholar" data-tooltip="Semantic Scholar"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><svg
+                            class="social-icon-link text-slate-400"><svg
                                 class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M24 8.609c-.848.536-1.436.83-2.146 1.245-4.152 2.509-8.15 5.295-11.247 8.981l-1.488 1.817-4.568-7.268c1.021.814 3.564 3.098 4.603 3.599l3.356-2.526c2.336-1.644 8.946-5.226 11.49-5.848ZM8.046 15.201c.346.277.692.537.969.744.761-3.668.121-7.613-1.886-11.039 3.374-.052 6.731-.087 10.105-.139a14.794 14.794 0 0 1 1.298 5.295c.294-.156.588-.294.883-.433-.104-1.868-.641-3.91-1.662-6.263-4.602-.018-9.188-.018-13.79-.018 2.993 3.547 4.36 7.839 4.083 11.853Zm-.623-.484c.087.086.191.155.277.225-.138-3.409-1.419-6.887-3.824-9.881H1.73c3.098 2.855 4.984 6.299 5.693 9.656Zm-.744-.658c.104.087.208.173.329.277-.9-2.526-2.492-5.018-4.741-7.198H0c2.89 2.076 5.122 4.481 6.679 6.921Z" />
                             </svg></a>
                         <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
                             aria-label="ResearchGate" data-tooltip="ResearchGate"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-researchgate fa-lg"></i></a>
                         <a href="https://orcid.org/0009-0008-1419-3524" target="_blank" aria-label="ORCID"
                             data-tooltip="ORCID"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-orcid fa-lg"></i></a>
                         <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
                             data-tooltip="GitHub"
-                            class="social-icon-link text-slate-400 hover:text-white transition-transform duration-300 transform hover:scale-125"><i
+                            class="social-icon-link text-slate-400"><i
                                 class="fab fa-github fa-lg"></i></a>
                     </div>
                 </div>

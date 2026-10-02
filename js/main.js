@@ -138,10 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Mobile Menu ---
+    // The menu drops down over the page under the header. Opening and closing only fade and slide it
+    // (opacity and transform, which phones animate on the GPU), so it stays smooth on older phones;
+    // the header itself never changes height. Styles: .mobile-nav / .mobile-menu-button in style.css.
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    const openIcon = document.getElementById('mobile-menu-open-icon');
-    const closeIcon = document.getElementById('mobile-menu-close-icon');
     const mobileTaToggle = document.getElementById('mobile-ta-toggle');
     const mobileTaSubmenu = document.getElementById('mobile-ta-submenu');
 
@@ -163,12 +164,29 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileTaToggle.setAttribute('aria-expanded', String(isOpen));
     };
 
-    mobileMenuButton.addEventListener('click', () => {
-        const isMenuHidden = mobileMenu.classList.toggle('hidden');
-        openIcon.style.display = isMenuHidden ? 'block' : 'none';
-        closeIcon.style.display = isMenuHidden ? 'none' : 'block';
-        if (isMenuHidden) {
+    const setMobileMenu = (open) => {
+        mobileMenu.classList.toggle('is-open', open);
+        mobileMenuButton.classList.toggle('is-open', open);
+        mobileMenuButton.setAttribute('aria-expanded', String(open));
+        if (!open) {
             closeMobileTaSubmenu();
+        }
+    };
+
+    mobileMenuButton.addEventListener('click', () => {
+        setMobileMenu(!mobileMenu.classList.contains('is-open'));
+    });
+
+    // tapping anywhere outside the header, or pressing Escape, closes it
+    document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('is-open') && !e.target.closest('header')) {
+            setMobileMenu(false);
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+            setMobileMenu(false);
+            mobileMenuButton.focus();
         }
     });
 
@@ -182,12 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close mobile menu when a link is clicked
     document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            openIcon.style.display = 'block';
-            closeIcon.style.display = 'none';
-            closeMobileTaSubmenu();
-        });
+        link.addEventListener('click', () => setMobileMenu(false));
     });
 
     // Background timeline: entries whose date runs to "Present" get a filled dot and a "Current" tag

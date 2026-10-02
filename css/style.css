@@ -63,8 +63,72 @@
     color: #202124;
 }
 
+/* The © in the footer. Google Sans draws © small and raised, like a superscript, so it uses Inter's
+   full-size ©, which matches the height of the text beside it. Only that one character is embedded
+   here (1 KB, Inter by Rasmus Andersson, SIL Open Font License), so nothing extra is downloaded. */
+@font-face {
+    font-family: 'Inter Copyright';
+    src: url(data:font/woff2;base64,d09GMgABAAAAAARMAA8AAAAAB9wAAAPxAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG4EiHG4GYD9TVEFUXgA8EQgKgyyDGgsKAAE2AiQDEAQgBYRcByAMBxu4BsgEHug9vz8zSXu7aZu7RBbyLIzKWQqfeACqR3x8wfn/95sVEqlwkUio1AT3XfR+TB9iMvG2VLdQRbSJxp2+vFC31DZGVB89qtTHy89CAAYDWIg+fOT46bRatiYbp34oG4hRP77ETlIfHdH+h9CKZL5AxgLZJPU9NslYi44EGdQlJm5+2IOgLlUA1YQEkJKaWOlm1C8qYNocomlx8VYoEMDmgjQm1c+R6eSKBDVtz2NiUL+2pD7uDE4r3c7/Neu0om2qpwh0VztxGBe4uusfAGcDI/kB++UliUvDO0b/DulU54qD+eCp0yZM42Us7lS8/H918Hwtj4O4RM7rC12fMhZgH37QQ3+u6c3sgEylc2tFHzhnVShsC4GI2EviQjHHt6I2bjQkUgw5GGbJWFAdjsjnBSlF3w3jonwgIxEP19UG2H0xbrk0t7NcEZSdH505VyUOq+g4VCase2qPy8+rD3s+aEFExZjgG3RD131uQ3f7rJo115jrKlfjF8Ys4cM7V/q16YYI5hp4hRdDzKwJMjOD1QE0URSJaNM+MLalXPbuKxZnGKWSsbdQYHOx6N1XnuUtFArG3lIpsveH0hdiy5flH6krvy9+zubPCt/N3Fcul8WWUmvB/Vxx8JbLj/F897jJbpRS5dLGIUp9Vt6EYvBLL29+2XkJxcublVKbX3558CalvlOXnU3q5cv5GYsttVhtGvwd1DZffmmTgl95ePFhpVR6Mc6vq3OvvZ5bFX44O3vKv/ixOWb7oumjV40ctWrM6FErV40cPd1eaI597FscO3NzdnjV63butVu7LtVamc+vrHXp0spa+XytlZcu1VqZz68U/9HFB+tK865dm1dat25e6dq10rx1lP1y8OgPHbqv9+kPFlUO+M2jecrKP6zcdTiYf+HvOv/Fa971fH019o9J4TEuqGX/XeePcM27PVaat+kuJUbLVlAxmdtSTTK9HR9pKh4H0ZRN+rn6uAJ6FSF9WLRLQGAICySmqA4aXfgBdOrzNrjoxVFwU5/VWpNeDM0LgU8ggD7UpTH0xUNtUPgweMjDfO5UUiRYQpIx2CwhToRldKUHaWwmeVhA4uMsphFhLQFmESBCiDC2M9smTY5+dOb3T5EmQJIgKZI0oWHh8BwBOpEiS4gx5P4AWToyle4PsYI4S4BnEmSOSN/zLHrQiS50oSv9CUHTpiO9LNMe9GYZXVi6AsuctYrZ2qlMYwLT6D/1GpkVbXjYprJryG5aWnTD/GsvLKYTJoC1hMMmkyVFlADLWsohrDgq3PzGOSzaHBttbX6YFSylE8uuhTu3rCfI0RnsyNz2x2WVNvv/OvsxB58IZ8dj/QAAAAA=) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+00A9;
+}
+
 .inter-font {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter Copyright', 'GoogleSans-Regular', sans-serif;
+}
+
+/* Font system. Google Sans is the site's voice: headings, text, menus, buttons, course codes, tags.
+   Paper titles (Home, Publications) and the seminar title in News use Tailwind's font-serif italic
+   (the device's serif: Georgia / Times New Roman on Windows). The BibTeX box uses JetBrains Mono
+   (from Google Fonts, link in each page's <head>). */
+:root {
+    --font-sans: 'GoogleSans-Regular', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.citation-pre {
+    font-family: var(--font-mono);
+}
+
+/* Type scale: one size per role, used on every page. Headings grow smoothly with the screen
+   width (clamp: phone size -> desktop size) instead of jumping at a breakpoint.
+   Use the .type-* classes in the markup, or the variables in component rules (.cp-title etc.). */
+:root {
+    --fs-display: clamp(2.5rem, 1.75rem + 3.2vw, 3.75rem);       /* 40 -> 60px  home page name */
+    --fs-page-title: clamp(1.875rem, 1.35rem + 2.2vw, 2.75rem);  /* 30 -> 44px  page title (h1) */
+    --fs-section: clamp(1.625rem, 1.3rem + 1.1vw, 2rem);         /* 26 -> 32px  section heading (h2) */
+    --fs-title: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);          /* 20 -> 24px  talk / publication title */
+    --fs-card-title: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);  /* 18 -> 20px  card title, sub-heading (h3) */
+}
+
+.type-display {
+    font-size: var(--fs-display);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.type-page-title {
+    font-size: var(--fs-page-title);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+}
+
+.type-section {
+    font-size: var(--fs-section);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.type-title {
+    font-size: var(--fs-title);
+    line-height: 1.35;
+}
+
+.type-card-title {
+    font-size: var(--fs-card-title);
+    line-height: 1.4;
 }
 
 /* Define color variables for light and dark themes */
@@ -756,6 +820,128 @@ img.is-loaded {
     color: var(--accent-dark);
 }
 
+/* Talks page cards: one even padding (smaller on phones), a header with the type tag, the title and
+   the details, then a thin rule before the poster / slides.
+   Details (date, event, venue): each icon sits in a small accent square, lined up with the first
+   line of its text so it stays in place when the text wraps. Side by side on wide screens, one per
+   line on phones, a little smaller than body text so the title leads.
+   Hover: the card's border turns accent with a soft shadow and the icon squares deepen. */
+.talk-card {
+    padding: 1.25rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 28px -16px rgba(15, 23, 42, 0.14);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 640px) {
+    .talk-card {
+        padding: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .talk-card {
+        padding: 2.25rem 2.5rem;
+    }
+}
+
+.talk-card:hover {
+    border-color: rgba(79, 70, 229, 0.35);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 36px -18px rgba(79, 70, 229, 0.3);
+}
+
+.dark .talk-card:hover {
+    border-color: rgba(129, 140, 248, 0.4);
+    box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.7);
+}
+
+.talk-head {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.dark .talk-head {
+    border-bottom-color: var(--border-dark);
+}
+
+.talk-head .talk-tag {
+    margin-bottom: 0.9rem;
+}
+
+.talk-head h2 {
+    margin-bottom: 1rem;
+}
+
+.talk-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--text-light-secondary);
+}
+
+.dark .talk-meta {
+    color: var(--text-dark-secondary);
+}
+
+.talk-meta li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.talk-meta-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-top: -0.2rem;   /* centres the square on the first line of text */
+    border-radius: 0.5rem;
+    background-color: rgba(79, 70, 229, 0.08);
+    color: var(--accent-light);
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+}
+
+.talk-card:hover .talk-meta-icon {
+    background-color: rgba(79, 70, 229, 0.14);
+}
+
+.dark .talk-meta-icon {
+    background-color: rgba(129, 140, 248, 0.12);
+    color: var(--accent-dark);
+}
+
+.dark .talk-card:hover .talk-meta-icon {
+    background-color: rgba(129, 140, 248, 0.2);
+}
+
+@media (max-width: 639px) {
+    .talk-head {
+        margin-bottom: 1.25rem;
+        padding-bottom: 1.25rem;
+    }
+
+    .talk-meta {
+        flex-direction: column;
+        gap: 0.65rem;
+        font-size: 0.875rem;
+    }
+
+    .talk-meta-icon {
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-top: -0.18rem;
+        font-size: 0.75rem;
+    }
+}
+
 /* Blurry Header */
 header {
     backdrop-filter: blur(10px);
@@ -790,6 +976,93 @@ header nav a.active,
 .dark header nav a.active,
 .dark .mobile-nav a.active {
     color: var(--accent-dark);
+}
+
+/* Mobile menu (phones and small tablets): a panel that drops down over the page from under the header.
+   It is light on older phones: it never changes the header's height or pushes the page (the header
+   has a background blur, which is costly to redraw every frame), and only opacity and transform are
+   animated, which the phone's GPU handles. Opening: the panel fades in sliding down 8px and its links
+   follow one after another; closing is a quicker fade back up. visibility switches off only once the
+   closing fade has finished, so the hidden panel cannot be tapped. */
+.mobile-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: 0 18px 32px -18px rgba(15, 23, 42, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    will-change: opacity, transform;
+    transition: opacity 0.16s ease-in, transform 0.16s ease-in, visibility 0s linear 0.16s;
+}
+
+.mobile-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: opacity 0.22s ease-out, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+}
+
+.dark .mobile-nav {
+    box-shadow: 0 18px 32px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* the links slide in one after another (the TA course list keeps its own open/close animation) */
+.mobile-nav > div > :not(.mobile-ta-submenu) {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.mobile-nav.is-open > div > :not(.mobile-ta-submenu) {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.25s ease-out, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav.is-open > div > :nth-child(2) { transition-delay: 0.03s; }
+.mobile-nav.is-open > div > :nth-child(3) { transition-delay: 0.06s; }
+.mobile-nav.is-open > div > :nth-child(4) { transition-delay: 0.09s; }
+.mobile-nav.is-open > div > :nth-child(n + 5) { transition-delay: 0.12s; }
+
+/* menu button: the bars and the cross sit on top of each other and cross-fade with a quarter turn */
+.mobile-menu-button {
+    display: grid;
+    place-items: center;
+}
+
+.mobile-menu-button > i {
+    grid-area: 1 / 1;
+    transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#mobile-menu-close-icon,
+.mobile-menu-button.is-open #mobile-menu-open-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+}
+
+.mobile-menu-button.is-open #mobile-menu-open-icon {
+    transform: rotate(90deg) scale(0.8);
+}
+
+.mobile-menu-button.is-open #mobile-menu-close-icon {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-nav,
+    .mobile-nav > div > :not(.mobile-ta-submenu),
+    .mobile-menu-button > i {
+        transform: none !important;
+    }
 }
 
 /* Keep the header steady while a page loads: the theme toggle shows the moon (light mode) or the
@@ -1187,6 +1460,15 @@ header nav a[data-nav].active::after {
     .action-btn:hover .action-btn-icon,
     .action-btn:focus-visible .action-btn-icon {
         transform: none;
+    }
+}
+
+/* Background page: Education and Experience side by side from laptop width (1024px) up. On tablets
+   two columns, each with its own date column, left cards too narrow for their titles, so they
+   stack there as on phones. ".grid" makes this win over Tailwind's grid-cols-1, which loads later. */
+@media (min-width: 1024px) {
+    .grid.bg-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -2310,11 +2592,117 @@ html.modal-open {
     }
 }
 
+/* Social icons (home bio, footer "Connect"). Hover or keyboard focus: the icon turns accent (white
+   in the always-dark footer), lifts 2px and grows a little with a gentle spring, while a soft accent
+   circle (::after) fades and grows in behind it; a click presses it in. The link itself never scales,
+   so the tooltip (::before) keeps its size. Only colour, opacity and transform animate, so it stays
+   smooth on phones too. */
 .social-icon-link {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: color 0.25s ease;
+}
+
+.social-icon-link > i,
+.social-icon-link > svg {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Font Awesome's fa-lg sets line-height 0.05em; inside these flex links that made the icon (and the
+   link) about 1px tall. A normal line-height gives each link the real size of its icon. */
+.social-icon-link > i {
+    line-height: 1;
+}
+
+.social-icon-link {
+    --halo: 2.5rem;   /* size of the hover circle; the tooltip keeps 8px clear of it */
+}
+
+.social-icon-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    width: var(--halo);
+    height: var(--halo);
+    margin: calc(var(--halo) / -2) 0 0 calc(var(--halo) / -2);
+    border-radius: 999px;
+    background-color: rgba(79, 70, 229, 0.1);
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-icon-link:hover,
+.social-icon-link:focus-visible {
+    color: var(--accent-light);
+    outline: none;
+}
+
+.social-icon-link:hover::after,
+.social-icon-link:focus-visible::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.social-icon-link:focus-visible::after {
+    box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.social-icon-link:hover > i,
+.social-icon-link:hover > svg,
+.social-icon-link:focus-visible > i,
+.social-icon-link:focus-visible > svg {
+    transform: translateY(-2px) scale(1.1);
+}
+
+.social-icon-link:active > i,
+.social-icon-link:active > svg {
+    transform: scale(0.92);
+    transition-duration: 0.1s;
+}
+
+.dark .social-icon-link:hover,
+.dark .social-icon-link:focus-visible {
+    color: var(--accent-dark);
+}
+
+.dark .social-icon-link::after {
+    background-color: rgba(129, 140, 248, 0.15);
+}
+
+.dark .social-icon-link:focus-visible::after {
+    box-shadow: 0 0 0 2px var(--accent-dark);
+}
+
+/* footer: always dark, so the icon turns white over a soft indigo circle in both themes */
+footer .social-icon-link:hover,
+footer .social-icon-link:focus-visible,
+.dark footer .social-icon-link:hover,
+.dark footer .social-icon-link:focus-visible {
+    color: #ffffff;
+}
+
+footer .social-icon-link::after,
+.dark footer .social-icon-link::after {
+    background-color: rgba(129, 140, 248, 0.18);
+}
+
+footer .social-icon-link:focus-visible::after,
+.dark footer .social-icon-link:focus-visible::after {
+    box-shadow: 0 0 0 2px var(--accent-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .social-icon-link > i,
+    .social-icon-link > svg,
+    .social-icon-link::after {
+        transform: none !important;
+    }
 }
 
 .social-icon-link::before {
@@ -2329,7 +2717,7 @@ html.modal-open {
 
 .social-icon-link::before {
     content: attr(data-tooltip);
-    bottom: calc(100% + 12px);
+    bottom: calc(50% + var(--halo) / 2 + 8px);   /* 8px above the hover circle */
     white-space: nowrap;
     padding: 0.45rem 0.7rem;
     border-radius: 0.55rem;
@@ -2351,6 +2739,22 @@ html.modal-open {
 .dark .social-icon-link::before {
     background: rgba(226, 232, 240, 0.98);
     color: #0f172a;
+}
+
+/* Footer (always dark): the tooltip is light so it stands out, and it opens below the icon so it
+   does not cover the "Connect" heading just above the row */
+footer .social-icon-link::before {
+    top: calc(50% + var(--halo) / 2 + 8px);      /* 8px below the hover circle */
+    bottom: auto;
+    transform: translateX(-50%) translateY(-4px);
+    background: rgba(226, 232, 240, 0.98);
+    color: #0f172a;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+footer .social-icon-link:hover::before,
+footer .social-icon-link:focus-visible::before {
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Header buttons (search, theme switch): a small tooltip below the button, in the same style as the
@@ -2479,8 +2883,7 @@ a.text-accent:focus-visible {
    TA course cards (ta.html and the homepage), Research Interests (homepage) and talks (talks.html) */
 #TA .course-card,
 #research .grid > div,
-#main-content .presentation-item,
-#main-content .presentation-item > div {
+#main-content .talk-card {
     border-radius: 1rem;   /* the id outweighs Tailwind's rounded-lg, which loads after this file */
 }
 
@@ -2544,7 +2947,7 @@ a.text-accent:focus-visible {
 
 .ta-feature-title {
     margin-bottom: 0.35rem;
-    font-size: 1.125rem;
+    font-size: var(--fs-card-title);
     font-weight: 600;
     line-height: 1.35;
 }
@@ -2645,7 +3048,55 @@ a.text-accent:focus-visible {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.75rem;
+}
+
+/* Separator under the course title (all course pages): a hairline that fades out at both ends with
+   a short accent bar in the middle. As the page opens the line draws out from the centre and the
+   bar grows in. */
+.cp-hero::after {
+    content: "";
+    display: block;
+    width: 100%;
+    max-width: 56rem;
+    height: 3px;
+    margin-top: 2rem;
+    background-image:
+        linear-gradient(var(--accent-light), var(--accent-light)),
+        linear-gradient(90deg, transparent, var(--border-light) 18%, var(--border-light) 82%, transparent);
+    background-position: center, center;
+    background-repeat: no-repeat;
+    background-size: 3.5rem 3px, 100% 1px;
+    animation: cp-separator-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s both;
+}
+
+.dark .cp-hero::after {
+    background-image:
+        linear-gradient(var(--accent-dark), var(--accent-dark)),
+        linear-gradient(90deg, transparent, var(--border-dark) 18%, var(--border-dark) 82%, transparent);
+}
+
+@keyframes cp-separator-in {
+    from {
+        background-size: 0 3px, 0% 1px;
+    }
+}
+
+@media (max-width: 639px) {
+    .cp-hero {
+        margin-bottom: 2rem;
+    }
+
+    .cp-hero::after {
+        margin-top: 1.5rem;
+        background-size: 2.75rem 3px, 100% 1px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cp-hero::after {
+        animation: none;
+    }
 }
 
 
@@ -2665,7 +3116,7 @@ a.text-accent:focus-visible {
 .cp-title {
     max-width: 48rem;
     margin: 0.9rem 0 0.5rem;
-    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-size: var(--fs-page-title);
     font-weight: 700;
     line-height: 1.2;
 }
@@ -2697,7 +3148,7 @@ a.text-accent:focus-visible {
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
-    font-size: 1.5rem;
+    font-size: var(--fs-section);
     font-weight: 700;
 }
 
@@ -2778,7 +3229,7 @@ a.text-accent:focus-visible {
 }
 
 .cp-item-title {
-    font-size: 1.125rem;
+    font-size: var(--fs-card-title);
     font-weight: 600;
     line-height: 1.4;
 }
@@ -2865,7 +3316,7 @@ a.text-accent:focus-visible {
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border-light);
-    font-size: 1.125rem;
+    font-size: var(--fs-card-title);
     font-weight: 700;
 }
 
@@ -3104,10 +3555,6 @@ a.text-accent:focus-visible {
     .cp-open {
         margin-left: 3.4rem;
     }
-
-    .cp-heading {
-        font-size: 1.3rem;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3176,7 +3623,7 @@ a.text-accent:focus-visible {
 }
 
 .ta-card-title {
-    font-size: 1.25rem;
+    font-size: var(--fs-card-title);
     font-weight: 600;
     line-height: 1.4;
 }
@@ -3260,10 +3707,6 @@ a.text-accent:focus-visible {
 @media (max-width: 480px) {
     .ta-card-body {
         padding: 1.25rem 1.25rem 1rem;
-    }
-
-    .ta-card-title {
-        font-size: 1.125rem;
     }
 
     .ta-card-foot {
@@ -4508,7 +4951,7 @@ footer .search-target {
 
 .notfound-title {
     margin: 1rem 0 0.75rem;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: var(--fs-page-title);
     font-weight: 700;
 }
 
