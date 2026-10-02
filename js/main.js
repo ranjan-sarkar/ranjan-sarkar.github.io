@@ -317,27 +317,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Active nav link (header + mobile menu) ---
+    // The highlighted link follows a "reading line" 35% down the screen: on the home page it is the
+    // section crossing that line (Home / News / Publications / TA); on other pages, the page's own
+    // link. "Contact" (every page; it points to the footer, id="contact") takes over once the footer
+    // reaches the line, or at the very bottom of the page - on wide screens the page ends before
+    // the footer can reach the line. A short page that cannot scroll only shows Contact after Contact
+    // was clicked. One cheap check per frame while scrolling; links change only when the key does.
     const allNavLinks = document.querySelectorAll('header nav a[data-nav], .mobile-nav a[data-nav]');
     const setActiveNavLink = (key) => {
         allNavLinks.forEach((link) => link.classList.toggle('active', Boolean(key) && link.dataset.nav === key));
     };
 
-    setActiveNavLink(currentPage);
+    const contactFooter = document.getElementById('contact');
+    // Section ids match the nav keys (the TA section's id is "TA"; Research has no header link)
+    const spySections = currentPage === 'home' ? [...document.querySelectorAll('#main-content section[id]')] : [];
+    let activeNavKey = null;
 
-    // --- Scrollspy for Header (home page only: Home / News / Publications / TA) ---
-    if (currentPage === 'home') {
-        const sections = document.querySelectorAll('#main-content section[id]');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Section ids match the nav keys, except the TA section's id is "TA"
-                    setActiveNavLink(entry.target.getAttribute('id').toLowerCase());
-                }
-            });
-        }, { rootMargin: '-80px 0px -60% 0px' });
+    const updateActiveNavLink = () => {
+        const line = window.innerHeight * 0.35;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        let key = currentPage;
+        spySections.forEach((section) => {
+            if (section.getBoundingClientRect().top <= line) {
+                key = section.id.toLowerCase();
+            }
+        });
+        if (contactFooter) {
+            const atBottom = window.scrollY > 0 && window.scrollY >= maxScroll - 2;
+            const cannotScroll = maxScroll <= 2 && location.hash === '#contact';
+            if (contactFooter.getBoundingClientRect().top <= line || atBottom || cannotScroll) {
+                key = 'contact';
+            }
+        }
+        if (key !== activeNavKey) {
+            activeNavKey = key;
+            setActiveNavLink(key);
+        }
+    };
 
-        sections.forEach(section => observer.observe(section));
-    }
+    let navFrame = null;
+    const scheduleNavUpdate = () => {
+        if (!navFrame) {
+            navFrame = requestAnimationFrame(() => { navFrame = null; updateActiveNavLink(); });
+        }
+    };
+    window.addEventListener('scroll', scheduleNavUpdate, { passive: true });
+    window.addEventListener('resize', scheduleNavUpdate);
+    window.addEventListener('hashchange', scheduleNavUpdate);
+    updateActiveNavLink();
 
     // --- Course Modal (TA page) ---
     const courseData = {
