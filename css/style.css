@@ -526,7 +526,7 @@ body {
    column is too narrow and justifying leaves wide gaps between words, so it keeps the hero's
    alignment (centred on phones, left on tablets). */
 .home-intro {
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 @media (min-width: 1024px) {
