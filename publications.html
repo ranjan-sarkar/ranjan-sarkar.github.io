@@ -239,11 +239,12 @@
                     <!-- Paper: ICC 2027 -->
                     <article class="pub-card">
                         <!-- Paper figure (teaser), centred beside the text; clicking it opens the paper -->
-                        <a href="https://arxiv.org/abs/2607.12135" target="_blank" rel="noopener" class="pub-figure"
-                            aria-label="Open the paper">
+                        <!-- TEMPORARILY not linked while the arXiv version is being revised; restore the <a> below
+                        <a href="https://arxiv.org/abs/2607.12135" target="_blank" rel="noopener" class="pub-figure" aria-label="Open the paper"> -->
+                        <div class="pub-figure">
                             <img src="Content/pub_lqg_pomdp.webp" width="720" height="307" loading="lazy"
                                 alt="Proposed architecture: the control is estimated directly from past controls and measurements, without estimating the hidden state">
-                        </a>
+                        </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex flex-wrap items-center justify-between gap-3">
                                 <span class="pub-venue"><span>Accepted at <span class="pub-venue-full">Indian Control Conference (ICC 2027)</span><span class="pub-venue-short">ICC 2027</span></span></span>
@@ -275,12 +276,17 @@
                                 </div>
                             </div> -->
                             <div class="mt-5 flex flex-wrap items-center gap-2">
+                                <!-- TEMPORARILY faded while the arXiv version is being revised; restore this:
                                 <a href="https://arxiv.org/abs/2607.12135" target="_blank" rel="noopener" class="pub-link">
                                     <i class="fa-regular fa-file-lines"></i>Paper</a>
+                                -->
+                                <span class="pub-link is-disabled" title="Revised version coming soon">
+                                    <i class="fa-regular fa-file-lines"></i>Paper</span>
                                 <a href="talks.html#talk-rsday-2026-poster" class="pub-link">
                                     <i class="fa-regular fa-image"></i>Poster</a>
                                 <span class="pub-link is-disabled" title="Code will be released soon">
                                     <i class="fa-solid fa-code"></i>Code (coming soon)</span>
+                                <!-- TEMPORARILY faded while the arXiv version is being revised; restore this:
                                 <button type="button" class="pub-link cite-trigger"
                                     data-cite-title="BibTeX Citation" data-bibtex="@article{ranjan2026_lqg,
     title={{LQG} solution for {POMDP} without estimating states: A minimum variance approach}, 
@@ -290,6 +296,9 @@
     url={https://arxiv.org/abs/2607.12135}
 }">
                                     <i class="fa-solid fa-quote-right"></i>Cite</button>
+                                -->
+                                <span class="pub-link is-disabled" title="Revised version coming soon">
+                                    <i class="fa-solid fa-quote-right"></i>Cite</span>
                             </div>
                         </div>
                     </article>

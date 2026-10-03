@@ -525,10 +525,11 @@ body {
 }
 
 /* Home: on big monitors (QHD, ultrawide, 4K; 2400px wide and up) the hero fills the first screen
-   under the 4rem header, its content centred a little above the middle (more room below than above),
-   so the photo and bio sit in the middle of the screen instead of hugging the header with a wide empty
-   band under them. Laptops and Full-HD monitors keep the plain top padding from the Tailwind classes.
-   "#home" outweighs Tailwind's md:pt-12 / md:pb-28. */
+   under the 4rem header with its content centred (equal room above and below), so the photo and bio
+   If the content is taller than the screen (short ultrawides such as 2560x1080), the padding alone sets the gap.
+   On short ultrawides (e.g. 2560x1080) the content is taller than the screen, so the padding sets the gap.
+   Laptops and Full-HD monitors keep the plain top padding from the Tailwind classes.
+   "#home" outweighs Tailwind's md:pt-14 / md:pb-28. */
 @media (min-width: 2400px) {
     #home {
         display: flex;
@@ -536,8 +537,8 @@ body {
         justify-content: center;
         min-height: calc(100vh - 4rem);
         min-height: calc(100svh - 4rem);
-        padding-top: 3rem;
-        padding-bottom: 6rem;
+        padding-top: 4.5rem;
+        padding-bottom: 4.5rem;
     }
 }
 
@@ -2933,8 +2934,9 @@ header.is-scrolled {
     box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
 }
 
-/* 3. Inline text links: an accent underline slides in from the left on hover */
-a.text-accent {
+/* 3. Inline text links (and text-style buttons such as Cite): an accent underline slides in from the left on hover */
+a.text-accent,
+button.text-accent {
     text-decoration: none;
     background-image: linear-gradient(var(--accent-light), var(--accent-light));
     background-position: 0 100%;
@@ -2943,12 +2945,15 @@ a.text-accent {
     transition: background-size 0.3s ease, color 0.2s ease;
 }
 
-.dark a.text-accent {
+.dark a.text-accent,
+.dark button.text-accent {
     background-image: linear-gradient(var(--accent-dark), var(--accent-dark));
 }
 
 a.text-accent:hover,
-a.text-accent:focus-visible {
+a.text-accent:focus-visible,
+button.text-accent:hover,
+button.text-accent:focus-visible {
     text-decoration: none;
     background-size: 100% 1.5px;
 }
