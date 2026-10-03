@@ -103,6 +103,37 @@
     --fs-card-title: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);  /* 18 -> 20px  card title, sub-heading (h3) */
 }
 
+/* Screen-size scaling: every size on the site is in rem, so the root font size below scales the whole
+   page at once (text, spacing, content width, photo). Sizes are CSS pixels, i.e. after Windows / macOS
+   display scaling. Percentages (of the browser's 16px default) keep a reader's own font-size setting
+   working. Phones, tablets and anything not matched below stay at the default 100% (16px).
+   Laptops are told apart from desktops by height: they are short, so the hero fits on the first screen. */
+
+/* 15.6" laptops: 1920x1080 at 125% scaling, a window about 1536 x 730 */
+@media (min-width: 1024px) and (max-height: 760px) {
+    html { font-size: 93.75%; }   /* 15px */
+}
+
+/* 14" laptops: 1366x768, or 1920x1080 at 150% scaling, a window about 1280-1366 x 600-650 */
+@media (min-width: 1024px) and (max-height: 660px) {
+    html { font-size: 90.625%; }  /* 14.5px */
+}
+
+/* Full-HD desktop monitors (1920x1080 at 100%) and 1080p laptops without scaling */
+@media (min-width: 1800px) and (min-height: 880px) {
+    html { font-size: 106.25%; }  /* 17px */
+}
+
+/* QHD and ultrawide monitors (2560x1440, 3440x1440 at 100%) */
+@media (min-width: 2400px) and (min-height: 1200px) {
+    html { font-size: 118.75%; }  /* 19px */
+}
+
+/* 4K monitors at 100% scaling */
+@media (min-width: 3200px) and (min-height: 1600px) {
+    html { font-size: 150%; }     /* 24px */
+}
+
 .type-display {
     font-size: var(--fs-display);
     line-height: 1.1;
@@ -1697,7 +1728,7 @@ html.modal-open {
     position: relative;
     margin: 5% auto;
     width: 90%;
-    max-width: 700px;
+    max-width: 43.75rem;   /* 700px at the default size; scales with the screen tiers */
     opacity: 0;
     transform: translateY(10px) scale(0.94);
     transform-origin: var(--modal-origin, 50% 50%);
@@ -1994,7 +2025,7 @@ html.modal-open {
     gap: 0.5rem;
     list-style-position: outside;
     padding-left: 10px;
-    max-width: 900px;
+    max-width: 56.25rem;   /* 900px */
 }
 
 .row-col-list li {
@@ -2008,7 +2039,7 @@ html.modal-open {
     display: flex;
     flex-wrap: wrap;
     gap: 0.3rem 1rem;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .inline-bullets li {
@@ -4186,11 +4217,11 @@ html.dark {
     }
 }
 
-/* Side-by-side layout (768px and up): the photo shrinks with its column, up to its full 24rem,
+/* Side-by-side layout (768px and up): the photo shrinks with its column, up to 28rem (the column caps it on tablets and small laptops),
    so it never runs into the text on the right. "#home" makes this win over Tailwind's md:w-96 / md:h-96. */
 @media (min-width: 768px) {
     #home .profile-photo {
-        width: min(24rem, 100%);
+        width: min(28rem, 100%);
         height: auto;
         aspect-ratio: 1 / 1;
     }
