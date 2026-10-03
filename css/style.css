@@ -215,6 +215,10 @@ body {
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
+    /* its own graphics layer, so scrolling the page slides content over it without redrawing it,
+       and redrawing the lines (the scroll ripple in main.js) never touches the rest of the page */
+    contain: strict;
+    will-change: transform;
     color: var(--accent-light);
     background:
         radial-gradient(60rem 40rem at 100% 0%, rgba(79, 70, 229, 0.08), transparent 70%),
@@ -517,6 +521,23 @@ body {
     .news-action:focus-visible i,
     .news-action:active {
         transform: none;
+    }
+}
+
+/* Home: on big monitors (QHD, ultrawide, 4K; 2400px wide and up) the hero fills the first screen
+   under the 4rem header, its content centred a little above the middle (more room below than above),
+   so the photo and bio sit in the middle of the screen instead of hugging the header with a wide empty
+   band under them. Laptops and Full-HD monitors keep the plain top padding from the Tailwind classes.
+   "#home" outweighs Tailwind's md:pt-12 / md:pb-28. */
+@media (min-width: 2400px) {
+    #home {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: calc(100vh - 4rem);
+        min-height: calc(100svh - 4rem);
+        padding-top: 3rem;
+        padding-bottom: 6rem;
     }
 }
 
@@ -2484,16 +2505,35 @@ html.modal-open {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #ffffff;
-    background-image: linear-gradient(120deg, var(--accent-light), #0ea5e9, var(--accent-light));
-    background-size: 200% 100%;
+    background-color: var(--accent-light);
     box-shadow: 0 4px 12px -4px rgba(79, 70, 229, 0.6);
+    /* the shimmer is a double-width gradient behind the text that slides back and forth: moving it
+       with transform is done by the graphics chip, without repainting the tag on every frame */
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.news-new-tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    z-index: -1;
+    background-image: linear-gradient(120deg, var(--accent-light), #0ea5e9, var(--accent-light));
     animation: news-new-shimmer 5s ease-in-out infinite;
 }
 
 .dark .news-new-tag {
     color: #0f172a;
-    background-image: linear-gradient(120deg, var(--accent-dark), #38bdf8, var(--accent-dark));
+    background-color: var(--accent-dark);
     box-shadow: 0 4px 14px -4px rgba(129, 140, 248, 0.55);
+}
+
+.dark .news-new-tag::before {
+    background-image: linear-gradient(120deg, var(--accent-dark), #38bdf8, var(--accent-dark));
 }
 
 /* the timeline line of a new item picks up the accent colour */
@@ -2506,12 +2546,12 @@ html.modal-open {
 }
 
 @keyframes news-new-shimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .news-new-tag {
+    .news-new-tag::before {
         animation: none;
     }
 }
@@ -4225,6 +4265,15 @@ html.dark {
         height: auto;
         aspect-ratio: 1 / 1;
     }
+
+    /* The photo's top lines up with the name (3rem = the role tag above it) instead of the photo
+       being centred on the whole text column. On narrower windows the text wraps into more lines
+       and the column grows, and a centred photo would slide down and off the bottom of the screen;
+       on wide screens the two come out practically the same. */
+    #home .home-photo-col {
+        align-self: flex-start;
+        margin-top: 3rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5158,4 +5207,44 @@ footer .search-target {
     .notfound-card:hover {
         transform: none;
     }
+}
+
+/* =====================================================================
+   Lite mode for low-powered devices. js/main.js adds html.perf-lite on old or low-powered laptops
+   (4 GB of memory or less, 4 CPU threads or fewer, Data Saver, or when the background lines'
+   opening ripple runs below ~33 fps, e.g. in battery saver). It turns off the effects that make a
+   weak graphics chip redraw large areas: the frosted-glass blur behind the header and popups
+   (the header's blur is redone on every scroll frame), and the endless shimmers. Everything keeps
+   its layout and colours; the theme switch snaps instead of fading (main.js), and the background
+   lines stay still. Hover effects, the section fade-ins and the photo zoom stay: they only move
+   or fade an element, which even an old graphics chip does smoothly.
+   ===================================================================== */
+.perf-lite header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.perf-lite.dark header {
+    background-color: rgba(15, 23, 42, 0.96);
+}
+
+.perf-lite .modal,
+.perf-lite .search-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.perf-lite .modal {
+    background-color: rgba(15, 23, 42, 0.7);
+}
+
+.perf-lite .search-overlay {
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.perf-lite .news-new-tag::before,
+.perf-lite img.is-loading,
+.perf-lite .seminar-embed.is-loading {
+    animation: none;
 }

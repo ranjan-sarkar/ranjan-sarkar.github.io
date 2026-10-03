@@ -6,6 +6,30 @@
 // from here, so it also works on 404.html, which GitHub Pages shows at any missing address.
 const SITE_ROOT = new URL('..', document.currentScript?.src || location.href);
 
+// --- Lite mode for low-powered devices ---
+// Old or low-powered laptops (and browsers in battery saver, which caps the frame rate) get
+// <html class="perf-lite">: the costliest effects are switched off so scrolling stays smooth.
+// See "Lite mode" in style.css; the scroll ripple of the background lines stops too (below).
+// A device is treated as low-powered when it says so (Data Saver, 4 GB of memory or less,
+// 4 CPU threads or fewer), or when the background lines' opening ripple runs below ~33 fps.
+// The decision is kept for the browser tab's session, so other pages start in lite mode at once.
+const PERF_LITE_KEY = 'perf-lite';
+const enablePerfLite = () => {
+    document.documentElement.classList.add('perf-lite');
+    try { sessionStorage.setItem(PERF_LITE_KEY, '1'); } catch (e) { /* storage blocked: fine */ }
+};
+const isPerfLite = () => document.documentElement.classList.contains('perf-lite');
+(() => {
+    let remembered = false;
+    try { remembered = sessionStorage.getItem(PERF_LITE_KEY) === '1'; } catch (e) { /* ignore */ }
+    const nav = navigator;
+    if (remembered || nav.connection?.saveData
+        || (nav.deviceMemory && nav.deviceMemory <= 4)
+        || (nav.hardwareConcurrency && nav.hardwareConcurrency <= 4)) {
+        enablePerfLite();
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     const currentPage = document.body.dataset.page || '';
     const currentCourse = document.body.dataset.course || '';
@@ -30,10 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let themeSwitchTimer = null;
 
     themeToggle.addEventListener('click', () => {
-        // Let colours fade over for a moment instead of snapping (see .theme-switching in style.css)
-        document.documentElement.classList.add('theme-switching');
-        clearTimeout(themeSwitchTimer);
-        themeSwitchTimer = setTimeout(() => document.documentElement.classList.remove('theme-switching'), 450);
+        // Let colours fade over for a moment instead of snapping (see .theme-switching in style.css).
+        // Lite mode snaps: fading every element's colours at once is heavy for a weak graphics chip.
+        if (!isPerfLite()) {
+            document.documentElement.classList.add('theme-switching');
+            clearTimeout(themeSwitchTimer);
+            themeSwitchTimer = setTimeout(() => document.documentElement.classList.remove('theme-switching'), 450);
+        }
 
         document.documentElement.classList.toggle('dark');
         if (document.documentElement.classList.contains('dark')) {
@@ -81,27 +108,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // When a page opens (first visit or reload) the curves also ripple through one full wave on
     // their own and settle back, as if the page had been scrolled; the lines fade in meanwhile
     // (.bg-decor svg in style.css). Scrolling during the intro simply adds to it.
+    // Moving the lines redraws the whole screen-sized background every frame, so: only the artwork
+    // on screen is moved (CSS shows either the wide SVG or the two corner SVGs), lite mode skips the
+    // ripple, and the intro doubles as a frame-rate check that turns lite mode on for slow devices.
     const bgCurves = [];
     document.querySelectorAll('.bg-decor svg').forEach((svg) => {
         const indexInFan = { top: 0, bottom: 0 };
         svg.querySelectorAll('path').forEach((path) => {
             const fan = path.getAttribute('d').startsWith('M1450') ? 'top' : 'bottom';
-            bgCurves.push({ path, direction: fan === 'top' ? 1 : -1, lag: indexInFan[fan]++ * 0.45 });
+            bgCurves.push({ svg, path, direction: fan === 'top' ? 1 : -1, lag: indexInFan[fan]++ * 0.45 });
         });
     });
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (bgCurves.length && !prefersReducedMotion) {
+    if (bgCurves.length && !prefersReducedMotion && !isPerfLite()) {
         const AMPLITUDE = 8;      // SVG units; a curve moves at most 2x this from its drawn position
         const WAVELENGTH = 900;   // px of scrolling for one full wave
         const EASE = 0.08;        // fraction of the remaining distance covered per frame
         const INTRO_MS = 3000;    // length of the opening ripple
+        // frame-rate check: frames between 0.5 s and 2 s into the intro (after the page's own
+        // start-up work); a typical frame slower than this means the device cannot keep up
+        const PROBE_FROM_MS = 500;
+        const PROBE_TO_MS = 2000;
+        const SLOW_FRAME_MS = 30; // ~33 fps
 
         let targetScroll = window.scrollY;
         let currentScroll = targetScroll;
         let frame = null;
         let introStart = null;
         let introRunning = true;
+        let activeCurves = [];
+        let lastFrameAt = null;
+        const frameGaps = [];
+
+        // an SVG hidden with display: none has no client rects
+        const pickActiveCurves = () => {
+            activeCurves = bgCurves.filter(({ svg }) => svg.getClientRects().length > 0);
+        };
+
+        const onScroll = () => {
+            targetScroll = window.scrollY;
+            if (!frame) {
+                pickActiveCurves();
+                frame = requestAnimationFrame(renderCurves);
+            }
+        };
+
+        // slow device: put every line back where it is drawn and stop for good
+        const stopRipple = () => {
+            cancelAnimationFrame(frame);
+            frame = null;
+            window.removeEventListener('scroll', onScroll);
+            bgCurves.forEach(({ path }) => path.removeAttribute('transform'));
+        };
+
+        const tooSlow = (now) => {
+            const elapsed = now - introStart;
+            if (elapsed < PROBE_FROM_MS) return false;
+            if (elapsed <= PROBE_TO_MS) {
+                if (lastFrameAt !== null) frameGaps.push(now - lastFrameAt);
+                lastFrameAt = now;
+                return false;
+            }
+            if (frameGaps.length < 3) return false;   // tab was in the background: no verdict
+            const sorted = frameGaps.splice(0).sort((a, b) => a - b);
+            return sorted[Math.floor(sorted.length / 2)] > SLOW_FRAME_MS;
+        };
 
         const renderCurves = (now = performance.now()) => {
             currentScroll += (targetScroll - currentScroll) * EASE;
@@ -110,6 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let intro = 0;
             if (introRunning) {
                 introStart ??= now;
+                if (tooSlow(now)) {
+                    stopRipple();
+                    enablePerfLite();
+                    return;
+                }
                 const t = Math.min(1, (now - introStart) / INTRO_MS);
                 intro = WAVELENGTH * (1 + Math.cos(Math.PI * t)) / 2;
                 introRunning = t < 1;
@@ -117,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const phase = ((currentScroll + intro) / WAVELENGTH) * Math.PI * 2;
 
-            bgCurves.forEach(({ path, direction, lag }) => {
+            activeCurves.forEach(({ path, direction, lag }) => {
                 const dx = direction * AMPLITUDE * (Math.sin(phase + lag) - Math.sin(lag));
                 const dy = direction * AMPLITUDE * 0.6 * (Math.cos(phase + lag) - Math.cos(lag));
                 path.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
@@ -127,13 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? requestAnimationFrame(renderCurves) : null;
         };
 
-        window.addEventListener('scroll', () => {
-            targetScroll = window.scrollY;
-            if (!frame) {
-                frame = requestAnimationFrame(renderCurves);
-            }
-        }, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
 
+        pickActiveCurves();
         frame = requestAnimationFrame(renderCurves);
     }
 
