@@ -107,7 +107,10 @@
    page at once (text, spacing, content width, photo). Sizes are CSS pixels, i.e. after Windows / macOS
    display scaling. Percentages (of the browser's 16px default) keep a reader's own font-size setting
    working. Phones, tablets and anything not matched below stay at the default 100% (16px).
-   Laptops are told apart from desktops by height: they are short, so the hero fits on the first screen. */
+   Laptops are told apart from desktops by height: they are short, so the hero fits on the first screen.
+   The desktop steps below go mainly by height. Their width minimums are kept well under the screen
+   width so a browser narrowed by vertical tabs or a side panel (about 250-600px) keeps the same size;
+   each minimum still leaves room for the 80rem (max-w-7xl) content column at that root size. */
 
 /* 15.6" laptops: 1920x1080 at 125% scaling, a window about 1536 x 730 */
 @media (min-width: 1024px) and (max-height: 760px) {
@@ -120,17 +123,17 @@
 }
 
 /* Full-HD desktop monitors (1920x1080 at 100%) and 1080p laptops without scaling */
-@media (min-width: 1800px) and (min-height: 880px) {
+@media (min-width: 1600px) and (min-height: 880px) {
     html { font-size: 106.25%; }  /* 17px */
 }
 
 /* QHD and ultrawide monitors (2560x1440, 3440x1440 at 100%) */
-@media (min-width: 2400px) and (min-height: 1200px) {
+@media (min-width: 1920px) and (min-height: 1200px) {
     html { font-size: 118.75%; }  /* 19px */
 }
 
 /* 4K monitors at 100% scaling */
-@media (min-width: 3200px) and (min-height: 1600px) {
+@media (min-width: 2560px) and (min-height: 1600px) {
     html { font-size: 150%; }     /* 24px */
 }
 
@@ -524,13 +527,16 @@ body {
     }
 }
 
-/* Home: on big monitors (QHD, ultrawide, 4K; 2400px wide and up) the hero fills the first screen
-   under the 4rem header with its content centred (equal room above and below), so the photo and bio
+/* Home: on big monitors (QHD, ultrawide, 4K) the hero fills the first screen under the 4rem header
+   with its content centred (equal room above and below), so the photo and bio sit in the middle.
+   Matched by width (2400px and up) or by height (a viewport 1100px tall or more, at least 1280px
+   wide). The height test keeps it centred when the browser is narrower than the screen, e.g. with
+   vertical tabs or a side panel open, since those take width but not height. The 1280px floor keeps
+   tablets in portrait out.
    If the content is taller than the screen (short ultrawides such as 2560x1080), the padding alone sets the gap.
-   On short ultrawides (e.g. 2560x1080) the content is taller than the screen, so the padding sets the gap.
-   Laptops and Full-HD monitors keep the plain top padding from the Tailwind classes.
+   Laptops and Full-HD monitors (viewport under 1100px tall) keep the plain padding from the Tailwind classes.
    "#home" outweighs Tailwind's md:pt-14 / md:pb-28. */
-@media (min-width: 2400px) {
+@media (min-width: 2400px), (min-width: 1280px) and (min-height: 1100px) {
     #home {
         display: flex;
         flex-direction: column;
