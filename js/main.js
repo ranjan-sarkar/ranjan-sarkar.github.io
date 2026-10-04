@@ -30,6 +30,271 @@ const isPerfLite = () => document.documentElement.classList.contains('perf-lite'
     }
 })();
 
+// --- Smart matching (site search and the TA course filter) ---
+// A searched word finds text that contains it, as plain search would, and also:
+//  - other forms of the same word: "robots" finds "robot", "optimizing" finds "optimization"
+//    (a light suffix stemmer, see wordStem);
+//  - abbreviations spelled out: "RL" finds "reinforcement learning" (SEARCH_ALIASES);
+//  - misspellings, when the word as typed appears nowhere: "reinforcment" finds "reinforcement"
+//    (1 typo in words of 4+ letters, 2 in words of 8+; also in a word still being typed).
+// Words of 1-3 letters only match at the start of a word ("rl" finds "RL", not "world").
+// Each kind of match ranks below an exact one (MATCH_SCORE).
+// Usage: records come from searchable(text); expandTerms(terms, buildVocabulary(records)) turns the
+// searched words into matchers; termScore() tells how well a record matches one of them, and
+// matchPattern() finds the matched words in a text for highlighting.
+const MATCH_SCORE = { word: 10, alias: 8, part: 6, stem: 6, fuzzy: 2 };
+const STOP_WORDS = new Set(['a', 'an', 'and', 'the', 'of', 'in', 'on', 'for', 'to', 'with', 'by', 'from', 'or', 'is', 'are', 'about']);
+// each line lists names for the same thing; a one-word name finds all the others
+const SEARCH_ALIASES = [
+    ['rl', 'reinforcement learning'],
+    ['ml', 'machine learning'],
+    ['dl', 'deep learning'],
+    ['ai', 'artificial intelligence'],
+    ['cv', 'computer vision', 'curriculum vitae', 'resume'],
+    ['llm', 'large language model'],
+    ['nlp', 'natural language processing'],
+    ['ta', 'teaching assistant'],
+    ['iit', 'indian institute of technology'],
+    ['kgp', 'kharagpur'],
+    ['rhpi', 'receding horizon'],
+    ['lqg', 'linear quadratic gaussian'],
+    ['lqr', 'linear quadratic regulator'],
+    ['mpc', 'model predictive control'],
+    ['mhe', 'moving horizon estimation'],
+    ['mdp', 'markov decision process'],
+    ['pomdp', 'partially observable markov'],
+    ['dqn', 'deep q network'],
+    ['cnn', 'convolutional neural network'],
+    ['rnn', 'recurrent neural network'],
+    ['svd', 'singular value decomposition'],
+    ['bfs', 'breadth first search'],
+    ['dfs', 'depth first search'],
+    ['rrt', 'rapidly exploring random tree'],
+    ['prm', 'probabilistic roadmap'],
+    ['cps', 'cyber physical'],
+    ['phd', 'doctoral', 'doctorate'],
+    ['paper', 'publication', 'article', 'preprint'],
+    ['talk', 'presentation', 'seminar'],
+];
+
+// lower case, no accents
+const foldText = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+// the same, but only when it keeps every character in place (so a match can be cut from the original)
+const foldInPlace = (text) => {
+    const folded = foldText(text);
+    return folded.length === text.length ? folded : text.toLowerCase();
+};
+const wordsOf = (folded) => folded.match(/[\p{L}\p{N}]+/gu) || [];
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// "optimizations" -> "optimiz", "controllers" -> "control", "studies" -> "study"; both the searched
+// word and the text's words go through it, so it only has to be consistent, not correct English
+// [suffix, replacement, shortest stem allowed]; the first rule that fits is used
+const PLURAL_RULES = [['ies', 'y'], ['sses', 'ss'], ['ches', 'ch'], ['shes', 'sh'], ['xes', 'x'], ['ss', 'ss'], ['us', 'us'], ['is', 'is'], ['s', '']];
+// the "at"/"iz" stems need 5 letters, so "station" does not meet "state"
+const SUFFIX_RULES = [
+    ['izations', 'iz', 5], ['ization', 'iz', 5], ['isation', 'iz', 5], ['izing', 'iz', 5], ['izers', 'iz', 5], ['izer', 'iz', 5],
+    ['ized', 'iz', 5], ['izes', 'iz', 5], ['ize', 'iz', 5],
+    ['ations', 'at', 5], ['ation', 'at', 5], ['ators', 'at', 5], ['ator', 'at', 5], ['ating', 'at', 5], ['ated', 'at', 5], ['ate', 'at', 5],
+    ['ied', 'y'], ['ings', ''], ['ing', ''], ['edly', ''], ['ed', ''], ['ers', ''], ['er', ''], ['ly', ''],
+];
+const applyRule = (word, rules) => {
+    for (const [suffix, replacement, shortest = 3] of rules) {
+        if (word.endsWith(suffix)) {
+            const stem = word.slice(0, -suffix.length) + replacement;
+            if (stem.length >= shortest) {
+                return stem;
+            }
+        }
+    }
+    return word;
+};
+const wordStem = (word) => {
+    if (word.length < 4 || /\d/.test(word)) {
+        return word;
+    }
+    let stem = applyRule(applyRule(word, PLURAL_RULES), SUFFIX_RULES);
+    if (stem.length > 4 && stem.endsWith('e')) {
+        stem = stem.slice(0, -1);
+    }
+    if (stem.length >= 4 && stem.at(-1) === stem.at(-2) && /[^aeiou]/.test(stem.at(-1))) {
+        stem = stem.slice(0, -1); // "controll" -> "control", "plann" -> "plan"
+    }
+    return stem;
+};
+
+const ALIASES = new Map();
+SEARCH_ALIASES.forEach((names) => names.forEach((name) => {
+    if (!name.includes(' ')) {
+        ALIASES.set(wordStem(name), names.filter((other) => other !== name));
+    }
+}));
+
+// Edit distance with swapped neighbours counting as one edit; gives up (returns max + 1) beyond max
+const editDistance = (a, b, max) => {
+    if (Math.abs(a.length - b.length) > max) {
+        return max + 1;
+    }
+    let before = null;
+    let previous = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+        const row = [i];
+        let best = i;
+        for (let j = 1; j <= b.length; j++) {
+            let d = Math.min(previous[j] + 1, row[j - 1] + 1, previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+            if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+                d = Math.min(d, before[j - 2] + 1);
+            }
+            row.push(d);
+            best = Math.min(best, d);
+        }
+        if (best > max) {
+            return max + 1;
+        }
+        before = previous;
+        previous = row;
+    }
+    return previous[b.length];
+};
+
+// How many typos make word out of term (or, for a term still being typed, the start of word);
+// Infinity when it is too far off to be a misspelling
+const typoDistance = (term, word) => {
+    const max = term.length >= 8 ? 2 : term.length >= 4 ? 1 : 0;
+    // a wrong first letter is rare and lets in too much noise in short words
+    if (!max || (term[0] !== word[0] && term.length < 6)) {
+        return Infinity;
+    }
+    const distance = editDistance(term, word, max);
+    if (distance <= max) {
+        return distance;
+    }
+    if (term.length >= 5 && term[0] === word[0] && word.length > term.length
+        && [-1, 0, 1].some((extra) => editDistance(term, word.slice(0, term.length + extra), 1) <= 1)) {
+        return 1;
+    }
+    return Infinity;
+};
+
+// What a search can look at in a piece of text
+const searchable = (text) => {
+    const search = foldText(text);
+    const words = wordsOf(search);
+    return { search, plain: ` ${words.join(' ')} `, words: new Set(words) };
+};
+
+// Every word of the records (with its stem), to find the forms and misspellings of a searched word
+const buildVocabulary = (records) => {
+    const stems = new Map();
+    records.forEach((record) => record.words.forEach((word) => {
+        if (!stems.has(word)) {
+            stems.set(word, wordStem(word));
+        }
+    }));
+    return { stems, text: [...stems.keys()].join(' ') };
+};
+
+// Searched text -> its words, without "of", "the"... unless that is all there is
+const searchTerms = (query, split = /\s+/) => {
+    const terms = foldText(query).split(split).filter(Boolean);
+    const content = terms.filter((term) => !STOP_WORDS.has(term));
+    return content.length ? content : terms;
+};
+
+// Turn each searched word into what it matches. A word is searched for misspellings when it does
+// not appear in the vocabulary as typed, and then only the closest ones count ("leanring" finds
+// "learning", not also "meaning"). typoLimits (term -> typos) repeats an earlier search's decision.
+const expandTerms = (terms, vocabulary, typoLimits = null) => terms.map((term) => {
+    const isWord = /^[\p{L}\p{N}]+$/u.test(term) && !/\d/.test(term);
+    const fuzzy = isWord && (typoLimits ? typoLimits.has(term) : !vocabulary.text.includes(term));
+    const stem = wordStem(term);
+    const variants = new Map(); // word in the text -> 'stem' | 'fuzzy'
+    const typos = new Map(); // misspelling candidates -> how many typos
+    if (isWord && term.length >= 3) {
+        vocabulary.stems.forEach((wordStemmed, word) => {
+            if (word.includes(term)) {
+                return; // the plain match finds it already
+            }
+            if (wordStemmed === stem || (stem.length >= 5 && word.startsWith(stem))) {
+                variants.set(word, 'stem');
+            } else if (fuzzy && !/\d/.test(word)) {
+                const distance = typoDistance(term, word);
+                if (distance <= (typoLimits?.get(term) ?? 2)) {
+                    typos.set(word, distance);
+                }
+            }
+        });
+    }
+    const typoLimit = typos.size ? Math.min(...typos.values()) : null;
+    typos.forEach((distance, word) => {
+        if (distance === typoLimit) {
+            variants.set(word, 'fuzzy');
+        }
+    });
+    const pattern = escapeRegExp(term);
+    return {
+        term,
+        fuzzy,
+        typoLimit,
+        variants,
+        aliases: ALIASES.get(stem) || [],
+        // short words only count at the start of a word
+        start: term.length <= 3 ? new RegExp(`(?:^|[^\\p{L}\\p{N}])${pattern}`, 'u') : null,
+        whole: new RegExp(`(?:^|[^\\p{L}\\p{N}])${pattern}(?:$|[^\\p{L}\\p{N}])`, 'u'),
+    };
+});
+
+// How well a record matches one expanded term (0: not at all), see MATCH_SCORE
+const termScore = (expanded, record) => {
+    if (expanded.start ? expanded.start.test(record.search) : record.search.includes(expanded.term)) {
+        return expanded.whole.test(record.search) ? MATCH_SCORE.word : MATCH_SCORE.part;
+    }
+    // a multi-word name must start at a word; a one-word name ("rl") must be the whole word (or its plural)
+    if (expanded.aliases.some((alias) => (alias.includes(' ')
+        ? record.plain.includes(` ${alias}`)
+        : record.plain.includes(` ${alias} `) || record.plain.includes(` ${alias}s `)))) {
+        return MATCH_SCORE.alias;
+    }
+    let best = 0;
+    if (expanded.variants.size) {
+        record.words.forEach((word) => {
+            const kind = expanded.variants.get(word);
+            if (kind) {
+                best = Math.max(best, MATCH_SCORE[kind]);
+            }
+        });
+    }
+    return best;
+};
+
+// A global regular expression for every word the terms match, to highlight them in folded text
+const matchPattern = (expandedTerms) => {
+    const needles = new Set();
+    expandedTerms.forEach((expanded) => {
+        needles.add(expanded.start ? `(?<![\\p{L}\\p{N}])${escapeRegExp(expanded.term)}` : escapeRegExp(expanded.term));
+        expanded.aliases.forEach((alias) => needles.add(alias.includes(' ')
+            ? `(?<![\\p{L}\\p{N}])${alias.split(' ').map(escapeRegExp).join('[^\\p{L}\\p{N}]+')}`
+            : `(?<![\\p{L}\\p{N}])${escapeRegExp(alias)}s?(?![\\p{L}\\p{N}])`));
+        expanded.variants.forEach((_, word) => needles.add(escapeRegExp(word)));
+    });
+    // longest first, so a longer word wins over a shorter one it contains
+    const sorted = [...needles].sort((a, b) => b.length - a.length);
+    return new RegExp(`(${sorted.join('|')})`, 'gu');
+};
+
+// Escape text for HTML and wrap what the pattern matches in <mark>
+const markMatches = (text, pattern, className = '') => {
+    const escape = (part) => part.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+    const open = className ? `<mark class="${className}">` : '<mark>';
+    let html = '';
+    let last = 0;
+    for (const match of foldInPlace(text).matchAll(pattern)) {
+        html += escape(text.slice(last, match.index)) + open + escape(text.slice(match.index, match.index + match[0].length)) + '</mark>';
+        last = match.index + match[0].length;
+    }
+    return html + escape(text.slice(last));
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const currentPage = document.body.dataset.page || '';
     const currentCourse = document.body.dataset.course || '';
@@ -586,9 +851,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const emptyState = document.querySelector('.course-filter-empty');
         const emptyTitle = emptyState.querySelector('.course-filter-empty-title');
 
-        // lower case, no accents, punctuation as spaces ("AI31201 • Reinforcement" -> "ai31201 reinforcement")
-        const fold = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-        const words = (text) => ` ${fold(text).replace(/[^\p{L}\p{N}]+/gu, ' ').trim()} `;
         const escapeText = (text) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
         const IGNORED = new Set(['prof', 'professor', 'dr', 'course', 'courses']);
         const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
@@ -601,7 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map((el) => ({ el, text: el.textContent.replace(/\s+/g, ' ').trim() }));
             const term = fields[0].text;
             const topics = (info.topics || []).filter((topic) => !/updated soon/i.test(topic))
-                .map((text) => ({ text, search: words(text) }));
+                .map((text) => ({ text, search: searchable(text) }));
             // the line that names the topic when that is what matched (hidden otherwise), under the instructor
             const topicLine = document.createElement('p');
             topicLine.className = 'course-match';
@@ -611,26 +873,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 card, fields, term, topics, topicLine,
                 shortname: info.shortname || '',
                 // what the card shows; "fall" finds autumn courses too
-                search: words([...fields.map((f) => f.text), /autumn/i.test(term) ? 'fall' : ''].join(' ')),
-                alias: words(info.shortname || ''),
+                search: searchable([...fields.map((f) => f.text), /autumn/i.test(term) ? 'fall' : ''].join(' ')),
+                alias: searchable(info.shortname || ''),
             };
         });
+        // every word on the cards, for the smart matching (other word forms, misspellings; see expandTerms)
+        const vocabulary = buildVocabulary(courses.flatMap((c) => [c.search, c.alias, ...c.topics.map((tp) => tp.search)]));
 
-        // Wrap the searched words in <mark> (the card text is plain, so folding keeps the positions)
-        const markTerms = (text, terms) => {
-            if (!terms.length) {
-                return escapeText(text);
-            }
-            const pattern = new RegExp(terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
-            let html = '';
-            let last = 0;
-            for (const match of fold(text).matchAll(pattern)) {
-                html += escapeText(text.slice(last, match.index))
-                    + `<mark class="course-hit">${escapeText(text.slice(match.index, match.index + match[0].length))}</mark>`;
-                last = match.index + match[0].length;
-            }
-            return html + escapeText(text.slice(last));
-        };
+        // Wrap the searched words in <mark>
+        const markTerms = (text, pattern) => (pattern ? markMatches(text, pattern, 'course-hit') : escapeText(text));
 
         // One chip per semester, in the order the cards list them, plus "All"
         let activeTerm = '';
@@ -641,13 +892,17 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>`).join('');
         const chips = [...chipsBox.querySelectorAll('.course-chip')];
 
-        const queryTermsOf = (query) => words(query).trim().split(' ').filter((t) => t && !IGNORED.has(t));
-        const matchesText = (course, queryTerms) => queryTerms.every((t) => course.search.includes(t)
-            || course.alias.includes(t) || course.topics.some((topic) => topic.search.includes(t)));
+        // the words typed (punctuation splits them: "AI-31201" -> "ai", "31201"), each with what it matches
+        const queryTermsOf = (query) => expandTerms(
+            searchTerms(query, /[^\p{L}\p{N}]+/u).filter((t) => !IGNORED.has(t)), vocabulary);
+        const has = (record, t) => termScore(t, record) > 0;
+        const matchesText = (course, queryTerms) => queryTerms.every((t) => has(course.search, t)
+            || has(course.alias, t) || course.topics.some((topic) => has(topic.search, t)));
 
         const applyFilter = (animate = true) => {
             const query = courseFilterInput.value;
             const queryTerms = queryTermsOf(query);
+            const pattern = queryTerms.length ? matchPattern(queryTerms) : null;
 
             // where each card is on screen now (mid-animation too), so the move starts from there
             const before = new Map(courses.filter((c) => !c.card.hidden).map((c) => [c.card, c.card.getBoundingClientRect()]));
@@ -657,21 +912,21 @@ document.addEventListener('DOMContentLoaded', () => {
             courses.forEach((course) => {
                 const visible = matchesText(course, queryTerms) && (!activeTerm || course.term === activeTerm);
                 course.card.hidden = !visible;
-                course.fields.forEach(({ el, text }) => { el.innerHTML = markTerms(text, visible ? queryTerms : []); });
+                course.fields.forEach(({ el, text }) => { el.innerHTML = markTerms(text, visible ? pattern : null); });
                 // a word that is not on the card itself was found in a topic (or is the short name):
                 // say so on the card, preferring a topic that has all of those words
-                const offCard = visible ? queryTerms.filter((t) => !course.search.includes(t)) : [];
-                const topicTerms = offCard.filter((t) => !course.alias.includes(t));
+                const offCard = visible ? queryTerms.filter((t) => !has(course.search, t)) : [];
+                const topicTerms = offCard.filter((t) => !has(course.alias, t));
                 const topic = topicTerms.length
-                    ? course.topics.find((tp) => topicTerms.every((t) => tp.search.includes(t)))
-                        || course.topics.find((tp) => topicTerms.some((t) => tp.search.includes(t)))
+                    ? course.topics.find((tp) => topicTerms.every((t) => has(tp.search, t)))
+                        || course.topics.find((tp) => topicTerms.some((t) => has(tp.search, t)))
                     : null;
                 if (topic) {
                     course.topicLine.innerHTML = `<i class="fa-solid fa-list-ul" aria-hidden="true"></i>`
-                        + `<span>Topic: ${markTerms(topic.text, queryTerms)}</span>`;
+                        + `<span>Topic: ${markTerms(topic.text, pattern)}</span>`;
                 } else if (offCard.length) {
                     course.topicLine.innerHTML = `<i class="fa-solid fa-tag" aria-hidden="true"></i>`
-                        + `<span>Also known as ${markTerms(course.shortname, queryTerms)}</span>`;
+                        + `<span>Also known as ${markTerms(course.shortname, pattern)}</span>`;
                 } else {
                     course.topicLine.textContent = '';
                 }
@@ -1047,8 +1302,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return file.endsWith('.html') ? file : `${file}.html`;
     })();
 
-    const normalize = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-    const queryTerms = (query) => normalize(query).split(/\s+/).filter(Boolean);
     const escapeHtml = (text) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
     const siteUrl = (path) => new URL(path, SITE_ROOT).href;
 
@@ -1093,12 +1346,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return [...blocks.values()].map((block) => {
             block.text = block.text.replace(/\s+/g, ' ').trim();
-            block.search = normalize(block.text);
-            return block;
+            return Object.assign(block, searchable(block.text));
         });
     };
 
-    const blockMatches = (block, terms) => terms.every((term) => block.search.includes(term));
+    // How many of the expanded terms a block (or title) matches, and how well (see MATCH_SCORE)
+    const scoreTerms = (expandedTerms, record) => {
+        let count = 0;
+        let score = 0;
+        expandedTerms.forEach((expanded) => {
+            const termMatch = termScore(expanded, record);
+            count += termMatch > 0;
+            score += termMatch;
+        });
+        return { count, score };
+    };
 
     let searchIndexPromise = null;
     const loadSearchIndex = () => {
@@ -1126,13 +1388,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: notebook.title,
                 scope: 'notebook',
                 coursePage: notebook.page,
-                blocks: notebook.blocks.map((block) => ({ ...block, search: normalize(block.text) })),
+                blocks: notebook.blocks.map((block) => ({ ...block, ...searchable(block.text) })),
             })));
         searchIndexPromise ??= Promise.all([pages, notebooks]).then(([sitePages, notebookPages]) => {
             // footer hits scroll to the footer of this page (of the home page when on the 404 page)
             const footerUrl = SEARCH_PAGES.includes(currentFile) ? currentFile : 'index.html';
             const footerPage = { url: footerUrl, title: 'Footer', scope: 'footer', blocks: sitePages[0].footerBlocks };
-            return [...sitePages, footerPage, ...notebookPages];
+            const pages = [...sitePages, footerPage, ...notebookPages];
+            pages.forEach((page) => { page.titleText = searchable(page.title); });
+            return { pages, vocabulary: buildVocabulary(pages.flatMap((page) => [page.titleText, ...page.blocks])) };
         }).catch((error) => {
             searchIndexPromise = null; // allow a retry next time
             throw error;
@@ -1140,72 +1404,85 @@ document.addEventListener('DOMContentLoaded', () => {
         return searchIndexPromise;
     };
 
-    // Escape text for HTML and wrap the searched words in <mark>
-    const markHtml = (text, terms) => {
-        const pattern = new RegExp(`(${terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
-        // split() with a capture group puts the matched words at the odd positions
-        return text.split(pattern).map((piece, i) => (i % 2 ? `<mark>${escapeHtml(piece)}</mark>` : escapeHtml(piece))).join('');
-    };
-
-    const snippetHtml = (text, terms) => {
-        const lower = normalize(text);
-        const first = Math.min(...terms.map((term) => lower.indexOf(term)).filter((i) => i >= 0));
+    const snippetHtml = (text, pattern) => {
+        const first = Math.max(0, foldInPlace(text).search(pattern));
         let start = Math.max(0, first - 60);
         let end = Math.min(text.length, first + 160);
         if (start > 0) start = text.indexOf(' ', start) + 1 || start;
         if (end < text.length) end = text.lastIndexOf(' ', end) > first ? text.lastIndexOf(' ', end) : end;
-        return (start > 0 ? '… ' : '') + markHtml(text.slice(start, end), terms) + (end < text.length ? ' …' : '');
+        return (start > 0 ? '… ' : '') + markMatches(text.slice(start, end), pattern) + (end < text.length ? ' …' : '');
     };
 
-    const runSearch = (pages, query) => {
-        const terms = queryTerms(query);
+    // Blocks that match the search: every word of it (minCount = all), or when nothing does, as many
+    // words as possible. The page a result opens repeats this to find the same N-th block.
+    const searchBlocks = (blocks, expandedTerms, minCount) => blocks
+        .map((block) => ({ block, ...scoreTerms(expandedTerms, block) }))
+        .filter(({ count }) => count >= minCount);
+
+    const runSearch = ({ pages, vocabulary }, query) => {
+        const terms = searchTerms(query);
         if (!terms.length) {
-            return [];
+            return { results: [] };
         }
-        const results = [];
-        pages.forEach((page, pageOrder) => {
-            const isNotebook = page.scope === 'notebook';
-            if (page.scope !== 'footer' && terms.every((term) => normalize(page.title).includes(term))) {
-                results.push({
-                    page,
-                    kind: isNotebook ? 'notebook' : 'page',
-                    score: 100,
-                    order: -1,
-                    href: isNotebook ? page.url : siteUrl(page.url),
-                    title: markHtml(page.title, terms),
-                    snippet: isNotebook ? 'Open notebook on GitHub' : 'Open page',
-                });
-            }
-            let hit = 0;
-            page.blocks.forEach((block, order) => {
-                if (!blockMatches(block, terms)) {
-                    return;
+        const expandedTerms = expandTerms(terms, vocabulary);
+        const pattern = matchPattern(expandedTerms);
+        // the target page needs to know which words were matched as misspellings, and how closely
+        // (see highlightSearchHits): "leanring:1"
+        const fuzzy = expandedTerms.filter((expanded) => expanded.typoLimit !== null)
+            .map((expanded) => `${expanded.term}:${expanded.typoLimit}`);
+
+        const collect = (minCount) => {
+            const results = [];
+            const extra = `${fuzzy.length ? `&fuzzy=${encodeURIComponent(fuzzy.join(' '))}` : ''}${minCount < terms.length ? `&min=${minCount}` : ''}`;
+            pages.forEach((page, pageOrder) => {
+                const isNotebook = page.scope === 'notebook';
+                const titleMatch = scoreTerms(expandedTerms, page.titleText);
+                if (page.scope !== 'footer' && titleMatch.count >= minCount) {
+                    results.push({
+                        page,
+                        kind: isNotebook ? 'notebook' : 'page',
+                        score: 100 + titleMatch.score + titleMatch.count * 50,
+                        order: -1,
+                        href: isNotebook ? page.url : siteUrl(page.url),
+                        title: markMatches(page.title, pattern),
+                        snippet: isNotebook ? 'Open notebook on GitHub' : 'Open page',
+                    });
                 }
-                // notebook blocks come from the pre-built index and say whether they are headings
-                const { element } = block;
-                const isHeading = block.isHeading ?? SEARCH_HEADINGS.test(element.tagName);
-                const isLink = Boolean(element) && (element.matches('a') || (element.children.length === 1 && element.firstElementChild.matches('a')));
-                const wholeWords = terms.filter((term) => new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(block.search)).length;
-                results.push({
-                    page,
-                    kind: isNotebook ? 'notebook' : isHeading ? 'heading' : isLink ? 'link' : 'text',
-                    score: (isHeading ? 20 : 0) + wholeWords * 5 - (isNotebook ? 2 : 0) - pageOrder * 0.01,
-                    order,
-                    href: isNotebook
-                        ? page.url
-                        : siteUrl(`${page.url}?q=${encodeURIComponent(query.trim())}${page.scope ? `&in=${page.scope}` : ''}&hit=${hit}`),
-                    // headings are their own title; other text sits under its section heading
-                    title: isHeading ? snippetHtml(block.text, terms) : markHtml(block.heading || page.title, terms),
-                    snippet: isHeading ? '' : snippetHtml(block.text, terms),
+                searchBlocks(page.blocks, expandedTerms, minCount).forEach(({ block, count, score }, hit) => {
+                    // notebook blocks come from the pre-built index and say whether they are headings
+                    const { element } = block;
+                    const isHeading = block.isHeading ?? SEARCH_HEADINGS.test(element.tagName);
+                    const isLink = Boolean(element) && (element.matches('a') || (element.children.length === 1 && element.firstElementChild.matches('a')));
+                    results.push({
+                        page,
+                        kind: isNotebook ? 'notebook' : isHeading ? 'heading' : isLink ? 'link' : 'text',
+                        // blocks with more of the words first (when not all of them match), then the closest matches
+                        score: count * 50 + score + (isHeading ? 20 : 0) - (isNotebook ? 2 : 0) - pageOrder * 0.01,
+                        order: page.blocks.indexOf(block),
+                        href: isNotebook
+                            ? page.url
+                            : siteUrl(`${page.url}?q=${encodeURIComponent(query.trim())}${page.scope ? `&in=${page.scope}` : ''}${extra}&hit=${hit}`),
+                        // headings are their own title; other text sits under its section heading
+                        title: isHeading ? snippetHtml(block.text, pattern) : markMatches(block.heading || page.title, pattern),
+                        snippet: isHeading ? '' : snippetHtml(block.text, pattern),
+                    });
                 });
-                hit += 1;
             });
-        });
+            return results;
+        };
+
+        // every word; when nothing has them all, one word fewer at a time
+        let minCount = terms.length;
+        let results = collect(minCount);
+        while (!results.length && minCount > 1) {
+            minCount -= 1;
+            results = collect(minCount);
+        }
         // results from the page being viewed come first, then that course's notebooks,
         // then the best matches from everywhere else
         const isHere = ({ page }) => ((!page.scope && page.url === currentFile) ? 2 : page.coursePage === currentFile ? 1 : 0);
         const perNotebook = new Map();
-        return results
+        results = results
             .sort((a, b) => isHere(b) - isHere(a) || b.score - a.score || a.order - b.order)
             .filter(({ page }) => {
                 if (page.scope !== 'notebook') {
@@ -1215,6 +1492,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return perNotebook.get(page) <= NOTEBOOK_RESULTS;
             })
             .slice(0, MAX_RESULTS);
+        return { results, partial: minCount < terms.length };
     };
 
     // Header button: it is written in each page's HTML (before the theme toggle) so the header
@@ -1311,7 +1589,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberSearch = (query) => {
         const clean = query.trim().replace(/\s+/g, ' ');
         if (clean) {
-            saveRecent([clean, ...loadRecent().filter((item) => normalize(item) !== normalize(clean))].slice(0, RECENT_MAX));
+            saveRecent([clean, ...loadRecent().filter((item) => foldText(item) !== foldText(clean))].slice(0, RECENT_MAX));
         }
     };
     const EMPTY_ICON = icon('M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0zM8.5 8.5l4 4m0-4l-4 4');
@@ -1344,14 +1622,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderResults = async () => {
         const query = searchInput.value;
-        if (queryTerms(query).length === 0) {
+        if (searchTerms(query).length === 0) {
             // an empty box is just the input (plus recent searches, if there are any)
             updatePanel(() => showIdle());
             return;
         }
-        let pages;
+        let searchIndex;
         try {
-            pages = await loadSearchIndex();
+            searchIndex = await loadSearchIndex();
         } catch (error) {
             updatePanel(() => showMessage(location.protocol === 'file:'
                 ? 'Search needs the site to be served over http (GitHub Pages or a local server), not opened as a file.'
@@ -1361,7 +1639,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (query !== searchInput.value) {
             return; // a newer keystroke has already rendered
         }
-        const results = runSearch(pages, query);
+        const { results, partial } = runSearch(searchIndex, query);
         if (!results.length) {
             updatePanel(() => showMessage(`No results for “${query.trim()}”`, 'Try another word, or check the spelling.'));
             return;
@@ -1406,7 +1684,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePanel(() => {
             searchPanel.classList.remove('is-empty', 'is-message', 'is-recent');
             searchStatus.textContent = `${results.length}${results.length === MAX_RESULTS ? '+' : ''} result${results.length === 1 ? '' : 's'}`
-                + (groups.size > 1 ? ` on ${groups.size} pages` : '');
+                + (groups.size > 1 ? ` on ${groups.size} pages` : '')
+                + (partial ? ' · no page has every word, showing the closest' : '');
             searchResults.innerHTML = html;
             searchResults.scrollTop = 0; // a new list starts at its first result
         });
@@ -1581,14 +1860,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!query || !scope) {
             return;
         }
-        const terms = queryTerms(query);
-        const matches = extractBlocks(scope).filter((block) => blockMatches(block, terms));
-        const pattern = new RegExp(terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'gi');
+        // the same matching as the search that made the link (see runSearch), so hit=N is the same block
+        const terms = searchTerms(query);
+        const blocks = extractBlocks(scope);
+        const typoLimits = new Map((params.get('fuzzy') || '').split(' ').filter(Boolean)
+            .map((item) => item.split(':')).map(([term, limit]) => [term, Number(limit)]));
+        const expandedTerms = expandTerms(terms, buildVocabulary(blocks), typoLimits);
+        const minCount = Math.min(Number(params.get('min')) || terms.length, terms.length);
+        const matches = searchBlocks(blocks, expandedTerms, minCount).map(({ block }) => block);
+        const pattern = matchPattern(expandedTerms);
 
         matches.forEach((block) => {
             block.nodes.forEach((node) => {
                 const text = node.nodeValue;
-                const lower = normalize(text);
+                const lower = foldInPlace(text);
                 const fragment = document.createDocumentFragment();
                 let last = 0;
                 for (const match of lower.matchAll(pattern)) {
@@ -1619,6 +1904,8 @@ document.addEventListener('DOMContentLoaded', () => {
         params.delete('q');
         params.delete('in');
         params.delete('hit');
+        params.delete('fuzzy');
+        params.delete('min');
         const rest = params.toString();
         history.replaceState(null, '', location.pathname + (rest ? `?${rest}` : '') + location.hash);
     };
