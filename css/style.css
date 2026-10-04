@@ -527,16 +527,16 @@ body {
     }
 }
 
-/* Home: on big monitors (QHD, ultrawide, 4K) the hero fills the first screen under the 4rem header
-   with its content centred (equal room above and below), so the photo and bio sit in the middle.
-   Matched by width (2400px and up) or by height (a viewport 1100px tall or more, at least 1280px
-   wide). The height test keeps it centred when the browser is narrower than the screen, e.g. with
-   vertical tabs or a side panel open, since those take width but not height. The 1280px floor keeps
-   tablets in portrait out.
-   If the content is taller than the screen (short ultrawides such as 2560x1080), the padding alone sets the gap.
-   Laptops and Full-HD monitors (viewport under 1100px tall) keep the plain padding from the Tailwind classes.
+/* Home: on desktop monitors (Full HD, QHD, ultrawide, 4K) the hero fills the first screen under the
+   4rem header with its content centred (equal room above and below), so the photo and bio sit in the
+   middle and the News section starts below the fold.
+   Matched by the browser window, not the screen: landscape, at least 1024px wide and 800px tall.
+   Vertical tabs or a side panel take width and horizontal tabs take height, but a desktop window
+   stays well inside these limits either way. Laptops (windows under about 760px tall, see the
+   screen-size scaling above) and tablets in portrait keep the plain padding from the Tailwind classes.
+   If the content is taller than the window, the padding alone sets the gap.
    "#home" outweighs Tailwind's md:pt-14 / md:pb-28. */
-@media (min-width: 2400px), (min-width: 1280px) and (min-height: 1100px) {
+@media (min-width: 1024px) and (min-height: 800px) and (min-aspect-ratio: 1/1) {
     #home {
         display: flex;
         flex-direction: column;
