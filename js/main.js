@@ -798,6 +798,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('.course-card').forEach(card => {
             card.addEventListener('click', (event) => {
+                // "View Details" on a TA card is a plain link to the course page, not the popup
+                if (event.target.closest('.ta-card-more')) return;
                 const data = courseData[card.dataset.course];
 
                 modalId.textContent = data.id;
