@@ -2844,6 +2844,16 @@ footer .social-icon-link:focus-visible::before {
     transform: translateX(-50%) translateY(0);
 }
 
+/* No tooltips on touch screens: a tap would leave one stuck on, and even while invisible (opacity 0)
+   it takes up room. On a narrow phone the tooltip of the rightmost bio icon then sticks out past the
+   screen edge, making the page a few px wider than the screen (sideways scrolling, and a white strip
+   beside the footer). The icons keep their aria-label. */
+@media (hover: none) {
+    .social-icon-link::before {
+        content: none;
+    }
+}
+
 /* Header buttons (search, theme switch): a small tooltip below the button, in the same style as the
    social-icon tooltips. Its text comes from data-tip (set in js/main.js). It shows after a short
    pause on mouse hover, and on keyboard focus; not on touch screens, where a tap would leave it on. */
