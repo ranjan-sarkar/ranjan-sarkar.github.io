@@ -1916,14 +1916,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- SCROLL TO TOP BUTTON + header depth once the page is scrolled ---
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     const siteHeader = document.querySelector('header');
+    // the header's extra top room (style.css "Blurry Header"): it is stuck at minus this amount,
+    // so once the page has scrolled this far the header is compact
+    const headerExtra = -parseFloat(getComputedStyle(siteHeader).top) || 0;
+    let headerOpen = null;
     const onScroll = () => {
         if (window.scrollY > 600) {
             scrollToTopBtn.classList.add('show');
         } else {
             scrollToTopBtn.classList.remove('show');
         }
-        siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+        siteHeader.classList.toggle('is-scrolled', window.scrollY >= Math.max(headerExtra, 1));
+        // how much of the extra room is still in view (1 at the top, 0 once compact); the bar's lift follows it
+        const open = headerExtra ? 1 - Math.min(Math.max(window.scrollY, 0), headerExtra) / headerExtra : 0;
+        if (open !== headerOpen) {
+            headerOpen = open;
+            siteHeader.style.setProperty('--header-open', open);
+        }
     };
+
+    // Opening another page from a compact header: the <head> script of the next page reads this and
+    // starts its header compact; here that start is cleared after the first paint, so it grows smoothly.
+    // Left at the top, the page also opts out of the browser's scroll restoration for a reload or
+    // Back: Chrome restores such a page a few pixels down (up to ~30px), which would already
+    // use up the header's extra room. Left scrolled down, the position is restored as usual.
+    window.addEventListener('pagehide', () => {
+        const compact = window.scrollY >= Math.max(headerExtra, 1);
+        try {
+            sessionStorage.setItem('headerCompact', compact ? '1' : '0');
+        } catch (e) { }
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = compact ? 'auto' : 'manual';
+        }
+    });
+    if (document.documentElement.classList.contains('header-enter')) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            document.documentElement.classList.add('header-grow');
+            document.documentElement.classList.remove('header-enter');
+            setTimeout(() => document.documentElement.classList.remove('header-grow'), 500);
+        }));
+    }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     scrollToTopBtn.addEventListener('click', () => {

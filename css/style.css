@@ -528,7 +528,7 @@ body {
 }
 
 /* Home: on desktop monitors (Full HD, QHD, ultrawide, 4K) the hero fills the first screen under the
-   4rem header with its content centred (equal room above and below), so the photo and bio sit in the
+   header (4rem bar + its extra top room) with its content centred (equal room above and below), so the photo and bio sit in the
    middle and the News section starts below the fold.
    Matched by the browser window, not the screen: landscape, at least 1024px wide and 800px tall.
    Vertical tabs or a side panel take width and horizontal tabs take height, but a desktop window
@@ -541,8 +541,8 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: calc(100vh - 4rem);
-        min-height: calc(100svh - 4rem);
+        min-height: calc(100vh - 4rem - var(--header-extra));
+        min-height: calc(100svh - 4rem - var(--header-extra));
         padding-top: 4.5rem;
         padding-bottom: 4.5rem;
     }
@@ -1002,6 +1002,47 @@ img.is-loaded {
 }
 
 /* Blurry Header */
+/* At the top of a page the header has extra room above its 4rem bar. It is sticky at minus that
+   amount, so the first few pixels of scrolling carry the extra room up out of view and the bar
+   settles compact - it follows the scroll exactly, and the page below never shifts.
+   Arriving at the top of a page from a scrolled (compact) header, it starts compact and grows
+   smoothly: html.header-enter is set in <head> and cleared by main.js after the first paint.
+   The bar itself is lifted by a little over a third of the extra room still in view (--header-open,
+   1 at the top to 0 when compact, set by main.js while scrolling), so the name and links sit
+   just below centre in the taller bar. */
+:root {
+    --header-extra: 0.75rem;
+}
+
+header.sticky {
+    top: calc(-1 * var(--header-extra));
+    padding-top: var(--header-extra);
+    transition: padding-top 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+header.sticky > .container > .h-16 {
+    transform: translateY(calc(var(--header-open, 1) * var(--header-extra) * -0.35));
+}
+
+html.header-enter header.sticky {
+    padding-top: 0;
+}
+
+html.header-enter header.sticky > .container > .h-16 {
+    transform: none;
+}
+
+/* while it grows in, the bar's lift follows the padding with the same timing */
+html.header-grow header.sticky > .container > .h-16 {
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    header.sticky {
+        transition: box-shadow 0.3s ease;
+    }
+}
+
 header {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -1057,7 +1098,7 @@ header nav a.active,
     top: 100%;
     left: 0;
     right: 0;
-    max-height: calc(100vh - 4rem);
+    max-height: calc(100vh - 4rem - var(--header-extra));
     overflow-y: auto;
     overscroll-behavior: contain;
     box-shadow: 0 18px 32px -18px rgba(15, 23, 42, 0.3);
@@ -4389,6 +4430,10 @@ footer::after {
 }
 
 .footer-link {
+    /* The emails sit in a flex column, which stretches each link to the widest one;
+       keep each link only as wide as its text so the underline matches it. */
+    align-self: flex-start;
+    max-width: 100%;
     text-decoration: none;
     background-image: linear-gradient(var(--accent-dark), var(--accent-dark));
     background-position: 0 100%;

@@ -10,13 +10,35 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Apply the saved (or system) theme before first paint, so pages don't flash light in dark mode -->
+    <!-- Apply the theme before first paint, so pages don't flash light in dark mode: the visitor's own
+         choice (theme toggle) if they made one, otherwise the time on their clock - light from 7:00
+         to 19:00, dark otherwise. That pick is kept for the rest of the visit, so the theme never
+         flips between pages when a visit runs past 7:00 or 19:00. -->
     <script>
-        try {
-            if (localStorage.getItem('theme') === 'dark' ||
-                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        (function () {
+            var theme = null;
+            try { theme = localStorage.getItem('theme') || sessionStorage.getItem('autoTheme'); } catch (e) { }
+            if (theme !== 'light' && theme !== 'dark') {
+                var hour = new Date().getHours();
+                theme = hour >= 7 && hour < 19 ? 'light' : 'dark';
+                try { sessionStorage.setItem('autoTheme', theme); } catch (e) { }
+            }
+            if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
             }
+        })();
+    </script>
+    <!-- Opened from a page scrolled down: the header starts compact and grows smoothly (see main.js) -->
+    <script>
+        try {
+            (function () {
+                var nav = performance.getEntriesByType('navigation')[0];
+                if (sessionStorage.getItem('headerCompact') === '1' && !location.hash &&
+                    (!nav || nav.type === 'navigate') &&
+                    !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.documentElement.classList.add('header-enter');
+                }
+            })();
         } catch (e) { }
     </script>
     <!-- Old single-page links (e.g. /#seminars, /#amfai) now live on their own pages -->
