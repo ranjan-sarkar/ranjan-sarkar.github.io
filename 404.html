@@ -35,8 +35,7 @@
             (function () {
                 var nav = performance.getEntriesByType('navigation')[0];
                 if (sessionStorage.getItem('headerCompact') === '1' && !location.hash &&
-                    (!nav || nav.type === 'navigate') &&
-                    !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    (!nav || nav.type === 'navigate')) {
                     document.documentElement.classList.add('header-enter');
                 }
             })();

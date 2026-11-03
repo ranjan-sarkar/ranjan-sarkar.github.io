@@ -1002,45 +1002,38 @@ img.is-loaded {
 }
 
 /* Blurry Header */
-/* At the top of a page the header has extra room above its 4rem bar. It is sticky at minus that
-   amount, so the first few pixels of scrolling carry the extra room up out of view and the bar
-   settles compact - it follows the scroll exactly, and the page below never shifts.
+/* At the top of a page the header has extra room above its 4rem bar. Once the page is scrolled past
+   that room (main.js adds .is-scrolled), the header slides up by it over a short, visible animation
+   and the bar settles compact; scrolling back to the top slides it down again. Only a transform
+   moves, so the header keeps its height in the layout and the page below never shifts.
    Arriving at the top of a page from a scrolled (compact) header, it starts compact and grows
    smoothly: html.header-enter is set in <head> and cleared by main.js after the first paint.
-   The bar itself is lifted by a little over a third of the extra room still in view (--header-open,
-   1 at the top to 0 when compact, set by main.js while scrolling), so the name and links sit
-   just below centre in the taller bar. */
+   In the taller header the bar is lifted by a little over a third of the extra room, so the name
+   and links sit just below centre. */
 :root {
     --header-extra: 0.75rem;
+    --header-ease: 0.45s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 header.sticky {
-    top: calc(-1 * var(--header-extra));
+    top: 0;
     padding-top: var(--header-extra);
-    transition: padding-top 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    transition: transform var(--header-ease), box-shadow 0.3s ease;
 }
 
 header.sticky > .container > .h-16 {
-    transform: translateY(calc(var(--header-open, 1) * var(--header-extra) * -0.35));
+    transform: translateY(calc(var(--header-extra) * -0.35));
+    transition: transform var(--header-ease);
 }
 
+header.sticky.is-scrolled,
 html.header-enter header.sticky {
-    padding-top: 0;
+    transform: translateY(calc(-1 * var(--header-extra)));
 }
 
+header.sticky.is-scrolled > .container > .h-16,
 html.header-enter header.sticky > .container > .h-16 {
     transform: none;
-}
-
-/* while it grows in, the bar's lift follows the padding with the same timing */
-html.header-grow header.sticky > .container > .h-16 {
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    header.sticky {
-        transition: box-shadow 0.3s ease;
-    }
 }
 
 header {
