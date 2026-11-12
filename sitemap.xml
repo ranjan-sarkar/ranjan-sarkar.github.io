@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -33,7 +34,88 @@
 <url>
   <loc>https://ranjan-sarkar.github.io/photography.html</loc>
   <lastmod>2026-11-12T00:00:00+00:00</lastmod>
-  <priority>0.70</priority>
+  <priority>0.80</priority>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/humayuns-tomb-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/howrah-bridge-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/old-bus-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/lake-hills-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/nehru-museum-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1791131069082-442fc986055d?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/sunflowers-main-building-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778043-88929382c02a?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/kash-ful-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/string-lights-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/ganga-sunset-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://ranjan-sarkar.github.io/Content/photography/autumn-park-1024.webp</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
+  <image:image>
+    <image:loc>https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=1800&amp;q=82&amp;auto=format&amp;fit=max</image:loc>
+  </image:image>
 </url>
 <url>
   <loc>https://ranjan-sarkar.github.io/rl.html</loc>

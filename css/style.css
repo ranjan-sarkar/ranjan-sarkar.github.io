@@ -5191,11 +5191,37 @@ footer .search-target {
 
 .notfound-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
     gap: 1rem;
-    max-width: 56rem;
+    max-width: 62rem;
     margin: 3.5rem auto 0;
     text-align: left;
+}
+
+/* five cards: one row on desktops; three over two on tablets; two columns on phones, with a lone
+   last card spanning the full row */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .notfound-links {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .notfound-links > .notfound-card {
+        grid-column: span 2;
+    }
+
+    .notfound-links > .notfound-card:nth-child(n + 4) {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 639px) {
+    .notfound-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .notfound-links > .notfound-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
 }
 
 .notfound-card {
