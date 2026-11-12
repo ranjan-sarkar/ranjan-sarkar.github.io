@@ -906,28 +906,46 @@
                             <i class="fa-brands fa-500px" aria-hidden="true"></i>500px</a>
                     </div>
                     <p class="photo-credit">All photos &copy; Ranjan Sarkar, from my <a href="https://unsplash.com/@ranjansarkar"
-                            target="_blank" rel="noopener">Unsplash</a> and <a href="https://500px.com/p/ranjansarkar"
-                            target="_blank" rel="noopener">500px</a> profiles.</p>
+                            target="_blank" rel="noopener" class="themed-text-primary text-accent font-medium">Unsplash</a> and <a
+                            href="https://500px.com/p/ranjansarkar" target="_blank" rel="noopener"
+                            class="themed-text-primary text-accent font-medium">500px</a> profiles.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Full-screen viewer (opened by js/photography.js) -->
-    <dialog class="photo-lightbox search-skip" id="photo-lightbox" aria-label="Photo viewer">
+    <!-- Full-screen viewer (opened by js/photography.js): the photo with its caption, a toolbar
+         (slideshow, photo list, close), and the list of all photos beside it (under it on phones) -->
+    <dialog class="photo-lightbox search-skip" id="photo-lightbox" aria-label="Photo viewer" tabindex="-1">
         <div class="photo-lightbox-inner">
-            <button type="button" class="photo-lb-btn photo-lb-close" data-lb="close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-            <button type="button" class="photo-lb-btn photo-lb-prev" data-lb="prev" aria-label="Previous photo"><i class="fa-solid fa-chevron-left"></i></button>
-            <figure class="photo-lb-figure">
-                <img class="photo-lb-img" alt="">
-                <figcaption class="photo-lb-caption">
-                    <span class="photo-lb-count"></span>
-                    <span class="photo-lb-title"></span>
-                    <span class="photo-lb-text"></span>
-                    <span class="photo-lb-meta"></span>
-                </figcaption>
-            </figure>
-            <button type="button" class="photo-lb-btn photo-lb-next" data-lb="next" aria-label="Next photo"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="photo-lb-stage">
+                <div class="photo-lb-toolbar">
+                    <button type="button" class="photo-lb-btn" data-lb="play" aria-pressed="false" aria-label="Play slideshow"
+                        data-tip="Play slideshow (Space)"><i class="fa-solid fa-play" aria-hidden="true"></i></button>
+                    <button type="button" class="photo-lb-btn" data-lb="sidebar" aria-pressed="true" aria-controls="photo-lb-sidebar"
+                        aria-label="Hide photo list" data-tip="Hide photo list"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i></button>
+                    <button type="button" class="photo-lb-btn" data-lb="close" aria-label="Close" data-tip="Close (Esc)"><i
+                            class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                </div>
+                <button type="button" class="photo-lb-btn photo-lb-prev" data-lb="prev" aria-label="Previous photo"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                <figure class="photo-lb-figure">
+                    <div class="photo-lb-frame">
+                        <img class="photo-lb-img" alt="">
+                        <span class="photo-lb-progress" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="photo-lb-caption">
+                        <span class="photo-lb-count"></span>
+                        <span class="photo-lb-title"></span>
+                        <span class="photo-lb-text"></span>
+                        <span class="photo-lb-meta"></span>
+                    </figcaption>
+                </figure>
+                <button type="button" class="photo-lb-btn photo-lb-next" data-lb="next" aria-label="Next photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            </div>
+            <aside class="photo-lb-sidebar" id="photo-lb-sidebar" aria-label="All photos">
+                <p class="photo-lb-sidebar-head"><span>All photos</span><span class="photo-lb-sidebar-count"></span></p>
+                <ul class="photo-lb-thumbs"></ul>
+            </aside>
         </div>
     </dialog>
 

@@ -5853,6 +5853,48 @@ footer .search-target {
     color: #a5b4fc;
 }
 
+/* Auto-play countdown: a thin bar along the bottom edge of the current slide fills from left to
+   right over --auto-ms (set by js/photography.js); when it is full the next slide comes in. While the
+   carousel is held (.is-held: mouse over it, focus in it, a finger on it...) the bar stops where it is
+   and later carries on from there. Never shown with reduced motion (no auto-play then). */
+.photo-slide-progress {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 2;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.18);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.photo-slide-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #4f46e5, #7c6cf0);   /* the page's indigo-violet, calm */
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.photo-carousel.is-playing .photo-slide.is-current .photo-slide-progress {
+    opacity: 1;
+}
+
+.photo-carousel.is-playing .photo-slide.is-current .photo-slide-progress::after {
+    animation: photo-countdown var(--auto-ms, 4000ms) linear forwards;
+}
+
+.photo-carousel.is-held .photo-slide.is-current .photo-slide-progress::after {
+    animation-play-state: paused;
+}
+
+@keyframes photo-countdown {
+    to {
+        transform: scaleX(1);
+    }
+}
+
 .photo-carousel-controls {
     display: flex;
     align-items: center;
@@ -6200,10 +6242,6 @@ footer .search-target {
     color: var(--text-dark-secondary);
 }
 
-.photo-credit a {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-}
 
 /* Full-screen viewer */
 .photo-lightbox-open {
@@ -6211,6 +6249,7 @@ footer .search-target {
 }
 
 .photo-lightbox {
+    overflow: hidden;
     width: 100vw;
     max-width: 100vw;
     height: 100vh;
@@ -6222,6 +6261,10 @@ footer .search-target {
     border: 0;
     background: rgba(2, 6, 23, 0.94);
     color: #f1f5f9;
+}
+
+.photo-lightbox:focus {
+    outline: none;
 }
 
 .photo-lightbox::backdrop {
@@ -6238,18 +6281,58 @@ footer .search-target {
     }
 }
 
+/* Layout: the stage (photo, caption, arrows, toolbar) and the list of all photos, beside it on
+   tablets and desktops (a column on the right) or under it on phones (a strip of thumbnails).
+   .is-sidebar-hidden collapses the list; --lb-chrome is the height kept free around the photo. */
+.photo-lightbox {
+    --lb-chrome: 17rem;
+}
+
+.photo-lightbox:not(.is-sidebar-hidden) {
+    --lb-chrome: 23rem;
+}
+
 .photo-lightbox-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) var(--lb-strip, 6rem);
+    height: 100%;
+    transition: grid-template-rows 0.35s ease, grid-template-columns 0.35s ease;
+}
+
+.photo-lightbox.is-sidebar-hidden .photo-lightbox-inner {
+    --lb-strip: 0rem;
+}
+
+@media (min-width: 768px) {
+    .photo-lightbox,
+    .photo-lightbox:not(.is-sidebar-hidden) {
+        --lb-chrome: 14rem;
+    }
+
+    .photo-lightbox-inner {
+        grid-template-columns: minmax(0, 1fr) var(--lb-sidebar, 17.5rem);
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    .photo-lightbox.is-sidebar-hidden .photo-lightbox-inner {
+        --lb-sidebar: 0rem;
+    }
+}
+
+.photo-lb-stage {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    padding: 3.5rem 1rem 4.5rem;
+    min-width: 0;
+    min-height: 0;
+    padding: 4rem 1rem 4.5rem;
 }
 
 @media (min-width: 768px) {
-    .photo-lightbox-inner {
-        padding: 3rem 5rem 2rem;
+    .photo-lb-stage {
+        padding: 4rem 5rem 2rem;
     }
 }
 
@@ -6261,27 +6344,61 @@ footer .search-target {
     max-height: 100%;
 }
 
+/* the photo sits in a frame that also holds the slideshow countdown bar along its bottom edge */
+.photo-lb-frame {
+    position: relative;
+    max-width: 100%;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    line-height: 0;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+}
+
 .photo-lb-img {
     display: block;
     max-width: 100%;
-    max-height: calc(100vh - 17rem);
-    max-height: calc(100dvh - 17rem);
+    max-height: calc(100vh - var(--lb-chrome));
+    max-height: calc(100dvh - var(--lb-chrome));
     width: auto;
     height: auto;
-    border-radius: 0.6rem;
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
     transition: opacity 0.3s ease;
-}
-
-@media (min-width: 768px) {
-    .photo-lb-img {
-        max-height: calc(100vh - 14rem);
-        max-height: calc(100dvh - 14rem);
-    }
 }
 
 .photo-lb-img.is-swapping {
     opacity: 0.4;
+}
+
+/* Slideshow countdown: shows once the slideshow has been started; fills over --slide-ms (set by
+   js/photography.js) and freezes while paused, so playing again carries on from there */
+.photo-lb-progress {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.18);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.photo-lb-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #4f46e5, #7c6cf0);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.photo-lightbox.has-slideshow .photo-lb-progress {
+    opacity: 1;
+}
+
+.photo-lb-progress.is-counting::after {
+    animation: photo-countdown var(--slide-ms, 4000ms) linear forwards;
+}
+
+.photo-lightbox:not(.is-playing) .photo-lb-progress::after {
+    animation-play-state: paused;
 }
 
 .photo-lb-caption {
@@ -6366,9 +6483,79 @@ footer .search-target {
     outline-offset: 2px;
 }
 
-.photo-lb-close {
+/* toolbar in the stage's top-right corner: slideshow, photo list, close */
+.photo-lb-toolbar {
+    position: absolute;
     top: 0.75rem;
     right: 0.75rem;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.photo-lb-toolbar .photo-lb-btn {
+    position: relative;
+}
+
+/* hover labels for the toolbar buttons, in the same style as the header's search / theme tooltips:
+   text from data-tip (kept up to date by js/photography.js), shown below the button after a short
+   pause on mouse hover, and on keyboard focus; not on touch screens, where a tap would leave it on */
+.photo-lb-toolbar .photo-lb-btn::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    z-index: 4;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.55rem;
+    background: rgba(15, 23, 42, 0.96);
+    color: #f8fafc;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* the close button sits at the right edge, so its label lines up with its right side */
+.photo-lb-toolbar .photo-lb-btn:last-child::after {
+    left: auto;
+    right: 0;
+    transform: translateY(-4px);
+}
+
+@media (hover: hover) {
+    .photo-lb-toolbar .photo-lb-btn:hover::after {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transition-delay: 0.25s;
+    }
+
+    .photo-lb-toolbar .photo-lb-btn:last-child:hover::after {
+        transform: none;
+    }
+}
+
+.photo-lb-toolbar .photo-lb-btn:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.photo-lb-toolbar .photo-lb-btn:last-child:focus-visible::after {
+    transform: none;
+}
+
+/* the slideshow button while playing, and the list button while the list is shown */
+.photo-lb-btn[aria-pressed="true"] {
+    border-color: rgba(165, 180, 252, 0.55);
+    background-color: rgba(79, 70, 229, 0.55);
 }
 
 /* phones: the arrows sit in the bottom corners, clear of the photo (swiping works too) */
@@ -6386,7 +6573,7 @@ footer .search-target {
 }
 
 @media (min-width: 768px) {
-    .photo-lb-close {
+    .photo-lb-toolbar {
         top: 1.25rem;
         right: 1.25rem;
     }
@@ -6404,6 +6591,135 @@ footer .search-target {
 
     .photo-lb-next {
         right: 1.25rem;
+    }
+}
+
+/* The list of all photos: a thumbnail strip under the photo on phones, a two-column grid beside
+   it on tablets and desktops. The current photo is outlined; the others are dimmed until hovered. */
+.photo-lb-sidebar {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(15, 23, 42, 0.72);
+}
+
+.photo-lb-sidebar-head {
+    display: none;
+    justify-content: space-between;
+    padding: 1.4rem 1.25rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #94a3b8;
+}
+
+.photo-lb-sidebar-count {
+    font-family: var(--font-mono);
+    color: #a5b4fc;
+}
+
+.photo-lb-thumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    height: 100%;
+    padding: 0 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;   /* scrolls by wheel, touch and keyboard, without a visible bar */
+    overscroll-behavior: contain;
+    scroll-padding: 0.75rem 1rem;   /* keeps the highlighted photo's outline clear of the edges */
+}
+
+.photo-lb-thumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.photo-lb-thumbs li {
+    flex: 0 0 auto;
+}
+
+.photo-lb-thumb {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #1e293b;
+    cursor: pointer;
+    opacity: 0.5;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: opacity 0.2s ease, outline-color 0.2s ease;
+}
+
+.photo-lb-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-lb-thumb:hover,
+.photo-lb-thumb:focus-visible {
+    opacity: 0.85;
+}
+
+.photo-lb-thumb:focus-visible {
+    outline-color: rgba(165, 180, 252, 0.6);
+}
+
+.photo-lb-thumb.is-current {
+    opacity: 1;
+    outline-color: #a5b4fc;
+}
+
+/* a collapsed list leaves no border line behind */
+.photo-lightbox.is-sidebar-hidden .photo-lb-sidebar {
+    border-color: transparent;
+}
+
+@media (min-width: 768px) {
+    .photo-lb-sidebar {
+        border-top: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .photo-lightbox.is-sidebar-hidden .photo-lb-sidebar {
+        border-left-color: transparent;
+    }
+
+    .photo-lb-sidebar-head {
+        display: flex;
+        width: 17.5rem;
+    }
+
+    /* fixed width, so the thumbnails don't reflow while the list slides open or shut */
+    .photo-lb-thumbs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-content: start;
+        gap: 0.65rem;
+        width: 17.5rem;
+        height: auto;
+        flex: 1;
+        min-height: 0;
+        padding: 0.25rem 1.25rem 1.25rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .photo-lb-thumb {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
     }
 }
 
@@ -6438,5 +6754,10 @@ footer .search-target {
     .photo-item.is-entering,
     .photo-lightbox[open] {
         animation: none;
+    }
+
+    .photo-lightbox-inner,
+    .photo-lb-thumb {
+        transition: none;
     }
 }

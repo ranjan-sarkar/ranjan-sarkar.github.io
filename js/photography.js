@@ -62,17 +62,102 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Viewer ---
-    // Prev / next walk through the gallery photos currently shown by the filter.
+    // Prev / next walk through the gallery photos currently shown by the filter. Beside the photo
+    // (under it on phones) a list of all those photos shows where you are and jumps to any of them;
+    // it can be hidden, and that choice is remembered. A slideshow button plays the photos one after
+    // another; a bar along the bottom of the photo counts down to the next one, and pausing freezes
+    // the bar so playing again carries on from there.
     const img = dialog.querySelector('.photo-lb-img');
     const count = dialog.querySelector('.photo-lb-count');
     const title = dialog.querySelector('.photo-lb-title');
     const text = dialog.querySelector('.photo-lb-text');
     const meta = dialog.querySelector('.photo-lb-meta');
+    const thumbsList = dialog.querySelector('.photo-lb-thumbs');
+    const sidebar = dialog.querySelector('.photo-lb-sidebar');
+    const sidebarCount = dialog.querySelector('.photo-lb-sidebar-count');
+    const sidebarBtn = dialog.querySelector('[data-lb="sidebar"]');
+    const playBtn = dialog.querySelector('[data-lb="play"]');
+    const progress = dialog.querySelector('.photo-lb-progress');
     let list = [];
+    let thumbs = [];
     let index = 0;
     let opener = null;
 
     const escapeHtml = (value) => value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+    // slideshow clock: SLIDE_MS per photo, paused / resumed without losing the time already run
+    const SLIDE_MS = 4000;
+    dialog.style.setProperty('--slide-ms', `${SLIDE_MS}ms`);
+    let playing = false;
+    let slideTimer = null;
+    let slideLeft = SLIDE_MS;
+    let slideStarted = 0;
+    const startSlideClock = () => {
+        slideStarted = performance.now();
+        slideTimer = setTimeout(() => show(index + 1), slideLeft);
+    };
+    const stopSlideClock = () => {
+        if (!slideTimer) return;
+        clearTimeout(slideTimer);
+        slideTimer = null;
+        slideLeft = Math.max(0, slideLeft - (performance.now() - slideStarted));
+    };
+    const setPlaying = (on) => {
+        playing = on;
+        dialog.classList.toggle('is-playing', on);
+        playBtn.setAttribute('aria-pressed', String(on));
+        const label = on ? 'Pause slideshow' : 'Play slideshow';
+        playBtn.setAttribute('aria-label', label);
+        playBtn.dataset.tip = `${label} (Space)`;
+        playBtn.querySelector('i').className = `fa-solid ${on ? 'fa-pause' : 'fa-play'}`;
+        if (on) {
+            dialog.classList.add('has-slideshow');
+            if (!progress.classList.contains('is-counting')) progress.classList.add('is-counting');
+            startSlideClock();
+        } else {
+            stopSlideClock();
+        }
+    };
+
+    // the photo list: shown by default on tablets and desktops, hidden on phones, until the visitor chooses
+    let sidebarShown = window.innerWidth >= 768;
+    try {
+        const saved = localStorage.getItem('photoViewerSidebar');
+        if (saved === 'shown' || saved === 'hidden') sidebarShown = saved === 'shown';
+    } catch (e) { }
+    const applySidebar = () => {
+        dialog.classList.toggle('is-sidebar-hidden', !sidebarShown);
+        sidebar.inert = !sidebarShown;   // a hidden list is out of the tab order
+        sidebarBtn.setAttribute('aria-pressed', String(sidebarShown));
+        const label = sidebarShown ? 'Hide photo list' : 'Show photo list';
+        sidebarBtn.setAttribute('aria-label', label);
+        sidebarBtn.dataset.tip = label;
+    };
+    applySidebar();
+
+    const buildThumbs = () => {
+        thumbsList.textContent = '';
+        thumbs = list.map((frame, n) => {
+            const figure = frame.closest('.photo-item');
+            const small = frame.querySelector('img');
+            const li = document.createElement('li');
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'photo-lb-thumb';
+            btn.setAttribute('aria-label', `Photo ${n + 1}: ${figure.querySelector('.photo-title').textContent}`);
+            const pic = document.createElement('img');
+            pic.src = small.currentSrc || small.src;
+            pic.alt = '';
+            pic.loading = 'lazy';
+            pic.decoding = 'async';
+            btn.appendChild(pic);
+            btn.addEventListener('click', () => show(n));
+            li.appendChild(btn);
+            thumbsList.appendChild(li);
+            return btn;
+        });
+        sidebarCount.textContent = String(list.length);
+    };
 
     const show = (i) => {
         index = (i + list.length) % list.length;
@@ -105,6 +190,25 @@ document.addEventListener('DOMContentLoaded', () => {
             (place ? `<span><i class="fa-solid fa-location-dot" aria-hidden="true"></i>${escapeHtml(place.textContent.trim())}</span>` : '') +
             `<a href="${escapeHtml(frame.dataset.page)}" target="_blank" rel="noopener"><i class="fa-brands ${icon}" aria-hidden="true"></i>View on ${escapeHtml(source)}<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>`;
 
+        // highlight it in the list and keep it in view there
+        thumbs.forEach((btn, n) => {
+            btn.classList.toggle('is-current', n === index);
+            if (n === index) btn.setAttribute('aria-current', 'true');
+            else btn.removeAttribute('aria-current');
+        });
+        if (sidebarShown && thumbs[index] && dialog.open) {
+            thumbs[index].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        }
+
+        // a new photo gets the full slideshow time, and its countdown bar starts from empty
+        clearTimeout(slideTimer);
+        slideTimer = null;
+        slideLeft = SLIDE_MS;
+        progress.classList.remove('is-counting');
+        void progress.offsetWidth;
+        progress.classList.add('is-counting');
+        if (playing) startSlideClock();
+
         // warm the neighbours so next / previous feel instant
         [index + 1, index - 1].forEach((n) => {
             const neighbour = list[(n + list.length) % list.length];
@@ -116,9 +220,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const open = (frame, returnTo = frame) => {
         list = items.filter((item) => !item.hidden).map((item) => item.querySelector('.photo-frame'));
         opener = returnTo;
+        buildThumbs();
         show(list.indexOf(frame));
         dialog.showModal();
+        // focus the viewer itself, not its first button: no stray focus ring or label on "play",
+        // and Space plays / pauses straight away
+        dialog.focus();
+        dialog.dispatchEvent(new Event('photo-viewer-open'));   // the carousel holds its countdown
         document.documentElement.classList.add('photo-lightbox-open');
+        // bring the current photo into view in the list once the viewer has its size
+        requestAnimationFrame(() => {
+            if (sidebarShown && thumbs[index]) thumbs[index].scrollIntoView({ block: 'center', inline: 'center' });
+        });
     };
 
     grid.querySelectorAll('.photo-frame').forEach((frame) => {
@@ -126,6 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     dialog.addEventListener('close', () => {
+        setPlaying(false);
+        dialog.classList.remove('has-slideshow');
+        progress.classList.remove('is-counting');
         document.documentElement.classList.remove('photo-lightbox-open');
         if (opener) opener.focus({ preventScroll: true });
     });
@@ -135,18 +251,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (action === 'close') dialog.close();
         else if (action === 'prev') show(index - 1);
         else if (action === 'next') show(index + 1);
-        // a click on the dark backdrop (not on the photo or its caption) closes the viewer
-        else if (event.target === dialog || event.target.classList.contains('photo-lightbox-inner')) dialog.close();
+        else if (action === 'play') setPlaying(!playing);
+        else if (action === 'sidebar') {
+            sidebarShown = !sidebarShown;
+            try { localStorage.setItem('photoViewerSidebar', sidebarShown ? 'shown' : 'hidden'); } catch (e) { }
+            applySidebar();
+            if (sidebarShown && thumbs[index]) {
+                setTimeout(() => thumbs[index].scrollIntoView({ block: 'center', inline: 'center' }), 360);
+            }
+        }
+        // a click on the dark background around the photo (not on it or its caption) closes the viewer
+        else if (event.target === dialog || event.target.matches('.photo-lightbox-inner, .photo-lb-stage')) dialog.close();
     });
 
     dialog.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowRight') { event.preventDefault(); show(index + 1); }
         if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
+        // Space plays / pauses the slideshow (on a focused button it presses that button instead)
+        if (event.key === ' ' && !event.target.closest('button, a')) { event.preventDefault(); setPlaying(!playing); }
     });
 
-    // swipe left / right on touch screens
+    // swipe left / right on the photo (touch screens); swipes on the photo list just scroll the list
     let touchX = null;
-    dialog.addEventListener('touchstart', (event) => { touchX = event.touches[0].clientX; }, { passive: true });
+    dialog.addEventListener('touchstart', (event) => {
+        touchX = event.target.closest('.photo-lb-sidebar') ? null : event.touches[0].clientX;
+    }, { passive: true });
     dialog.addEventListener('touchend', (event) => {
         if (touchX === null) return;
         const dx = event.changedTouches[0].clientX - touchX;
@@ -177,12 +306,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const markCurrent = (i) => {
+        const changed = i !== current;
         current = i;
         slides.forEach((slide, n) => slide.classList.toggle('is-current', n === i));
         dots.forEach((dot, n) => {
             dot.classList.toggle('is-active', n === i);
             dot.setAttribute('aria-current', n === i ? 'true' : 'false');
         });
+        // a newly shown slide always gets a full countdown (its bar starts from empty in style.css)
+        if (changed) restartCountdown();
     };
 
     // scroll so the slide sits in the middle of the strip
@@ -193,8 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
         programmatic = Math.abs(track.scrollLeft - left) > 1;
         track.scrollTo({ left, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
         markCurrent(n);
-        // any move restarts the auto-advance countdown, so it never jumps right after a click
-        if (autoTimer) startAuto();
     };
 
     // while the strip moves (arrows, swipe, trackpad), the slide nearest the middle is highlighted
@@ -248,43 +378,87 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // auto-advance
-    const AUTO_MS = 5000;
-    let autoTimer = null;
-    let paused = false;
-    let onScreen = false;
-    const stopAuto = () => { clearInterval(autoTimer); autoTimer = null; };
-    const startAuto = () => {
-        stopAuto();
-        if (reduceMotion.matches || paused || document.hidden || !onScreen || dialog.open) return;
-        autoTimer = setInterval(() => { if (!dialog.open) goTo(current + 1); }, AUTO_MS);
-    };
-    const pause = () => { paused = true; stopAuto(); };
-    const resume = () => { paused = false; startAuto(); };
+    // Auto-advance: each slide gets AUTO_MS, then the next one comes in. A bar along the bottom edge
+    // of the current slide fills up to show the countdown (.photo-slide-progress in style.css).
+    // The countdown pauses where it is, and later carries on from there (it does not restart), while
+    // any "hold" applies: the mouse is over the carousel, keyboard focus is in it, a finger is on the
+    // strip, the photo viewer is open, the tab is hidden, or the carousel is off screen. Never runs
+    // with reduced motion.
+    const AUTO_MS = 4000;
+    let remaining = AUTO_MS;   // time left on the current slide
+    let startedAt = 0;         // when the clock last (re)started
+    let advanceTimer = null;   // set while the clock runs
+    const holds = new Set(['offscreen']);
+    carousel.style.setProperty('--auto-ms', `${AUTO_MS}ms`);
+    slides.forEach((slide) => {
+        const bar = document.createElement('span');
+        bar.className = 'photo-slide-progress';
+        bar.setAttribute('aria-hidden', 'true');
+        slide.querySelector('.photo-slide-btn').appendChild(bar);
+    });
 
-    carousel.addEventListener('mouseenter', pause);
-    carousel.addEventListener('mouseleave', resume);
-    carousel.addEventListener('focusin', pause);
-    carousel.addEventListener('focusout', (event) => { if (!carousel.contains(event.relatedTarget)) resume(); });
-    // a finger on the strip takes over from any button-driven move, and pauses auto-advance;
-    // it starts again a few seconds after the finger lifts
-    let touchResumeTimer = null;
+    const startClock = () => {
+        startedAt = performance.now();
+        // the timer stays set while goTo runs, so the new slide's countdown starts straight away
+        advanceTimer = setTimeout(() => goTo(current + 1), remaining);
+    };
+    const stopClock = () => {
+        clearTimeout(advanceTimer);
+        advanceTimer = null;
+        remaining = Math.max(0, remaining - (performance.now() - startedAt));
+    };
+    // run or hold, whichever applies now; .is-held freezes the bar where it is
+    const sync = () => {
+        const run = !reduceMotion.matches && holds.size === 0;
+        if (run && !advanceTimer) {
+            carousel.classList.add('is-playing');
+            carousel.classList.remove('is-held');
+            startClock();
+        } else if (!run && advanceTimer) {
+            stopClock();
+            carousel.classList.add('is-held');
+        }
+    };
+    const hold = (reason) => { holds.add(reason); sync(); };
+    const release = (reason) => { holds.delete(reason); sync(); };
+    // a new slide: full time again (keeps running if it was running, stays held if held)
+    function restartCountdown() {
+        const running = advanceTimer !== null;
+        clearTimeout(advanceTimer);
+        advanceTimer = null;
+        remaining = AUTO_MS;
+        if (running) startClock();
+    }
+
+    // only a real mouse pauses on hover (a tap on a phone also fires mouse events, with no "leave")
+    carousel.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') hold('hover'); });
+    carousel.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') release('hover'); });
+    // keyboard focus holds it; the focus a click or tap leaves on a button does not (no focus ring)
+    carousel.addEventListener('focusin', (event) => {
+        if (event.target.matches(':focus-visible')) hold('focus');
+        else release('focus');
+    });
+    carousel.addEventListener('focusout', (event) => { if (!carousel.contains(event.relatedTarget)) release('focus'); });
+    // a finger on the strip takes over from any button-driven move and holds the countdown;
+    // it carries on shortly after the finger lifts
+    let touchReleaseTimer = null;
     track.addEventListener('touchstart', () => {
         programmatic = false;
-        clearTimeout(touchResumeTimer);
-        pause();
+        clearTimeout(touchReleaseTimer);
+        hold('touch');
     }, { passive: true });
     track.addEventListener('touchend', () => {
-        clearTimeout(touchResumeTimer);
-        touchResumeTimer = setTimeout(resume, 4000);
+        clearTimeout(touchReleaseTimer);
+        touchReleaseTimer = setTimeout(() => release('touch'), 1500);
     }, { passive: true });
-    document.addEventListener('visibilitychange', () => (document.hidden ? stopAuto() : startAuto()));
-    dialog.addEventListener('close', startAuto);
+    document.addEventListener('visibilitychange', () => (document.hidden ? hold('hidden') : release('hidden')));
+    dialog.addEventListener('photo-viewer-open', () => hold('viewer'));
+    dialog.addEventListener('close', () => release('viewer'));
 
     // only run while the carousel is on screen
     new IntersectionObserver(([entry]) => {
-        onScreen = entry.isIntersecting;
-        startAuto();
+        if (entry.isIntersecting) release('offscreen');
+        else hold('offscreen');
     }, { threshold: 0.4 }).observe(carousel);
 
     // pad both ends so the first and last slides can also sit in the middle (sizes change with the
