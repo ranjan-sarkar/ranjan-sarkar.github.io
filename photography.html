@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Photography | Ranjan Sarkar</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Apply the theme before first paint, so pages don't flash light in dark mode: the visitor's own
+         choice (theme toggle) if they made one, otherwise the time on their clock - light from 7:00
+         to 19:00, dark otherwise. That pick is kept for the rest of the visit, so the theme never
+         flips between pages when a visit runs past 7:00 or 19:00. -->
+    <script>
+        (function () {
+            var theme = null;
+            try { theme = localStorage.getItem('theme') || sessionStorage.getItem('autoTheme'); } catch (e) { }
+            if (theme !== 'light' && theme !== 'dark') {
+                var hour = new Date().getHours();
+                theme = hour >= 7 && hour < 19 ? 'light' : 'dark';
+                try { sessionStorage.setItem('autoTheme', theme); } catch (e) { }
+            }
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <!-- Opened from a page scrolled down: the header starts compact and grows smoothly (see main.js) -->
+    <script>
+        try {
+            (function () {
+                var nav = performance.getEntriesByType('navigation')[0];
+                if (sessionStorage.getItem('headerCompact') === '1' && !location.hash &&
+                    (!nav || nav.type === 'navigate')) {
+                    document.documentElement.classList.add('header-enter');
+                }
+            })();
+        } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"> -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GX66CL7RZE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-GX66CL7RZE');
+    </script>
+
+    <meta property="og:site_name" content="Ranjan Sarkar">
+    <meta property="og:title" content="Photography | Ranjan Sarkar" />
+    <meta property="og:description" content="Photography by Ranjan Sarkar: campus mornings, sunsets and heritage, from IIT Kharagpur, IIT Roorkee and Delhi." />
+    <meta property="og:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
+    <meta property="og:url" content="https://ranjan-sarkar.github.io/photography.html" />
+    <meta property="og:type" content="website" />
+
+    <meta name="description" content="Photography by Ranjan Sarkar: campus mornings, sunsets and heritage, from IIT Kharagpur, IIT Roorkee and Delhi.">
+    <meta name="author" content="Ranjan Sarkar">
+    <link rel="canonical" href="https://ranjan-sarkar.github.io/photography.html">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Photography | Ranjan Sarkar" />
+    <meta name="twitter:description" content="Photography by Ranjan Sarkar: campus mornings, sunsets and heritage, from IIT Kharagpur, IIT Roorkee and Delhi." />
+    <meta name="twitter:image" content="https://ranjan-sarkar.github.io/page_preview.png" />
+
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind utilities, pre-built from tailwind.config.js (rebuild with: npm run build:css) -->
+    <link rel="stylesheet" href="css/tailwind.css">
+</head>
+
+<body data-page="photography">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Decorative background layer -->
+    <div class="bg-decor" aria-hidden="true">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor"
+            stroke-width="1.2" stroke-linecap="round">
+            <path d="M1450 430 C1220 340 1110 100 740 -10" />
+            <path d="M1450 390 C1226 306 1124 88 792 -10" />
+            <path d="M1450 350 C1232 272 1138 76 844 -10" />
+            <path d="M1450 310 C1238 238 1152 64 896 -10" />
+            <path d="M1450 270 C1244 204 1166 52 948 -10" />
+            <path d="M1450 230 C1250 170 1180 40 1000 -10" />
+            <path d="M1450 190 C1256 136 1194 28 1052 -10" />
+            <path d="M1450 150 C1262 102 1208 16 1104 -10" />
+            <path d="M1450 110 C1268 68 1222 4 1156 -10" />
+            <path d="M-10 470 C220 560 330 800 700 910" />
+            <path d="M-10 510 C214 594 316 812 648 910" />
+            <path d="M-10 550 C208 628 302 824 596 910" />
+            <path d="M-10 590 C202 662 288 836 544 910" />
+            <path d="M-10 630 C196 696 274 848 492 910" />
+            <path d="M-10 670 C190 730 260 860 440 910" />
+            <path d="M-10 710 C184 764 246 872 388 910" />
+            <path d="M-10 750 C178 798 232 884 336 910" />
+            <path d="M-10 790 C172 832 218 896 284 910" />
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full transition-all duration-300">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <a href="index.html" class="themed-text-primary text-xl"><span
+                            class="themed-accent font-semibold">Ranjan</span> Sarkar</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="index.html" data-nav="home" data-text="Home"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Home</a>
+                        <a href="index.html#news" data-nav="news" data-text="News"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">News</a>
+                        <a href="talks.html" data-nav="talks" data-text="Talks"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Talks</a>
+                        <!-- <a href="index.html#research" data-nav="research" data-text="Research" class="themed-text-secondary hover:themed-text-primary transition-colors">Research</a> -->
+                        <a href="publications.html" data-nav="publications" data-text="Publications"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Publications</a>
+                        <!-- <a href="background.html" data-nav="background" data-text="Background"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Background</a> -->
+                        <!-- <a href="background.html#experience" data-nav="background" data-text="Experience" class="themed-text-secondary hover:themed-text-primary transition-colors">Experience</a> -->
+                        <div class="ta-dropdown relative">
+                            <div class="inline-flex items-center gap-1">
+                                <a href="ta.html" data-nav="ta" data-text="TA"
+                                    class="themed-text-secondary hover:themed-text-primary transition-colors">TA</a>
+                                <button type="button" id="ta-dropdown-button" aria-label="Open TA course menu"
+                                    aria-haspopup="true" aria-expanded="false"
+                                    class="ta-dropdown-trigger themed-text-secondary hover:themed-text-primary transition-colors inline-flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="ta-dropdown-menu absolute right-0 top-full z-50 overflow-hidden rounded-xl border themed-border themed-bg-secondary shadow-2xl"
+                                style="top: calc(100% + 0.5rem); width: 15rem; max-width: calc(100vw - 2rem);">
+                                <a href="rl.html" data-course-link="rl"
+                                    class="block px-4 pt-4 pb-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI31201</span>
+                                    <span class="block text-sm font-medium">Reinforcement Learning</span>
+                                </a>
+                                <a href="robot.html" data-course-link="robot"
+                                    class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI60209</span>
+                                    <span class="block text-sm font-medium">AI for Robot Autonomy</span>
+                                </a>
+                                <a href="aicps.html" data-course-link="aicps"
+                                    class="block px-4 py-2 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI61006</span>
+                                    <span class="block text-sm font-medium">AI for Cyber Physical Systems</span>
+                                </a>
+                                <a href="amfai.html" data-course-link="amfai"
+                                    class="block px-4 pt-2 pb-4 themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">
+                                    <span class="block text-xs uppercase tracking-wide opacity-70">AI60211</span>
+                                    <span class="block text-sm font-medium">Algorithmic and Mathematical Foundations for
+                                        AI</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="#contact" data-nav="contact" data-text="Contact"
+                            class="themed-text-secondary hover:themed-text-primary transition-colors">Contact</a>
+                    </nav>
+                    <button type="button" id="search-button" aria-label="Search this website" data-tip="Search (Ctrl+K)"
+                        class="p-2 rounded-full themed-text-secondary focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+                        </svg>
+                    </button>
+                    <button id="theme-toggle"
+                        class="p-2 rounded-full themed-text-secondary hover:themed-text-primary focus:outline-none transition-transform duration-300 transform hover:scale-110">
+                        <svg id="theme-icon-light" class="h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        <svg id="theme-icon-dark" class="h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="md:hidden">
+                        <!-- the two icons cross-fade (.mobile-menu-button in style.css) -->
+                        <button id="mobile-menu-button" type="button" aria-label="Menu" aria-expanded="false"
+                            aria-controls="mobile-menu"
+                            class="mobile-menu-button p-2 rounded-md themed-text-secondary hover:themed-text-primary focus:outline-none">
+                            <i id="mobile-menu-open-icon" class="fas fa-bars fa-lg" aria-hidden="true"></i>
+                            <i id="mobile-menu-close-icon" class="fas fa-times fa-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <!-- Mobile menu: drops down over the page under the header (.mobile-nav in style.css, opened by main.js) -->
+        <div id="mobile-menu" class="md:hidden themed-bg-secondary border-t themed-border mobile-nav">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" data-nav="home"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Home</a>
+                <a href="index.html#news" data-nav="news"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">News</a>
+                <a href="talks.html" data-nav="talks"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Talks</a>
+                <!-- <a href="index.html#research" data-nav="research" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Research</a> -->
+                <a href="publications.html" data-nav="publications"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Publications</a>
+                <!-- <a href="background.html" data-nav="background" class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Background</a> -->
+                <div
+                    class="px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors flex items-center justify-between gap-3">
+                    <a href="ta.html" data-nav="ta" class="flex-1">TA</a>
+                    <button type="button" id="mobile-ta-toggle"
+                        class="mobile-ta-toggle inline-flex items-center justify-center rounded-md p-1 themed-text-secondary hover:themed-text-primary"
+                        aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="mobile-ta-submenu" class="mobile-ta-submenu mt-1 space-y-1 border-l-2 themed-border pl-3 ml-3">
+                    <a href="rl.html"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI31201
+                        - RL</a>
+                    <a href="robot.html"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60209
+                        - Robot Autonomy</a>
+                    <a href="aicps.html"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI61006
+                        - AICPS</a>
+                    <a href="amfai.html"
+                        class="block px-3 py-2 rounded-md text-sm themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">AI60211
+                        - AMFAI</a>
+                </div>
+                <a href="#contact" data-nav="contact"
+                    class="block px-3 py-2 rounded-md text-base font-medium themed-text-secondary hover:themed-text-primary hover:themed-bg-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <!-- Photography page: hero, a carousel of selected frames, then the full gallery with place filters
+             and a full-screen viewer. Unsplash photos are hot-linked from images.unsplash.com, as Unsplash asks;
+             500px photos are saved in Content/photography/ (500px image links expire). Each photo links back to
+             its page and carries a small Unsplash / 500px badge. To add a photo, copy a <figure class="photo-item">
+             and set its id, image, page link, data-source, width / height, data-group, title, sentence and place;
+             to show it in the carousel too, copy a <li class="photo-slide"> and point data-open at the figure's id. Styles: "Photography page" in style.css; behaviour: js/photography.js -->
+        <section class="photo-hero scroll-animate">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="photo-hero-grid">
+                    <div class="photo-hero-text">
+                        <p class="photo-eyebrow"><i class="fa-solid fa-camera-retro" aria-hidden="true"></i>Beyond the research</p>
+                        <h1 class="type-display font-bold themed-text-primary">Through My <span class="themed-accent">Lens</span></h1>
+                        <p class="photo-lead themed-text-secondary">
+                            My work is about estimating what can't be seen directly. Photography is the opposite:
+                            noticing what is right in front of me. These are frames from campus walks in Kharagpur and
+                            Roorkee, and from trips to Delhi, Kolkata and beyond, on early mornings and slow evenings.
+                        </p>
+                        <div class="photo-profiles">
+                            <a href="https://unsplash.com/@ranjansarkar" target="_blank" rel="noopener" class="photo-profile-btn is-primary">
+                                <i class="fa-brands fa-unsplash" aria-hidden="true"></i>Unsplash</a>
+                            <a href="https://500px.com/p/ranjansarkar" target="_blank" rel="noopener" class="photo-profile-btn">
+                                <i class="fa-brands fa-500px" aria-hidden="true"></i>500px</a>
+                        </div>
+                    </div>
+                    <div class="photo-fan" aria-hidden="true">
+                        <span class="photo-print photo-print-1"><img src="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=600&amp;q=75&amp;auto=format&amp;fit=max" width="480" height="641"
+                                alt="" decoding="async"></span>
+                        <span class="photo-print photo-print-2"><img src="https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=600&amp;q=75&amp;auto=format&amp;fit=max" width="480" height="670"
+                                alt="" decoding="async"></span>
+                        <span class="photo-print photo-print-3"><img src="https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=600&amp;q=75&amp;auto=format&amp;fit=max" width="480" height="640"
+                                alt="" decoding="async"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photos: the carousel of selected frames, then the full gallery, in one section -->
+        <!-- the fade-in sits on the blocks inside, not the whole section: on a phone the section is so tall
+             that 10% of it (the fade-in trigger) never fits on screen -->
+        <section class="photo-section" aria-labelledby="gallery-title">
+            <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="scroll-animate">
+                <div class="photo-gallery-head">
+                    <h2 id="gallery-title" class="type-section font-bold themed-text-primary themed-accent">Selected Frames</h2>
+                    <p class="themed-text-secondary">A few favourites. Tap any photo to see it larger.</p>
+                </div>
+
+                <div class="photo-carousel" aria-roledescription="carousel" aria-label="Selected frames">
+                    <ul class="photo-track" id="photo-track">
+                        <li class="photo-slide" style="--ar: 1.3179" aria-roledescription="slide" aria-label="1 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-pxhumayun" aria-label="View larger: Mughal Grandeur">
+                                <img src="Content/photography/humayuns-tomb-1024.webp" srcset="Content/photography/humayuns-tomb-600.webp 600w, Content/photography/humayuns-tomb-1024.webp 1024w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="1024" height="777"
+                                    loading="eager" decoding="async" alt="Mughal Grandeur">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Mughal Grandeur</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Humayun&#x27;s Tomb, New Delhi</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 0.7306" aria-roledescription="slide" aria-label="2 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-dusky" aria-label="View larger: Dusk Through the Window">
+                                <img src="https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=1200&amp;q=78&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="480" height="657"
+                                    loading="eager" decoding="async" alt="Dusk Through the Window">
+                                <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Dusk Through the Window</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 1.3333" aria-roledescription="slide" aria-label="3 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-howrah" aria-label="View larger: Howrah Bridge">
+                                <img src="Content/photography/howrah-bridge-1024.webp" srcset="Content/photography/howrah-bridge-600.webp 600w, Content/photography/howrah-bridge-1024.webp 1024w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="1024" height="768"
+                                    loading="lazy" decoding="async" alt="Howrah Bridge">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Howrah Bridge</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Kolkata, West Bengal</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 0.6452" aria-roledescription="slide" aria-label="4 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-heritage" aria-label="View larger: Heritage in Symmetry">
+                                <img src="https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=1200&amp;q=78&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="480" height="744"
+                                    loading="lazy" decoding="async" alt="Heritage in Symmetry">
+                                <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Heritage in Symmetry</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Roorkee</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 1.4862" aria-roledescription="slide" aria-label="5 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-bus" aria-label="View larger: Journey of Old Age">
+                                <img src="Content/photography/old-bus-1024.webp" srcset="Content/photography/old-bus-600.webp 600w, Content/photography/old-bus-1024.webp 1024w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="1024" height="689"
+                                    loading="lazy" decoding="async" alt="Journey of Old Age">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Journey of Old Age</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 1.7716" aria-roledescription="slide" aria-label="6 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-lake" aria-label="View larger: Mountain over the Lake">
+                                <img src="Content/photography/lake-hills-1024.webp" srcset="Content/photography/lake-hills-600.webp 600w, Content/photography/lake-hills-1024.webp 1024w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="1024" height="578"
+                                    loading="lazy" decoding="async" alt="Mountain over the Lake">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Mountain over the Lake</span>
+                                    
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 0.7500" aria-roledescription="slide" aria-label="7 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-nehru" aria-label="View larger: Nehru Museum">
+                                <img src="Content/photography/nehru-museum-1024.webp" srcset="Content/photography/nehru-museum-600.webp 600w, Content/photography/nehru-museum-1024.webp 768w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="768" height="1024"
+                                    loading="lazy" decoding="async" alt="Nehru Museum">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Nehru Museum</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 1.4328" aria-roledescription="slide" aria-label="8 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-corridor" aria-label="View larger: Golden Corridor">
+                                <img src="https://images.unsplash.com/photo-1791131069082-442fc986055d?w=1200&amp;q=78&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1791131069082-442fc986055d?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="480" height="335"
+                                    loading="lazy" decoding="async" alt="Golden Corridor">
+                                <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Golden Corridor</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Takshashila, IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 0.7488" aria-roledescription="slide" aria-label="9 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-twilight" aria-label="View larger: Before the Lights Come On">
+                                <img src="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=1200&amp;q=78&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="480" height="641"
+                                    loading="lazy" decoding="async" alt="Before the Lights Come On">
+                                <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Before the Lights Come On</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Tata Sports Complex, IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 0.7500" aria-roledescription="slide" aria-label="10 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-sunflowers" aria-label="View larger: Through the Sunflowers">
+                                <img src="Content/photography/sunflowers-main-building-1024.webp" srcset="Content/photography/sunflowers-main-building-600.webp 600w, Content/photography/sunflowers-main-building-1024.webp 768w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="768" height="1024"
+                                    loading="lazy" decoding="async" alt="Through the Sunflowers">
+                                <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Through the Sunflowers</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="photo-slide" style="--ar: 1.4076" aria-roledescription="slide" aria-label="11 of 11">
+                            <button type="button" class="photo-slide-btn" data-open="photo-woods" aria-label="View larger: Between the Woods">
+                                <img src="https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=1200&amp;q=78&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                    sizes="(min-width: 768px) 60vw, 85vw" width="480" height="341"
+                                    loading="lazy" decoding="async" alt="Between the Woods">
+                                <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                                <span class="photo-slide-caption">
+                                    <span class="photo-slide-title">Between the Woods</span>
+                                    <span class="photo-slide-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="photo-carousel-controls">
+                        <button type="button" class="photo-carousel-btn" data-carousel="prev" aria-label="Previous slide"><i
+                                class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+                        <div class="photo-dots" role="group" aria-label="Choose a slide"></div>
+                        <button type="button" class="photo-carousel-btn" data-carousel="next" aria-label="Next slide"><i
+                                class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="scroll-animate">
+                <div class="photo-gallery-head photo-gallery-head-all">
+                    <h2 class="type-section font-bold themed-text-primary themed-accent">All Photos</h2>
+                </div>
+                <div class="photo-filters" role="group" aria-label="Filter photos by place">
+                    <button type="button" class="photo-chip is-active" data-filter="all"
+                        aria-pressed="true">All<span class="photo-chip-count">27</span></button>
+                    <button type="button" class="photo-chip" data-filter="kgp"
+                        aria-pressed="false">Kharagpur<span class="photo-chip-count">16</span></button>
+                    <button type="button" class="photo-chip" data-filter="roorkee"
+                        aria-pressed="false">Roorkee<span class="photo-chip-count">4</span></button>
+                    <button type="button" class="photo-chip" data-filter="delhi"
+                        aria-pressed="false">Delhi NCR<span class="photo-chip-count">3</span></button>
+                    <button type="button" class="photo-chip" data-filter="other"
+                        aria-pressed="false">Elsewhere<span class="photo-chip-count">4</span></button>
+                </div>
+                </div>
+                <p class="visually-hidden" aria-live="polite" id="photo-filter-status"></p>
+                <div class="photo-grid" id="photo-grid">
+                    <figure class="photo-item" id="photo-pxhumayun" data-group="delhi" style="--i: 0">
+                        <button type="button" class="photo-frame" data-full="Content/photography/humayuns-tomb-1024.webp" data-page="https://500px.com/photo/KM6Q21MCnyb"
+                            data-source="500px" aria-label="View larger: Mughal Grandeur">
+                            <img src="Content/photography/humayuns-tomb-600.webp" srcset="Content/photography/humayuns-tomb-600.webp 600w, Content/photography/humayuns-tomb-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="777" loading="lazy" decoding="async"
+                                alt="Mughal Grandeur: A low, wide angle that lets the tomb fill the sky. Mughal symmetry at its boldest.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Mughal Grandeur</span>
+                            <span class="photo-text">A low, wide angle that lets the tomb fill the sky. Mughal symmetry at its boldest.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Humayun&#x27;s Tomb, New Delhi</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-dusky" data-group="kgp" style="--i: 1">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/7z-FTeWgRAo"
+                            data-source="Unsplash" aria-label="View larger: Dusk Through the Window">
+                            <img src="https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1794496293680-7428ca1602f0?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="657" loading="lazy" decoding="async"
+                                alt="Dusk Through the Window: Open window frames and a sky turning violet and pink as the day ends over the trees.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Dusk Through the Window</span>
+                            <span class="photo-text">Open window frames and a sky turning violet and pink as the day ends over the trees.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-twilight" data-group="kgp" style="--i: 2">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/cuewV4mrJHc"
+                            data-source="Unsplash" aria-label="View larger: Before the Lights Come On">
+                            <img src="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778172-1b60a803aa5a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="641" loading="lazy" decoding="async"
+                                alt="Before the Lights Come On: Floodlights stand still while the last colour drains out of the sky.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Before the Lights Come On</span>
+                            <span class="photo-text">Floodlights stand still while the last colour drains out of the sky.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Tata Sports Complex, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-howrah" data-group="other" style="--i: 3">
+                        <button type="button" class="photo-frame" data-full="Content/photography/howrah-bridge-1024.webp" data-page="https://500px.com/photo/f7zI5dtZbk8"
+                            data-source="500px" aria-label="View larger: Howrah Bridge">
+                            <img src="Content/photography/howrah-bridge-600.webp" srcset="Content/photography/howrah-bridge-600.webp 600w, Content/photography/howrah-bridge-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="768" loading="lazy" decoding="async"
+                                alt="Howrah Bridge: Morning fog over the Hooghly, the bridge half-drawn in mist and pigeons on the ghat.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Howrah Bridge</span>
+                            <span class="photo-text">Morning fog over the Hooghly, the bridge half-drawn in mist and pigeons on the ghat.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Kolkata, West Bengal</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-heritage" data-group="roorkee" style="--i: 4">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/vT4k8mkGRXI"
+                            data-source="Unsplash" aria-label="View larger: Heritage in Symmetry">
+                            <img src="https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1729668720686-abde67ab2d3a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="744" loading="lazy" decoding="async"
+                                alt="Heritage in Symmetry: A straight path to the main building. The lawns, the columns and the clock all line up.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Heritage in Symmetry</span>
+                            <span class="photo-text">A straight path to the main building. The lawns, the columns and the clock all line up.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Roorkee</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-bus" data-group="kgp" style="--i: 5">
+                        <button type="button" class="photo-frame" data-full="Content/photography/old-bus-1024.webp" data-page="https://500px.com/photo/7GwIGJFfx19"
+                            data-source="500px" aria-label="View larger: Journey of Old Age">
+                            <img src="Content/photography/old-bus-600.webp" srcset="Content/photography/old-bus-600.webp 600w, Content/photography/old-bus-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="689" loading="lazy" decoding="async"
+                                alt="Journey of Old Age: A retired testing van, its yellow paint fading, resting among the weeds.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Journey of Old Age</span>
+                            <span class="photo-text">A retired testing van, its yellow paint fading, resting among the weeds.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-mainbuilding" data-group="kgp" style="--i: 6">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/p-0fRk9eShM"
+                            data-source="Unsplash" aria-label="View larger: Looking Up">
+                            <img src="https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778016-2ce9390fe45a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="Looking Up: Clean white lines against a deep blue sky. Sometimes the best angle is straight up.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Looking Up</span>
+                            <span class="photo-text">Clean white lines against a deep blue sky. Sometimes the best angle is straight up.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-lake" data-group="other" style="--i: 7">
+                        <button type="button" class="photo-frame" data-full="Content/photography/lake-hills-1024.webp" data-page="https://500px.com/photo/eg1sdyBv4oD"
+                            data-source="500px" aria-label="View larger: Mountain over the Lake">
+                            <img src="Content/photography/lake-hills-600.webp" srcset="Content/photography/lake-hills-600.webp 600w, Content/photography/lake-hills-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="578" loading="lazy" decoding="async"
+                                alt="Mountain over the Lake: Still water, green hills and a heavy monsoon sky.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Mountain over the Lake</span>
+                            <span class="photo-text">Still water, green hills and a heavy monsoon sky.</span>
+                            
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-blossom" data-group="roorkee" style="--i: 8">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/L-cU2U4a608"
+                            data-source="Unsplash" aria-label="View larger: Blossom">
+                            <img src="https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730196162142-1c8d0bf645d2?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="Blossom: Pink blossom overhead and a lone cyclist on a quiet morning road.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Blossom</span>
+                            <span class="photo-text">Pink blossom overhead and a lone cyclist on a quiet morning road.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Roorkee</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-nehru" data-group="kgp" style="--i: 9">
+                        <button type="button" class="photo-frame" data-full="Content/photography/nehru-museum-1024.webp" data-page="https://500px.com/photo/wnYCD5GgWcV"
+                            data-source="500px" aria-label="View larger: Nehru Museum">
+                            <img src="Content/photography/nehru-museum-600.webp" srcset="Content/photography/nehru-museum-600.webp 600w, Content/photography/nehru-museum-1024.webp 768w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="768" height="1024" loading="lazy" decoding="async"
+                                alt="Nehru Museum: The old Hijli building, now the Nehru Museum, in white and red under a bright sky.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Nehru Museum</span>
+                            <span class="photo-text">The old Hijli building, now the Nehru Museum, in white and red under a bright sky.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-corridor" data-group="kgp" style="--i: 10">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1791131069082-442fc986055d?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/T54dkv028ck"
+                            data-source="Unsplash" aria-label="View larger: Golden Corridor">
+                            <img src="https://images.unsplash.com/photo-1791131069082-442fc986055d?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1791131069082-442fc986055d?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1791131069082-442fc986055d?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="335" loading="lazy" decoding="async"
+                                alt="Golden Corridor: The setting sun spills across the floor of Takshashila, the building our lab calls home.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Golden Corridor</span>
+                            <span class="photo-text">The setting sun spills across the floor of Takshashila, the building our lab calls home.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Takshashila, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-gurugram" data-group="delhi" style="--i: 11">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/R04kwmsfdOA"
+                            data-source="Unsplash" aria-label="View larger: City at Dusk">
+                            <img src="https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730196162148-99a0d94d6df7?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="327" loading="lazy" decoding="async"
+                                alt="City at Dusk: A hazy sun sinking over the skyline, seen from high above the city.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">City at Dusk</span>
+                            <span class="photo-text">A hazy sun sinking over the skyline, seen from high above the city.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Gurugram, Haryana</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-sunflowers" data-group="kgp" style="--i: 12">
+                        <button type="button" class="photo-frame" data-full="Content/photography/sunflowers-main-building-1024.webp" data-page="https://500px.com/photo/rypIET1MH4Q"
+                            data-source="500px" aria-label="View larger: Through the Sunflowers">
+                            <img src="Content/photography/sunflowers-main-building-600.webp" srcset="Content/photography/sunflowers-main-building-600.webp 600w, Content/photography/sunflowers-main-building-1024.webp 768w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="768" height="1024" loading="lazy" decoding="async"
+                                alt="Through the Sunflowers: The Main Building of IIT Kharagpur, seen past a bed of sunflowers.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Through the Sunflowers</span>
+                            <span class="photo-text">The Main Building of IIT Kharagpur, seen past a bed of sunflowers.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-sunsettrees" data-group="kgp" style="--i: 13">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778043-88929382c02a?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/nmNOu7jesRM"
+                            data-source="Unsplash" aria-label="View larger: Through the Branches">
+                            <img src="https://images.unsplash.com/photo-1780829778043-88929382c02a?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778043-88929382c02a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778043-88929382c02a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778043-88929382c02a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778043-88929382c02a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="Through the Branches: The sun slips behind the old trees that line the campus road.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Through the Branches</span>
+                            <span class="photo-text">The sun slips behind the old trees that line the campus road.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-humayun" data-group="delhi" style="--i: 14">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/MzCFI9y16LM"
+                            data-source="Unsplash" aria-label="View larger: Humayun&#x27;s Tomb">
+                            <img src="https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1729668720625-a4b93c886b5a?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="357" loading="lazy" decoding="async"
+                                alt="Humayun&#x27;s Tomb: Red sandstone and white marble, still holding the afternoon light after four and a half centuries.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Humayun&#x27;s Tomb</span>
+                            <span class="photo-text">Red sandstone and white marble, still holding the afternoon light after four and a half centuries.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Humayun&#x27;s Tomb, New Delhi</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-gate" data-group="kgp" style="--i: 15">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/GSsQiBCX198"
+                            data-source="Unsplash" aria-label="View larger: The Everyday Gate">
+                            <img src="https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778023-c02f18890db9?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="652" loading="lazy" decoding="async"
+                                alt="The Everyday Gate: The gate I walk through most days, under a canopy of yellow bloom.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">The Everyday Gate</span>
+                            <span class="photo-text">The gate I walk through most days, under a canopy of yellow bloom.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Takshashila, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-kash" data-group="other" style="--i: 16">
+                        <button type="button" class="photo-frame" data-full="Content/photography/kash-ful-1024.webp" data-page="https://500px.com/photo/41TPjQfdlyh"
+                            data-source="500px" aria-label="View larger: Kash Ful">
+                            <img src="Content/photography/kash-ful-600.webp" srcset="Content/photography/kash-ful-600.webp 600w, Content/photography/kash-ful-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="578" loading="lazy" decoding="async"
+                                alt="Kash Ful: Wild kash flowers swaying in the wind, a sure sign that autumn and Durga Puja are near.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Kash Ful</span>
+                            <span class="photo-text">Wild kash flowers swaying in the wind, a sure sign that autumn and Durga Puja are near.</span>
+                            
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-lights" data-group="kgp" style="--i: 17">
+                        <button type="button" class="photo-frame" data-full="Content/photography/string-lights-1024.webp" data-page="https://500px.com/photo/yYJnYym4UQ3"
+                            data-source="500px" aria-label="View larger: String Lights">
+                            <img src="Content/photography/string-lights-600.webp" srcset="Content/photography/string-lights-600.webp 600w, Content/photography/string-lights-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="768" loading="lazy" decoding="async"
+                                alt="String Lights: Diwali lights radiating out from under the clock tower.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">String Lights</span>
+                            <span class="photo-text">Diwali lights radiating out from under the clock tower.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Paschim Medinipur, West Bengal</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-woods" data-group="kgp" style="--i: 18">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/ttvTOeVIQOU"
+                            data-source="Unsplash" aria-label="View larger: Between the Woods">
+                            <img src="https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730194046795-f861fc3c1433?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="341" loading="lazy" decoding="async"
+                                alt="Between the Woods: A road running under a roof of branches. Kharagpur&#x27;s quiet green tunnels.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Between the Woods</span>
+                            <span class="photo-text">A road running under a roof of branches. Kharagpur&#x27;s quiet green tunnels.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-tower" data-group="kgp" style="--i: 19">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/uX_DCHSM2Us"
+                            data-source="Unsplash" aria-label="View larger: The Tower, Framed">
+                            <img src="https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778121-b1614b44a091?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="670" loading="lazy" decoding="async"
+                                alt="The Tower, Framed: The Main Building&#x27;s tower peeking out from the leaves and clouds.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">The Tower, Framed</span>
+                            <span class="photo-text">The Main Building&#x27;s tower peeking out from the leaves and clouds.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Main Building, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-ganga" data-group="other" style="--i: 20">
+                        <button type="button" class="photo-frame" data-full="Content/photography/ganga-sunset-1024.webp" data-page="https://500px.com/photo/41TPjQLLfyh"
+                            data-source="500px" aria-label="View larger: Sunset on the Ganga">
+                            <img src="Content/photography/ganga-sunset-600.webp" srcset="Content/photography/ganga-sunset-600.webp 600w, Content/photography/ganga-sunset-1024.webp 755w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="755" height="1024" loading="lazy" decoding="async"
+                                alt="Sunset on the Ganga: Evening colours over the river, near a ghat of the Ganga.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Sunset on the Ganga</span>
+                            <span class="photo-text">Evening colours over the river, near a ghat of the Ganga.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>River Ganga</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-hijli" data-group="kgp" style="--i: 21">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/59GpNSD39d0"
+                            data-source="Unsplash" aria-label="View larger: Winter Sunrise">
+                            <img src="https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730196162142-f48c8deea3af?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="324" loading="lazy" decoding="async"
+                                alt="Winter Sunrise: An empty road and a low winter sun. The day hasn&#x27;t started yet.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Winter Sunrise</span>
+                            <span class="photo-text">An empty road and a low winter sun. The day hasn&#x27;t started yet.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Hijli, West Bengal</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-autumnpark" data-group="kgp" style="--i: 22">
+                        <button type="button" class="photo-frame" data-full="Content/photography/autumn-park-1024.webp" data-page="https://500px.com/photo/J9GfxPyQsXS"
+                            data-source="500px" aria-label="View larger: Morning of Autumn">
+                            <img src="Content/photography/autumn-park-600.webp" srcset="Content/photography/autumn-park-600.webp 600w, Content/photography/autumn-park-1024.webp 1024w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="1024" height="578" loading="lazy" decoding="async"
+                                alt="Morning of Autumn: Sunlight through the shade of an old tree on a beautiful autumn morning.">
+                            <span class="photo-source is-500px" title="On 500px" aria-hidden="true"><i class="fa-brands fa-500px"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Morning of Autumn</span>
+                            <span class="photo-text">Sunlight through the shade of an old tree on a beautiful autumn morning.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Paschim Medinipur, West Bengal</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-roorkeemorning" data-group="roorkee" style="--i: 23">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/us22hey20sE"
+                            data-source="Unsplash" aria-label="View larger: Morning">
+                            <img src="https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1730194046760-8033944e03d7?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="Morning: A street light, a flowering tree and a clear blue sky to start the day.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Morning</span>
+                            <span class="photo-text">A street light, a flowering tree and a clear blue sky to start the day.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Roorkee</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-evening" data-group="kgp" style="--i: 24">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/opzCCJNJw08"
+                            data-source="Unsplash" aria-label="View larger: Takshashila at Evening">
+                            <img src="https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778185-5a8b7c34a768?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="Takshashila at Evening: The day winding down. A parked cycle and the last light on the walls.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Takshashila at Evening</span>
+                            <span class="photo-text">The day winding down. A parked cycle and the last light on the walls.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Takshashila, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-autumn" data-group="roorkee" style="--i: 25">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/XaYMCbQQlbs"
+                            data-source="Unsplash" aria-label="View larger: Autumn Light">
+                            <img src="https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1729668720629-f2ac9bdfc16e?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="680" loading="lazy" decoding="async"
+                                alt="Autumn Light: Sunlight cutting through the haze on an autumn morning walk.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">Autumn Light</span>
+                            <span class="photo-text">Sunlight cutting through the haze on an autumn morning walk.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>IIT Roorkee</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="photo-item" id="photo-corner" data-group="kgp" style="--i: 26">
+                        <button type="button" class="photo-frame" data-full="https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=1800&amp;q=82&amp;auto=format&amp;fit=max" data-page="https://unsplash.com/photos/LjpBowRiv9c"
+                            data-source="Unsplash" aria-label="View larger: A Quiet Corner">
+                            <img src="https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=600&amp;q=75&amp;auto=format&amp;fit=max" srcset="https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=400&amp;q=75&amp;auto=format&amp;fit=max 400w, https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=600&amp;q=75&amp;auto=format&amp;fit=max 600w, https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=900&amp;q=75&amp;auto=format&amp;fit=max 900w, https://images.unsplash.com/photo-1780829778247-2a6d895aaca5?w=1200&amp;q=75&amp;auto=format&amp;fit=max 1200w"
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                width="480" height="640" loading="lazy" decoding="async"
+                                alt="A Quiet Corner: A small kiosk, a green lawn and a slow afternoon between classes.">
+                            <span class="photo-source is-unsplash" title="On Unsplash" aria-hidden="true"><i class="fa-brands fa-unsplash"></i></span>
+                            <span class="photo-zoom" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
+                        </button>
+                        <figcaption>
+                            <span class="photo-title">A Quiet Corner</span>
+                            <span class="photo-text">A small kiosk, a green lawn and a slow afternoon between classes.</span>
+                            <span class="photo-place"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Takshashila, IIT Kharagpur</span>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="photo-cta scroll-animate">
+                    <p class="photo-cta-title themed-text-primary">There's more where these came from.</p>
+                    <p class="themed-text-secondary">The full collection, free to download, lives on my profiles.</p>
+                    <div class="photo-profiles">
+                        <a href="https://unsplash.com/@ranjansarkar" target="_blank" rel="noopener" class="photo-profile-btn is-primary">
+                            <i class="fa-brands fa-unsplash" aria-hidden="true"></i>Unsplash</a>
+                        <a href="https://500px.com/p/ranjansarkar" target="_blank" rel="noopener" class="photo-profile-btn">
+                            <i class="fa-brands fa-500px" aria-hidden="true"></i>500px</a>
+                    </div>
+                    <p class="photo-credit">All photos &copy; Ranjan Sarkar, from my <a href="https://unsplash.com/@ranjansarkar"
+                            target="_blank" rel="noopener">Unsplash</a> and <a href="https://500px.com/p/ranjansarkar"
+                            target="_blank" rel="noopener">500px</a> profiles.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Full-screen viewer (opened by js/photography.js) -->
+    <dialog class="photo-lightbox search-skip" id="photo-lightbox" aria-label="Photo viewer">
+        <div class="photo-lightbox-inner">
+            <button type="button" class="photo-lb-btn photo-lb-close" data-lb="close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" class="photo-lb-btn photo-lb-prev" data-lb="prev" aria-label="Previous photo"><i class="fa-solid fa-chevron-left"></i></button>
+            <figure class="photo-lb-figure">
+                <img class="photo-lb-img" alt="">
+                <figcaption class="photo-lb-caption">
+                    <span class="photo-lb-count"></span>
+                    <span class="photo-lb-title"></span>
+                    <span class="photo-lb-text"></span>
+                    <span class="photo-lb-meta"></span>
+                </figcaption>
+            </figure>
+            <button type="button" class="photo-lb-btn photo-lb-next" data-lb="next" aria-label="Next photo"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </dialog>
+
+    <!-- Footer -->
+    <footer id="contact" style="background-color: #0f172a;"> <!-- slate-900, dark color forced -->
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <div class="footer-grid grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Contact</h3>
+                    <div class="footer-contact flex items-start text-slate-400 justify-center md:justify-start mb-3">
+                        <i class="fas fa-envelope mt-1 w-5 text-center mr-2"></i>
+                        <div class="flex flex-col text-left">
+                            <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank"
+                                class="footer-link">ranjan.sarkar.24@kgpian.iitkgp.ac.in</a>
+                            <a href="mailto:ranjan.sarkar@rhpilab.in" target="_blank"
+                                class="footer-link">ranjan.sarkar@rhpilab.in</a>
+                        </div>
+                    </div>
+                    <div class="footer-contact flex items-start text-slate-400 justify-center md:justify-start">
+                        <i class="fas fa-map-marker-alt mt-1 w-5 text-center mr-2"></i>
+                        <span><a href="https://maps.app.goo.gl/eUzswzJQnkphKTdq5" target="_blank"
+                                class="footer-link">RHPI Lab, Takshashila 1st Floor</a><br>Department of AI, IIT
+                            Kharagpur<br>Kharagpur, WB, India - 721302</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <!-- <li><a href="index.html" class="footer-quick-link text-slate-400">Home</a></li> -->
+                        <!-- <li><a href="index.html#research" class="footer-quick-link text-slate-400">Research</a></li> -->
+                        <li><a href="talks.html"
+                                class="footer-quick-link text-slate-400">Research Talks</a></li>
+                        <!-- <li><a href="publications.html"
+                                class="footer-quick-link text-slate-400">Publications</a></li> -->
+                        <li><a href="ta.html" class="footer-quick-link text-slate-400">TAShip</a></li>
+                        <li><a href="background.html" class="footer-quick-link text-slate-400">Background</a></li>
+                        <li><a href="photography.html" class="footer-quick-link text-slate-400">Photography</a></li>
+                        <li><a href="CV_RANJAN.pdf" target="_blank" rel="noopener" class="footer-quick-link text-slate-400">CV</a></li>
+                        <li><a href="https://rhpilab.in" target="_blank" rel="noopener"
+                                class="footer-quick-link text-slate-400">RHPI Lab</a></li>
+                        <li><a href="https://ranjan-sarkar.github.io/idoai" target="_blank"
+                                class="footer-quick-link text-slate-400">IdoAI Talk Series</a></li>
+                        <li><a href="https://sites.google.com/view/ranjan-sarkar/ta?authuser=0#h.5j1qyijmklec"
+                                target="_blank"
+                                class="footer-quick-link text-slate-400">Archive</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-7">Connect</h3>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-4">
+                        <a href="mailto:ranjan.sarkar.24@kgpian.iitkgp.ac.in" target="_blank" aria-label="Email"
+                            data-tooltip="Email"
+                            class="social-icon-link text-slate-400"><i
+                                class="fas fa-envelope fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/ranjan-sarkar" target="_blank" aria-label="LinkedIn"
+                            data-tooltip="LinkedIn"
+                            class="social-icon-link text-slate-400"><i
+                                class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="https://scholar.google.com/citations?user=opM7lgEAAAAJ&hl=en" target="_blank"
+                            aria-label="Google Scholar" data-tooltip="Google Scholar"
+                            class="social-icon-link text-slate-400"><i
+                                class="fab fa-google-scholar fa-lg"></i></a>
+                        <a href="https://www.semanticscholar.org/author/Ranjan-Sarkar/2449780460" target="_blank"
+                            aria-label="Semantic Scholar" data-tooltip="Semantic Scholar"
+                            class="social-icon-link text-slate-400"><svg
+                                class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M24 8.609c-.848.536-1.436.83-2.146 1.245-4.152 2.509-8.15 5.295-11.247 8.981l-1.488 1.817-4.568-7.268c1.021.814 3.564 3.098 4.603 3.599l3.356-2.526c2.336-1.644 8.946-5.226 11.49-5.848ZM8.046 15.201c.346.277.692.537.969.744.761-3.668.121-7.613-1.886-11.039 3.374-.052 6.731-.087 10.105-.139a14.794 14.794 0 0 1 1.298 5.295c.294-.156.588-.294.883-.433-.104-1.868-.641-3.91-1.662-6.263-4.602-.018-9.188-.018-13.79-.018 2.993 3.547 4.36 7.839 4.083 11.853Zm-.623-.484c.087.086.191.155.277.225-.138-3.409-1.419-6.887-3.824-9.881H1.73c3.098 2.855 4.984 6.299 5.693 9.656Zm-.744-.658c.104.087.208.173.329.277-.9-2.526-2.492-5.018-4.741-7.198H0c2.89 2.076 5.122 4.481 6.679 6.921Z" />
+                            </svg></a>
+                        <a href="https://www.researchgate.net/profile/Ranjan-Sarkar-7" target="_blank"
+                            aria-label="ResearchGate" data-tooltip="ResearchGate"
+                            class="social-icon-link text-slate-400"><i
+                                class="fab fa-researchgate fa-lg"></i></a>
+                        <a href="https://orcid.org/0009-0008-1419-3524" target="_blank" aria-label="ORCID"
+                            data-tooltip="ORCID"
+                            class="social-icon-link text-slate-400"><i
+                                class="fab fa-orcid fa-lg"></i></a>
+                        <a href="https://github.com/ranjan-sarkar" target="_blank" aria-label="GitHub"
+                            data-tooltip="GitHub"
+                            class="social-icon-link text-slate-400"><i
+                                class="fab fa-github fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-slate-700 pt-8 text-center text-slate-500 text-sm">
+                <span class="inter-font">&copy;</span> 2026 Ranjan Sarkar. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top"
+        class="fixed bottom-8 right-8 z-50 p-3 rounded-full themed-accent-bg dark:bg-dark-primary text-white shadow-lg hover:opacity-90 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script src="js/main.js"></script>
+    <script src="js/photography.js"></script>
+</body>
+
+</html>

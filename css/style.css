@@ -5329,3 +5329,1024 @@ footer .search-target {
 .perf-lite .seminar-embed.is-loading {
     animation: none;
 }
+
+/* =====================================================================
+   Photography page (photography.html, behaviour in js/photography.js)
+   Hero with a fanned stack of prints, a featured frame, place filter chips, a masonry gallery
+   (CSS columns) with a caption under every photo, and a full-screen <dialog> viewer.
+   ===================================================================== */
+:root {
+    --photo-print-bg: #ffffff;
+    --photo-shadow: 0 18px 40px -18px rgba(15, 23, 42, 0.45);
+    --photo-shadow-hover: 0 26px 50px -20px rgba(15, 23, 42, 0.55);
+    --photo-chip-bg: rgba(79, 70, 229, 0.06);
+    --photo-chip-border: rgba(79, 70, 229, 0.2);
+    --photo-radius: 0.9rem;
+    --photo-serif: Georgia, "Times New Roman", serif;
+}
+
+.dark {
+    --photo-print-bg: #e2e8f0;
+    --photo-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.75);
+    --photo-shadow-hover: 0 26px 50px -20px rgba(0, 0, 0, 0.85);
+    --photo-chip-bg: rgba(129, 140, 248, 0.08);
+    --photo-chip-border: rgba(129, 140, 248, 0.25);
+}
+
+.photo-hero {
+    padding: 3.5rem 0 2.5rem;
+    overflow-x: clip;   /* the tilted prints never cause sideways scrolling on phones */
+}
+
+.photo-hero-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .photo-hero {
+        padding: 5rem 0 3.5rem;
+    }
+
+    .photo-hero-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 4rem;
+    }
+}
+
+.photo-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--photo-chip-border);
+    border-radius: 999px;
+    background-color: var(--photo-chip-bg);
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.dark .photo-eyebrow {
+    color: var(--accent-dark);
+}
+
+.photo-hero h1 {
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+}
+
+.photo-lead {
+    max-width: 38rem;
+    font-size: 1.075rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+}
+
+.photo-profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.photo-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1.3rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--text-light-primary);
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.dark .photo-profile-btn {
+    border-color: var(--border-dark);
+    color: var(--text-dark-primary);
+}
+
+.photo-profile-btn:hover,
+.photo-profile-btn:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+}
+
+.dark .photo-profile-btn:hover,
+.dark .photo-profile-btn:focus-visible {
+    border-color: var(--accent-dark);
+    color: var(--accent-dark);
+}
+
+.photo-profile-btn.is-primary {
+    border-color: transparent;
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.dark .photo-profile-btn.is-primary {
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.photo-profile-btn.is-primary:hover,
+.photo-profile-btn.is-primary:focus-visible {
+    background-color: var(--accent-hover-light);
+    color: #ffffff;
+}
+
+.dark .photo-profile-btn.is-primary:hover,
+.dark .photo-profile-btn.is-primary:focus-visible {
+    background-color: var(--accent-hover-dark);
+    color: #ffffff;
+}
+
+/* Fanned stack of three prints beside the hero text; they spread apart on hover */
+.photo-fan {
+    position: relative;
+    height: 300px;
+    max-width: 30rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+    .photo-fan {
+        height: 400px;
+    }
+
+    .photo-print {
+        width: 46%;
+    }
+}
+
+.photo-print {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 42%;
+    padding: 0.5rem 0.5rem 1.6rem;
+    border-radius: 0.35rem;
+    background-color: var(--photo-print-bg);
+    box-shadow: var(--photo-shadow);
+    transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.photo-print img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 0.15rem;
+}
+
+.photo-print-1 {
+    transform: translate(-108%, -50%) rotate(-9deg);
+}
+
+.photo-print-2 {
+    z-index: 2;
+    transform: translate(-50%, -54%) rotate(2deg);
+}
+
+.photo-print-3 {
+    transform: translate(8%, -46%) rotate(10deg);
+}
+
+.photo-fan:hover .photo-print-1 {
+    transform: translate(-118%, -50%) rotate(-13deg);
+}
+
+.photo-fan:hover .photo-print-2 {
+    transform: translate(-50%, -60%) rotate(0deg) scale(1.03);
+}
+
+.photo-fan:hover .photo-print-3 {
+    transform: translate(18%, -44%) rotate(14deg);
+}
+
+.photo-section {
+    padding: 2.5rem 0;
+}
+
+@media (min-width: 1024px) {
+    .photo-section {
+        padding: 3.5rem 0;
+    }
+}
+
+/* Clickable photo (gallery and featured frame): zooms gently on hover, opens the viewer */
+.photo-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--photo-radius);
+    overflow: hidden;
+    background: none;
+    cursor: zoom-in;
+    box-shadow: var(--photo-shadow);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.5s ease;
+}
+
+.photo-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.45), transparent 45%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.photo-zoom {
+    position: absolute;
+    right: 0.85rem;
+    bottom: 0.85rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.92);
+    color: #1e293b;
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photo-frame:hover,
+.photo-frame:focus-visible {
+    box-shadow: var(--photo-shadow-hover);
+    transform: translateY(-3px);
+}
+
+.photo-frame:hover img,
+.photo-frame:focus-visible img {
+    transform: scale(1.05);
+}
+
+.photo-frame:hover::after,
+.photo-frame:focus-visible::after,
+.photo-frame:hover .photo-zoom,
+.photo-frame:focus-visible .photo-zoom {
+    opacity: 1;
+    transform: none;
+}
+
+.photo-frame:focus-visible {
+    outline: 3px solid var(--accent-light);
+    outline-offset: 3px;
+}
+
+.dark .photo-frame:focus-visible {
+    outline-color: var(--accent-dark);
+}
+
+.photo-place i {
+    color: var(--accent-light);
+}
+
+.dark .photo-place i {
+    color: var(--accent-dark);
+}
+
+/* Source badge: a small logo chip in the photo's top-left corner saying where it is published
+   (Unsplash or 500px); the viewer's "View on ..." link says the same */
+.photo-source {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.5);
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.photo-source.is-unsplash {
+    color: #111111;
+}
+
+/* 500px brand blue */
+.photo-source.is-500px {
+    color: #0870d1;
+}
+
+.photo-slide .photo-source {
+    top: 0.9rem;
+    left: 0.9rem;
+}
+
+/* "Selected Frames" carousel: a scroll-snapping strip of slides that all share one height, so wide
+   and tall photos sit side by side at their own shape; the slide in the middle is full strength,
+   its neighbours a little dimmed. Arrows, dots and auto-advance come from js/photography.js. */
+.photo-carousel {
+    --slide-h: 300px;
+    position: relative;
+    margin: 0 -1rem 4rem;
+}
+
+@media (min-width: 640px) {
+    .photo-carousel {
+        --slide-h: 400px;
+        margin: 0 -1.5rem 4.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .photo-carousel {
+        --slide-h: 480px;
+        margin: 0 -2rem 5rem;
+    }
+}
+
+.photo-track {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0.75rem 1rem 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+}
+
+.photo-track::-webkit-scrollbar {
+    display: none;
+}
+
+.photo-slide {
+    flex: 0 0 auto;
+    height: var(--slide-h);
+    width: calc(var(--slide-h) * var(--ar));
+    max-width: 85vw;
+    scroll-snap-align: center;
+    opacity: 0.55;
+    transform: scale(0.94);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.photo-slide.is-current {
+    opacity: 1;
+    transform: none;
+}
+
+.photo-slide-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background: var(--skeleton-base);
+    cursor: pointer;
+    box-shadow: var(--photo-shadow);
+}
+
+.photo-slide.is-current .photo-slide-btn {
+    cursor: zoom-in;
+    box-shadow: var(--photo-shadow-hover);
+}
+
+.photo-slide-btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.photo-slide.is-current .photo-slide-btn:hover img {
+    transform: scale(1.04);
+}
+
+.photo-slide-btn:focus-visible {
+    outline: 3px solid var(--accent-light);
+    outline-offset: 3px;
+}
+
+.dark .photo-slide-btn:focus-visible {
+    outline-color: var(--accent-dark);
+}
+
+.photo-slide-caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 3rem 1.25rem 1.1rem;
+    background: linear-gradient(to top, rgba(2, 6, 23, 0.78), rgba(2, 6, 23, 0) );
+    color: #f8fafc;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.photo-slide.is-current .photo-slide-caption {
+    opacity: 1;
+    transform: none;
+}
+
+.photo-slide-title {
+    font-family: var(--photo-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.3;
+}
+
+@media (min-width: 1024px) {
+    .photo-slide-title {
+        font-size: 1.4rem;
+    }
+}
+
+.photo-slide-place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.photo-slide-place i {
+    color: #a5b4fc;
+}
+
+.photo-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+.photo-carousel-btn {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--text-light-primary);
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.dark .photo-carousel-btn {
+    border-color: var(--border-dark);
+    color: var(--text-dark-primary);
+}
+
+.photo-carousel-btn:hover,
+.photo-carousel-btn:focus-visible {
+    border-color: var(--accent-light);
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.dark .photo-carousel-btn:hover,
+.dark .photo-carousel-btn:focus-visible {
+    border-color: var(--accent-dark);
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.photo-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+/* each dot has a 24px hit area around a small visible pill */
+.photo-dot {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.photo-dot::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background-color: var(--border-light);
+    transition: width 0.35s ease, background-color 0.35s ease;
+}
+
+.dark .photo-dot::before {
+    background-color: var(--border-dark);
+}
+
+.photo-dot.is-active::before {
+    width: 1.35rem;
+    background-color: var(--accent-light);
+}
+
+.dark .photo-dot.is-active::before {
+    background-color: var(--accent-dark);
+}
+
+.photo-dot:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 1px;
+    border-radius: 999px;
+}
+
+.photo-gallery-head-all {
+    margin-bottom: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-slide,
+    .photo-slide-btn img,
+    .photo-slide-caption,
+    .photo-dot::before {
+        transition: none;
+    }
+
+    .photo-slide.is-current .photo-slide-btn:hover img {
+        transform: none;
+    }
+}
+
+/* Gallery heading and filter chips */
+.photo-gallery-head {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.photo-gallery-head h2 {
+    margin-bottom: 0.4rem;
+}
+
+.photo-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+}
+
+.photo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--text-light-secondary);
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.dark .photo-chip {
+    border-color: var(--border-dark);
+    color: var(--text-dark-secondary);
+}
+
+.photo-chip:hover {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+}
+
+.dark .photo-chip:hover {
+    border-color: var(--accent-dark);
+    color: var(--accent-dark);
+}
+
+.photo-chip-count {
+    min-width: 1.5rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background-color: var(--photo-chip-bg);
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.photo-chip.is-active,
+.photo-chip.is-active:hover {
+    border-color: var(--accent-light);
+    background-color: var(--accent-light);
+    color: #ffffff;
+}
+
+.dark .photo-chip.is-active,
+.dark .photo-chip.is-active:hover {
+    border-color: var(--accent-dark);
+    background-color: var(--accent-dark);
+    color: #0f172a;
+}
+
+.photo-chip.is-active .photo-chip-count {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+.photo-chip:focus-visible {
+    outline: 3px solid var(--accent-light);
+    outline-offset: 2px;
+}
+
+/* Masonry gallery: 1 / 2 / 3 columns */
+.photo-grid {
+    columns: 1;
+    column-gap: 1.75rem;
+}
+
+@media (min-width: 640px) {
+    .photo-grid {
+        columns: 2;
+    }
+}
+
+@media (min-width: 1024px) {
+    .photo-grid {
+        columns: 3;
+    }
+}
+
+.photo-item {
+    display: block;
+    break-inside: avoid;
+    margin: 0 0 2rem;
+}
+
+.photo-item[hidden] {
+    display: none;
+}
+
+.photo-item.is-entering {
+    animation: photo-enter 0.5s cubic-bezier(0.33, 1, 0.68, 1) both;
+    animation-delay: calc(min(var(--i, 0), 8) * 45ms);
+}
+
+@keyframes photo-enter {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.photo-item figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.9rem 0.25rem 0;
+}
+
+.photo-title {
+    font-family: var(--photo-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    color: var(--text-light-primary);
+}
+
+.dark .photo-title {
+    color: var(--text-dark-primary);
+}
+
+.photo-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-light-secondary);
+}
+
+.dark .photo-text {
+    color: var(--text-dark-secondary);
+}
+
+.photo-place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-light-secondary);
+}
+
+.dark .photo-place {
+    color: var(--text-dark-secondary);
+}
+
+/* Closing call-out with the profile links: a solid card with a soft accent glow from the top */
+.photo-cta {
+    margin-top: 2.5rem;
+    padding: 2.75rem 1.5rem;
+    border: 1px solid var(--photo-chip-border);
+    border-radius: 1.5rem;
+    background:
+        radial-gradient(120% 90% at 50% 0%, var(--photo-chip-bg), transparent 70%),
+        var(--bg-light-primary);
+    box-shadow: 0 18px 40px -28px rgba(79, 70, 229, 0.45);
+    text-align: center;
+}
+
+.dark .photo-cta {
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(129, 140, 248, 0.12), transparent 70%),
+        var(--bg-dark-secondary);
+    box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.8);
+}
+
+.photo-cta-title {
+    margin-bottom: 0.4rem;
+    font-family: var(--photo-serif);
+    font-style: italic;
+    font-size: var(--fs-title);
+}
+
+.photo-cta .photo-profiles {
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.photo-credit {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-light-secondary);
+}
+
+.dark .photo-credit {
+    color: var(--text-dark-secondary);
+}
+
+.photo-credit a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Full-screen viewer */
+.photo-lightbox-open {
+    overflow: hidden;
+}
+
+.photo-lightbox {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(2, 6, 23, 0.94);
+    color: #f1f5f9;
+}
+
+.photo-lightbox::backdrop {
+    background: rgba(2, 6, 23, 0.6);
+}
+
+.photo-lightbox[open] {
+    animation: photo-lightbox-in 0.3s ease both;
+}
+
+@keyframes photo-lightbox-in {
+    from {
+        opacity: 0;
+    }
+}
+
+.photo-lightbox-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 3.5rem 1rem 4.5rem;
+}
+
+@media (min-width: 768px) {
+    .photo-lightbox-inner {
+        padding: 3rem 5rem 2rem;
+    }
+}
+
+.photo-lb-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.photo-lb-img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 17rem);
+    max-height: calc(100dvh - 17rem);
+    width: auto;
+    height: auto;
+    border-radius: 0.6rem;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+    transition: opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .photo-lb-img {
+        max-height: calc(100vh - 14rem);
+        max-height: calc(100dvh - 14rem);
+    }
+}
+
+.photo-lb-img.is-swapping {
+    opacity: 0.4;
+}
+
+.photo-lb-caption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 40rem;
+    margin-top: 1.1rem;
+    text-align: center;
+}
+
+.photo-lb-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+}
+
+.photo-lb-title {
+    font-family: var(--photo-serif);
+    font-style: italic;
+    font-size: 1.35rem;
+}
+
+.photo-lb-text {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.photo-lb-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.25rem;
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.photo-lb-meta span,
+.photo-lb-meta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.photo-lb-meta i {
+    color: #a5b4fc;
+}
+
+.photo-lb-meta a {
+    color: #c7d2fe;
+}
+
+.photo-lb-meta a:hover {
+    text-decoration: underline;
+}
+
+.photo-lb-btn {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background-color: rgba(15, 23, 42, 0.6);
+    color: #f1f5f9;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.photo-lb-btn:hover,
+.photo-lb-btn:focus-visible {
+    background-color: rgba(129, 140, 248, 0.35);
+}
+
+.photo-lb-btn:focus-visible {
+    outline: 2px solid #a5b4fc;
+    outline-offset: 2px;
+}
+
+.photo-lb-close {
+    top: 0.75rem;
+    right: 0.75rem;
+}
+
+/* phones: the arrows sit in the bottom corners, clear of the photo (swiping works too) */
+.photo-lb-prev,
+.photo-lb-next {
+    bottom: 0.75rem;
+}
+
+.photo-lb-prev {
+    left: 0.75rem;
+}
+
+.photo-lb-next {
+    right: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .photo-lb-close {
+        top: 1.25rem;
+        right: 1.25rem;
+    }
+
+    .photo-lb-prev,
+    .photo-lb-next {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+    }
+
+    .photo-lb-prev {
+        left: 1.25rem;
+    }
+
+    .photo-lb-next {
+        right: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-print,
+    .photo-frame,
+    .photo-frame img,
+    .photo-zoom,
+    .photo-lb-img {
+        transition: none;
+    }
+
+    .photo-fan:hover .photo-print-1 {
+        transform: translate(-108%, -50%) rotate(-9deg);
+    }
+
+    .photo-fan:hover .photo-print-2 {
+        transform: translate(-50%, -54%) rotate(2deg);
+    }
+
+    .photo-fan:hover .photo-print-3 {
+        transform: translate(8%, -46%) rotate(10deg);
+    }
+
+    .photo-frame:hover,
+    .photo-frame:focus-visible,
+    .photo-frame:hover img,
+    .photo-frame:focus-visible img {
+        transform: none;
+    }
+
+    .photo-item.is-entering,
+    .photo-lightbox[open] {
+        animation: none;
+    }
+}

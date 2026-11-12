@@ -1291,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // `npm run build:search`); their results open the notebook on GitHub in a new tab.
     const SEARCH_PAGES = [
         'index.html', 'publications.html', 'talks.html', 'background.html', 'ta.html',
-        'rl.html', 'robot.html', 'aicps.html', 'amfai.html',
+        'rl.html', 'robot.html', 'aicps.html', 'amfai.html', 'photography.html',
     ];
     const SEARCH_NOTEBOOKS = 'js/search-notebooks.json';
     const NOTEBOOK_RESULTS = 5; // at most this many hits per notebook, so they don't crowd out the pages
