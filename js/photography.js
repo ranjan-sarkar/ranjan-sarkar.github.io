@@ -35,6 +35,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chips.forEach((chip) => chip.addEventListener('click', () => applyFilter(chip.dataset.filter)));
 
+    // --- Hero prints on phones ---
+    // Phones have no hover, so there the fanned prints spread apart as the page scrolls instead:
+    // --spread goes from 0 (resting) to 1 (fully spread) while the stack moves up the screen.
+    // The transforms that use it are in style.css (max-width: 767px).
+    const fan = document.querySelector('.photo-fan');
+    const phone = window.matchMedia('(max-width: 767px)');
+    if (fan) {
+        let fanFrame = 0;
+        const updateFan = () => {
+            fanFrame = 0;
+            if (!phone.matches || reduceMotion.matches) {
+                fan.style.removeProperty('--spread');
+                return;
+            }
+            const rect = fan.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const centre = rect.top + rect.height / 2;
+            const spread = Math.min(1, Math.max(0, (vh * 0.9 - centre) / (vh * 0.45)));
+            fan.style.setProperty('--spread', spread.toFixed(3));
+        };
+        const queueFan = () => { if (!fanFrame) fanFrame = requestAnimationFrame(updateFan); };
+        window.addEventListener('scroll', queueFan, { passive: true });
+        window.addEventListener('resize', queueFan);
+        updateFan();
+    }
+
     // --- Viewer ---
     // Prev / next walk through the gallery photos currently shown by the filter.
     const img = dialog.querySelector('.photo-lb-img');
@@ -164,26 +190,43 @@ document.addEventListener('DOMContentLoaded', () => {
         const n = (i + slides.length) % slides.length;
         const slide = slides[n];
         const left = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+        programmatic = Math.abs(track.scrollLeft - left) > 1;
         track.scrollTo({ left, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
         markCurrent(n);
         // any move restarts the auto-advance countdown, so it never jumps right after a click
         if (autoTimer) startAuto();
     };
 
-    // after any scroll (arrows, swipe, trackpad), the slide nearest the middle becomes current
-    let scrollTimer = null;
+    // while the strip moves (arrows, swipe, trackpad), the slide nearest the middle is highlighted
+    // live, once per frame, so the highlight and dots follow the finger during a swipe
+    let scrollFrame = 0;
+    let programmatic = false;   // an arrow / dot / auto move is under way: it already set the target
+    let programmaticTimer = null;
+    const nearestSlide = () => {
+        const middle = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDistance = Infinity;
+        slides.forEach((slide, n) => {
+            const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - middle);
+            if (distance < bestDistance) { bestDistance = distance; best = n; }
+        });
+        return best;
+    };
     track.addEventListener('scroll', () => {
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-            const middle = track.scrollLeft + track.clientWidth / 2;
-            let best = 0;
-            let bestDistance = Infinity;
-            slides.forEach((slide, n) => {
-                const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - middle);
-                if (distance < bestDistance) { bestDistance = distance; best = n; }
-            });
-            markCurrent(best);
-        }, 120);
+        if (scrollFrame) return;
+        scrollFrame = requestAnimationFrame(() => {
+            scrollFrame = 0;
+            const best = nearestSlide();
+            // during a smooth scroll started by a button, don't flicker through the slides passed on the way
+            if (!programmatic && best !== current) markCurrent(best);
+        });
+        // a scroll that has gone quiet ends any button-driven move
+        clearTimeout(programmaticTimer);
+        programmaticTimer = setTimeout(() => {
+            programmatic = false;
+            const best = nearestSlide();
+            if (best !== current) markCurrent(best);
+        }, 150);
     }, { passive: true });
 
     carousel.querySelector('[data-carousel="prev"]').addEventListener('click', () => goTo(current - 1));
@@ -223,7 +266,18 @@ document.addEventListener('DOMContentLoaded', () => {
     carousel.addEventListener('mouseleave', resume);
     carousel.addEventListener('focusin', pause);
     carousel.addEventListener('focusout', (event) => { if (!carousel.contains(event.relatedTarget)) resume(); });
-    track.addEventListener('touchstart', pause, { passive: true });
+    // a finger on the strip takes over from any button-driven move, and pauses auto-advance;
+    // it starts again a few seconds after the finger lifts
+    let touchResumeTimer = null;
+    track.addEventListener('touchstart', () => {
+        programmatic = false;
+        clearTimeout(touchResumeTimer);
+        pause();
+    }, { passive: true });
+    track.addEventListener('touchend', () => {
+        clearTimeout(touchResumeTimer);
+        touchResumeTimer = setTimeout(resume, 4000);
+    }, { passive: true });
     document.addEventListener('visibilitychange', () => (document.hidden ? stopAuto() : startAuto()));
     dialog.addEventListener('close', startAuto);
 
