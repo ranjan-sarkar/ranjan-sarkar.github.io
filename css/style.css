@@ -6057,6 +6057,431 @@ footer .search-target {
     }
 }
 
+/* =====================================================================
+   Photo story ("Frame by Frame", photography.html): a pinned, scroll-driven sequence.
+   The section is tall (one short screen of scrolling per photo); its .story-sticky part stays pinned
+   under the header while that height scrolls past, and js/photography.js turns the scroll position
+   into the story:
+   - each photo has --r (0 to 1): it wipes up over the one before (clip-path) while easing from a
+     slight zoom, and the photo it covers gets --out (0 to 1): it dims and shrinks a little behind it
+   - the caption, counter and the soft colour glow behind the stage change when a photo is mostly in
+   - the progress bar fills one segment per photo
+   With reduced motion the photos change in clean steps, without the wipe and zoom.
+   ===================================================================== */
+.photo-story {
+    --count: 8;
+    --story-top: 4.5rem;   /* kept in step with the header's height by js/photography.js */
+    position: relative;
+    height: calc(var(--count) * 55vh + 100vh);
+    height: calc(var(--count) * 55svh + 100svh);
+    margin: 0 0 3rem;
+}
+
+.story-sticky {
+    position: sticky;
+    top: var(--story-top);
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    height: calc(100vh - var(--story-top));
+    height: calc(100svh - var(--story-top));
+    padding: 1.25rem 0 1.75rem;
+}
+
+.story-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    min-width: 0;
+}
+
+.story-head .photo-eyebrow {
+    margin-bottom: 0.75rem;
+}
+
+/* big counter: 01 / 08 */
+.story-counter {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0;
+    line-height: 1;
+}
+
+.story-now {
+    display: inline-block;
+    font-size: clamp(3.5rem, 2.5rem + 3.5vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, var(--accent-light), #8b7cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.dark .story-now {
+    background: linear-gradient(135deg, var(--accent-dark), #c4b5fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.story-now.is-flipping {
+    animation: story-flip 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes story-flip {
+    from {
+        opacity: 0;
+        transform: translateY(35%);
+        filter: blur(6px);
+    }
+}
+
+.story-total {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    color: var(--text-light-secondary);
+}
+
+.dark .story-total {
+    color: var(--text-dark-secondary);
+}
+
+/* captions sit on top of each other; the current one slides and un-blurs in */
+.story-captions {
+    position: relative;
+    min-height: 10.5rem;
+}
+
+.story-caption {
+    position: absolute;
+    inset: 0 0 auto 0;
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(8px);
+    transition: opacity 0.5s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+    pointer-events: none;
+}
+
+.story-caption.is-before {
+    transform: translateY(-22px);
+}
+
+.story-caption.is-active {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    pointer-events: auto;
+}
+
+.story-place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+}
+
+.dark .story-place {
+    color: var(--accent-dark);
+}
+
+.story-title {
+    margin: 0.45rem 0 0.6rem;
+    font-family: var(--photo-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 1.15rem + 1.5vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--text-light-primary);
+}
+
+.dark .story-title {
+    color: var(--text-dark-primary);
+}
+
+.story-text {
+    max-width: 28rem;
+    margin: 0;
+    line-height: 1.7;
+    color: var(--text-light-secondary);
+}
+
+.dark .story-text {
+    color: var(--text-dark-secondary);
+}
+
+/* progress: one segment per photo, filling as its photo wipes in */
+.story-progress {
+    display: grid;
+    grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+    gap: 0.4rem;
+    max-width: 22rem;
+}
+
+.story-seg {
+    position: relative;
+    height: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: var(--border-light);
+}
+
+.dark .story-seg {
+    background-color: var(--border-dark);
+}
+
+.story-seg > span {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #4f46e5, #7c6cf0);
+    transform: scaleX(var(--fill, 0));
+    transform-origin: left center;
+}
+
+.story-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--text-light-secondary);
+    transition: opacity 0.4s ease;
+}
+
+.dark .story-hint {
+    color: var(--text-dark-secondary);
+}
+
+.story-hint i {
+    animation: story-nudge 1.6s ease-in-out infinite;
+}
+
+@keyframes story-nudge {
+    50% {
+        transform: translateY(4px);
+    }
+}
+
+.photo-story.is-end .story-hint {
+    opacity: 0;
+}
+
+/* the stage: photos stacked in one rounded frame, with a soft glow of the current photo behind.
+   Desktops and tablets: a portrait 4:5 frame (the story photos are all tall), centred in its column */
+.story-stage {
+    position: relative;
+    justify-self: center;
+    height: min(72vh, 42rem);
+    height: min(72svh, 42rem);
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.story-glow {
+    position: absolute;
+    inset: 10% 8%;
+    border-radius: 2rem;
+    background-position: center;
+    background-size: cover;
+    filter: blur(52px) saturate(1.4);
+    opacity: 0.5;
+    transform: scale(1.06);
+    transition: background-image 0.8s ease;
+    pointer-events: none;
+}
+
+.dark .story-glow {
+    opacity: 0.42;
+}
+
+.story-frames {
+    position: relative;
+    height: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background-color: #0f172a;
+    box-shadow: 0 40px 80px -36px rgba(15, 23, 42, 0.55), 0 0 0 1px rgba(15, 23, 42, 0.06);
+    cursor: zoom-in;
+    isolation: isolate;
+}
+
+.dark .story-frames {
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.story-frames:focus-visible {
+    outline: 3px solid var(--accent-light);
+    outline-offset: 4px;
+}
+
+.story-slide {
+    position: absolute;
+    inset: 0;
+    z-index: calc(var(--i, 0) + 1);
+    margin: 0;
+    /* --r: 0 = not in yet, 1 = fully in (the first photo starts in) */
+    clip-path: inset(calc((1 - var(--r, 0)) * 100%) 0 0 0);
+}
+
+.story-slide:first-child {
+    --r: 1;
+}
+
+.story-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(calc(1.16 - 0.16 * var(--r, 0) - 0.06 * var(--out, 0)));
+    filter: brightness(calc(1 - 0.5 * var(--out, 0)));
+    will-change: transform;
+}
+
+/* tablets: a little tighter */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .story-sticky {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 2rem;
+    }
+
+    .story-stage {
+        height: min(62vh, 34rem);
+        height: min(62svh, 34rem);
+    }
+}
+
+/* phones: heading, then the photo filling the middle, then caption and progress */
+@media (max-width: 767px) {
+    .photo-story {
+        height: calc(var(--count) * 48vh + 100vh);
+        height: calc(var(--count) * 48svh + 100svh);
+    }
+
+    .story-sticky {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr) auto auto;
+        align-items: stretch;
+        gap: 0.9rem;
+        padding: 0.75rem 0 1.1rem;
+    }
+
+    .story-copy {
+        display: contents;
+    }
+
+    .story-head {
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    .story-head .photo-eyebrow {
+        display: none;
+    }
+
+    .story-head h2 {
+        font-size: 1.5rem;
+    }
+
+    .story-stage {
+        grid-row: 2;
+        grid-column: 1;
+        justify-self: stretch;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: auto;
+    }
+
+    .story-captions {
+        grid-row: 3;
+        min-height: 7.2rem;
+    }
+
+    .story-progress {
+        grid-row: 4;
+        max-width: none;
+    }
+
+    /* the counter rides in the photo's top-left corner (same grid cell as the photo, on top) */
+    .story-counter {
+        grid-row: 2;
+        grid-column: 1;
+        z-index: 2;
+        align-self: start;
+        justify-self: start;
+        margin: 0.85rem 0 0 0.95rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.55);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .story-now,
+    .dark .story-now {
+        font-size: 1.1rem;
+        letter-spacing: 0;
+        background: none;
+        color: #ffffff;
+    }
+
+    .story-total,
+    .dark .story-total {
+        font-size: 0.75rem;
+        color: #cbd5e1;
+    }
+
+    .story-title {
+        margin: 0.3rem 0 0.35rem;
+        font-size: 1.45rem;
+    }
+
+    .story-text {
+        font-size: 0.92rem;
+        line-height: 1.55;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .story-hint {
+        display: none;
+    }
+
+    .story-frames {
+        border-radius: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .story-caption,
+    .story-hint,
+    .story-glow {
+        transition: none;
+    }
+
+    .story-now.is-flipping,
+    .story-hint i {
+        animation: none;
+    }
+
+    .story-slide img {
+        transform: none;
+    }
+}
+
 /* Gallery heading and filter chips */
 .photo-gallery-head {
     text-align: center;
@@ -6082,7 +6507,9 @@ footer .search-target {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border-light);
     border-radius: 999px;
-    background-color: transparent;
+    /* solid, so the page's background lines don't show through */
+    background-color: var(--bg-light-secondary);
+    box-shadow: 0 2px 8px -4px rgba(15, 23, 42, 0.18);
     color: var(--text-light-secondary);
     font-size: 0.925rem;
     font-weight: 600;
@@ -6092,6 +6519,8 @@ footer .search-target {
 
 .dark .photo-chip {
     border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
+    box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.6);
     color: var(--text-dark-secondary);
 }
 

@@ -283,6 +283,93 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
+    // --- Photo story ("Frame by Frame") ---
+    // The section is tall and its .story-sticky part stays pinned under the header while that height
+    // scrolls past; the scroll position inside it drives the story. pos runs from 0 (first photo) to
+    // count - 1 (last photo). Each photo's --r (0 to 1) wipes it in over the one before, which gets
+    // --out (dims and shrinks behind it); the caption, counter and glow switch once a photo is mostly
+    // in; the progress bar fills one segment per photo. Styles: "Photo story" in style.css.
+    const story = document.getElementById('photo-story');
+    if (story) {
+        const sticky = story.querySelector('.story-sticky');
+        const storySlides = Array.from(story.querySelectorAll('.story-slide'));
+        const captions = Array.from(story.querySelectorAll('.story-caption'));
+        const fills = Array.from(story.querySelectorAll('.story-seg > span'));
+        const counter = story.querySelector('.story-now');
+        const glow = story.querySelector('.story-glow');
+        const frames = story.querySelector('.story-frames');
+        const header = document.querySelector('header');
+        const count = storySlides.length;
+        const clamp01 = (v) => Math.min(1, Math.max(0, v));
+        const ease = (t) => t * t * (3 - 2 * t);
+        let shown = -1;
+        let storyFrame = 0;
+
+        // the caption, counter and glow for photo n
+        const showCaption = (n) => {
+            captions.forEach((caption, i) => {
+                caption.classList.toggle('is-active', i === n);
+                caption.classList.toggle('is-before', i < n);
+                caption.setAttribute('aria-hidden', String(i !== n));
+            });
+            counter.textContent = String(n + 1).padStart(2, '0');
+            counter.classList.remove('is-flipping');
+            void counter.offsetWidth;
+            counter.classList.add('is-flipping');
+            const pic = storySlides[n].querySelector('img');
+            glow.style.backgroundImage = `url("${pic.currentSrc || pic.src}")`;
+            story.classList.toggle('is-end', n === count - 1);
+            shown = n;
+        };
+
+        const updateStory = () => {
+            storyFrame = 0;
+            // pin just under the header (its height changes when it turns compact)
+            const top = Math.round(header ? header.getBoundingClientRect().bottom : 0);
+            if (Math.abs(parseFloat(story.style.getPropertyValue('--story-top') || '0') - top) > 1) {
+                story.style.setProperty('--story-top', `${Math.max(0, top)}px`);
+            }
+            const travel = story.offsetHeight - sticky.offsetHeight;
+            const progress = travel > 0 ? clamp01((top - story.getBoundingClientRect().top) / travel) : 0;
+            const pos = progress * (count - 1);
+
+            // how far each photo is in: its wipe runs over the middle of its step, with a short
+            // hold on each photo before the next one starts
+            const r = storySlides.map((_, i) => {
+                if (i === 0) return 1;
+                if (reduceMotion.matches) return pos >= i - 0.5 ? 1 : 0;
+                return ease(clamp01((pos - (i - 1) - 0.15) / 0.7));
+            });
+            storySlides.forEach((slide, i) => {
+                slide.style.setProperty('--r', r[i].toFixed(4));
+                slide.style.setProperty('--out', (r[i + 1] || 0).toFixed(4));
+            });
+            fills.forEach((fill, i) => fill.style.setProperty('--fill', r[i].toFixed(4)));
+
+            const current = r.reduce((n, value, i) => (value >= 0.5 ? i : n), 0);
+            if (current !== shown) showCaption(current);
+        };
+        const queueStory = () => { if (!storyFrame) storyFrame = requestAnimationFrame(updateStory); };
+        window.addEventListener('scroll', queueStory, { passive: true });
+        window.addEventListener('resize', queueStory);
+        updateStory();
+
+        // the stage opens the current photo in the viewer (click, or Enter / Space when focused)
+        const openCurrent = () => {
+            const figure = document.getElementById(storySlides[shown].dataset.open);
+            if (!figure) return;
+            if (figure.hidden) applyFilter('all');
+            open(figure.querySelector('.photo-frame'), frames);
+        };
+        frames.addEventListener('click', openCurrent);
+        frames.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openCurrent();
+            }
+        });
+    }
+
     // --- Carousel ---
     // A scroll-snapping strip: arrows and dots scroll it, swiping / trackpad scrolling work natively,
     // and it advances on its own every few seconds (paused on hover, on focus, when the tab is hidden,
