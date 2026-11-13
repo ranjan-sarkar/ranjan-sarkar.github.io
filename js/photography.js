@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-advance: each slide gets AUTO_MS, then the next one comes in. A bar along the bottom edge
     // of the current slide fills up to show the countdown (.photo-slide-progress in style.css).
     // The countdown pauses where it is, and later carries on from there (it does not restart), while
-    // any "hold" applies: the mouse is over the carousel, keyboard focus is in it, a finger is on the
+    // any "hold" applies: the mouse is over the slides, keyboard focus is in it, a finger is on the
     // strip, the photo viewer is open, the tab is hidden, or the carousel is off screen. Never runs
     // with reduced motion.
     const AUTO_MS = 4000;
@@ -517,9 +517,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (running) startClock();
     }
 
-    // only a real mouse pauses on hover (a tap on a phone also fires mouse events, with no "leave")
-    carousel.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') hold('hover'); });
-    carousel.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') release('hover'); });
+    // only a real mouse pauses on hover (a tap on a phone also fires mouse events, with no "leave"),
+    // and only over the slides themselves: hovering the arrows / dots below keeps it running
+    track.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') hold('hover'); });
+    track.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') release('hover'); });
     // keyboard focus holds it; the focus a click or tap leaves on a button does not (no focus ring)
     carousel.addEventListener('focusin', (event) => {
         if (event.target.matches(':focus-visible')) hold('focus');

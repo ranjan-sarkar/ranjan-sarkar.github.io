@@ -4435,6 +4435,13 @@ footer::after {
     transition: background-size 0.3s ease, color 0.2s ease;
 }
 
+/* phones: emails marked .footer-emails are centred under each other, like the address lines */
+@media (max-width: 767px) {
+    .footer-emails > .footer-link {
+        align-self: center;
+    }
+}
+
 .footer-link:hover,
 .footer-link:focus-visible {
     color: #ffffff;
@@ -5608,7 +5615,8 @@ footer .search-target {
     }
 }
 
-/* Clickable photo (gallery and featured frame): zooms gently on hover, opens the viewer */
+/* Clickable photo (All Photos grid): the frame itself stays still on hover (no lift, no shadow
+   change); only the photo inside zooms gently. Opens the viewer */
 .photo-frame {
     position: relative;
     display: block;
@@ -5620,7 +5628,6 @@ footer .search-target {
     background: none;
     cursor: zoom-in;
     box-shadow: var(--photo-shadow);
-    transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
 .photo-frame img {
@@ -5656,12 +5663,6 @@ footer .search-target {
     opacity: 0;
     transform: translateY(6px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.photo-frame:hover,
-.photo-frame:focus-visible {
-    box-shadow: var(--photo-shadow-hover);
-    transform: translateY(-3px);
 }
 
 .photo-frame:hover img,
@@ -5936,15 +5937,18 @@ footer .search-target {
     height: 2.6rem;
     border: 1px solid var(--border-light);
     border-radius: 999px;
-    background-color: transparent;
+    background-color: var(--bg-light-secondary);
     color: var(--text-light-primary);
+    box-shadow: 0 4px 12px -6px rgba(15, 23, 42, 0.25);
     cursor: pointer;
     transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .dark .photo-carousel-btn {
     border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
     color: var(--text-dark-primary);
+    box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.6);
 }
 
 .photo-carousel-btn:hover,
@@ -6380,6 +6384,7 @@ footer .search-target {
 
     .story-head {
         grid-row: 1;
+        grid-column: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -6456,8 +6461,15 @@ footer .search-target {
         overflow: hidden;
     }
 
+    /* the hint sits at the right end of the heading row (the eyebrow is hidden on phones) */
     .story-hint {
-        display: none;
+        grid-row: 1;
+        grid-column: 1;
+        justify-self: end;
+        align-self: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
     }
 
     .story-frames {
@@ -7180,7 +7192,6 @@ footer .search-target {
 
 @media (prefers-reduced-motion: reduce) {
     .photo-print,
-    .photo-frame,
     .photo-frame img,
     .photo-zoom,
     .photo-lb-img {
@@ -7199,8 +7210,6 @@ footer .search-target {
         transform: translate(8%, -46%) rotate(10deg);
     }
 
-    .photo-frame:hover,
-    .photo-frame:focus-visible,
     .photo-frame:hover img,
     .photo-frame:focus-visible img {
         transform: none;
