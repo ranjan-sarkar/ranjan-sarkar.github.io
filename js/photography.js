@@ -2,6 +2,24 @@
 // photo viewer. Photos come from Unsplash or 500px (data-source on each .photo-frame). The page works without this script (every photo and caption is in the HTML; the
 // carousel is a plain scrollable strip); this adds the controls. Styles: "Photography page" in style.css.
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Photo protection ---
+    // No right-click / long-press menu ("Save image as", "Open image in new tab") and no dragging a
+    // photo out of the page, on every image here, including ones the viewer adds later. Ctrl/Cmd+S
+    // (save page, which would save the photos with it) is blocked too. The CSS half is in style.css.
+    const isPhoto = (target) => target instanceof Element && target.closest('img, .photo-frame, .photo-slide-btn, .story-frames, .photo-lb-frame, .photo-print');
+    document.addEventListener('contextmenu', (event) => { if (isPhoto(event.target)) event.preventDefault(); });
+    document.addEventListener('dragstart', (event) => { if (isPhoto(event.target)) event.preventDefault(); });
+    document.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') event.preventDefault();
+    });
+    const noDrag = (root) => root.querySelectorAll('img').forEach((img) => { img.draggable = false; });
+    noDrag(document);
+    new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return;
+        if (node.tagName === 'IMG') node.draggable = false;
+        else noDrag(node);
+    }))).observe(document.body, { childList: true, subtree: true });
+
     const grid = document.getElementById('photo-grid');
     const dialog = document.getElementById('photo-lightbox');
     if (!grid || !dialog) return;

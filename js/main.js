@@ -1588,6 +1588,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // storage blocked (private mode etc.): recent searches are simply not kept
         }
     };
+    // remove one recent search (the × on its row, or Delete while it is highlighted), then redraw the
+    // list with the highlight on the row that took its place
+    const forgetSearch = (query, keepHighlight) => {
+        const left = loadRecent().filter((item) => item !== query);
+        saveRecent(left);
+        const next = Math.min(activeResult, left.length - 1);
+        updatePanel(() => showIdle());
+        if (keepHighlight && next >= 0) {
+            setActiveResult(next);
+        }
+        searchInput.focus();
+    };
+    const REMOVE_ICON = icon('M6 18L18 6M6 6l12 12');
     const rememberSearch = (query) => {
         const clean = query.trim().replace(/\s+/g, ' ');
         if (clean) {
@@ -1737,15 +1750,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="search-group" role="group" aria-label="Recent searches">
                 <div class="search-group-label search-recent-label">
                     <span>Recent searches</span>
-                    <button type="button" class="search-recent-clear">Clear</button>
+                    <button type="button" class="search-recent-clear" aria-label="Clear all recent searches">Clear all</button>
                 </div>
                 ${recent.map((query, i) => `
-                <a id="search-result-${i}" role="option" aria-selected="false" href="#" data-recent="${escapeHtml(query)}"
-                    class="search-result is-recent">
-                    <span class="search-result-icon">${RESULT_ICONS.recent}</span>
-                    <span class="search-result-body"><span class="search-result-title">${escapeHtml(query)}</span></span>
-                    <span class="search-result-enter">${ENTER_ICON}</span>
-                </a>`).join('')}
+                <div class="search-recent-row" role="none">
+                    <a id="search-result-${i}" role="option" aria-selected="false" href="#" data-recent="${escapeHtml(query)}"
+                        class="search-result is-recent">
+                        <span class="search-result-icon">${RESULT_ICONS.recent}</span>
+                        <span class="search-result-body"><span class="search-result-title">${escapeHtml(query)}</span></span>
+                        <span class="search-result-enter">${ENTER_ICON}</span>
+                    </a>
+                    <button type="button" class="search-recent-remove" data-remove="${escapeHtml(query)}"
+                        aria-label="Remove ${escapeHtml(query)} from recent searches" title="Remove">${REMOVE_ICON}</button>
+                </div>`).join('')}
             </div>`;
         searchStatus.textContent = '';
         shownResults = new Set();
@@ -1802,6 +1819,11 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.focus();
             return;
         }
+        const remove = event.target.closest('.search-recent-remove');
+        if (remove) {
+            forgetSearch(remove.dataset.remove, false);
+            return;
+        }
         const item = event.target.closest('a');
         if (!item) {
             return;
@@ -1835,6 +1857,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (event.key === 'Enter' && event.target === searchInput && activeResult >= 0) {
             event.preventDefault();
             searchResults.querySelectorAll('a')[activeResult].click();
+        } else if (event.key === 'Delete' && event.target === searchInput && activeResult >= 0
+            && searchPanel.classList.contains('is-recent')) {
+            // Delete removes the highlighted recent search
+            event.preventDefault();
+            forgetSearch(searchResults.querySelectorAll('a')[activeResult].dataset.recent, true);
         } else if (event.key === 'Tab') {
             // keep focus inside the dialog
             const focusable = [searchInput, ...searchResults.querySelectorAll('a, button')];
