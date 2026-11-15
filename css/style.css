@@ -6817,11 +6817,11 @@ body[data-page="photography"] img {
    tablets and desktops (a column on the right) or under it on phones (a strip of thumbnails).
    .is-sidebar-hidden collapses the list; --lb-chrome is the height kept free around the photo. */
 .photo-lightbox {
-    --lb-chrome: 16rem;
+    --lb-chrome: 13rem;
 }
 
 .photo-lightbox:not(.is-sidebar-hidden) {
-    --lb-chrome: 22rem;
+    --lb-chrome: 19rem;
 }
 
 .photo-lightbox-inner {
@@ -6859,12 +6859,13 @@ body[data-page="photography"] img {
     justify-content: center;
     min-width: 0;
     min-height: 0;
-    padding: 3.75rem 1rem 4.25rem;
+    padding: 3.75rem 1rem 1.25rem;
 }
 
 @media (min-width: 768px) {
     .photo-lb-stage {
         padding: 3.75rem 4.25rem 1.25rem;
+        container: lb-stage / inline-size;   /* lets the "View on" link move up once the stage is wide enough */
     }
 }
 
@@ -7034,6 +7035,40 @@ body[data-page="photography"] img {
     text-decoration: underline;
 }
 
+/* Tablets and desktops: the "View on Unsplash / 500px" link leaves the caption for the top centre
+   of the stage, as a pill level with the counter and the toolbar. It only moves when the stage is
+   wide enough to fit it between them (a narrow tablet with the photo list open keeps it in the
+   caption). Positioned against the stage, the nearest positioned ancestor. */
+@media (min-width: 768px) {
+    @container lb-stage (min-width: 44rem) {
+        .photo-lb-meta a {
+            position: absolute;
+            top: 1.25rem;
+            left: 50%;
+            z-index: 2;
+            height: 2rem;
+            padding: 0 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background-color: rgba(15, 23, 42, 0.6);
+            white-space: nowrap;
+            transform: translateX(-50%);
+            transition: background-color 0.2s ease;
+        }
+
+        .photo-lb-meta a:hover,
+        .photo-lb-meta a:focus-visible {
+            background-color: rgba(129, 140, 248, 0.35);
+            text-decoration: none;
+        }
+
+        .photo-lb-meta a:focus-visible {
+            outline: 2px solid #a5b4fc;
+            outline-offset: 2px;
+        }
+    }
+}
+
 .photo-lb-btn {
     position: absolute;
     z-index: 2;
@@ -7134,10 +7169,11 @@ body[data-page="photography"] img {
     background-color: rgba(79, 70, 229, 0.55);
 }
 
-/* phones: the arrows sit in the bottom corners, clear of the photo (swiping works too) */
+/* the arrows sit at the middle of the left and right edges (swiping works too on phones) */
 .photo-lb-prev,
 .photo-lb-next {
-    bottom: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .photo-lb-prev {
@@ -7152,13 +7188,6 @@ body[data-page="photography"] img {
     .photo-lb-toolbar {
         top: 0.875rem;
         right: 0.875rem;
-    }
-
-    .photo-lb-prev,
-    .photo-lb-next {
-        top: 50%;
-        bottom: auto;
-        transform: translateY(-50%);
     }
 
     .photo-lb-prev {
@@ -7343,8 +7372,8 @@ body[data-page="photography"] img {
 
 /* Full-screen slideshow (.is-immersive, set by js/photography.js): the photo list folds away and
    the photo fills the screen on black. The toolbar, arrows, counter and music player fade out until
-   the mouse moves or the screen is tapped (.is-ui-awake); the caption always stays, over the bottom
-   of the photo on a dark fade (under the photo on phones). */
+   the mouse moves or the screen is tapped (.is-ui-awake); the caption always stays, at the bottom
+   of the screen on a dark fade. */
 .photo-lightbox-inner:fullscreen {
     background-color: #000;
 }
@@ -7613,34 +7642,23 @@ body[data-page="photography"] img {
     font-size: 1.5rem;
 }
 
-/* Phones: the caption sits under the photo instead of over it, and the photo is centred in the
-   space above the caption (a wide photo on a tall screen has black space to spare, so nothing is
-   covered and the photo doesn't look pushed down by the caption). The moving photo is clipped to
-   that space. */
+/* Phones: the photo is centred on the whole screen, both ways. It is laid out against the stage
+   itself (absolutely, at 100% of the stage, which always resolves) rather than through viewport
+   units or a chain of flex heights, which mobile browsers size inconsistently as their address bar
+   shows and hides. A wide photo on a tall screen has black space above and below it, so the caption
+   at the bottom sits in that space; only a tall photo goes under the caption's dark fade. */
 @media (max-width: 767px) {
-    .photo-lightbox.is-immersive .photo-lb-figure {
-        width: 100%;
-        height: 100%;
-        max-height: none;
-    }
-
-    .photo-lightbox.is-immersive .photo-lb-frame {
-        flex: 1 1 auto;
-        width: 100%;
-        min-height: 0;
-    }
-
     .photo-lightbox.is-immersive .photo-lb-img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
+        object-position: 50% 50%;
     }
 
     .photo-lightbox.is-immersive .photo-lb-caption {
-        position: static;
-        flex: none;
-        align-self: stretch;
-        padding: 0.9rem 1.25rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
-        background: none;
+        padding: 3rem 1.25rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
     }
 
     .photo-lightbox.is-immersive .photo-lb-title {
