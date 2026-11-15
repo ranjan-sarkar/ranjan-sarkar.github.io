@@ -5515,6 +5515,8 @@ body[data-page="photography"] img {
     padding: 0.65rem 1.3rem;
     border: 1px solid var(--border-light);
     border-radius: 999px;
+    background-color: var(--bg-light-secondary);   /* solid, so the page's background effects don't show through */
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
     font-weight: 600;
     color: var(--text-light-primary);
     transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
@@ -5522,6 +5524,7 @@ body[data-page="photography"] img {
 
 .dark .photo-profile-btn {
     border-color: var(--border-dark);
+    background-color: var(--bg-dark-secondary);
     color: var(--text-dark-primary);
 }
 
@@ -6765,6 +6768,12 @@ body[data-page="photography"] img {
     color: var(--text-dark-secondary);
 }
 
+.photo-music-credit {
+    max-width: 46rem;
+    margin: 0.5rem auto 0;
+    line-height: 1.6;
+}
+
 
 /* Full-screen viewer */
 .photo-lightbox-open {
@@ -7164,6 +7173,7 @@ body[data-page="photography"] img {
 /* The list of all photos: a thumbnail strip under the photo on phones, a two-column grid beside
    it on tablets and desktops. The current photo is outlined; the others are dimmed until hovered. */
 .photo-lb-sidebar {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -7173,9 +7183,42 @@ body[data-page="photography"] img {
     background-color: rgba(15, 23, 42, 0.72);
 }
 
+/* × that hides the list: at the right end of the strip on phones, in the top-right corner beside
+   the "All photos" heading on tablets and desktops */
+.photo-lb-sidebar-close {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background-color: rgba(15, 23, 42, 0.92);
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.photo-lb-sidebar-close:hover,
+.photo-lb-sidebar-close:focus-visible {
+    background-color: rgba(129, 140, 248, 0.35);
+    color: #ffffff;
+}
+
+.photo-lb-sidebar-close:focus-visible {
+    outline: 2px solid #a5b4fc;
+    outline-offset: 2px;
+}
+
 .photo-lb-sidebar-head {
     display: none;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 0.6rem;
     padding: 1.4rem 1.25rem 0.85rem;
     font-size: 0.75rem;
     font-weight: 600;
@@ -7195,12 +7238,12 @@ body[data-page="photography"] img {
     align-items: center;
     gap: 0.55rem;
     height: 100%;
-    padding: 0 1rem;
+    padding: 0 3.25rem 0 1rem;   /* room on the right for the × */
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;   /* scrolls by wheel, touch and keyboard, without a visible bar */
     overscroll-behavior: contain;
-    scroll-padding: 0.75rem 1rem;   /* keeps the highlighted photo's outline clear of the edges */
+    scroll-padding: 0.75rem 3.25rem 0.75rem 1rem;   /* keeps the highlighted photo clear of the edges and the × */
 }
 
 .photo-lb-thumbs::-webkit-scrollbar {
@@ -7261,6 +7304,14 @@ body[data-page="photography"] img {
 
     .photo-lightbox.is-sidebar-hidden .photo-lb-sidebar {
         border-left-color: transparent;
+    }
+
+    .photo-lb-sidebar-close {
+        top: 0.95rem;
+        right: 0.95rem;
+        width: 1.9rem;
+        height: 1.9rem;
+        transform: none;
     }
 
     .photo-lb-sidebar-head {
@@ -7385,8 +7436,99 @@ body[data-page="photography"] img {
     }
 }
 
-.photo-lightbox.is-immersive [data-lb="sidebar"] {
+/* the photo list button only outside full screen; the music button and its key only inside it */
+.photo-lightbox.is-immersive [data-lb="sidebar"],
+.photo-lightbox:not(.is-immersive) [data-lb="music"] {
     display: none;
+}
+
+/* no "View on Unsplash / 500px" link over the photo in full screen, just the title and place */
+.photo-lightbox.is-immersive .photo-lb-meta a {
+    display: none;
+}
+
+/* The piece of music playing and its credit, in a pill at the top centre of the screen in full
+   screen while the music is on (on phones just under the toolbar, as the top row is full there).
+   Shown with the controls, and for a few seconds whenever a new piece or photo comes in. */
+.photo-lb-music {
+    position: absolute;
+    top: 3.9rem;
+    left: 50%;
+    z-index: 2;
+    display: none;
+    align-items: center;
+    gap: 0.55rem;
+    max-width: calc(100% - 2rem);
+    height: 2rem;
+    padding: 0 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background-color: rgba(15, 23, 42, 0.6);
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+    color: #cbd5e1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transition: opacity 0.45s ease;
+}
+
+.photo-lb-music i {
+    flex: none;
+    color: #a5b4fc;
+}
+
+.photo-lb-music-text {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.photo-lb-music strong {
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+/* phones: the title on one line and the credit under it, rather than either being cut off */
+@media (max-width: 767px) {
+    .photo-lb-music strong {
+        display: block;
+    }
+
+    .photo-lb-music-sep {
+        display: none;
+    }
+
+    .photo-lb-music {
+        width: max-content;
+        height: auto;
+        min-height: 2rem;
+        padding: 0.35rem 0.95rem;
+        border-radius: 1rem;
+        line-height: 1.45;
+        text-align: center;
+    }
+
+    .photo-lb-music-text {
+        white-space: normal;
+    }
+}
+
+@media (min-width: 768px) {
+    .photo-lb-music {
+        top: 1.25rem;
+        max-width: calc(100% - 30rem);   /* clear of the counter on the left and the toolbar on the right */
+    }
+}
+
+.photo-lightbox.is-immersive.has-music .photo-lb-music:not(:empty) {
+    display: flex;
+}
+
+.photo-lightbox.is-immersive.is-ui-awake .photo-lb-music,
+.photo-lightbox.is-immersive.is-caption-shown .photo-lb-music {
+    opacity: 1;
 }
 
 .photo-lightbox.is-immersive .photo-lb-prev,

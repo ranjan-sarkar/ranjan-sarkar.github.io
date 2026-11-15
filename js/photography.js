@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarBtn = dialog.querySelector('[data-lb="sidebar"]');
     const playBtn = dialog.querySelector('[data-lb="play"]');
     const fullBtn = dialog.querySelector('[data-lb="fullscreen"]');
+    const musicBtn = dialog.querySelector('[data-lb="music"]');
     const inner = dialog.querySelector('.photo-lightbox-inner');
     const progress = dialog.querySelector('.photo-lb-progress');
     let list = [];
@@ -328,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             show(index);   // reload the photo at full-screen size
             if (!playing) setPlaying(true);
+            applyMusic();
             wakeUi();
             // focus off the (fading) button, so Space plays / pauses instead of pressing it again
             dialog.focus({ preventScroll: true });
@@ -337,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 try { quietly(exit.call(document)); } catch (e) { }
             }
             stopMotion();
+            applyMusic();
             clearTimeout(wakeTimer);
             clearTimeout(captionTimer);
             dialog.classList.remove('is-ui-awake', 'is-caption-shown');
@@ -346,6 +349,46 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     };
+    // --- Music (full screen only) ---
+    // Piano music (a playlist of recordings, js/slideshow-music.js) can play during the full-screen
+    // slideshow: the music button (or M) turns it on and off, and the choice is remembered, so it
+    // starts again the next time full screen is entered. It fades out when full screen ends or the
+    // viewer closes. The piece playing and its credit are named at the top centre of the screen,
+    // shown with the controls and again whenever a new piece starts.
+    const nowPlaying = dialog.querySelector('.photo-lb-music');
+    let musicWanted = false;
+    try { musicWanted = localStorage.getItem('photoViewerMusic') === 'on'; } catch (e) { }
+    if (!window.SlideshowMusic) musicBtn.hidden = true;
+    const showTrack = () => {
+        const track = window.SlideshowMusic && window.SlideshowMusic.current;
+        nowPlaying.innerHTML = track
+            ? `<i class="fa-solid fa-music" aria-hidden="true"></i><span class="photo-lb-music-text"><strong>${escapeHtml(track.title)}</strong><span class="photo-lb-music-sep"> &middot; </span>${escapeHtml(track.credit || track.artist)}</span>`
+            : '';
+    };
+    window.addEventListener('slideshow-music-track', () => {
+        showTrack();
+        if (immersive) flashCaption();
+    });
+    function applyMusic() {
+        const music = window.SlideshowMusic;
+        const on = Boolean(music) && musicWanted && immersive;
+        if (music) {
+            if (on) music.start();
+            else music.stop();
+        }
+        if (on) showTrack();
+        dialog.classList.toggle('has-music', on);
+        musicBtn.setAttribute('aria-pressed', String(on));
+        const label = on ? 'Turn music off' : 'Play piano music';
+        musicBtn.setAttribute('aria-label', label);
+        musicBtn.dataset.tip = `${label} (M)`;
+    }
+    const setMusic = (on) => {
+        musicWanted = on;
+        try { localStorage.setItem('photoViewerMusic', on ? 'on' : 'off'); } catch (e) { }
+        applyMusic();
+    };
+
     // the browser's own way out of full screen (Esc, or its exit control) leaves full-screen mode too
     ['fullscreenchange', 'webkitfullscreenchange'].forEach((type) => document.addEventListener(type, () => {
         if (!fsElement() && immersive) setImmersive(false);
@@ -392,35 +435,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dialog.addEventListener('click', (event) => {
         const action = event.target.closest('[data-lb]')?.dataset.lb;
+        // a button clicked with the mouse hands focus back to the viewer, so the keys below keep
+        // working (otherwise Space would press that button again: the next arrow, say)
+        if (action && action !== 'close' && event.detail > 0) dialog.focus({ preventScroll: true });
         if (action === 'close') dialog.close();
         else if (action === 'prev') show(index - 1);
         else if (action === 'next') show(index + 1);
         else if (action === 'play') setPlaying(!playing);
         else if (action === 'fullscreen') setImmersive(!immersive);
+        else if (action === 'music') setMusic(!musicWanted);
         // in full screen, a tap or click anywhere off the controls brings the controls back
         else if (immersive) { if (!event.target.closest('a')) wakeUi(); }
-        else if (action === 'sidebar') {
-            sidebarShown = !sidebarShown;
+        // the toolbar's list button shows / hides the photo list; the × in the list's corner hides it
+        else if (action === 'sidebar' || action === 'sidebar-close') {
+            sidebarShown = action === 'sidebar' ? !sidebarShown : false;
             try { localStorage.setItem('photoViewerSidebar', sidebarShown ? 'shown' : 'hidden'); } catch (e) { }
             applySidebar();
             if (sidebarShown && thumbs[index]) {
                 setTimeout(() => thumbs[index].scrollIntoView({ block: 'center', inline: 'center' }), 360);
             }
+            // the × is gone with the list: keyboard focus moves to the toolbar button that brings it back
+            if (action === 'sidebar-close' && event.detail === 0) sidebarBtn.focus();
         }
         // a click on the dark background around the photo (not on it or its caption) closes the viewer
         else if (event.target === dialog || event.target.matches('.photo-lightbox-inner, .photo-lb-stage')) dialog.close();
     });
 
-    dialog.addEventListener('keydown', (event) => {
+    // Keys while the viewer is open: ← / → previous / next, Space play / pause, F full screen, M music
+    // (in full screen). Listened for on the whole document, so they work wherever focus has ended up,
+    // including inside the browser's full screen.
+    document.addEventListener('keydown', (event) => {
+        if (!dialog.open || event.ctrlKey || event.metaKey || event.altKey) return;
         if (immersive) wakeUi();
-        if ((event.key === 'f' || event.key === 'F') && !event.ctrlKey && !event.metaKey && !event.altKey) {
+        const key = event.key;
+        const onControl = event.target instanceof Element && event.target.closest('button, a');
+        if (key === 'ArrowRight' || key === 'ArrowLeft') {
+            event.preventDefault();
+            show(index + (key === 'ArrowRight' ? 1 : -1));
+        } else if (key === ' ' && (immersive || !onControl)) {
+            // on a focused button Space presses that button, except in full screen, where the
+            // buttons are mostly hidden and Space always plays / pauses
+            event.preventDefault();
+            if (!event.repeat) setPlaying(!playing);
+        } else if ((key === 'f' || key === 'F') && !event.repeat) {
             event.preventDefault();
             setImmersive(!immersive);
+        } else if ((key === 'm' || key === 'M') && immersive && !event.repeat && window.SlideshowMusic) {
+            event.preventDefault();
+            setMusic(!musicWanted);
         }
-        if (event.key === 'ArrowRight') { event.preventDefault(); show(index + 1); }
-        if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
-        // Space plays / pauses the slideshow (on a focused button it presses that button instead)
-        if (event.key === ' ' && !event.target.closest('button, a')) { event.preventDefault(); setPlaying(!playing); }
     });
 
     // swipe left / right on the photo (touch screens); swipes on the photo list just scroll the list

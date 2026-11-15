@@ -1072,6 +1072,14 @@
                             target="_blank" rel="noopener" class="themed-text-primary text-accent font-medium">Unsplash</a> and <a
                             href="https://500px.com/p/ranjansarkar" target="_blank" rel="noopener"
                             class="themed-text-primary text-accent font-medium">500px</a> profiles.</p>
+                    <p class="photo-credit photo-music-credit">Slideshow music: &ldquo;In This Moment&rdquo;, &ldquo;Wildflowers&rdquo; and
+                        &ldquo;With These Hands&rdquo; by Scott Buckley, released under <a href="https://creativecommons.org/licenses/by/4.0/"
+                            target="_blank" rel="noopener" class="themed-text-primary text-accent font-medium">CC BY 4.0</a>
+                        (<a href="https://www.scottbuckley.com.au" target="_blank" rel="noopener"
+                            class="themed-text-primary text-accent font-medium">www.scottbuckley.com.au</a>); Satie&rsquo;s Gymnop&eacute;die
+                        No. 1 played by Robin Alciatore and Debussy&rsquo;s Clair de lune played by Laurens Goedhart, public-domain
+                        recordings from <a href="https://commons.wikimedia.org" target="_blank" rel="noopener"
+                            class="themed-text-primary text-accent font-medium">Wikimedia Commons</a>.</p>
                 </div>
             </div>
         </section>
@@ -1084,9 +1092,12 @@
         <div class="photo-lightbox-inner">
             <div class="photo-lb-stage">
                 <span class="photo-lb-count"></span>
+                <span class="photo-lb-music" aria-live="polite"></span>
                 <div class="photo-lb-toolbar">
                     <button type="button" class="photo-lb-btn" data-lb="play" aria-pressed="false" aria-label="Play slideshow"
                         data-tip="Play slideshow (Space)"><i class="fa-solid fa-play" aria-hidden="true"></i></button>
+                    <button type="button" class="photo-lb-btn" data-lb="music" aria-pressed="false" aria-label="Play piano music"
+                        data-tip="Play piano music (M)"><i class="fa-solid fa-music" aria-hidden="true"></i></button>
                     <button type="button" class="photo-lb-btn" data-lb="fullscreen" aria-pressed="false" aria-label="Full screen slideshow"
                         data-tip="Full screen slideshow (F)"><i class="fa-solid fa-expand" aria-hidden="true"></i></button>
                     <button type="button" class="photo-lb-btn" data-lb="sidebar" aria-pressed="true" aria-controls="photo-lb-sidebar"
@@ -1112,6 +1123,8 @@
             </div>
             <aside class="photo-lb-sidebar" id="photo-lb-sidebar" aria-label="All photos">
                 <p class="photo-lb-sidebar-head"><span>All photos</span><span class="photo-lb-sidebar-count"></span></p>
+                <button type="button" class="photo-lb-sidebar-close" data-lb="sidebar-close" aria-label="Hide photo list"
+                    title="Hide photo list"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                 <ul class="photo-lb-thumbs"></ul>
             </aside>
         </div>
@@ -1215,6 +1228,7 @@
     </button>
 
     <script src="js/main.js"></script>
+    <script src="js/slideshow-music.js"></script>
     <script src="js/photography.js"></script>
 </body>
 
