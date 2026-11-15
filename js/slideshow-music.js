@@ -5,6 +5,7 @@
 //   window.SlideshowMusic.start()   fades the music in (call it from a click or key press: browsers
 //                                   only allow sound to start after the visitor does something)
 //   window.SlideshowMusic.stop()    fades it out
+//   window.SlideshowMusic.skip(1)   next piece; skip(-1) the previous one (or restarts this one)
 //   window.SlideshowMusic.current   the piece playing now ({ title, artist, credit }), for the "now playing" label
 //   'slideshow-music-track' event   fired on window when a new piece starts
 //
@@ -26,18 +27,26 @@
     const FADE_IN_MS = 2500;
     const FADE_OUT_MS = 1200;
     const CROSSFADE_S = 4;        // the next piece starts this many seconds before the current one ends
+    const SKIP_FADE_S = 1.2;      // quicker cross-fade when the visitor skips
+    const RESTART_AFTER_S = 4;    // "previous" more than this far into a piece starts it again instead
 
-    // a shuffled order, reshuffled each time round (never starting with the piece that just ended)
-    let order = [];
-    let position = -1;
-    const shuffle = () => {
-        const last = order[order.length - 1];
-        order = TRACKS.map((_, i) => i);
-        for (let i = order.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [order[i], order[j]] = [order[j], order[i]];
+    // The order: pieces are drawn from a shuffled bag (refilled each time round, never starting with
+    // the piece just played), and every piece played goes into a history, so "previous" can step
+    // back through what was heard and "next" forward again before drawing new ones.
+    let bag = [];
+    const history = [];
+    let at = -1;   // place in the history of the piece playing now
+    const draw = () => {
+        if (!bag.length) {
+            bag = TRACKS.map((_, i) => i);
+            for (let i = bag.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [bag[i], bag[j]] = [bag[j], bag[i]];
+            }
+            const last = history[history.length - 1];
+            if (bag.length > 1 && bag[0] === last) [bag[0], bag[1]] = [bag[1], bag[0]];
         }
-        if (order.length > 1 && order[0] === last) [order[0], order[1]] = [order[1], order[0]];
+        return bag.shift();
     };
 
     // volume fades, a few steps a frame; each audio element has at most one fade running
@@ -61,13 +70,8 @@
 
     const quietly = (result) => { if (result && result.catch) result.catch(() => { }); };
 
-    const load = () => {
-        position += 1;
-        if (position >= order.length || order.length === 0) {
-            shuffle();
-            position = 0;
-        }
-        const track = TRACKS[order[position]];
+    const load = (index) => {
+        const track = TRACKS[index];
         const element = new Audio();
         element.preload = 'auto';
         element.src = track.src;
@@ -85,20 +89,43 @@
 
     const announce = () => window.dispatchEvent(new CustomEvent('slideshow-music-track', { detail: current }));
 
-    const next = () => {
+    // cross-fade from the piece playing to the one at history[at]
+    const switchTo = (seconds) => {
         const old = audio;
-        fade(old, 0, CROSSFADE_S * 1000, () => old.pause());
-        audio = load();
+        fade(old, 0, seconds * 1000, () => old.pause());
+        audio = load(history[at]);
         quietly(audio.play());
-        fade(audio, VOLUME, CROSSFADE_S * 1000);
+        fade(audio, VOLUME, seconds * 1000);
         announce();
+    };
+
+    const next = (seconds = CROSSFADE_S) => {
+        if (at === history.length - 1) history.push(draw());
+        at += 1;
+        switchTo(seconds);
+    };
+
+    // skip(1): the next piece; skip(-1): the one before, or the start of this one if it has been
+    // playing a while (or is the first)
+    const skip = (direction) => {
+        if (!playing || !audio) return;
+        if (direction > 0) {
+            next(SKIP_FADE_S);
+        } else if (at === 0 || audio.currentTime > RESTART_AFTER_S) {
+            audio.currentTime = 0;
+        } else {
+            at -= 1;
+            switchTo(SKIP_FADE_S);
+        }
     };
 
     const start = () => {
         if (playing) return;
         playing = true;
         if (!audio) {
-            audio = load();
+            history.push(draw());
+            at = 0;
+            audio = load(history[at]);
             announce();
         }
         quietly(audio.play());
@@ -115,6 +142,7 @@
     window.SlideshowMusic = {
         start,
         stop,
+        skip,
         get playing() { return playing; },
         get current() { return current; },
     };

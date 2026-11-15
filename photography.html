@@ -1092,7 +1092,13 @@
         <div class="photo-lightbox-inner">
             <div class="photo-lb-stage">
                 <span class="photo-lb-count"></span>
-                <span class="photo-lb-music" aria-live="polite"></span>
+                <div class="photo-lb-music" role="group" aria-label="Music">
+                    <button type="button" class="photo-lb-music-btn" data-lb="track-prev" aria-label="Previous piece"
+                        title="Previous piece (Shift+&larr;)"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
+                    <span class="photo-lb-music-now" aria-live="polite"></span>
+                    <button type="button" class="photo-lb-music-btn" data-lb="track-next" aria-label="Next piece"
+                        title="Next piece (Shift+&rarr;)"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
+                </div>
                 <div class="photo-lb-toolbar">
                     <button type="button" class="photo-lb-btn" data-lb="play" aria-pressed="false" aria-label="Play slideshow"
                         data-tip="Play slideshow (Space)"><i class="fa-solid fa-play" aria-hidden="true"></i></button>

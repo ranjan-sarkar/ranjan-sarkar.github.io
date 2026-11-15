@@ -252,10 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (neighbour) new Image().src = fullUrl(neighbour);
         });
 
-        if (immersive) {
-            flashCaption();
-            startMotion();
-        }
+        if (immersive) startMotion();
     };
 
     // --- Slow motion on each photo in full screen ---
@@ -264,22 +261,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // in a row. The keyframes are in style.css (photo-kenburns); they pause with the slideshow.
     // The zoom is always enough to cover the pan, so a photo that fills the screen never shows an edge.
     let lastMotion = -1;
-    const pickMotion = () => {
+    // Moves only go along a direction the photo fills: a wide photo on a tall phone screen has black
+    // bands above and below it, and drifting it up or down would leave it sitting off-centre, so it
+    // only pans sideways or zooms (from its centre); a tall photo on a wide screen only moves up and down.
+    const pickMotion = (canX, canY) => {
+        const kinds = [0, 1];                     // zoom in, zoom out: always fine
+        if (canX) kinds.push(2);                  // pan left / right
+        if (canY) kinds.push(3);                  // drift up / down
+        if (canX || canY) kinds.push(4);          // zoom towards a corner (or an edge)
         let kind;
-        do { kind = Math.floor(Math.random() * 5); } while (kind === lastMotion);
+        do { kind = kinds[Math.floor(Math.random() * kinds.length)]; } while (kind === lastMotion && kinds.length > 1);
         lastMotion = kind;
-        const dx = Math.random() < 0.5 ? -1 : 1;
-        const dy = Math.random() < 0.5 ? -1 : 1;
+        const dx = canX ? (Math.random() < 0.5 ? -1 : 1) : 0;
+        const dy = canY ? (Math.random() < 0.5 ? -1 : 1) : 0;
         switch (kind) {
-            case 0: return ['scale(1)', 'scale(1.15)'];                                              // zoom in
-            case 1: return ['scale(1.15)', 'scale(1)'];                                              // zoom out
-            case 2: return [`scale(1.12) translateX(${4 * dx}%)`, `scale(1.12) translateX(${-4 * dx}%)`]; // pan
-            case 3: return [`scale(1.12) translateY(${3 * dy}%)`, `scale(1.12) translateY(${-3 * dy}%)`]; // drift
-            default: return ['scale(1) translate(0%, 0%)', `scale(1.18) translate(${3 * dx}%, ${2 * dy}%)`]; // corner
+            case 0: return ['scale(1)', 'scale(1.15)'];
+            case 1: return ['scale(1.15)', 'scale(1)'];
+            case 2: return [`scale(1.12) translateX(${4 * dx}%)`, `scale(1.12) translateX(${-4 * dx}%)`];
+            case 3: return [`scale(1.12) translateY(${3 * dy}%)`, `scale(1.12) translateY(${-3 * dy}%)`];
+            default: return ['scale(1) translate(0%, 0%)', `scale(1.18) translate(${3 * dx}%, ${2 * dy}%)`];
         }
     };
     function startMotion() {
-        const [from, to] = pickMotion();
+        // the photo's shape (from its gallery thumbnail, known before the large file loads) against
+        // the shape of the box it is shown in
+        const small = list[index] && list[index].querySelector('img');
+        const w = small ? small.naturalWidth || parseFloat(small.getAttribute('width')) : 0;
+        const h = small ? small.naturalHeight || parseFloat(small.getAttribute('height')) : 0;
+        const photoRatio = w && h ? w / h : 1.5;
+        const boxRatio = img.clientWidth && img.clientHeight ? img.clientWidth / img.clientHeight : window.innerWidth / window.innerHeight;
+        const canX = photoRatio >= boxRatio * 0.98;   // fills the width
+        const canY = photoRatio <= boxRatio * 1.02;   // fills the height
+        const [from, to] = pickMotion(canX, canY);
         img.style.setProperty('--kb-from', from);
         img.style.setProperty('--kb-to', to);
         img.classList.remove('is-kenburns');
@@ -295,11 +308,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Full screen ---
     // The photo fills the whole screen (the browser's own full screen where it is supported; on
     // iPhones, which only allow that for videos, the viewer simply drops everything around the
-    // photo) and the slideshow starts. The toolbar, arrows and counter fade away after a moment
-    // and come back when the mouse moves, the screen is tapped or a key is pressed; each new photo
-    // shows its title and place for a few seconds. F or the button toggles it; Esc leaves it.
+    // photo) and the slideshow starts. The photo's title, description and place stay on screen; the
+    // toolbar, arrows, counter and music label fade away after a moment and come back when the mouse
+    // moves, the screen is tapped or a key is pressed. F or the button toggles it; Esc leaves it.
     let wakeTimer = null;
-    let captionTimer = null;
+    let trackTimer = null;
     const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
     const quietly = (result) => { if (result && result.catch) result.catch(() => { }); };
     const wakeUi = () => {
@@ -307,11 +320,12 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(wakeTimer);
         wakeTimer = setTimeout(() => dialog.classList.remove('is-ui-awake'), 2500);
     };
-    function flashCaption() {
-        dialog.classList.add('is-caption-shown');
-        clearTimeout(captionTimer);
-        captionTimer = setTimeout(() => dialog.classList.remove('is-caption-shown'), 3200);
-    }
+    // the music label also shows by itself for a few seconds when a new piece starts
+    const flashTrack = () => {
+        dialog.classList.add('is-track-shown');
+        clearTimeout(trackTimer);
+        trackTimer = setTimeout(() => dialog.classList.remove('is-track-shown'), 4000);
+    };
     const setImmersive = (on) => {
         if (on === immersive) return;
         immersive = on;
@@ -341,8 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
             stopMotion();
             applyMusic();
             clearTimeout(wakeTimer);
-            clearTimeout(captionTimer);
-            dialog.classList.remove('is-ui-awake', 'is-caption-shown');
+            clearTimeout(trackTimer);
+            dialog.classList.remove('is-ui-awake', 'is-track-shown');
             // the photo list is back in view: bring the current photo into view in it again
             requestAnimationFrame(() => {
                 if (sidebarShown && thumbs[index]) thumbs[index].scrollIntoView({ block: 'center', inline: 'center' });
@@ -354,8 +368,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // slideshow: the music button (or M) turns it on and off, and the choice is remembered, so it
     // starts again the next time full screen is entered. It fades out when full screen ends or the
     // viewer closes. The piece playing and its credit are named at the top centre of the screen,
-    // shown with the controls and again whenever a new piece starts.
-    const nowPlaying = dialog.querySelector('.photo-lb-music');
+    // between buttons for the previous and next piece (also Shift+← / Shift+→), shown with the
+    // controls and for a few seconds whenever a new piece starts.
+    const nowPlaying = dialog.querySelector('.photo-lb-music-now');
     let musicWanted = false;
     try { musicWanted = localStorage.getItem('photoViewerMusic') === 'on'; } catch (e) { }
     if (!window.SlideshowMusic) musicBtn.hidden = true;
@@ -367,8 +382,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('slideshow-music-track', () => {
         showTrack();
-        if (immersive) flashCaption();
+        if (immersive) flashTrack();
     });
+    const skipTrack = (direction) => {
+        if (window.SlideshowMusic && dialog.classList.contains('has-music')) window.SlideshowMusic.skip(direction);
+    };
     function applyMusic() {
         const music = window.SlideshowMusic;
         const on = Boolean(music) && musicWanted && immersive;
@@ -376,7 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (on) music.start();
             else music.stop();
         }
-        if (on) showTrack();
+        if (on) {
+            showTrack();
+            flashTrack();
+        }
         dialog.classList.toggle('has-music', on);
         musicBtn.setAttribute('aria-pressed', String(on));
         const label = on ? 'Turn music off' : 'Play piano music';
@@ -444,6 +465,10 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (action === 'play') setPlaying(!playing);
         else if (action === 'fullscreen') setImmersive(!immersive);
         else if (action === 'music') setMusic(!musicWanted);
+        else if (action === 'track-prev' || action === 'track-next') {
+            skipTrack(action === 'track-next' ? 1 : -1);
+            wakeUi();
+        }
         // in full screen, a tap or click anywhere off the controls brings the controls back
         else if (immersive) { if (!event.target.closest('a')) wakeUi(); }
         // the toolbar's list button shows / hides the photo list; the × in the list's corner hides it
@@ -461,15 +486,19 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (event.target === dialog || event.target.matches('.photo-lightbox-inner, .photo-lb-stage')) dialog.close();
     });
 
-    // Keys while the viewer is open: ← / → previous / next, Space play / pause, F full screen, M music
-    // (in full screen). Listened for on the whole document, so they work wherever focus has ended up,
-    // including inside the browser's full screen.
+    // Keys while the viewer is open: ← / → previous / next photo, Space play / pause, F full screen,
+    // and in full screen M music on / off and Shift+← / Shift+→ previous / next piece of music.
+    // Listened for on the whole document, so they work wherever focus has ended up, including
+    // inside the browser's full screen.
     document.addEventListener('keydown', (event) => {
         if (!dialog.open || event.ctrlKey || event.metaKey || event.altKey) return;
         if (immersive) wakeUi();
         const key = event.key;
         const onControl = event.target instanceof Element && event.target.closest('button, a');
-        if (key === 'ArrowRight' || key === 'ArrowLeft') {
+        if ((key === 'ArrowRight' || key === 'ArrowLeft') && event.shiftKey && dialog.classList.contains('has-music')) {
+            event.preventDefault();
+            if (!event.repeat) skipTrack(key === 'ArrowRight' ? 1 : -1);
+        } else if (key === 'ArrowRight' || key === 'ArrowLeft') {
             event.preventDefault();
             show(index + (key === 'ArrowRight' ? 1 : -1));
         } else if (key === ' ' && (immersive || !onControl)) {
