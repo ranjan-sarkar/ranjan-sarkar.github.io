@@ -1077,14 +1077,18 @@
         </section>
     </main>
 
-    <!-- Full-screen viewer (opened by js/photography.js): the photo with its caption, a toolbar
-         (slideshow, photo list, close), and the list of all photos beside it (under it on phones) -->
+    <!-- Photo viewer (opened by js/photography.js): the photo with its caption, the counter, a toolbar
+         (slideshow, full screen, photo list, close), and the list of all photos beside it (under it
+         on phones). Full screen hides everything but the photo and plays the slideshow. -->
     <dialog class="photo-lightbox search-skip" id="photo-lightbox" aria-label="Photo viewer" tabindex="-1">
         <div class="photo-lightbox-inner">
             <div class="photo-lb-stage">
+                <span class="photo-lb-count"></span>
                 <div class="photo-lb-toolbar">
                     <button type="button" class="photo-lb-btn" data-lb="play" aria-pressed="false" aria-label="Play slideshow"
                         data-tip="Play slideshow (Space)"><i class="fa-solid fa-play" aria-hidden="true"></i></button>
+                    <button type="button" class="photo-lb-btn" data-lb="fullscreen" aria-pressed="false" aria-label="Full screen slideshow"
+                        data-tip="Full screen slideshow (F)"><i class="fa-solid fa-expand" aria-hidden="true"></i></button>
                     <button type="button" class="photo-lb-btn" data-lb="sidebar" aria-pressed="true" aria-controls="photo-lb-sidebar"
                         aria-label="Hide photo list" data-tip="Hide photo list"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i></button>
                     <button type="button" class="photo-lb-btn" data-lb="close" aria-label="Close" data-tip="Close (Esc)"><i
@@ -1097,10 +1101,11 @@
                         <span class="photo-lb-progress" aria-hidden="true"></span>
                     </div>
                     <figcaption class="photo-lb-caption">
-                        <span class="photo-lb-count"></span>
-                        <span class="photo-lb-title"></span>
+                        <span class="photo-lb-head">
+                            <span class="photo-lb-title"></span>
+                            <span class="photo-lb-meta"></span>
+                        </span>
                         <span class="photo-lb-text"></span>
-                        <span class="photo-lb-meta"></span>
                     </figcaption>
                 </figure>
                 <button type="button" class="photo-lb-btn photo-lb-next" data-lb="next" aria-label="Next photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>

@@ -95,11 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarCount = dialog.querySelector('.photo-lb-sidebar-count');
     const sidebarBtn = dialog.querySelector('[data-lb="sidebar"]');
     const playBtn = dialog.querySelector('[data-lb="play"]');
+    const fullBtn = dialog.querySelector('[data-lb="fullscreen"]');
+    const inner = dialog.querySelector('.photo-lightbox-inner');
     const progress = dialog.querySelector('.photo-lb-progress');
     let list = [];
     let thumbs = [];
     let index = 0;
     let opener = null;
+    let immersive = false;   // full-screen slideshow mode (see "Full screen" below)
+
+    // the large version of a photo; in full screen, Unsplash photos are asked for at the screen's
+    // real pixel width (up to 3000px) instead of the usual 1800px, so they stay sharp on big screens
+    const fullUrl = (frame) => {
+        const url = frame.dataset.full;
+        if (!immersive || !/images\.unsplash\.com/.test(url)) return url;
+        const want = Math.min(3000, Math.ceil((screen.width * (window.devicePixelRatio || 1)) / 200) * 200);
+        return want > 1800 ? url.replace(/([?&])w=\d+/, `$1w=${want}`) : url;
+    };
 
     const escapeHtml = (value) => value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
@@ -145,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) { }
     const applySidebar = () => {
         dialog.classList.toggle('is-sidebar-hidden', !sidebarShown);
-        sidebar.inert = !sidebarShown;   // a hidden list is out of the tab order
+        sidebar.inert = !sidebarShown || immersive;   // a hidden list is out of the tab order
         sidebarBtn.setAttribute('aria-pressed', String(sidebarShown));
         const label = sidebarShown ? 'Hide photo list' : 'Show photo list';
         sidebarBtn.setAttribute('aria-label', label);
@@ -183,18 +195,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const figure = frame.closest('.photo-item');
         const thumb = frame.querySelector('img');
 
-        // show the already-loaded thumbnail at once, then swap in the large version
+        // show the large version straight away if it is already loaded (the neighbours are fetched
+        // ahead, so during a slideshow it usually is); otherwise show the already-loaded thumbnail
+        // at once and swap in the large version when it arrives
         img.classList.add('is-swapping');
-        img.src = thumb.currentSrc || thumb.src;
         img.alt = thumb.alt;
         const full = new Image();
-        full.onload = () => {
-            if (list[index] === frame) {
-                img.src = full.src;
-                img.classList.remove('is-swapping');
-            }
-        };
-        full.src = frame.dataset.full;
+        full.src = fullUrl(frame);
+        if (full.complete && full.naturalWidth) {
+            img.src = full.src;
+        } else {
+            img.src = thumb.currentSrc || thumb.src;
+            full.onload = () => {
+                if (list[index] === frame) {
+                    img.src = full.src;
+                    img.classList.remove('is-swapping');
+                }
+            };
+        }
         requestAnimationFrame(() => img.classList.remove('is-swapping'));
 
         count.textContent = `${index + 1} / ${list.length}`;
@@ -230,9 +248,116 @@ document.addEventListener('DOMContentLoaded', () => {
         // warm the neighbours so next / previous feel instant
         [index + 1, index - 1].forEach((n) => {
             const neighbour = list[(n + list.length) % list.length];
-            if (neighbour) new Image().src = neighbour.dataset.full;
+            if (neighbour) new Image().src = fullUrl(neighbour);
         });
+
+        if (immersive) {
+            flashCaption();
+            startMotion();
+        }
     };
+
+    // --- Slow motion on each photo in full screen ---
+    // Every photo gets a random, slow move for the length of its slide: a zoom in or out, a pan to
+    // the left or right, a drift up or down, or a zoom towards a corner, never the same kind twice
+    // in a row. The keyframes are in style.css (photo-kenburns); they pause with the slideshow.
+    // The zoom is always enough to cover the pan, so a photo that fills the screen never shows an edge.
+    let lastMotion = -1;
+    const pickMotion = () => {
+        let kind;
+        do { kind = Math.floor(Math.random() * 5); } while (kind === lastMotion);
+        lastMotion = kind;
+        const dx = Math.random() < 0.5 ? -1 : 1;
+        const dy = Math.random() < 0.5 ? -1 : 1;
+        switch (kind) {
+            case 0: return ['scale(1)', 'scale(1.15)'];                                              // zoom in
+            case 1: return ['scale(1.15)', 'scale(1)'];                                              // zoom out
+            case 2: return [`scale(1.12) translateX(${4 * dx}%)`, `scale(1.12) translateX(${-4 * dx}%)`]; // pan
+            case 3: return [`scale(1.12) translateY(${3 * dy}%)`, `scale(1.12) translateY(${-3 * dy}%)`]; // drift
+            default: return ['scale(1) translate(0%, 0%)', `scale(1.18) translate(${3 * dx}%, ${2 * dy}%)`]; // corner
+        }
+    };
+    function startMotion() {
+        const [from, to] = pickMotion();
+        img.style.setProperty('--kb-from', from);
+        img.style.setProperty('--kb-to', to);
+        img.classList.remove('is-kenburns');
+        void img.offsetWidth;   // restart the animation for the new photo
+        img.classList.add('is-kenburns');
+    }
+    const stopMotion = () => {
+        img.classList.remove('is-kenburns');
+        img.style.removeProperty('--kb-from');
+        img.style.removeProperty('--kb-to');
+    };
+
+    // --- Full screen ---
+    // The photo fills the whole screen (the browser's own full screen where it is supported; on
+    // iPhones, which only allow that for videos, the viewer simply drops everything around the
+    // photo) and the slideshow starts. The toolbar, arrows and counter fade away after a moment
+    // and come back when the mouse moves, the screen is tapped or a key is pressed; each new photo
+    // shows its title and place for a few seconds. F or the button toggles it; Esc leaves it.
+    let wakeTimer = null;
+    let captionTimer = null;
+    const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+    const quietly = (result) => { if (result && result.catch) result.catch(() => { }); };
+    const wakeUi = () => {
+        dialog.classList.add('is-ui-awake');
+        clearTimeout(wakeTimer);
+        wakeTimer = setTimeout(() => dialog.classList.remove('is-ui-awake'), 2500);
+    };
+    function flashCaption() {
+        dialog.classList.add('is-caption-shown');
+        clearTimeout(captionTimer);
+        captionTimer = setTimeout(() => dialog.classList.remove('is-caption-shown'), 3200);
+    }
+    const setImmersive = (on) => {
+        if (on === immersive) return;
+        immersive = on;
+        dialog.classList.toggle('is-immersive', on);
+        applySidebar();
+        fullBtn.setAttribute('aria-pressed', String(on));
+        const label = on ? 'Exit full screen' : 'Full screen slideshow';
+        fullBtn.setAttribute('aria-label', label);
+        fullBtn.dataset.tip = `${label} (F)`;
+        fullBtn.querySelector('i').className = `fa-solid ${on ? 'fa-compress' : 'fa-expand'}`;
+        if (on) {
+            const request = inner.requestFullscreen || inner.webkitRequestFullscreen;
+            if (request && !fsElement()) {
+                try { quietly(request.call(inner)); } catch (e) { }
+            }
+            show(index);   // reload the photo at full-screen size
+            if (!playing) setPlaying(true);
+            wakeUi();
+            // focus off the (fading) button, so Space plays / pauses instead of pressing it again
+            dialog.focus({ preventScroll: true });
+        } else {
+            const exit = document.exitFullscreen || document.webkitExitFullscreen;
+            if (exit && fsElement()) {
+                try { quietly(exit.call(document)); } catch (e) { }
+            }
+            stopMotion();
+            clearTimeout(wakeTimer);
+            clearTimeout(captionTimer);
+            dialog.classList.remove('is-ui-awake', 'is-caption-shown');
+            // the photo list is back in view: bring the current photo into view in it again
+            requestAnimationFrame(() => {
+                if (sidebarShown && thumbs[index]) thumbs[index].scrollIntoView({ block: 'center', inline: 'center' });
+            });
+        }
+    };
+    // the browser's own way out of full screen (Esc, or its exit control) leaves full-screen mode too
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach((type) => document.addEventListener(type, () => {
+        if (!fsElement() && immersive) setImmersive(false);
+    }));
+    // without the browser's full screen (iPhone), Esc leaves full-screen mode instead of closing the viewer
+    dialog.addEventListener('cancel', (event) => {
+        if (immersive) {
+            event.preventDefault();
+            setImmersive(false);
+        }
+    });
+    dialog.addEventListener('pointermove', (event) => { if (immersive && event.pointerType === 'mouse') wakeUi(); });
 
     // returnTo: the element that gets focus back when the viewer closes
     const open = (frame, returnTo = frame) => {
@@ -257,6 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     dialog.addEventListener('close', () => {
+        setImmersive(false);
         setPlaying(false);
         dialog.classList.remove('has-slideshow');
         progress.classList.remove('is-counting');
@@ -270,6 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (action === 'prev') show(index - 1);
         else if (action === 'next') show(index + 1);
         else if (action === 'play') setPlaying(!playing);
+        else if (action === 'fullscreen') setImmersive(!immersive);
+        // in full screen, a tap or click anywhere off the controls brings the controls back
+        else if (immersive) { if (!event.target.closest('a')) wakeUi(); }
         else if (action === 'sidebar') {
             sidebarShown = !sidebarShown;
             try { localStorage.setItem('photoViewerSidebar', sidebarShown ? 'shown' : 'hidden'); } catch (e) { }
@@ -283,6 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     dialog.addEventListener('keydown', (event) => {
+        if (immersive) wakeUi();
+        if ((event.key === 'f' || event.key === 'F') && !event.ctrlKey && !event.metaKey && !event.altKey) {
+            event.preventDefault();
+            setImmersive(!immersive);
+        }
         if (event.key === 'ArrowRight') { event.preventDefault(); show(index + 1); }
         if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
         // Space plays / pauses the slideshow (on a focused button it presses that button instead)
