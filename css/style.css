@@ -1734,6 +1734,25 @@ header nav a[data-nav].active::after {
     }
 }
 
+/* Smooth wheel scrolling (Lenis, started by js/smooth-scroll.js, which adds html.lenis).
+   Lenis measures the page from the document's own height, so body must not be pinned to 100%;
+   embedded videos and maps ignore the pointer while the page glides, so a wheel over one keeps
+   scrolling the page instead of being swallowed by the frame. */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
 /* Animation for sections on scroll */
 .scroll-animate {
     opacity: 0;

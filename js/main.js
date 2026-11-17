@@ -1149,7 +1149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hash = decodeURIComponent(window.location.hash.substring(1));
         const target = hash && document.getElementById(hash);
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            window.siteScrollTo(target);
         }
     };
     window.addEventListener('load', () => requestAnimationFrame(scrollToHashTarget));
@@ -1927,7 +1927,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             target.element.classList.add('search-target');
             // wait a frame so layout (fonts, scroll animations) has settled
-            requestAnimationFrame(() => target.element.scrollIntoView({ block: 'center', behavior: 'smooth' }));
+            requestAnimationFrame(() => window.siteScrollTo(target.element, { block: 'center' }));
         }
         // tidy the address bar; the highlights stay until the page is reloaded
         params.delete('q');
@@ -1977,6 +1977,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     scrollToTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.siteScrollTo(0);
     });
 });
