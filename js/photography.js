@@ -423,6 +423,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     dialog.addEventListener('pointermove', (event) => { if (immersive && event.pointerType === 'mouse') wakeUi(); });
 
+    // Closing fades the viewer out (.is-closing in style.css) before the dialog really closes. From
+    // full screen it closes straight away, as it does with reduced motion; a timer stands in if the
+    // fade's animationend never arrives (a hidden tab, say).
+    let closing = false;
+    const closeViewer = () => {
+        if (!dialog.open || closing) return;
+        if (immersive || reduceMotion.matches) {
+            dialog.close();
+            return;
+        }
+        closing = true;
+        dialog.classList.add('is-closing');
+        let fallback = null;
+        const finish = (event) => {
+            if (event && event.target !== dialog) return;   // the photo's own fade ends too
+            dialog.removeEventListener('animationend', finish);
+            clearTimeout(fallback);
+            closing = false;
+            dialog.classList.remove('is-closing');
+            if (dialog.open) dialog.close();
+        };
+        dialog.addEventListener('animationend', finish);
+        fallback = setTimeout(finish, 400);
+    };
+    // Esc fades out the same way (in full screen it leaves full-screen mode instead: see above)
+    // (the key itself is caught in the keydown handler below; this covers other close requests,
+    // such as the Android back gesture)
+    dialog.addEventListener('cancel', (event) => {
+        if (event.defaultPrevented) return;   // the listener above has just left full-screen mode
+        event.preventDefault();
+        closeViewer();
+    });
+
     // returnTo: the element that gets focus back when the viewer closes
     const open = (frame, returnTo = frame) => {
         list = items.filter((item) => !item.hidden).map((item) => item.querySelector('.photo-frame'));
@@ -459,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // a button clicked with the mouse hands focus back to the viewer, so the keys below keep
         // working (otherwise Space would press that button again: the next arrow, say)
         if (action && action !== 'close' && event.detail > 0) dialog.focus({ preventScroll: true });
-        if (action === 'close') dialog.close();
+        if (action === 'close') closeViewer();
         else if (action === 'prev') show(index - 1);
         else if (action === 'next') show(index + 1);
         else if (action === 'play') setPlaying(!playing);
@@ -483,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (action === 'sidebar-close' && event.detail === 0) sidebarBtn.focus();
         }
         // a click on the dark background around the photo (not on it or its caption) closes the viewer
-        else if (event.target === dialog || event.target.matches('.photo-lightbox-inner, .photo-lb-stage')) dialog.close();
+        else if (event.target === dialog || event.target.matches('.photo-lightbox-inner, .photo-lb-stage')) closeViewer();
     });
 
     // Keys while the viewer is open: ← / → previous / next photo, Space play / pause, F full screen,
@@ -495,7 +528,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (immersive) wakeUi();
         const key = event.key;
         const onControl = event.target instanceof Element && event.target.closest('button, a');
-        if ((key === 'ArrowRight' || key === 'ArrowLeft') && event.shiftKey && dialog.classList.contains('has-music')) {
+        if (key === 'Escape' && !immersive) {
+            event.preventDefault();   // fade out instead of the dialog's instant close
+            closeViewer();
+        } else if ((key === 'ArrowRight' || key === 'ArrowLeft') && event.shiftKey && dialog.classList.contains('has-music')) {
             event.preventDefault();
             if (!event.repeat) skipTrack(key === 'ArrowRight' ? 1 : -1);
         } else if (key === 'ArrowRight' || key === 'ArrowLeft') {

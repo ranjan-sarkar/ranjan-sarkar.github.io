@@ -604,6 +604,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     scrollAnimateElements.forEach(el => scrollObserver.observe(el));
 
+    // Footer scroll-in: the footer's columns fade up and its lines draw in once it comes into view
+    // (styles: "Footer scroll-in" in style.css). It plays once; with reduced motion the footer is
+    // left as it is. Arriving straight at the footer (the "Contact" link, a search result) plays
+    // it as soon as the footer is on screen.
+    const siteFooter = document.querySelector('footer#contact');
+    if (siteFooter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        siteFooter.classList.add('footer-reveal');
+        const footerObserver = new IntersectionObserver((entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+                siteFooter.classList.add('is-revealed');
+                footerObserver.disconnect();
+            }
+        }, { threshold: 0.12 });
+        footerObserver.observe(siteFooter);
+    }
+
     // --- TA Dropdown (desktop header) ---
     const taDropdown = document.querySelector('.ta-dropdown');
     const taDropdownButton = document.getElementById('ta-dropdown-button');
@@ -1039,6 +1055,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const citeModal = document.getElementById('cite-modal');
     const citeCopyStatus = document.getElementById('cite-copy-status');
     let citeStatusTimer = null;
+    let citeStatusDelay = null;   // holds a message back until the popup has finished opening
+    let citeOpenedAt = 0;
+    const CITE_OPEN_MS = 150;     // just after the popup starts opening (.modal.show in style.css)
 
     const closeCiteModal = () => {
         if (citeModal) {
@@ -1047,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lockPageScroll(false);
             if (citeCopyStatus) {
                 clearTimeout(citeStatusTimer);
+                clearTimeout(citeStatusDelay);
                 citeCopyStatus.classList.remove('is-visible', 'toast-pop');
                 citeCopyStatus.innerHTML = '';
             }
@@ -1060,8 +1080,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const citeBibtexText = document.getElementById('cite-bibtex-text');
         const citeModalTitle = document.getElementById('cite-modal-title');
 
+        // A message that arrives while the popup is still opening (the automatic copy finishes
+        // almost at once) waits until the popup has settled, so it appears just after it and is
+        // noticed instead of being lost in the opening animation.
         const setCitationStatus = (message, state = 'success') => {
             if (!citeCopyStatus) return;
+            clearTimeout(citeStatusDelay);
+            const wait = CITE_OPEN_MS - (performance.now() - citeOpenedAt);
+            if (wait > 0) {
+                citeStatusDelay = setTimeout(() => showCitationStatus(message, state), wait);
+                return;
+            }
+            showCitationStatus(message, state);
+        };
+
+        const showCitationStatus = (message, state) => {
+            if (!citeModal.classList.contains('show')) return;
             clearTimeout(citeStatusTimer);
 
             let iconHtml = '';
@@ -1083,9 +1117,13 @@ document.addEventListener('DOMContentLoaded', () => {
             citeCopyStatus.classList.add('toast-pop');
 
             if (state === 'success') {
+                // the BibTeX box lights up once, showing what has been copied
+                citeBibtexText.classList.remove('is-copied');
+                void citeBibtexText.offsetWidth;
+                citeBibtexText.classList.add('is-copied');
                 citeStatusTimer = setTimeout(() => {
                     citeCopyStatus.classList.remove('is-visible');
-                }, 3200);
+                }, 5000);
             }
         };
 
@@ -1097,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             navigator.clipboard.writeText(citeBibtexText.textContent)
                 .then(() => {
-                    setCitationStatus('BibTeX copied to clipboard!', 'success');
+                    setCitationStatus('BibTeX copied to clipboard', 'success');
                 })
                 .catch(() => {
                     setCitationStatus('Auto-copy failed. Please copy manually.', 'error');
@@ -1110,6 +1148,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 citeModalTitle.textContent = trigger.dataset.citeTitle || 'BibTeX Citation';
                 setModalOrigin(citeModal, event);
                 lockPageScroll(true);
+                citeOpenedAt = performance.now();
+                citeBibtexText.classList.remove('is-copied');
                 citeModal.classList.add('show');
                 citeModal.setAttribute('aria-hidden', 'false');
 
@@ -1120,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 citeBibtexText.textContent = bibtex;
-                setCitationStatus('Copying citation...', 'pending');
+                // copied straight away (it must happen during the click); only the message waits
                 copyCitationToClipboard();
             });
         });

@@ -2708,7 +2708,39 @@ html.modal-open {
 
 /* Toast pop animation on trigger */
 #cite-copy-status.toast-pop {
-    animation: cite-status-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: cite-status-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* the BibTeX box glows green once when it has been copied, so it is clear what was copied */
+.modal.show .modal-content > .citation-pre.is-copied {   /* the popup's own fade-up (modal-item-in) carries on alongside */
+    animation: modal-item-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both,
+               cite-pre-copied 1s ease-out;
+}
+
+@keyframes cite-pre-copied {
+    0% {
+        border-color: var(--border-light);
+    }
+    20% {
+        border-color: #34d399;   /* emerald-400 */
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        background-color: #ecfdf5;   /* emerald-50 */
+    }
+}
+
+.dark .modal.show .modal-content > .citation-pre.is-copied {
+    animation-name: modal-item-in, cite-pre-copied-dark;
+}
+
+@keyframes cite-pre-copied-dark {
+    0% {
+        border-color: var(--border-dark);
+    }
+    20% {
+        border-color: #34d399;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        background-color: rgba(6, 78, 59, 0.45);
+    }
 }
 
 @keyframes cite-status-pop {
@@ -2729,6 +2761,13 @@ html.modal-open {
     }
     #cite-copy-status.toast-pop {
         animation: none;
+    }
+    /* keep only the colour glow (no fade-up) on the BibTeX box */
+    .modal.show .modal-content > .citation-pre.is-copied {
+        animation: cite-pre-copied 1s ease-out;
+    }
+    .dark .modal.show .modal-content > .citation-pre.is-copied {
+        animation-name: cite-pre-copied-dark;
     }
 }
 
@@ -4416,11 +4455,18 @@ footer::after {
     background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.6) 30%, rgba(56, 189, 248, 0.5) 70%, transparent);
 }
 
-/* Footer columns: Contact gets more room for the long e-mail addresses, which also moves
-   Quick Links a little to the right towards Connect. Addresses wrap instead of overflowing. */
+/* Footer columns: each as wide as its content, Contact against the left edge, Connect against the
+   right, and Quick Links in between with equal space on both sides. Addresses wrap instead of
+   overflowing when the window is narrow. */
 @media (min-width: 768px) {
     footer .footer-grid {   /* "footer" makes this win over Tailwind's md:grid-cols-3, which loads later */
-        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-columns: repeat(3, auto);
+        justify-content: space-between;
+    }
+
+    /* an address is never broken mid-word here; on narrow tablets the Connect icons wrap instead */
+    .footer-emails > .footer-link {
+        white-space: nowrap;
     }
 }
 
@@ -4500,6 +4546,143 @@ footer::after {
     transform: scaleX(1);
 }
 
+/* Hairline above the copyright: fades out at both ends on phones, towards the right from tablets up */
+.footer-bottom::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.3) 20%, rgba(148, 163, 184, 0.3) 80%, transparent);
+    transform-origin: center;
+}
+
+@media (min-width: 768px) {
+    .footer-bottom::before {
+        background: linear-gradient(90deg, rgba(148, 163, 184, 0.32), rgba(148, 163, 184, 0.14) 65%, transparent);
+        transform-origin: left;
+    }
+}
+
+/* Footer scroll-in: when the footer scrolls into view (js/main.js adds .footer-reveal, then
+   .is-revealed), the three columns and the copyright fade up one after another, the coloured
+   line along the top and the hairline above the copyright draw across, and the headings' accent
+   bars grow in. Without JavaScript, or with reduced motion, the footer is simply there. */
+footer.footer-reveal .footer-grid > div,
+footer.footer-reveal .footer-bottom {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+footer.footer-reveal::after,
+footer.footer-reveal .footer-bottom::before,
+footer.footer-reveal .footer-heading::after {
+    transform: scaleX(0);
+}
+
+/* only the way in is animated: hiding (when the page loads) is instant, so nothing flickers */
+footer.footer-reveal.is-revealed .footer-grid > div,
+footer.footer-reveal.is-revealed .footer-bottom {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+footer.footer-reveal.is-revealed::after,
+footer.footer-reveal.is-revealed .footer-bottom::before {
+    transform: scaleX(1);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+footer.footer-reveal.is-revealed .footer-heading::after {
+    transform: scaleX(1);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* one after another: columns 0.07s apart, each heading's bar just after its column, the copyright last */
+footer.footer-reveal.is-revealed .footer-grid > div:nth-child(2) { transition-delay: 0.07s; }
+footer.footer-reveal.is-revealed .footer-grid > div:nth-child(3) { transition-delay: 0.14s; }
+footer.footer-reveal.is-revealed .footer-grid > div:nth-child(1) .footer-heading::after { transition-delay: 0.2s; }
+footer.footer-reveal.is-revealed .footer-grid > div:nth-child(2) .footer-heading::after { transition-delay: 0.27s; }
+footer.footer-reveal.is-revealed .footer-grid > div:nth-child(3) .footer-heading::after { transition-delay: 0.34s; }
+footer.footer-reveal.is-revealed .footer-bottom { transition-delay: 0.2s; }
+footer.footer-reveal.is-revealed .footer-bottom::before { transition-delay: 0.27s; }
+
+@media (prefers-reduced-motion: reduce) {
+    footer.footer-reveal .footer-grid > div,
+    footer.footer-reveal .footer-bottom {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    footer.footer-reveal::after,
+    footer.footer-reveal .footer-bottom::before,
+    footer.footer-reveal .footer-heading::after {
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Column headings: small capitals with a short accent bar under them, the same in all three columns */
+.footer-heading {
+    margin-bottom: 1.35rem;
+    color: #e2e8f0;   /* slate-200 */
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.footer-heading::after {
+    content: "";
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    margin: 0.6rem auto 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-dark), #38bdf8);
+}
+
+@media (min-width: 768px) {
+    .footer-heading::after {
+        margin-left: 0;
+        transform-origin: left;
+    }
+}
+
+/* Quick links in two columns (one on tablets, where the column is narrow), so the footer stays short */
+.footer-quick-links {
+    display: inline-grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 2.5rem;
+    row-gap: 0.6rem;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .footer-quick-links {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-quick-links {
+        grid-template-columns: repeat(2, max-content);
+    }
+}
+
+.footer-bottom {
+    position: relative;
+    margin-top: 2.75rem;
+    padding-top: 1.75rem;
+}
+
+.footer-bottom::before {
+    top: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .footer-contact:hover > i,
     .footer-contact:focus-within > i {
@@ -4511,6 +4694,12 @@ footer::after {
     footer::before,
     footer::after {
         display: none;
+    }
+
+    footer.footer-reveal .footer-grid > div,
+    footer.footer-reveal .footer-bottom {
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -6822,13 +7011,64 @@ body[data-page="photography"] img {
     background: rgba(2, 6, 23, 0.6);
 }
 
+/* Opening and closing: the dark background fades in while the photo and its caption grow gently
+   into place; closing (.is-closing, added by js/photography.js, which waits for it to finish
+   before the dialog really closes) plays the same thing in reverse, a little quicker */
 .photo-lightbox[open] {
     animation: photo-lightbox-in 0.3s ease both;
+}
+
+.photo-lightbox[open]::backdrop {
+    animation: photo-lightbox-in 0.3s ease both;
+}
+
+.photo-lightbox[open] .photo-lb-figure {
+    animation: photo-lb-figure-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.photo-lightbox.is-closing {
+    animation: photo-lightbox-out 0.24s ease forwards;
+    pointer-events: none;
+}
+
+.photo-lightbox.is-closing::backdrop {
+    animation: photo-lightbox-out 0.24s ease forwards;
+}
+
+.photo-lightbox.is-closing .photo-lb-figure {
+    animation: photo-lb-figure-out 0.24s ease forwards;
 }
 
 @keyframes photo-lightbox-in {
     from {
         opacity: 0;
+    }
+}
+
+@keyframes photo-lightbox-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes photo-lb-figure-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+}
+
+@keyframes photo-lb-figure-out {
+    to {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-lightbox[open] .photo-lb-figure,
+    .photo-lightbox.is-closing .photo-lb-figure {
+        animation: none;
     }
 }
 
