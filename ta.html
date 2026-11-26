@@ -138,7 +138,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
+                                            d="M6 9.5l5.15 5.15a1.2 1.2 0 0 0 1.7 0L18 9.5" />
                                     </svg>
                                 </button>
                             </div>
@@ -227,7 +227,7 @@
                         aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9.5l5.15 5.15a1.2 1.2 0 0 0 1.7 0L18 9.5" />
                         </svg>
                     </button>
                 </div>
@@ -253,17 +253,19 @@
 
     <main id="main-content" tabindex="-1">
         <!-- TAShip Section -->
-        <section id="TA" class="scroll-animate min-h-screen pt-12 pb-20 md:pt-20 md:pb-28">
+        <section id="TA" class="scroll-animate min-h-screen pt-12 pb-20 md:pt-16 md:pb-24">
             <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h1 class="type-page-title font-bold text-center themed-text-primary themed-accent mb-3">Teaching
                     Assistantship (TA)</h1>
-                <p class="text-center themed-text-secondary mb-10 max-w-2xl mx-auto">Courses I have assisted as a
+                <p class="text-center themed-text-secondary mb-10">Courses I have assisted as a
                     Teaching Assistant at IIT Kharagpur; open any card to see its topics and tutorials.</p>
 
                 <!-- Course search: filters the cards below (js/main.js, "Course search").
-                     search-skip keeps the site-wide search from indexing these controls. -->
-                <div class="course-filter search-skip" role="search" aria-label="Search courses">
-                    <div class="course-filter-field">
+                     search-skip keeps the site-wide search from indexing these controls.
+                     The text search input (.course-filter-field) is hidden for now; remove `hidden`
+                     when more TA cards are added. -->
+                <div class="course-filter search-skip" role="search" aria-label="Filter courses">
+                    <div class="course-filter-field" hidden>
                         <svg class="course-filter-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
@@ -290,7 +292,7 @@
                     the details shown in the popup (courseData in js/main.js); the search reads the
                     .ta-card-title / -code / -instructor / -term parts.
                     -->
-                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
+                    <div class="course-card ta-card border rounded-2xl cursor-pointer"
                         data-course="rl">
                         <div class="ta-card-body">
                             <div class="ta-card-head">
@@ -305,7 +307,7 @@
                             <a class="ta-card-more" href="rl.html">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
+                    <div class="course-card ta-card border rounded-2xl cursor-pointer"
                         data-course="robot">
                         <div class="ta-card-body">
                             <div class="ta-card-head">
@@ -320,7 +322,7 @@
                             <a class="ta-card-more" href="robot.html">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
+                    <div class="course-card ta-card border rounded-2xl cursor-pointer"
                         data-course="aicps">
                         <div class="ta-card-body">
                             <div class="ta-card-head">
@@ -335,7 +337,7 @@
                             <a class="ta-card-more" href="aicps.html">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    <div class="course-card ta-card themed-bg-secondary border themed-border shadow-lg cursor-pointer"
+                    <div class="course-card ta-card border rounded-2xl cursor-pointer"
                         data-course="amfai">
                         <div class="ta-card-body">
                             <div class="ta-card-head">

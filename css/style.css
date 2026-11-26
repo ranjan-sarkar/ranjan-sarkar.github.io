@@ -32,6 +32,26 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+    font-family: 'Google Sans Text';
+    src: url('../font/Google Sans Text Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'Google Sans Text';
+    src: url('../font/Google Sans Text Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .font-regular {
     font-family: 'GoogleSans-Regular', sans-serif;
     font-weight: 400;
@@ -80,16 +100,50 @@
 }
 
 /* Font system. Google Sans is the site's voice: headings, text, menus, buttons, course codes, tags.
+   Paragraphs use Google Sans Text for body readability.
    Paper titles (Home, Publications) and the seminar title in News use Tailwind's font-serif italic
    (the device's serif: Georgia / Times New Roman on Windows). The BibTeX box uses JetBrains Mono
    (from Google Fonts, link in each page's <head>). */
 :root {
     --font-sans: 'GoogleSans-Regular', sans-serif;
+    --font-text: 'Google Sans Text', 'GoogleSans-Regular', sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
 .citation-pre {
     font-family: var(--font-mono);
+}
+
+p,
+.talk-highlights {
+    font-family: var(--font-text);
+}
+
+p .font-regular,
+p .font-medium,
+p .font-semibold,
+p .font-bold,
+.talk-highlights .font-regular,
+.talk-highlights .font-medium,
+.talk-highlights .font-semibold,
+.talk-highlights .font-bold {
+    font-family: inherit;
+    letter-spacing: 0em;
+}
+
+p strong,
+p .font-medium,
+p .font-semibold,
+.talk-highlights strong,
+.talk-highlights .font-medium,
+.talk-highlights .font-semibold {
+    font-weight: 700;
+}
+
+.home-role,
+.home-institute,
+.ta-feature-code {
+    font-family: var(--font-sans);
 }
 
 /* Type scale: one size per role, used on every page. Headings grow smoothly with the screen
@@ -195,6 +249,65 @@
     /* indigo-400 */
     --accent-hover-dark: #6366F1;
     /* indigo-500 */
+
+    /* Glassmorphic surface tokens for floating drawers, modals, and cards over .bg-decor */
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-bg-hover: rgba(255, 255, 255, 0.86);
+    --glass-bg-elevated: rgba(255, 255, 255, 0.86);
+    --glass-border: rgba(148, 163, 184, 0.28);
+    --glass-border-hover: rgba(79, 70, 229, 0.35);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    --glass-shadow: 0 8px 24px -16px rgba(15, 23, 42, 0.14), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --glass-shadow-hover: 0 14px 30px -16px rgba(15, 23, 42, 0.2), 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.dark {
+    --glass-bg: rgba(30, 41, 59, 0.64);
+    --glass-bg-hover: rgba(30, 41, 59, 0.78);
+    --glass-bg-elevated: rgba(15, 23, 42, 0.86);
+    --glass-border: rgba(148, 163, 184, 0.18);
+    --glass-border-hover: rgba(129, 140, 248, 0.38);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    --glass-shadow: 0 10px 26px -16px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --glass-shadow-hover: 0 16px 32px -16px rgba(0, 0, 0, 0.68), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Home: Research Interests cards (glass surface with quiet hover) */
+.research-card {
+    padding: 1.75rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.research-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+}
+
+.research-card-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(79, 70, 229, 0.16);
+    border-radius: 0.75rem;
+    background-color: rgba(79, 70, 229, 0.08);
+    color: var(--accent-light);
+    font-size: 1.05rem;
+}
+
+.dark .research-card-icon {
+    border-color: rgba(129, 140, 248, 0.22);
+    background-color: rgba(129, 140, 248, 0.12);
+    color: var(--accent-dark);
 }
 
 /* Apply theme colors using CSS variables */
@@ -463,28 +576,35 @@ body {
 .news-action {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.4rem;
     margin-left: 0.35rem;
-    padding: 0.1rem 0.7rem;
+    padding: 0.32rem 0.78rem;
     border: 1px solid rgba(79, 70, 229, 0.2);
     border-radius: 999px;
-    background-color: rgba(79, 70, 229, 0.06);
+    background-color: #f4f4fe;
     color: var(--accent-light);
-    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
     font-weight: 600;
+    line-height: 1;
+    vertical-align: middle;
     white-space: nowrap;
     transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 
 .news-action i {
-    font-size: 0.75em;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8em;
+    line-height: 1;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .news-action:hover,
 .news-action:focus-visible {
     border-color: rgba(79, 70, 229, 0.45);
-    background-color: rgba(79, 70, 229, 0.12);
+    background-color: #e9e8fc;
     box-shadow: 0 6px 14px -8px rgba(79, 70, 229, 0.55);
     outline: none;
 }
@@ -504,14 +624,14 @@ body {
 
 .dark .news-action {
     border-color: rgba(129, 140, 248, 0.25);
-    background-color: rgba(129, 140, 248, 0.1);
+    background-color: #1a2342;
     color: var(--accent-dark);
 }
 
 .dark .news-action:hover,
 .dark .news-action:focus-visible {
     border-color: rgba(129, 140, 248, 0.5);
-    background-color: rgba(129, 140, 248, 0.17);
+    background-color: #222e55;
     box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.6);
 }
 
@@ -887,8 +1007,12 @@ img.is-loaded {
    Hover: the card's border turns accent with a soft shadow and the icon squares deepen. */
 .talk-card {
     padding: 1.25rem;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 28px -16px rgba(15, 23, 42, 0.14);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 @media (min-width: 640px) {
@@ -904,13 +1028,15 @@ img.is-loaded {
 }
 
 .talk-card:hover {
-    border-color: rgba(79, 70, 229, 0.35);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 36px -18px rgba(79, 70, 229, 0.3);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .dark .talk-card:hover {
-    border-color: rgba(129, 140, 248, 0.4);
-    box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.7);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .talk-head {
@@ -1036,17 +1162,35 @@ html.header-enter header.sticky > .container > .h-16 {
     transform: none;
 }
 
+/* Backdrop blur sits on header::before instead of header itself, so child floating panels
+   (.ta-dropdown-menu, .mobile-nav) are not trapped in a backdrop-filter root and can blur
+   the scrolling page cleanly behind them. */
 header {
+    background-color: transparent;
+    border-bottom: 0;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.8);
-    border-bottom-width: 1px;
-    border-color: var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
 
-.dark header {
+.dark header::before {
     background-color: rgba(15, 23, 42, 0.8);
-    border-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+/* Section links in the header use Google Sans Text; the brand name on the left stays Google Sans */
+header nav a[data-nav],
+header .mobile-nav a[data-nav] {
+    font-family: var(--font-text);
 }
 
 /* Active nav link style */
@@ -1086,15 +1230,20 @@ header nav a.active,
    animated, which the phone's GPU handles. Opening: the panel fades in sliding down 8px and its links
    follow one after another; closing is a quicker fade back up. visibility switches off only once the
    closing fade has finished, so the hidden panel cannot be tapped. */
-.mobile-nav {
+header .mobile-nav {
     position: absolute;
-    top: 100%;
+    top: calc(100% - 1px);
     left: 0;
     right: 0;
     max-height: calc(100vh - 4rem - var(--header-extra));
     overflow-y: auto;
     overscroll-behavior: contain;
-    box-shadow: 0 18px 32px -18px rgba(15, 23, 42, 0.3);
+    background-color: rgba(255, 255, 255, 0.72);
+    border-top: 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: 0 20px 40px -16px rgba(15, 23, 42, 0.22);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1111,8 +1260,20 @@ header nav a.active,
     transition: opacity 0.22s ease-out, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
 }
 
-.dark .mobile-nav {
-    box-shadow: 0 18px 32px -18px rgba(0, 0, 0, 0.7);
+.dark header .mobile-nav {
+    background-color: rgba(15, 23, 42, 0.74);
+    border-bottom-color: rgba(148, 163, 184, 0.22);
+    box-shadow: 0 22px 44px -16px rgba(0, 0, 0, 0.65);
+}
+
+header .mobile-nav a:hover,
+header .mobile-nav a:focus-visible {
+    background-color: rgba(79, 70, 229, 0.07);
+}
+
+.dark header .mobile-nav a:hover,
+.dark header .mobile-nav a:focus-visible {
+    background-color: rgba(129, 140, 248, 0.12);
 }
 
 /* the links slide in one after another (the TA course list keeps its own open/close animation) */
@@ -1237,12 +1398,24 @@ header nav a[data-nav].active::after {
     transform: scaleX(1);
 }
 
-.ta-dropdown-menu {
+header .ta-dropdown-menu {
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.72);
+    border-color: rgba(148, 163, 184, 0.3);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 20px 40px -16px rgba(15, 23, 42, 0.22);
     opacity: 0;
     transform: translateY(0.5rem) scale(0.98);
     pointer-events: none;
     visibility: hidden;
     transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.dark header .ta-dropdown-menu {
+    background-color: rgba(15, 23, 42, 0.74);
+    border-color: rgba(148, 163, 184, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 22px 44px -16px rgba(0, 0, 0, 0.65);
 }
 
 .ta-dropdown::after {
@@ -1294,14 +1467,14 @@ header nav a[data-nav].active::after {
 .ta-dropdown-menu a.is-active,
 .ta-dropdown-menu a:hover,
 .ta-dropdown-menu a:focus-visible {
-    background-color: var(--bg-light-primary);
+    background-color: rgba(79, 70, 229, 0.07);
     color: var(--text-light-primary);
 }
 
 .dark .ta-dropdown-menu a.is-active,
 .dark .ta-dropdown-menu a:hover,
 .dark .ta-dropdown-menu a:focus-visible {
-    background-color: var(--bg-dark-primary);
+    background-color: rgba(129, 140, 248, 0.12);
     color: var(--text-dark-primary);
 }
 
@@ -1401,30 +1574,36 @@ header nav a[data-nav].active::after {
     color: var(--accent-dark);
 }
 
-/* each entry sits in a clean bordered card; the border picks up the accent on hover */
+/* each entry sits in a clean frosted card; the border picks up the accent on hover */
 .timeline-content {
     flex-grow: 1;
     min-width: 0;
     margin-left: 1.5rem;
     padding: 1rem 1.15rem;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 1rem;
-    background-color: var(--bg-light-secondary);
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .timeline-item:hover .timeline-content {
-    border-color: rgba(79, 70, 229, 0.4);
-    transform: translateX(4px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+    transform: translateX(3px);
 }
 
 .dark .timeline-content {
-    border-color: var(--border-dark);
-    background-color: rgba(15, 23, 42, 0.55);
+    border-color: var(--glass-border);
+    background-color: var(--glass-bg);
 }
 
 .dark .timeline-item:hover .timeline-content {
-    border-color: rgba(129, 140, 248, 0.45);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
 }
 
 /* "Current" tag after the title of entries that run to "Present" (added by js/main.js) */
@@ -1821,6 +2000,19 @@ html.modal-open {
    the buttons inside use 0.75rem, like the BibTeX text box, so they keep the same rounded feel */
 .modal .modal-content {
     border-radius: 1rem;
+}
+
+/* In the TA course popup modal, syllabus overview text and bullet points use Google Sans Text */
+#course-modal #modal-body p,
+#course-modal #modal-topics li {
+    font-family: var(--font-text);
+}
+
+#course-modal #modal-body .font-regular,
+#course-modal #modal-body .font-medium,
+#course-modal #modal-body .font-semibold,
+#course-modal #modal-body .font-bold {
+    font-family: inherit;
 }
 
 .modal .modal-content .themed-accent-bg {
@@ -2355,15 +2547,17 @@ html.modal-open {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem 1.5rem 1.5rem 1.75rem;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 1rem;
-    background-color: var(--bg-light-secondary);
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-/* accent strip down the left edge, in the same indigo -> sky colours as the background glow */
+/* accent strip down the left edge */
 .pub-card::before {
     content: '';
     position: absolute;
@@ -2375,15 +2569,16 @@ html.modal-open {
 }
 
 .pub-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(79, 70, 229, 0.35);
-    box-shadow: 0 20px 40px -16px rgba(79, 70, 229, 0.28);
+    transform: translateY(-2px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .dark .pub-card {
-    border-color: var(--border-dark);
-    background-color: var(--bg-dark-secondary);
-    box-shadow: none;
+    border-color: var(--glass-border);
+    background-color: var(--glass-bg);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
 }
 
 .dark .pub-card::before {
@@ -2391,8 +2586,9 @@ html.modal-open {
 }
 
 .dark .pub-card:hover {
-    border-color: rgba(129, 140, 248, 0.45);
-    box-shadow: 0 20px 40px -16px rgba(2, 6, 23, 0.7);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 @media (min-width: 768px) {
@@ -2555,13 +2751,15 @@ html.modal-open {
 .news-new-tag {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     margin-left: 0.6rem;
-    vertical-align: 0.1em;
-    padding: 0.15rem 0.55rem;
+    vertical-align: middle;
+    padding: 0.28rem 0.58rem;
     border-radius: 9999px;
+    font-family: var(--font-sans);
     font-size: 0.625rem;
     font-weight: 700;
-    line-height: 1rem;
+    line-height: 1;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #ffffff;
@@ -3050,7 +3248,7 @@ button.text-accent {
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 1.5px;
-    transition: background-size 0.3s ease, color 0.2s ease;
+    transition: background-size 0.3s ease;
 }
 
 .dark a.text-accent,
@@ -3098,27 +3296,33 @@ button.text-accent:focus-visible {
     align-items: stretch;
     gap: 1rem;
     padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 1rem;
-    background-color: var(--bg-light-secondary);
-    box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.12);
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .ta-feature:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 30px -12px rgba(15, 23, 42, 0.25);
+    transform: translateY(-2px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .dark .ta-feature {
-    border-color: var(--border-dark);
-    background-color: var(--bg-dark-secondary);
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.4);
+    border-color: var(--glass-border);
+    background-color: var(--glass-bg);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
 }
 
 .dark .ta-feature:hover {
-    box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.6);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .ta-feature-body {
@@ -3230,9 +3434,18 @@ button.text-accent:focus-visible {
     padding: 3rem 0 5rem;
 }
 
+/* On individual TA course pages, keep Google Sans Text only on body paragraphs (.cp-text),
+   not on hero subtitles, card metadata, or status lines. */
+.cp-page .cp-subtitle,
+.cp-page .cp-meta,
+.cp-page .cp-empty {
+    font-family: var(--font-sans);
+}
+
 @media (min-width: 768px) {
     .cp-page {
-        padding-top: 4.5rem;
+        padding-top: 4rem;
+        padding-bottom: 6rem;
     }
 }
 
@@ -3382,18 +3595,21 @@ button.text-accent:focus-visible {
     align-items: center;
     gap: 1.1rem;
     padding: 1.15rem 1.25rem;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 1rem;
-    background-color: var(--bg-light-secondary);
-    box-shadow: 0 4px 14px -8px rgba(15, 23, 42, 0.12);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .cp-item:hover,
 .cp-item:focus-within {
-    transform: translateY(-3px);
-    border-color: rgba(79, 70, 229, 0.45);
-    box-shadow: 0 16px 30px -14px rgba(15, 23, 42, 0.25);
+    transform: translateY(-2px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .cp-num {
@@ -3500,10 +3716,12 @@ button.text-accent:focus-visible {
     --cp-fact-gap: 0.5rem;
     --cp-fact-indent: calc(var(--cp-fact-icon) + var(--cp-fact-gap));
     padding: 1.5rem;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 1rem;
-    background-color: var(--bg-light-secondary);
-    box-shadow: 0 4px 14px -8px rgba(15, 23, 42, 0.12);
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
 }
 
 .cp-panel + .cp-panel {
@@ -3674,15 +3892,16 @@ button.text-accent:focus-visible {
 
 .dark .cp-item,
 .dark .cp-panel {
-    border-color: var(--border-dark);
-    background-color: var(--bg-dark-secondary);
-    box-shadow: 0 4px 14px -8px rgba(0, 0, 0, 0.5);
+    border-color: var(--glass-border);
+    background-color: var(--glass-bg);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
 }
 
 .dark .cp-item:hover,
 .dark .cp-item:focus-within {
-    border-color: rgba(129, 140, 248, 0.5);
-    box-shadow: 0 16px 30px -14px rgba(0, 0, 0, 0.6);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .dark .cp-item:hover .cp-num,
@@ -3794,20 +4013,27 @@ button.text-accent:focus-visible {
 /* TA page: course cards (.ta-card) — title with the course code badge in the top-right corner,
    instructor below, and a footer strip with the semester and "View Details". The footer sits at
    the bottom, so cards of different heights line up in the grid. */
-.ta-card {
+#course-grid .ta-card {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.ta-card[hidden] {
-    display: none;   /* the course search hides cards; display: flex above would override [hidden] */
+#course-grid .ta-card[hidden] {
+    display: none;   /* the course search/filter hides cards; #course-grid .ta-card's display: flex would otherwise override [hidden] */
 }
 
-.ta-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+#course-grid .ta-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
 }
 
 .ta-card-body {
@@ -3846,14 +4072,27 @@ button.text-accent:focus-visible {
     margin: 0.65rem 0 0;
 }
 
+/* Keep TA card text (including instructor name and filter match line) in Google Sans */
+.ta-card p,
+.ta-feature p {
+    font-family: var(--font-sans);
+}
+
+.ta-card p .font-medium,
+.ta-feature p .font-medium {
+    font-family: var(--font-sans);
+    font-weight: 450;
+    letter-spacing: -0.02em;
+}
+
 .ta-card-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
     padding: 0.85rem 1.5rem;
-    border-top: 1px solid var(--border-light);
-    background-color: var(--bg-light-primary);
+    border-top: 1px solid var(--glass-border);
+    background-color: rgba(248, 250, 252, 0.55);
 }
 
 .ta-card-term {
@@ -3895,10 +4134,6 @@ button.text-accent:focus-visible {
 
 .ta-card:hover .ta-card-more i {
     transform: translateX(4px);
-}
-
-.dark .ta-card:hover {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 .dark .ta-card-code {
@@ -3960,6 +4195,10 @@ button.text-accent:focus-visible {
     background-color: var(--bg-light-secondary);
     box-shadow: 0 6px 20px -10px rgba(15, 23, 42, 0.18);
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.course-filter-field[hidden] {
+    display: none;
 }
 
 .course-filter-field:hover {
@@ -4047,8 +4286,12 @@ button.text-accent:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem 1rem;
-    margin-top: 1rem;
+    margin-top: 0;
     padding: 0 0.25rem;
+}
+
+.course-filter-field:not([hidden]) + .course-filter-bar {
+    margin-top: 1rem;
 }
 
 .course-filter-chips {
@@ -4319,13 +4562,132 @@ mark.course-hit {
     }
 }
 
-/* 5. Theme switch: colours fade over (js/main.js adds .theme-switching briefly) and the icon spins in */
+/* 5. Theme switch: colours fade over (js/main.js adds .theme-switching briefly) and the icon spins in.
+   Only elements that explicitly define a theme-dependent `color` transition `color` (0.4s); inheriting
+   elements (`div`, `p`, `span`, `a`, `li`, `strong`, `time`, SVG `currentColor`, etc.) omit `color`
+   from their transition so they track their parent's fade synchronously with zero cascading lag. */
 .theme-switching,
 .theme-switching *,
 .theme-switching *::before,
 .theme-switching *::after {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, fill 0.4s ease,
-        stroke 0.4s ease !important;
+    transition: background-color 0.4s ease, border-color 0.4s ease !important;
+}
+
+.theme-switching :is(
+    body,
+    .themed-text-primary,
+    .themed-text-secondary,
+    .themed-accent,
+    [class*="dark:text-"],
+    header nav a.active,
+    .mobile-nav a.active,
+    .ta-dropdown-menu a.is-active,
+    .ta-dropdown-menu a:hover,
+    .ta-dropdown-menu a:focus-visible,
+    .bg-decor,
+    .more-link,
+    .more-link-arrow,
+    .home-role,
+    .home-bio dt,
+    .home-bio dt i,
+    .home-bio-tags li,
+    .resume-btn,
+    .social-icon-link,
+    .research-card-icon,
+    .news-more-btn,
+    .pub-venue,
+    .pub-date,
+    .pub-link,
+    .news-action,
+    .news-new-tag,
+    .citation-pre,
+    #cite-copy-status,
+    .modal-close,
+    .modal-btn-soft,
+    .modal-btn-soft .modal-btn-arrow,
+    .modal-btn-solid,
+    .action-btn-outline,
+    .affiliation-name,
+    .timeline-date,
+    .timeline-current,
+    .bg-heading-icon,
+    .bg-secondary-btn,
+    .talk-tag,
+    .talk-meta,
+    .talk-meta-icon,
+    .ta-feature-code,
+    .ta-feature-term,
+    .ta-feature-go,
+    .card-instructor-icon,
+    .ta-card-code,
+    .ta-card-term,
+    .ta-card-more,
+    .course-filter-icon,
+    .course-filter-clear,
+    #course-filter-input,
+    .course-chip,
+    .course-filter-status,
+    .course-match,
+    .course-match i,
+    .course-filter-empty-icon,
+    .course-filter-reset,
+    .cp-code,
+    .cp-heading-icon,
+    .cp-count,
+    .cp-num,
+    .cp-meta i,
+    .cp-tags li,
+    .cp-open,
+    .cp-facts dt,
+    .cp-facts dt i,
+    .cp-facts dd,
+    .cp-avatar,
+    .cp-syllabus li,
+    .cp-syllabus strong,
+    .cp-empty,
+    .cp-empty i,
+    .cp-official,
+    .search-panel,
+    .search-field-icon,
+    .search-esc,
+    .search-footer,
+    .search-group-label,
+    .search-result-title,
+    .search-result-text,
+    .search-result-icon,
+    .search-result mark,
+    .search-message-title,
+    .search-message-hint,
+    .search-message-icon,
+    .search-group-badge,
+    .search-recent-clear,
+    .search-recent-remove,
+    .skip-link,
+    .notfound-code,
+    .notfound-btn,
+    .notfound-card,
+    .notfound-card-icon,
+    .photo-eyebrow,
+    .photo-profile-btn,
+    .photo-place,
+    .photo-place i,
+    .story-total,
+    .story-place,
+    .story-title,
+    .story-text,
+    .story-hint,
+    .story-now,
+    .photo-chip,
+    .photo-title,
+    .photo-text,
+    .photo-credit
+),
+.theme-switching .cp-syllabus li::before,
+.theme-switching .social-icon-link::before,
+.theme-switching #search-button::after,
+.theme-switching #theme-toggle::after,
+.theme-switching #course-filter-input::placeholder {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease !important;
 }
 
 #theme-toggle.is-spinning svg {
@@ -4641,7 +5003,8 @@ footer.footer-reveal.is-revealed .footer-bottom::before { transition-delay: 0.27
     height: 2px;
     margin: 0.6rem auto 0;
     border-radius: 2px;
-    background: linear-gradient(90deg, var(--accent-dark), #38bdf8);
+    background: var(--accent-dark);
+    opacity: 0.75;
 }
 
 @media (min-width: 768px) {
@@ -5587,20 +5950,56 @@ footer .search-target {
    lines stay still. Hover effects, the section fade-ins and the photo zoom stay: they only move
    or fade an element, which even an old graphics chip does smoothly.
    ===================================================================== */
-.perf-lite header {
+.perf-lite header::before {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-color: rgba(255, 255, 255, 0.96);
 }
 
-.perf-lite.dark header {
+.perf-lite.dark header::before {
     background-color: rgba(15, 23, 42, 0.96);
 }
 
 .perf-lite .modal,
-.perf-lite .search-overlay {
+.perf-lite .search-overlay,
+.perf-lite header .ta-dropdown-menu,
+.perf-lite header .mobile-nav,
+.perf-lite .research-card,
+.perf-lite .pub-card,
+.perf-lite #course-grid .ta-card,
+.perf-lite .ta-feature,
+.perf-lite .talk-card,
+.perf-lite .cp-item,
+.perf-lite .cp-panel,
+.perf-lite .timeline-content {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+}
+
+.perf-lite header .ta-dropdown-menu,
+.perf-lite header .mobile-nav,
+.perf-lite .research-card,
+.perf-lite .pub-card,
+.perf-lite #course-grid .ta-card,
+.perf-lite .ta-feature,
+.perf-lite .talk-card,
+.perf-lite .cp-item,
+.perf-lite .cp-panel,
+.perf-lite .timeline-content {
+    background-color: var(--bg-light-secondary);
+}
+
+.perf-lite.dark header .ta-dropdown-menu,
+.perf-lite.dark header .mobile-nav,
+.perf-lite.dark .research-card,
+.perf-lite.dark .pub-card,
+.perf-lite.dark #course-grid .ta-card,
+.perf-lite.dark .ta-feature,
+.perf-lite.dark .talk-card,
+.perf-lite.dark .cp-item,
+.perf-lite.dark .cp-panel,
+.perf-lite.dark .timeline-content {
+    background-color: var(--bg-dark-secondary);
 }
 
 .perf-lite .modal {

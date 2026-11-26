@@ -1127,19 +1127,59 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const fallbackCopyToClipboard = (text) => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '-9999px';
+            textarea.style.opacity = '0';
+            const prevFocus = document.activeElement;
+            citeModal.appendChild(textarea);
+            textarea.focus({ preventScroll: true });
+            textarea.select();
+            textarea.setSelectionRange(0, text.length);
+            let copied = false;
+            try {
+                copied = document.execCommand('copy');
+            } catch (err) {
+                copied = false;
+            }
+            textarea.remove();
+            if (prevFocus && typeof prevFocus.focus === 'function') {
+                prevFocus.focus({ preventScroll: true });
+            }
+            return copied;
+        };
+
         const copyCitationToClipboard = () => {
-            if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
-                setCitationStatus('Clipboard access unavailable. Please copy manually.', 'error');
+            const text = citeBibtexText.textContent;
+            if (!text) {
+                setCitationStatus('No BibTeX found for this paper.', 'error');
                 return;
             }
 
-            navigator.clipboard.writeText(citeBibtexText.textContent)
-                .then(() => {
-                    setCitationStatus('BibTeX copied to clipboard', 'success');
-                })
-                .catch(() => {
-                    setCitationStatus('Auto-copy failed. Please copy manually.', 'error');
-                });
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        setCitationStatus('BibTeX copied to clipboard', 'success');
+                    })
+                    .catch(() => {
+                        if (fallbackCopyToClipboard(text)) {
+                            setCitationStatus('BibTeX copied to clipboard', 'success');
+                        } else {
+                            setCitationStatus('Auto-copy failed. Please copy manually.', 'error');
+                        }
+                    });
+                return;
+            }
+
+            if (fallbackCopyToClipboard(text)) {
+                setCitationStatus('BibTeX copied to clipboard', 'success');
+            } else {
+                setCitationStatus('Clipboard access unavailable. Please copy manually.', 'error');
+            }
         };
 
         citeTriggers.forEach((trigger) => {
@@ -2019,4 +2059,16 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToTopBtn.addEventListener('click', () => {
         window.siteScrollTo(0);
     });
+
+    // --- FOOTER COPYRIGHT YEAR ---
+    const footerBottom = document.querySelector('.footer-bottom');
+    if (footerBottom) {
+        const currentYear = String(new Date().getFullYear());
+        for (const node of footerBottom.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE && /\b20\d{2}\b/.test(node.textContent)) {
+                node.textContent = node.textContent.replace(/\b20\d{2}\b/, currentYear);
+                break;
+            }
+        }
+    }
 });

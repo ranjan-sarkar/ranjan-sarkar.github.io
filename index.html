@@ -221,7 +221,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
+                                            d="M6 9.5l5.15 5.15a1.2 1.2 0 0 0 1.7 0L18 9.5" />
                                     </svg>
                                 </button>
                             </div>
@@ -310,7 +310,7 @@
                         aria-controls="mobile-ta-submenu" aria-expanded="false" aria-label="Toggle TA course list">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9.5l5.15 5.15a1.2 1.2 0 0 0 1.7 0L18 9.5" />
                         </svg>
                     </button>
                 </div>
@@ -544,30 +544,26 @@
                 <h2 class="type-section font-bold text-center themed-text-primary themed-accent mb-12">Research Interests
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-brain"></i></div>
+                    <div class="research-card">
+                        <div class="research-card-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
                         <h3 class="type-card-title font-semibold themed-text-primary mb-2">Machine Learning</h3>
                         <p class="themed-text-secondary">Investigating the theoretical and probabilistic foundations of
                             machine learning models to provide mathematical guarantees.</p>
                     </div>
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-robot"></i></div>
+                    <div class="research-card">
+                        <div class="research-card-icon"><i class="fas fa-robot" aria-hidden="true"></i></div>
                         <h3 class="type-card-title font-semibold themed-text-primary mb-2">Reinforcement Learning</h3>
                         <p class="themed-text-secondary">Focusing on the intersection of stochastic control and
                             sequential decision-making to guarantee system stability and performance.</p>
                     </div>
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-wave-square"></i></div>
+                    <div class="research-card">
+                        <div class="research-card-icon"><i class="fas fa-wave-square" aria-hidden="true"></i></div>
                         <h3 class="type-card-title font-semibold themed-text-primary mb-2">State-Space Models</h3>
                         <p class="themed-text-secondary">Modelling partially observed dynamical systems through latent
                             states, and learning, filtering and control directly from input-output data.</p>
                     </div>
-                    <div
-                        class="themed-bg-secondary p-7 rounded-lg shadow-lg border themed-border transform transition-transform duration-300 hover:-translate-y-2">
-                        <div class="text-2xl themed-accent mb-4"><i class="fas fa-chart-line"></i></div>
+                    <div class="research-card">
+                        <div class="research-card-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
                         <h3 class="type-card-title font-semibold themed-text-primary mb-2">Stochastic Optimization</h3>
                         <p class="themed-text-secondary">Developing scalable optimization frameworks and estimation
                             techniques to handle high-dimensional uncertainty.</p>
